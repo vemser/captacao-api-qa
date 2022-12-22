@@ -15,13 +15,53 @@ public class InformacoesPage extends BasePage {
     private static final By msgErroCPF = By.cssSelector("#step-1-cpf-helper-text");
     private static final By campoTelefone = By.cssSelector("#step-1-telefone");
     private static final By msgErroTelefone = By.cssSelector("#step-1-telefone-helper-text");
-    private static final By campoData = By.cssSelector("#step-1-dataNascimento");
+    private static final By campoDataNascimento = By.cssSelector("#step-1-dataNascimento");
     private static final By msgErroData = By.cssSelector("#step-1-dataNascimento-helper-text");
     private static final By campoCidade = By.cssSelector("#step-1-cidade");
     private static final By msgErroCidade = By.cssSelector("#step-1-cidade-helper-text");
     private static final By selectEstado = By.cssSelector("#step-1-estado");
     private static final By selectNeurodiversidade = By.cssSelector("#step-1-neurodiversidade");
     private static final By btnProximo = By.cssSelector("#step-1-enviar");
+
+    @Step("Preencher campo nome completo")
+    public void preencherCampoNomeCompleto(String nomeCompleto) {
+        sendKeys(campoNomeCompleto, nomeCompleto);
+    }
+
+    @Step("Preencher campo email")
+    public void preencherCampoEmail(String email) {
+        sendKeys(campoEmail, email);
+    }
+
+    @Step("Preencher campo rg")
+    public void preencherCampoRG(String rg) {
+        sendKeys(campoRG, rg);
+    }
+
+    @Step("Preencher campo cpf")
+    public void preencherCampoCPF(String cpf) {
+        sendKeys(campoCPF, cpf);
+    }
+
+    @Step("Preencher campo telefone")
+    public void preencherCampoTelefone(String telefone) {
+        sendKeys(campoTelefone, telefone);
+    }
+
+    @Step("Preencher campo data de nascimento")
+    public void preencherCampoDataDeNascimento(String dataNascimento) {
+        sendKeys(campoDataNascimento, dataNascimento);
+    }
+
+    @Step("Preencher campo cidade")
+    public void preencherCampoCidade(String cidade) {
+        sendKeys(campoDataNascimento, cidade);
+    }
+
+    @Step("Clicar no botão Próximo")
+    public void clicarBotaoProximo() {
+        click(btnProximo);
+    }
 
     @Step("Validar url atual")
     public String validarUrlAtual() {
