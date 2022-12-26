@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.captacao.builder;
 
-import br.com.dbccompany.vemser.captacao.dto.candidato.Ativo;
+import br.com.dbccompany.vemser.captacao.dto.TipoValidacao;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
 import br.com.dbccompany.vemser.captacao.dto.candidato.EdicaoDTO;
 
@@ -18,7 +18,7 @@ public class CandidatoBuilder {
                 .cpf("012.345.678-90")
                 .estado("BA")
                 .cidade("Salvador")
-                .ativo(Ativo.T.toString())
+                .ativo(TipoValidacao.T.toString())
                 .linguagens(List.of())
                 .edicao(new EdicaoDTO())
                 .formulario(0)

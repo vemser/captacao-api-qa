@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.io.File;
@@ -9,11 +10,30 @@ import static io.restassured.RestAssured.given;
 
 public class FormularioService {
 
-    public Response buscarListaPorId(Integer idFormulario){
+    public Response listar(){
         return
 	            given()
-                        .queryParam("sort", idFormulario)
                 .when()
+                        .get(Utils.getBaseUrl() + "/formulario/listar")
+                ;
+    }
+
+    public Response listarComOrdenacao(String sort){
+        return
+                given()
+                        .queryParam("sort", sort)
+                .when()
+                        .get(Utils.getBaseUrl() + "/formulario/listar")
+                ;
+    }
+
+    public Response listarComPaginacao(Integer pagina, Integer tamanho, String sort){
+        return
+                given()
+                        .queryParam("pagina", pagina)
+                        .queryParam("tamanho", tamanho)
+                        .queryParam("sort", sort)
+                    .when()
                         .get(Utils.getBaseUrl() + "/formulario/listar")
                 ;
     }
@@ -27,9 +47,11 @@ public class FormularioService {
                 ;
     }
 
-    public Response cadastroFormulario(String formulario) {
+    public Response cadastrar(String formulario) {
         return
                 given()
+                        .log().all()
+                        .contentType(ContentType.JSON)
                         .body(formulario)
                 .when()
                         .post(Utils.getBaseUrl() + "/formulario/cadastro")
@@ -69,9 +91,10 @@ public class FormularioService {
     public Response deletarTeste(Integer idFormulario) {
         return
                 given()
-                        .pathParam("idFormulario", idFormulario)
+                        .queryParam("idFormulario", idFormulario)
                 .when()
-                        .delete(Utils.getBaseUrl() + "/formulario/")
+                        .delete(Utils.getBaseUrl() + "/formulario")
                 ;
     }
+
 }

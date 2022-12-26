@@ -16,7 +16,7 @@ import java.util.List;
 public class FormularioDTO {
 
     private Integer idFormulario;
-    private String matriculadoBoolean;
+    private String matriculado;
     private String curso;
     private String turno;
     private String instituicao;
@@ -39,6 +39,6 @@ public class FormularioDTO {
     private String orientacao;
     private String disponibilidade;
     private List<TrilhaDTO> trilhas;
-    private String importancia;
+    //private String importancia;
 
 }
