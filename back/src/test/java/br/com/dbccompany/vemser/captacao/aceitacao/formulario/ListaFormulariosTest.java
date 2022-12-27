@@ -34,7 +34,7 @@ public class ListaFormulariosTest {
     }
 
     @Test
-    @Tag("error")
+    @Tag("all")
     @Description("Deve listar formulários com ordenação com sucesso")
     public void deveListarFormulariosComOrdenacaoComSucesso() {
         // RETORNA 500, DEVERIA RETORNAR LISTA
@@ -52,7 +52,11 @@ public class ListaFormulariosTest {
     }
 
     @Test
+<<<<<<< HEAD
+    @Tag("all")
+=======
     @Tag("error")
+>>>>>>> 09fb034dc78ad4473f07d4570db8dd3ee84e8fbc
     @Description("Deve retornar lista vazia")
     public void deveRetornarListaVazia() {
         // RETORNA 500, DEVERIA RETORNAR LISTA VAZIA

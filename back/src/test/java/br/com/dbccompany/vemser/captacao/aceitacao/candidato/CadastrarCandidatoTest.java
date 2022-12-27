@@ -68,7 +68,7 @@ public class CadastrarCandidatoTest {
                 .statusCode(HttpStatus.SC_NO_CONTENT)
                 ;
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_NO_CONTENT)
@@ -94,7 +94,7 @@ public class CadastrarCandidatoTest {
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 ;
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_NO_CONTENT)
@@ -120,7 +120,7 @@ public class CadastrarCandidatoTest {
                 .statusCode(HttpStatus.SC_NOT_FOUND)
         ;
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_NO_CONTENT)

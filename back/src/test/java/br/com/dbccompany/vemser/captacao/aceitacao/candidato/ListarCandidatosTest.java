@@ -31,7 +31,7 @@ public class ListarCandidatosTest {
     CandidatoBuilder candidatoBuilder = new CandidatoBuilder();
 
     @Test
-    @Tag("wip")
+    @Tag("all")
     @Description("Deve listar candidatos com sucesso")
     public void deveListarCandidatosComSucesso() {
         PageCandidatoDTO pageCandidatos = candidatoService.buscarListaPorId()

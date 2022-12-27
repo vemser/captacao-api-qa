@@ -15,16 +15,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Formulário")
-@Epic("Cadastrar Formulário")
-public class CadastraFormularioTest {
+@Epic("Deletar Formulário")
+public class DeletaFormularioTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
     @Test
     @Tag("all")
-    @Description("Deve cadastrar formulário com sucesso")
-    public void deveCadastrarFormularioComSucesso() {
+    @Description("Deve deletar formulário com sucesso")
+    public void deveDeletarFormularioComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -34,10 +34,6 @@ public class CadastraFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
-        assertEquals(formularioCreate.getIngles(), formulario.getIngles());
-        assertEquals(formularioCreate.getGenero(), formulario.getGenero());
-        assertEquals(formularioCreate.getCurso(), formulario.getCurso());
-
         formularioService.deletar(formulario.getIdFormulario())
                 .then()
                     .log().all()
@@ -46,37 +42,17 @@ public class CadastraFormularioTest {
     }
 
     @Test
-    @Tag("error")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
-        // DEVE RETORNAR MENSAGEM DE ERRO
-
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemPreencherCamposObrigatorios();
-
-        formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    //.extract().path("message")
-                ;
-
-        //assertEquals("", message);
-    }
-
-    @Test
     @Tag("all")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemMatricula() {
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemMatricula();
-
-        String message = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+    @Description("Deve não deletar formulário")
+    public void deveNaoDeletarFormularioComIdFormularioInexistente() {
+        String message = formularioService.deletar(19931019)
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract().path("message")
-                ;
+        ;
 
-        assertEquals("Precisa estar matriculado!", message);
+        assertEquals("Erro ao buscar o formulário.", message);
     }
 
 }

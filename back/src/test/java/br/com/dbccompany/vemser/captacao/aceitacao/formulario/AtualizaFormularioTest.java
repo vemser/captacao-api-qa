@@ -25,6 +25,8 @@ public class AtualizaFormularioTest {
     @Tag("error")
     @Description("Deve atualizar formulário com sucesso")
     public void deveAtualizarFormularioComSucesso() {
+        //ALTERAR QUERY PARA PATH
+
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
         FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder.atualizarFormulario();
 
@@ -46,45 +48,11 @@ public class AtualizaFormularioTest {
         assertEquals(formularioAtualizadoCreate.getIngles(), formularioAtualizado.getIngles());
         assertEquals(formularioAtualizadoCreate.getCurso(), formularioAtualizado.getCurso());
 
-        formularioService.deletarTeste(formularioAtualizado.getIdFormulario())
+        formularioService.deletar(formularioAtualizado.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
         ;
-    }
-
-    @Test
-    @Tag("error")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
-        // DEVE RETORNAR MENSAGEM DE ERRO
-
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemPreencherCamposObrigatorios();
-
-        formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    //.extract().path("message")
-                ;
-
-        //assertEquals("", message);
-    }
-
-    @Test
-    @Tag("all")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemMatricula() {
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemMatricula();
-
-        String message = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract().path("message")
-                ;
-
-        assertEquals("Precisa estar matriculado!", message);
     }
 
 }

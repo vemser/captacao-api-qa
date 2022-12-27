@@ -3,7 +3,6 @@ package br.com.dbccompany.vemser.captacao.aceitacao.formulario;
 import br.com.dbccompany.vemser.captacao.builder.FormularioBuilder;
 import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioCreateDTO;
 import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioDTO;
-import br.com.dbccompany.vemser.captacao.dto.formulario.PageFormularioDTO;
 import br.com.dbccompany.vemser.captacao.service.FormularioService;
 import br.com.dbccompany.vemser.captacao.utils.Utils;
 import io.qameta.allure.Description;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Formulário")
 @Epic("Buscar Currículo por idFormulario")
@@ -22,12 +21,10 @@ public class BuscaCurriculoPorIdFormularioTest {
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
-/*    @Test
-    @Tag("wip")
+    @Test
+    @Tag("all")
     @Description("Deve buscar currículo por idFormulario com sucesso")
     public void deveBuscarCurriculoPorIdFormularioComSucesso() {
-        // FALTA CADASTRAR CURRICULO NO FORMULARIO
-
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -37,18 +34,24 @@ public class BuscaCurriculoPorIdFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
+        formularioService.atualizarCurriculo(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                ;
+
         formularioService.buscarCurriculoPorIdFormulario(formulario.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
                 ;
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
         ;
-    }*/
+    }
 
     @Test
     @Tag("all")
@@ -72,7 +75,7 @@ public class BuscaCurriculoPorIdFormularioTest {
 
         assertEquals("Usuário não possui currículo cadastrado.", message);
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
