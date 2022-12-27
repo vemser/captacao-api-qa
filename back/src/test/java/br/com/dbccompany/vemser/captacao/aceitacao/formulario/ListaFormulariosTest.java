@@ -52,7 +52,7 @@ public class ListaFormulariosTest {
     }
 
     @Test
-    @Tag("wip")
+    @Tag("all")
     @Description("Deve retornar lista vazia")
     public void deveRetornarListaVazia() {
         // RETORNA 500, DEVERIA RETORNAR LISTA VAZIA

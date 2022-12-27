@@ -1,7 +1,17 @@
 package br.com.dbccompany.vemser.captacao.dto.candidato;
 
-public class EdicaoDTO {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@JsonIgnoreProperties
+public class EdicaoDTO {
     private String nome;
 
 }
