@@ -3,6 +3,7 @@ package br.com.dbccompany.vemser.captacao.builder;
 import br.com.dbccompany.vemser.captacao.dto.TipoValidacao;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
 import br.com.dbccompany.vemser.captacao.dto.candidato.EdicaoDTO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -20,10 +21,21 @@ public class CandidatoBuilder {
                 .cidade("Salvador")
                 .ativo(TipoValidacao.T.toString())
                 .linguagens(List.of())
-                .edicao(new EdicaoDTO())
+                .edicao(new EdicaoDTO("1ª Edição"))
                 .formulario(0)
                 .pcdboolean(false)
                 .build();
     }
 
+    public CandidatoCreateDTO criarCandidatoSemPreencherCamposObrigatorios(){
+        CandidatoCreateDTO candidatoInvalido = criarCandidato();
+        candidatoInvalido.setNome(StringUtils.EMPTY);
+        candidatoInvalido.setDataNascimento(StringUtils.EMPTY);
+        candidatoInvalido.setTelefone(StringUtils.EMPTY);
+        candidatoInvalido.setRg(StringUtils.EMPTY);
+        candidatoInvalido.setEstado(StringUtils.EMPTY);
+        candidatoInvalido.setCidade(StringUtils.EMPTY);
+
+        return candidatoInvalido;
+    }
 }

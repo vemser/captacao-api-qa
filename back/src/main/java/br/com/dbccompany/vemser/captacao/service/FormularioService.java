@@ -1,9 +1,7 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
 
 import java.io.File;
@@ -73,15 +71,15 @@ public class FormularioService {
     public Response atualizarPrintConfigPc(Integer idFormulario) {
         return
                 given()
-                        .queryParam("idFormulario", idFormulario)
+                        .pathParam("idFormulario", idFormulario)
+                        .contentType(ContentType.MULTIPART)
                         .multiPart(new File("./doc/imgPanda.jpg"))
                 .when()
-                        .put(Utils.getBaseUrl() + "/upload-print-config-pc")
+                        .put(Utils.getBaseUrl() + "/formulario/upload-print-config-pc/{idFormulario}")
                 ;
     }
 
     public Response atualizarCurriculo(Integer idFormulario) {
-        //RestAssured.defaultParser = Parser.JSON;
         return
                 given()
                         .pathParam("idFormulario", idFormulario)
@@ -92,7 +90,7 @@ public class FormularioService {
                 ;
     }
 
-    public Response deletarTeste(Integer idFormulario) {
+    public Response deletar(Integer idFormulario) {
         return
                 given()
                         .pathParam("idFormulario", idFormulario)

@@ -15,16 +15,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Formulário")
-@Epic("Cadastrar Formulário")
-public class CadastraFormularioTest {
+@Epic("Upload Print Configuração PC")
+public class UploadPrintConfigPCTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
     @Test
     @Tag("all")
-    @Description("Deve cadastrar formulário com sucesso")
-    public void deveCadastrarFormularioComSucesso() {
+    @Description("Deve atualizar print configuração pc de formulário com sucesso")
+    public void deveAtualizarPrintConfigPcDeFormularioComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -34,9 +34,11 @@ public class CadastraFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
-        assertEquals(formularioCreate.getIngles(), formulario.getIngles());
-        assertEquals(formularioCreate.getGenero(), formulario.getGenero());
-        assertEquals(formularioCreate.getCurso(), formulario.getCurso());
+        formularioService.atualizarPrintConfigPc(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                ;
 
         formularioService.deletar(formulario.getIdFormulario())
                 .then()
@@ -46,37 +48,17 @@ public class CadastraFormularioTest {
     }
 
     @Test
-    @Tag("error")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
-        // DEVE RETORNAR MENSAGEM DE ERRO
-
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemPreencherCamposObrigatorios();
-
-        formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    //.extract().path("message")
-                ;
-
-        //assertEquals("", message);
-    }
-
-    @Test
     @Tag("all")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemMatricula() {
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemMatricula();
-
-        String message = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+    @Description("Deve não atualizar print configuração pc")
+    public void deveNaoAtualizarPrintConfigPcComIdFormularioInexistente() {
+        String message = formularioService.atualizarPrintConfigPc(19931019)
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract().path("message")
-                ;
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract().path("message")
+        ;
 
-        assertEquals("Precisa estar matriculado!", message);
+        assertEquals("Erro ao buscar o formulário.", message);
     }
 
 }

@@ -13,17 +13,16 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayName("Formulário")
 @Epic("Upload Currículo")
-public class UploadCurriculoDeFormularioTest {
+public class UploadCurriculoTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
     @Test
-    @Tag("wip")
+    @Tag("all")
     @Description("Deve atualizar currículo de formulário com sucesso")
     public void deveAtualizarCurriculoDeFormularioComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
@@ -41,9 +40,7 @@ public class UploadCurriculoDeFormularioTest {
                     .statusCode(HttpStatus.SC_OK)
                 ;
 
-        assertNotNull(formulario.getCurriculo());
-
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
@@ -51,37 +48,17 @@ public class UploadCurriculoDeFormularioTest {
     }
 
     @Test
-    @Tag("error")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
-        // DEVE RETORNAR MENSAGEM DE ERRO
-
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemPreencherCamposObrigatorios();
-
-        formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    //.extract().path("message")
-                ;
-
-        //assertEquals("", message);
-    }
-
-    @Test
     @Tag("all")
-    @Description("Deve não cadastrar formulário")
-    public void deveNaoCadastrarFormularioSemMatricula() {
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemMatricula();
-
-        String message = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+    @Description("Deve não atualizar currículo")
+    public void deveNaoAtualizarCurriculoComIdFormularioInexistente() {
+        String message = formularioService.atualizarCurriculo(19931019)
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract().path("message")
-                ;
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract().path("message")
+        ;
 
-        assertEquals("Precisa estar matriculado!", message);
+        assertEquals("Erro ao buscar o formulário.", message);
     }
 
 }
