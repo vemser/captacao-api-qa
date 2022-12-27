@@ -15,17 +15,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Formulário")
-@Epic("Cadastrar Formulário")
-public class CadastraFormularioTest {
+@Epic("Atualizar Formulário")
+public class AtualizaFormularioTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
     @Test
-    @Tag("all")
-    @Description("Deve cadastrar formulário com sucesso")
-    public void deveCadastrarFormularioComSucesso() {
+    @Tag("error")
+    @Description("Deve atualizar formulário com sucesso")
+    public void deveAtualizarFormularioComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
+        FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder.atualizarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
                 .then()
@@ -34,11 +35,18 @@ public class CadastraFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
-        assertEquals(formularioCreate.getIngles(), formulario.getIngles());
-        assertEquals(formularioCreate.getGenero(), formulario.getGenero());
-        assertEquals(formularioCreate.getCurso(), formulario.getCurso());
+        FormularioDTO formularioAtualizado = formularioService
+                .atualizarFormulario(formulario.getIdFormulario(), Utils.convertFormularioToJson(formularioAtualizadoCreate))
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
+                ;
 
-        formularioService.deletarTeste(formulario.getIdFormulario())
+        assertEquals(formularioAtualizadoCreate.getIngles(), formularioAtualizado.getIngles());
+        assertEquals(formularioAtualizadoCreate.getCurso(), formularioAtualizado.getCurso());
+
+        formularioService.deletarTeste(formularioAtualizado.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)

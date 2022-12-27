@@ -59,4 +59,32 @@ public class FormularioBuilder {
         return formularioInvalido;
     }
 
+    public FormularioCreateDTO atualizarFormulario() {
+        return FormularioCreateDTO.builder()
+                .matriculadoBoolean(true)
+                .curso("Engenharia da Computação")
+                .turno(TipoTurno.MANHA.toString())
+                .instituicao("UFBA")
+                .github("https://github.com/testeqa-atualizado")
+                .linkedin("https://www.linkedin.com/in/testeqa-atualizado/")
+                .desafiosBoolean(false)
+                .problemaBoolean(false)
+                .reconhecimentoBoolean(false)
+                .altruismoBoolean(false)
+                .resposta("Resposta atualizada")
+                .lgpdBoolean(false)
+                .provaBoolean(false)
+                .ingles("Inglês atualizado")
+                .espanhol("Espanhol atualizado")
+                .neurodiversidade("Neurodiversidade atualizado")
+                .configuracoes("Configuracoes atualizado")
+                .efetivacaoBoolean(false)
+                .disponibilidadeBoolean(false)
+                .genero("Gênero  atualizado")
+                .orientacao("Orientação sexual atualizado")
+                .trilhas(List.of(3))
+                .importancia("Importância atualizado")
+                .build();
+    }
+
 }
