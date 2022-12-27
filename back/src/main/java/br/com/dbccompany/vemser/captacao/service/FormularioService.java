@@ -71,29 +71,29 @@ public class FormularioService {
     public Response atualizarPrintConfigPc(Integer idFormulario) {
         return
                 given()
-                        .pathParam("idFormulario", idFormulario)
+                        .queryParam("idFormulario", idFormulario)
                         .multiPart(new File("./doc/imgPanda.jpg"))
                 .when()
-                        .put(Utils.getBaseUrl() + "/upload-print-config-pc/")
+                        .put(Utils.getBaseUrl() + "/upload-print-config-pc")
                 ;
     }
 
     public Response atualizarCurriculo(Integer idFormulario) {
         return
                 given()
-                        .pathParam("idFormulario", idFormulario)
+                        .queryParam("idFormulario", idFormulario)
                         .multiPart(new File("./doc/curriculo.pdf"))
                 .when()
-                        .put(Utils.getBaseUrl() + "/upload-curriculo/")
+                        .put(Utils.getBaseUrl() + "/upload-curriculo")
                 ;
     }
 
     public Response deletarTeste(Integer idFormulario) {
         return
                 given()
-                        .queryParam("idFormulario", idFormulario)
+                        .pathParam("idFormulario", idFormulario)
                 .when()
-                        .delete(Utils.getBaseUrl() + "/formulario")
+                        .delete(Utils.getBaseUrl() + "/formulario/delete-fisico/{idFormulario}")
                 ;
     }
 

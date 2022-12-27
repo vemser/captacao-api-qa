@@ -39,6 +39,7 @@ public class FormularioDTO {
     private String orientacao;
     private String disponibilidade;
     private List<TrilhaDTO> trilhas;
-    //private String importancia;
+    private Integer imagemConfigPc;
+    private String importancia;
 
 }

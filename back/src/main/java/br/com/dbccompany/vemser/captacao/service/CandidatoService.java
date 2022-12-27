@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.io.File;
@@ -8,10 +9,9 @@ import java.io.File;
 import static io.restassured.RestAssured.given;
 public class CandidatoService {
 
-    public Response buscarListaPorId(Integer idCandidato){
+    public Response buscarListaPorId(){
         return
 	            given()
-                        .queryParam("sort", idCandidato)
                 .when()
                         .get(Utils.getBaseUrl() + "/candidato")
                 ;
@@ -38,6 +38,8 @@ public class CandidatoService {
     public Response cadastroCandidato(String candidato) {
         return
                 given()
+                        .log().all()
+                        .contentType(ContentType.JSON)
                         .body(candidato)
                 .when()
                         .post(Utils.getBaseUrl() + "/candidato")
@@ -78,7 +80,7 @@ public class CandidatoService {
                 given()
                         .pathParam("idCandidato", idCandidato)
                 .when()
-                        .delete(Utils.getBaseUrl() + "/candidato/delete-fisico/")
+                        .delete(Utils.getBaseUrl() + "/candidato/delete-fisico/{idCandidato}")
                 ;
     }
 }

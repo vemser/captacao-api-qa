@@ -6,13 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @JsonIgnoreProperties
-public class LinguagemDTO {
+public class PageCandidatoDTO {
 
-    private String nome;
-
+    private Integer totalElementos;
+    private Integer quantidadePaginas;
+    private Integer pagina;
+    private Integer tamanho;
+    private List<CandidatoDTO> elementos;
 }
