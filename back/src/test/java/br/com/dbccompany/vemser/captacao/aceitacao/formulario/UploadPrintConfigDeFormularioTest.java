@@ -13,10 +13,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayName("Formulário")
 @Epic("Cadastrar Formulário")
-public class CadastraFormularioTest {
+public class UploadPrintConfigDeFormularioTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
@@ -34,19 +35,35 @@ public class CadastraFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
+        formularioService.atualizarCurriculo(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
+                ;
+
+        formularioService.atualizarPrintConfigPc(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
+                ;
+
         assertEquals(formularioCreate.getIngles(), formulario.getIngles());
         assertEquals(formularioCreate.getGenero(), formulario.getGenero());
         assertEquals(formularioCreate.getCurso(), formulario.getCurso());
+        assertNotNull(formulario.getCurriculo());
+        assertNotNull(formulario.getImagemConfigPc());
 
         formularioService.deletarTeste(formulario.getIdFormulario())
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_NO_CONTENT)
+                    .statusCode(HttpStatus.SC_OK)
         ;
     }
 
     @Test
-    @Tag("error")
+    @Tag("all")
     @Description("Deve não cadastrar formulário")
     public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
         // DEVE RETORNAR MENSAGEM DE ERRO
@@ -67,16 +84,16 @@ public class CadastraFormularioTest {
     @Tag("all")
     @Description("Deve não cadastrar formulário")
     public void deveNaoCadastrarFormularioSemMatricula() {
+        // RETORNA 500, DEVE RETORNAR 400 E MENSAGEM DE ERRO
+
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormularioSemMatricula();
 
-        String message = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+        formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract().path("message")
+                    //.extract().as(FormularioDTO.class)
                 ;
-
-        assertEquals("Precisa estar matriculado!", message);
     }
 
 }

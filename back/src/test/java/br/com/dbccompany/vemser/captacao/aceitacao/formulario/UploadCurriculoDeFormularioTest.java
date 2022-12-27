@@ -13,18 +13,19 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayName("Formulário")
-@Epic("Cadastrar Formulário")
-public class CadastraFormularioTest {
+@Epic("Upload Currículo")
+public class UploadCurriculoDeFormularioTest {
 
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
 
     @Test
-    @Tag("all")
-    @Description("Deve cadastrar formulário com sucesso")
-    public void deveCadastrarFormularioComSucesso() {
+    @Tag("wip")
+    @Description("Deve atualizar currículo de formulário com sucesso")
+    public void deveAtualizarCurriculoDeFormularioComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -34,9 +35,13 @@ public class CadastraFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
-        assertEquals(formularioCreate.getIngles(), formulario.getIngles());
-        assertEquals(formularioCreate.getGenero(), formulario.getGenero());
-        assertEquals(formularioCreate.getCurso(), formulario.getCurso());
+        formularioService.atualizarCurriculo(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                ;
+
+        assertNotNull(formulario.getCurriculo());
 
         formularioService.deletarTeste(formulario.getIdFormulario())
                 .then()

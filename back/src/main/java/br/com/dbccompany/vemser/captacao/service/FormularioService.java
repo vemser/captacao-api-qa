@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
 
 import java.io.File;
@@ -50,7 +52,6 @@ public class FormularioService {
     public Response cadastrar(String formulario) {
         return
                 given()
-                        .log().all()
                         .contentType(ContentType.JSON)
                         .body(formulario)
                 .when()
@@ -62,9 +63,10 @@ public class FormularioService {
         return
                 given()
                         .pathParam("idFormulario", idFormulario)
+                        .contentType(ContentType.JSON)
                         .body(formularioAtualizado)
                 .when()
-                        .put(Utils.getBaseUrl() + "/formulario/")
+                        .put(Utils.getBaseUrl() + "/formulario/atualizar-formulario/{idFormulario}")
                 ;
     }
 
@@ -79,12 +81,14 @@ public class FormularioService {
     }
 
     public Response atualizarCurriculo(Integer idFormulario) {
+        //RestAssured.defaultParser = Parser.JSON;
         return
                 given()
-                        .queryParam("idFormulario", idFormulario)
+                        .pathParam("idFormulario", idFormulario)
+                        .contentType(ContentType.MULTIPART)
                         .multiPart(new File("./doc/curriculo.pdf"))
                 .when()
-                        .put(Utils.getBaseUrl() + "/upload-curriculo")
+                        .put(Utils.getBaseUrl() + "/formulario/upload-curriculo/{idFormulario}")
                 ;
     }
 
