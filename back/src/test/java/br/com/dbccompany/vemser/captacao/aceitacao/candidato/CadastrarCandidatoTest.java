@@ -67,12 +67,6 @@ public class CadastrarCandidatoTest {
                 .log().all()
                 .statusCode(HttpStatus.SC_NO_CONTENT)
                 ;
-
-        formularioService.deletar(formulario.getIdFormulario())
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_NO_CONTENT)
-        ;
     }
 
     @Test
@@ -93,12 +87,6 @@ public class CadastrarCandidatoTest {
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 ;
-
-        formularioService.deletar(formulario.getIdFormulario())
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_NO_CONTENT)
-        ;
     }
 
     @Test
@@ -118,12 +106,6 @@ public class CadastrarCandidatoTest {
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_NOT_FOUND)
-        ;
-
-        formularioService.deletar(formulario.getIdFormulario())
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_NO_CONTENT)
         ;
     }
 }

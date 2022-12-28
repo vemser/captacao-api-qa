@@ -35,6 +35,24 @@ public class CandidatoService {
                 ;
     }
 
+    public Response buscarCandidatosPorTrilha(String trilha){
+        return
+                given()
+                        .queryParam("trilha", trilha)
+                        .when()
+                        .get(Utils.getBaseUrl() + "/candidato/find-by-trilha")
+                ;
+    }
+
+    public Response buscarCandidatosPorEdicao(String edicao){
+        return
+                given()
+                        .queryParam("edicao", edicao)
+                        .when()
+                        .get(Utils.getBaseUrl() + "/candidato/find-by-edicao")
+                ;
+    }
+
     public Response cadastroCandidato(String candidato) {
         return
                 given()
@@ -67,6 +85,16 @@ public class CandidatoService {
                 ;
     }
 
+    public Response atualizarNotaProva(String email) {
+        return
+                given()
+                        .pathParam("email", email)
+                        .multiPart(new File("./doc/imgPanda.jpg"))
+                        .when()
+                        .put(Utils.getBaseUrl() + "/candidato/upload-foto/{email}")
+                ;
+    }
+
     public Response atualizarFotoInvalido(String email) {
         return
                 given()
@@ -81,9 +109,9 @@ public class CandidatoService {
     public Response deletarTeste(Integer idCandidato) {
         return
                 given()
-                        .pathParam("idFormulario", idCandidato)
+                        .pathParam("idCandidato", idCandidato)
                 .when()
-                        .delete(Utils.getBaseUrl() + "/candidato/")
+                        .delete(Utils.getBaseUrl() + "/candidato/{idCandidato}")
                 ;
     }
 
