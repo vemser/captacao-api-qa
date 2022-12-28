@@ -73,6 +73,7 @@ public class UploadFotoTest {
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract().path("message")
                     ;
+
         assertEquals("Candidato com o e-mail especificado não existe", message);
     }
 
@@ -84,9 +85,9 @@ public class UploadFotoTest {
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().as(FormularioDTO.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
                 ;
 
         CandidatoCreateDTO candidatoCreate = candidatoBuilder.criarCandidato();
@@ -105,6 +106,7 @@ public class UploadFotoTest {
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract().path("message")
         ;
+
         assertEquals("Formato de arquivo inválido! Inserir .png, .jpg ou .jpeg", message);
 
         candidatoService.deletarTesteFisico(candidato.getIdCandidato())
@@ -113,4 +115,5 @@ public class UploadFotoTest {
                     .statusCode(HttpStatus.SC_NO_CONTENT)
         ;
     }
+
 }
