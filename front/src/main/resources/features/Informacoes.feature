@@ -3,9 +3,9 @@
 @test
 Funcionalidade: Informações
 
-  Contexto: O usuário deve cadastrar suas informações no sistema
+  Contexto: O candidato deve cadastrar suas informações no sistema
 
-  @smoke
+  @error
   Cenario: Validar cadastro de informações com sucesso
     Dado que acesso a página de Informações
     E preencho todos os campos válidos de Informações
@@ -32,28 +32,28 @@ Funcionalidade: Informações
     Quando clico em 'Próximo'
     Então devo visualizar mensagem de erro para email inválido
 
-  @smoke
+  @bug
   Cenario: Validar tentativa de cadastro de informações com rg inválido
     Dado que acesso a página de Informações
     E preencho o campo rg inválido
     Quando clico em 'Próximo'
     Então devo visualizar mensagem de erro para rg inválido
 
-  @smoke
+  @error
   Cenario: Validar tentativa de cadastro de informações com cpf inválido
     Dado que acesso a página de Informações
     E preencho o campo cpf inválido
     Quando clico em 'Próximo'
     Então devo visualizar mensagem de erro para cpf inválido
 
-  @smoke
+  @error
   Cenario: Validar tentativa de cadastro de informações com telefone inválido
     Dado que acesso a página de Informações
     E preencho o campo telefone inválido
     Quando clico em 'Próximo'
     Então devo visualizar mensagem de erro para telefone inválido
 
-  @smoke
+  @error
   Cenario: Validar tentativa de cadastro de informações com idade menor de 16 anos
     Dado que acesso a página de Informações
     E preencho o campo data de nascimento inválido

@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium-java.version>3.141.59</selenium-java.version>
         <junit.version>4.13.2</junit.version>
+        <datafaker.version>1.6.0</datafaker.version>
         <slf4j-api.version>2.0.3</slf4j-api.version>
         <slf4j-log4j12.version>2.0.3</slf4j-log4j12.version>
         <allure-junit4.version>2.19.0</allure-junit4.version>
@@ -65,9 +66,9 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>1.0.2</version>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
         </dependency>
     </dependencies>
 

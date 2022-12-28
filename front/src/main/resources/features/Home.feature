@@ -5,7 +5,7 @@ Funcionalidade: Home
 
   Contexto: O usuario deve acessar a página de inscrição
 
-  @wip
+  @smoke
   Cenario: Validar botão de inscrição com sucesso
     Dado que estou na página inicial
     Quando clico em ‘Inscrição’
