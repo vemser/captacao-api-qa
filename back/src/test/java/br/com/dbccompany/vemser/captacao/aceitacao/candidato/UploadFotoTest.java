@@ -16,6 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @DisplayName("Candidato")
 @Epic("Upload Foto")
 public class UploadFotoTest {
@@ -59,23 +61,19 @@ public class UploadFotoTest {
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
                 ;
-
-        formularioService.deletar(formulario.getIdFormulario())
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_NO_CONTENT)
-                ;
     }
 
     @Test
     @Tag("all")
     @Description("Deve não atualizar foto de candidato")
     public void deveNaoAtualizarFotoDeCandidatoComEmailInvalido() {
-        candidatoService.atualizarFoto("email.invalido")
+        String message = candidatoService.atualizarFoto("email.invalido")
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_OK)
-        ;
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract().path("message")
+                    ;
+        assertEquals("Candidato com o e-mail especificado não existe", message);
     }
 
     @Test
@@ -101,23 +99,18 @@ public class UploadFotoTest {
                     .extract().as(CandidatoDTO.class)
                 ;
 
-        candidatoService.atualizarFotoInvalido(candidato.getEmail())
+        String message = candidatoService.atualizarFotoInvalido(candidato.getEmail())
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract().path("message")
         ;
+        assertEquals("Formato de arquivo inválido! Inserir .png, .jpg ou .jpeg", message);
 
         candidatoService.deletarTesteFisico(candidato.getIdCandidato())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)
         ;
-
-        formularioService.deletar(formulario.getIdFormulario())
-                .then()
-                    .log().all()
-                    .statusCode(HttpStatus.SC_NO_CONTENT)
-        ;
     }
-
 }

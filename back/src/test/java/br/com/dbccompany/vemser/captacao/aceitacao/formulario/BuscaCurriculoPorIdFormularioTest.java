@@ -89,7 +89,7 @@ public class BuscaCurriculoPorIdFormularioTest {
         String message = formularioService.buscarCurriculoPorIdFormulario(19931019)
                 .then()
                     .log().all()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract().path("message")
                 ;
 
