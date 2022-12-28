@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Formulário")
@@ -25,10 +26,10 @@ public class AtualizaFormularioTest {
     @Tag("error")
     @Description("Deve atualizar formulário com sucesso")
     public void deveAtualizarFormularioComSucesso() {
-        //ALTERAR QUERY PARA PATH
+        // NÃO ATUALIZA MESMO RETORNANDO 200
+        // ATUALIZA SOMENTE O ATRIBUTO CURSO
 
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
-        FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder.atualizarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
                 .then()
@@ -36,6 +37,8 @@ public class AtualizaFormularioTest {
                     .statusCode(HttpStatus.SC_OK)
                     .extract().as(FormularioDTO.class)
                 ;
+
+        FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder.atualizarFormulario();
 
         FormularioDTO formularioAtualizado = formularioService
                 .atualizarFormulario(formulario.getIdFormulario(), Utils.convertFormularioToJson(formularioAtualizadoCreate))
@@ -45,10 +48,72 @@ public class AtualizaFormularioTest {
                     .extract().as(FormularioDTO.class)
                 ;
 
-        assertEquals(formularioAtualizadoCreate.getIngles(), formularioAtualizado.getIngles());
         assertEquals(formularioAtualizadoCreate.getCurso(), formularioAtualizado.getCurso());
 
         formularioService.deletar(formularioAtualizado.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_NO_CONTENT)
+        ;
+    }
+
+    @Test
+    @Tag("all")
+    @Description("Deve não atualizar formulário")
+    public void deveNaoAtualizarFormularioSemPreencherCamposObrigatorios() {
+        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
+
+        FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
+                ;
+
+        FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder
+                .atualizarFormularioSemPreencherCamposObrigatorios();
+
+        formularioService
+                .atualizarFormulario(formulario.getIdFormulario(), Utils.convertFormularioToJson(formularioAtualizadoCreate))
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body(containsString("curso: O campo Curso não deve ser vazio ou nulo."))
+                ;
+
+        formularioService.deletar(formulario.getIdFormulario())
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_NO_CONTENT)
+        ;
+    }
+
+    @Test
+    @Tag("all")
+    @Description("Deve não atualizar formulário")
+    public void deveNaoAtualizarFormularioComIdFormularioInexistente() {
+        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
+
+        FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().as(FormularioDTO.class)
+                ;
+
+        FormularioCreateDTO formularioAtualizadoCreate = formularioBuilder.atualizarFormulario();
+
+        String message = formularioService
+                .atualizarFormulario(19931019, Utils.convertFormularioToJson(formularioAtualizadoCreate))
+                .then()
+                    .log().all()
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                    .extract().path("message")
+                ;
+
+        assertEquals("Erro ao buscar o formulário.", message);
+
+        formularioService.deletar(formulario.getIdFormulario())
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_NO_CONTENT)

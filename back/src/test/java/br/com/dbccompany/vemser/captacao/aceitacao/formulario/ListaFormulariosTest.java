@@ -37,9 +37,7 @@ public class ListaFormulariosTest {
     @Tag("all")
     @Description("Deve listar formulários com ordenação com sucesso")
     public void deveListarFormulariosComOrdenacaoComSucesso() {
-        // RETORNA 500, DEVERIA RETORNAR LISTA
-
-        PageFormularioDTO pageFormulario = formularioService.listarComOrdenacao("curriculo")
+        PageFormularioDTO pageFormulario = formularioService.listarComOrdenacao("curriculoEntity")
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -55,8 +53,6 @@ public class ListaFormulariosTest {
     @Tag("all")
     @Description("Deve retornar lista vazia")
     public void deveRetornarListaVazia() {
-        // RETORNA 500, DEVERIA RETORNAR LISTA VAZIA
-
         PageFormularioDTO pageFormulario = formularioService.listarComPaginacao(0, 0, "idFormulario")
                 .then()
                     .log().all()

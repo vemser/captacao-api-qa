@@ -78,6 +78,7 @@ public class CandidatoService {
         return
                 given()
                         .pathParam("email", email)
+                        .contentType(ContentType.MULTIPART)
                         .multiPart(new File("./doc/imgPanda.jpg"))
                 .when()
                         .put(Utils.getBaseUrl() + "/candidato/upload-foto/{email}")
@@ -90,6 +91,17 @@ public class CandidatoService {
                         .pathParam("email", email)
                         .multiPart(new File("./doc/imgPanda.jpg"))
                         .when()
+                        .put(Utils.getBaseUrl() + "/candidato/upload-foto/{email}")
+                ;
+    }
+
+    public Response atualizarFotoInvalido(String email) {
+        return
+                given()
+                        .pathParam("email", email)
+                        .contentType(ContentType.MULTIPART)
+                        .multiPart(new File("./doc/curriculo.doc"))
+                .when()
                         .put(Utils.getBaseUrl() + "/candidato/upload-foto/{email}")
                 ;
     }
