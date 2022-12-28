@@ -35,5 +35,6 @@ public class CandidatoDTO {
     private List<LinguagemDTO> linguagens;
     private EdicaoDTO edicao;
     private FormularioDTO formulario;
+    private Integer imagem;
     private boolean pcdboolean;
 }
