@@ -46,7 +46,7 @@ public class CadastraFormularioTest {
     }
 
     @Test
-    @Tag("error")
+    @Tag("all")
     @Description("Deve não cadastrar formulário")
     public void deveNaoCadastrarFormularioSemPreencherCamposObrigatorios() {
         // DEVE RETORNAR MENSAGEM DE ERRO
@@ -57,10 +57,7 @@ public class CadastraFormularioTest {
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    //.extract().path("message")
                 ;
-
-        //assertEquals("", message);
     }
 
     @Test
