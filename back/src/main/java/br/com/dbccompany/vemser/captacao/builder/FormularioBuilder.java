@@ -87,4 +87,11 @@ public class FormularioBuilder {
                 .build();
     }
 
+    public FormularioCreateDTO atualizarFormularioSemPreencherCamposObrigatorios() {
+        FormularioCreateDTO formularioInvalido = atualizarFormulario();
+        formularioInvalido.setCurso(StringUtils.EMPTY);
+
+        return formularioInvalido;
+    }
+
 }
