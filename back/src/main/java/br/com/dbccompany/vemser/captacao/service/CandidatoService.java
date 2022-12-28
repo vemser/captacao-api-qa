@@ -1,10 +1,13 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
+import com.google.gson.Gson;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 public class CandidatoService {
@@ -85,13 +88,16 @@ public class CandidatoService {
                 ;
     }
 
-    public Response atualizarNotaProva(String email) {
+    public Response atualizarNotaProva(Integer idCandidato) {
+        Map<String, Number> notaProva = new HashMap<String, Number>();
+        notaProva.put("notaProva", 60);
         return
                 given()
-                        .pathParam("email", email)
-                        .multiPart(new File("./doc/imgPanda.jpg"))
-                        .when()
-                        .put(Utils.getBaseUrl() + "/candidato/upload-foto/{email}")
+                        .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
+                        .body(new Gson().toJson(notaProva))
+                .when()
+                        .put(Utils.getBaseUrl() + "/candidato/NotaProva/{idCandidato}")
                 ;
     }
 

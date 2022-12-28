@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.captacao.utils;
 
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
+import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoNotaDTO;
 import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioCreateDTO;
 import com.google.gson.Gson;
 import net.datafaker.Faker;
@@ -25,6 +26,9 @@ public class Utils {
         return new Gson().toJson(candidato);
     }
 
+    public static String convertCandidatoNotaToJson(CandidatoNotaDTO nota) {
+        return new Gson().toJson(nota);
+    }
 /*    public static PessoaCreateDTO convertJsonToPessoa(String toJson) {
         return new Gson().fromJson(toJson, PessoaCreateDTO.class);
     }*/

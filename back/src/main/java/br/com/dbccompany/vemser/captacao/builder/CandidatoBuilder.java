@@ -2,6 +2,7 @@ package br.com.dbccompany.vemser.captacao.builder;
 
 import br.com.dbccompany.vemser.captacao.dto.TipoValidacao;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
+import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoNotaDTO;
 import br.com.dbccompany.vemser.captacao.dto.candidato.EdicaoDTO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,5 +38,17 @@ public class CandidatoBuilder {
         candidatoInvalido.setCidade(StringUtils.EMPTY);
 
         return candidatoInvalido;
+    }
+
+    public CandidatoNotaDTO atualizarNota(){
+        return CandidatoNotaDTO.builder()
+                .notaProva(5)
+                .build();
+    }
+
+    public CandidatoNotaDTO atualizarNotaInvalida(){
+        return CandidatoNotaDTO.builder()
+                .notaProva(-1)
+                .build();
     }
 }
