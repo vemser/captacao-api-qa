@@ -40,15 +40,16 @@ public class CandidatoBuilder {
         return candidatoInvalido;
     }
 
-    public CandidatoNotaDTO atualizarNota(){
-        return CandidatoNotaDTO.builder()
-                .notaProva(5)
-                .build();
+    public CandidatoCreateDTO atualizarCandidato(){
+        CandidatoCreateDTO candidatoAtualizado = criarCandidato();
+        candidatoAtualizado.setNome("Atualizado");
+        candidatoAtualizado.setTelefone("51 00000-0000");
+        candidatoAtualizado.setRg("00.000.000-00");
+        candidatoAtualizado.setEstado("Atualizado");
+        candidatoAtualizado.setCidade("Atualizado");
+        candidatoAtualizado.setPcdboolean(true);
+
+        return candidatoAtualizado;
     }
 
-    public CandidatoNotaDTO atualizarNotaInvalida(){
-        return CandidatoNotaDTO.builder()
-                .notaProva(-1)
-                .build();
-    }
 }
