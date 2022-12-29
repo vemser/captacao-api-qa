@@ -71,9 +71,10 @@ public class CandidatoService {
         return
                 given()
                         .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
                         .body(candidatoAtualizado)
                 .when()
-                        .put(Utils.getBaseUrl() + "/candidato/")
+                        .put(Utils.getBaseUrl() + "/candidato/{idCandidato}")
                 ;
     }
 
@@ -97,7 +98,33 @@ public class CandidatoService {
                         .contentType(ContentType.JSON)
                         .body(new Gson().toJson(notaProva))
                 .when()
-                        .put(Utils.getBaseUrl() + "/candidato/NotaProva/{idCandidato}")
+                        .put(Utils.getBaseUrl() + "/candidato/nota-prova/{idCandidato}")
+                ;
+    }
+
+    public Response atualizarNotaProvaNegativa(Integer idCandidato) {
+        Map<String, Number> notaProva = new HashMap<String, Number>();
+        notaProva.put("notaProva", -1);
+        return
+                given()
+                        .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
+                        .body(new Gson().toJson(notaProva))
+                        .when()
+                        .put(Utils.getBaseUrl() + "/candidato/nota-prova/{idCandidato}")
+                ;
+    }
+
+    public Response atualizarNotaProvaMaior100(Integer idCandidato) {
+        Map<String, Number> notaProva = new HashMap<String, Number>();
+        notaProva.put("notaProva", 101);
+        return
+                given()
+                        .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
+                        .body(new Gson().toJson(notaProva))
+                        .when()
+                        .put(Utils.getBaseUrl() + "/candidato/nota-prova/{idCandidato}")
                 ;
     }
 

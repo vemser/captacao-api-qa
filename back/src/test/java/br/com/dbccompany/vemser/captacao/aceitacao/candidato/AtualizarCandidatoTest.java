@@ -1,10 +1,10 @@
 package br.com.dbccompany.vemser.captacao.aceitacao.candidato;
 
+
 import br.com.dbccompany.vemser.captacao.builder.CandidatoBuilder;
 import br.com.dbccompany.vemser.captacao.builder.FormularioBuilder;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoDTO;
-import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoNotaDTO;
 import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioCreateDTO;
 import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioDTO;
 import br.com.dbccompany.vemser.captacao.service.CandidatoService;
@@ -21,17 +21,18 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Candidato")
-@Epic("Upload Nota prova")
-public class UploadNotaProvaTest {
-    CandidatoService candidatoService = new CandidatoService();
-    CandidatoBuilder candidatoBuilder = new CandidatoBuilder();
+@Epic("Atualizar Candidato")
+public class AtualizarCandidatoTest {
+
     FormularioService formularioService = new FormularioService();
     FormularioBuilder formularioBuilder = new FormularioBuilder();
+    CandidatoService candidatoService = new CandidatoService();
+    CandidatoBuilder candidatoBuilder = new CandidatoBuilder();
 
     @Test
     @Tag("all")
-    @Description("Deve atualizar nota da prova de candidato com sucesso")
-    public void deveAtualizarNotaDeCandidatoComSucesso() {
+    @Description("Deve atualizar candidato com sucesso")
+    public void deveAtualizarCandidatoComSucesso() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -43,7 +44,6 @@ public class UploadNotaProvaTest {
 
         CandidatoCreateDTO candidatoCreate = candidatoBuilder.criarCandidato();
         candidatoCreate.setFormulario(formulario.getIdFormulario());
-
         CandidatoDTO candidato = candidatoService.cadastroCandidato(Utils.convertCandidatoToJson(candidatoCreate))
                 .then()
                 .log().all()
@@ -51,13 +51,19 @@ public class UploadNotaProvaTest {
                 .extract().as(CandidatoDTO.class)
                 ;
 
-        CandidatoDTO candidatoNota = candidatoService.atualizarNotaProva(candidato.getIdCandidato())
+        CandidatoCreateDTO candidatoAtualizadoCreate = candidatoBuilder.atualizarCandidato();
+        candidatoAtualizadoCreate.setFormulario(formulario.getIdFormulario());
+        CandidatoDTO candidatoAtualizado = candidatoService.atualizarCandidato(candidato.getIdCandidato(), Utils.convertCandidatoToJson(candidatoAtualizadoCreate))
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().as(CandidatoDTO.class)
                 ;
-        assertEquals(60.0, candidatoNota.getNotaProva());
+        assertEquals(candidatoAtualizadoCreate.getNome(), candidatoAtualizado.getNome());
+        assertEquals(candidatoAtualizadoCreate.getTelefone(), candidatoAtualizado.getTelefone());
+        assertEquals(candidatoAtualizadoCreate.getRg(), candidatoAtualizado.getRg());
+        assertEquals(candidatoAtualizadoCreate.getEstado(), candidatoAtualizado.getEstado());
+        assertEquals(candidatoAtualizadoCreate.getCidade(), candidatoAtualizado.getCidade());
 
         candidatoService.deletarTesteFisico(candidato.getIdCandidato())
                 .then()
@@ -68,8 +74,8 @@ public class UploadNotaProvaTest {
 
     @Test
     @Tag("all")
-    @Description("Deve tentar atualizar nota da prova de candidato com nota invalida negativa")
-    public void deveAtualizarNotaNegativa() {
+    @Description("Deve tentar atualizar candidato sem preencher campos obrigatorios")
+    public void deveAtualizarCandidatoSemPreencherCampos() {
         FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
 
         FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
@@ -81,7 +87,6 @@ public class UploadNotaProvaTest {
 
         CandidatoCreateDTO candidatoCreate = candidatoBuilder.criarCandidato();
         candidatoCreate.setFormulario(formulario.getIdFormulario());
-
         CandidatoDTO candidato = candidatoService.cadastroCandidato(Utils.convertCandidatoToJson(candidatoCreate))
                 .then()
                 .log().all()
@@ -89,11 +94,17 @@ public class UploadNotaProvaTest {
                 .extract().as(CandidatoDTO.class)
                 ;
 
-       candidatoService.atualizarNotaProvaNegativa(candidato.getIdCandidato())
+        CandidatoCreateDTO candidatoAtualizadoCreate = candidatoBuilder.criarCandidatoSemPreencherCamposObrigatorios();
+        candidatoCreate.setFormulario(formulario.getIdFormulario());
+        candidatoService.atualizarCandidato(candidato.getIdCandidato(), Utils.convertCandidatoToJson(candidatoAtualizadoCreate))
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body(containsString("notaProva: must be greater than or equal to 0"))
+                .body(containsString("dataNascimento: must not be null"))
+                .body(containsString("nome: O nome deve ter de 3 a 255 caracteres"))
+                .body(containsString("telefone: O nome deve ter de 8 a 30 caracteres"))
+                .body(containsString("rg: O nome deve ter de 8 a 30 caracteres"))
+                .body(containsString("cidade: O nome deve ter de 3 a 30 caracteres"))
                 ;
 
         candidatoService.deletarTesteFisico(candidato.getIdCandidato())
@@ -105,38 +116,17 @@ public class UploadNotaProvaTest {
 
     @Test
     @Tag("all")
-    @Description("Deve tentar atualizar nota da prova de candidato com nota maior que 100")
-    public void deveAtualizarNotaMaior100() {
-        FormularioCreateDTO formularioCreate = formularioBuilder.criarFormulario();
+    @Description("Deve tentar atualizar candidato com id inexistente")
+    public void deveAtualizarCandidatoComIdInexistente() {
 
-        FormularioDTO formulario = formularioService.cadastrar(Utils.convertFormularioToJson(formularioCreate))
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().as(FormularioDTO.class)
-                ;
+        CandidatoCreateDTO candidatoAtualizadoCreate = candidatoBuilder.criarCandidato();
 
-        CandidatoCreateDTO candidatoCreate = candidatoBuilder.criarCandidato();
-        candidatoCreate.setFormulario(formulario.getIdFormulario());
-
-        CandidatoDTO candidato = candidatoService.cadastroCandidato(Utils.convertCandidatoToJson(candidatoCreate))
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract().as(CandidatoDTO.class)
-                ;
-
-        candidatoService.atualizarNotaProvaMaior100(candidato.getIdCandidato())
+        String message = candidatoService.atualizarCandidato(0, Utils.convertCandidatoToJson(candidatoAtualizadoCreate))
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body(containsString("notaProva: must be less than or equal to 100"))
+                .extract().path("message")
                 ;
-
-        candidatoService.deletarTesteFisico(candidato.getIdCandidato())
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_NO_CONTENT)
-        ;
+        assertEquals("Candidato não encontrado.", message);
     }
 }
