@@ -9,6 +9,7 @@ public class FormularioPage extends BasePage {
 
     private static final By btnMatriculadoSim = By.cssSelector("#matriculado-sim");
     private static final By btnMatriculadoNao = By.cssSelector("#matriculado-nao");
+    private static final By msgErroNaoMatriculado = By.cssSelector("#erro-não-matriculado");
     private static final By btnTurnoManha = By.cssSelector("#turno-manha");
     private static final By btnTurnoTarde = By.cssSelector("#turno-tarde");
     private static final By btnTurnoNoite = By.cssSelector("#turno-noite");
@@ -20,6 +21,12 @@ public class FormularioPage extends BasePage {
     private static final By selectNivelEspanhol = By.cssSelector("#nivel-espanhol-candidato");
     private static final By selectOrientacaoSexual = By.cssSelector("#orientacao-sexual-candidato");
     private static final By selectGenero = By.cssSelector("#mui-component-select-genero");
+    private static final By selectLinguagensProgramacao = By.cssSelector("#s2-select-linguagens-checkbox");
+    private static final By checkboxJava = By.cssSelector("#menu- > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-" +
+            "rounded.MuiPaper-elevation1.MuiPaper-root.MuiMenu-paper.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-" +
+            "elevation8.MuiPopover-paper.css-177ic5c > ul > li:nth-child(3) > span.MuiButtonBase-root.MuiCheckbox-" +
+            "root.MuiCheckbox-colorPrimary.PrivateSwitchBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary." +
+            "MuiCheckbox-root.MuiCheckbox-colorPrimary.css-1ujiglk > input");
     private static final By btnTrilhaBackend = By.cssSelector("#s2-trilha-backend");
     private static final By btnTrilhaFrontend = By.cssSelector("#s2-trilha-frontend");
     private static final By btnTrilhaQA = By.cssSelector("#s2-trilha-qa");
@@ -39,58 +46,68 @@ public class FormularioPage extends BasePage {
     private static final By btnDisponibilidadeTurnoNao = By.cssSelector("#s2-candidato-disponibilidade-nao");
     private static final By campoGitHub = By.cssSelector("#s2-candidato-github");
     private static final By campoLinkedin = By.cssSelector("#s2-candidato-linkedin");
-    private static final By btnAdicionarCurriculo = By.cssSelector("#root > div.MuiBox-root.css-uqekie > " +
-            "div > div > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.css-1au9qiw > form > " +
-            "div:nth-child(19) > div > div > label");
-    private static final By btnAdicionarPrintConficugaroes = By.cssSelector("#root > div.MuiBox-root.css-uqekie > " +
-            "div > div > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.css-1au9qiw > form > " +
-            "div:nth-child(20) > div > div > label");
+    private static final By btnAdicionarCurriculo = By.cssSelector("#botao-curriculo");
+    private static final By btnAdicionarPrintConficugaroes = By.cssSelector("#botao-configuracoes");
     private static final By btnVoltar = By.cssSelector("#s2-botao-voltar");
     private static final By btnEnviar = By.cssSelector("#s2-botao-submit");
 
 
-    @Step("Selecionar opcao de nao matriculado")
-    public void selectNaoMatriculado() {
+    @Step("Clicar em não matriculado")
+    public void clicarNaoMatriculado() {
         click(btnMatriculadoNao);
     }
 
-    @Step("Selecionar turno de estudo do candidato")
+    @Step("Validar mensagem erro campo não matriculado")
+    public String validarMsgErroNaoMatriculado(){
+        return getText(msgErroNaoMatriculado);
+    }
+
+    @Step("Selecionar opção de turno de estudo")
     public void selectTurno() {
         click(btnTurnoNoite);
     }
 
-    @Step("Preencher campo institucao de ensino")
+    @Step("Preencher campo instituição de ensino")
     public void preencherInstituicaoEnsino() {
-        sendKeys(campoInstituicaoDeEnsino, "TESTE INSTITUICAO");
+        sendKeys(campoInstituicaoDeEnsino, "Instrituição Teste");
     }
 
     @Step("Preencher campo curso")
     public void preencherCurso() {
-        sendKeys(campoCurso, "TESTE CURSO");
+        sendKeys(campoCurso, "Curso Teste");
     }
 
-    @Step("Selecionar nivel de ingles")
+    @Step("Selecionar nível de inglês")
     public void selectIngles() {
+        click(selectNivelIngles);
         Select select = new Select((WebElement) selectNivelIngles);
         select.selectByVisibleText("Fluente");
     }
 
-    @Step("Selecionar nivel de espanhol")
+    @Step("Selecionar nível de espanhol")
     public void selectEspanhol() {
         Select select = new Select((WebElement) selectNivelEspanhol);
         select.selectByVisibleText("Intermediário");
     }
 
-    @Step("Selecionar orientacao sexual")
+    @Step("Selecionar orientação sexual")
     public void selectOrientacaoSexual() {
         Select select = new Select((WebElement) selectOrientacaoSexual);
         select.selectByVisibleText("Prefiro não informar");
     }
 
-    @Step("Selecionar Genero")
+    @Step("Selecionar gênero")
     public void selectGenero() {
         Select select = new Select((WebElement) selectGenero);
         select.selectByVisibleText("Prefiro não informar");
+    }
+
+    @Step("Selecionar linguagens de programação")
+    public void selectLinguagensProgramacao() {
+        click(selectLinguagensProgramacao);
+/*        Select select = new Select((WebElement) selectLinguagensProgramacao);
+        select.selectByVisibleText("Java");*/
+        click(checkboxJava);
     }
 
     @Step("Selecionar trilha")
@@ -98,25 +115,36 @@ public class FormularioPage extends BasePage {
         click(btnTrilhaQA);
     }
 
-    @Step("Selecionar Deficiencia")
+    @Step("Selecionar deficiência")
     public void selectDeficiencia() {
+        click(selectDeficiencia);
         Select select = new Select((WebElement) selectDeficiencia);
         select.selectByVisibleText("Sim");
     }
 
-    @Step("Preencher campo deficiencia")
+    @Step("Preencher campo deficiência")
     public void preencherDeficiencia() {
-        sendKeys(campoDeficiencia, "TESTE DEFICIENCIA");
+        sendKeys(campoDeficiencia, "Deficiência teste");
     }
 
-    @Step("Selecionar motivacao")
+    @Step("Selecionar motivação")
     public void selectMotivo() {
+        click(selectMotivacaoDesafios);
+    }
+
+    @Step("Selecionar motivação outro")
+    public void selectMotivoOutro() {
         click(selectMotivacaoOutro);
     }
 
-    @Step("Preencher campo motivacao")
+    @Step("Preencher campo motivação outro")
     public void preencherMotivo() {
-        sendKeys(campoMotivacaoOutro, "TESTE MOTIVO");
+        sendKeys(campoMotivacaoOutro, "Motivo teste");
+    }
+
+    @Step("Preencher campo algo importante")
+    public void preencherAlgoImportante() {
+        sendKeys(campoAlgoImportante, "Algo importante teste");
     }
 
     @Step("Selecionar conhecimento para prova")
@@ -124,14 +152,24 @@ public class FormularioPage extends BasePage {
         click(btnConhecimentoSim);
     }
 
-    @Step("Selecionar disponibilidade de efetivacao")
+    @Step("Selecionar disponibilidade de efetivação")
     public void selectDisponibilidadeEfetivacao() {
         click(btnDisponibilidadeAnoSim);
     }
 
-    @Step("Selecionar trilha")
+    @Step("Selecionar disponibilidade")
     public void selectDisponibilidade() {
         click(btnDisponibilidadeTurnoSim);
+    }
+
+    @Step("Clicar no botão Enviar")
+    public void clicarBotaoEnviar() {
+        click(btnEnviar);
+    }
+
+    @Step("Validar página")
+    public String validarPagina() {
+        return getPageSource();
     }
 
     @Step("Validar url atual")

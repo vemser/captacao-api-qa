@@ -13,12 +13,12 @@ public class InformacoesSteps {
     InformacoesPage informacoesPage = new InformacoesPage();
 
     @E("preencho todos os campos válidos de Informações")
-    public void preencherCamposValidos() {
+    public void preencherCamposValidos() throws InterruptedException {
         informacoesPage.preencherCampoNomeCompleto("Nome Sobrenome");
         informacoesPage.preencherCampoEmail("nome.sobrenome@gmail.com");
         informacoesPage.preencherCampoRG("0123456789");
         informacoesPage.preencherCampoCPF("01234567890");
-        informacoesPage.preencherCampoTelefone("(71) 99999-9999");
+        informacoesPage.preencherCampoTelefone("71999999999");
         informacoesPage.preencherCampoDataDeNascimento("19101993");
         informacoesPage.preencherCampoCidade("Cidade");
     }
@@ -60,8 +60,7 @@ public class InformacoesSteps {
 
     @Entao("devo ser redirecionado para a página de Formulário")
     public void validarPaginaFormulario() {
-        assertTrue(informacoesPage.validarPagina()
-                .contains("Você é matriculado em algum curso de graduação ou técnico?"));
+        assertTrue(informacoesPage.validarPagina().contains("matriculado"));
     }
 
     @Entao("devo visualizar mensagens de erro para campos vazios na tela Formulário")
@@ -105,7 +104,20 @@ public class InformacoesSteps {
 
     @Entao("devo visualizar mensagem de erro para idade inválida")
     public void validarMensagemDeErroCampoDataNascimentoInvalido() {
-        assertEquals("A data de nascimento deve ter no mínimo 16 anos", informacoesPage.validarMsgErroTelefone());
+        assertEquals("A data de nascimento deve ter no mínimo 16 anos",
+                informacoesPage.validarMsgErroDataNascimento());
+    }
+
+    @E("cadastro Informações corretamente")
+    public void cadastrarInformacoesCorretamente() {
+        informacoesPage.preencherCampoNomeCompleto("Nome Sobrenome");
+        informacoesPage.preencherCampoEmail("nome.sobrenome@gmail.com");
+        informacoesPage.preencherCampoRG("0123456789");
+        informacoesPage.preencherCampoCPF("01234567890");
+        informacoesPage.preencherCampoTelefone("71999999999");
+        informacoesPage.preencherCampoDataDeNascimento("19101993");
+        informacoesPage.preencherCampoCidade("Cidade");
+        informacoesPage.clicarBotaoProximo();
     }
 
 }
