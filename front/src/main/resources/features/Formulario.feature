@@ -20,7 +20,7 @@ Funcionalidade: Formulário
     Quando clico em 'Não' para matriculado
     Então devo visualizar mensagem de erro bloqueando a continuação do cadastro
 
-  @wip
+  @pendente
   Cenario: Validar cadastro de formulário preenchendo campo deficiência com sucesso
     Dado que acesso a página de Inscrição
     E cadastro Informações corretamente
@@ -30,7 +30,7 @@ Funcionalidade: Formulário
     Quando clico em 'Enviar'
     Então devo ser redirecionado para a página de Finalização
 
-  @wip
+  @pendente
   Cenario: Validar cadastro de formulário preenchendo campo outro motivo com sucesso
     Dado que acesso a página de Inscrição
     E cadastro Informações corretamente
@@ -39,3 +39,10 @@ Funcionalidade: Formulário
     E preencho o campo outro motivo
     Quando clico em 'Enviar'
     Então devo ser redirecionado para a página de Finalização
+
+  @pendente
+  Cenario: Validar botão VOLTAR
+    Dado que acesso a página de Inscrição
+    E cadastro Informações corretamente
+    Quando clico em 'Voltar'
+    Então devo ser retornar para a página de Informações
