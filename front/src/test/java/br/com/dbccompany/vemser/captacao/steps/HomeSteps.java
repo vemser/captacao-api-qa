@@ -21,9 +21,19 @@ public class HomeSteps {
         homePage.clicarBotaoInscricao();
     }
 
+    @Quando("clico em ‘ENTRAR COMO ADMINISTRADOR’")
+    public void clicarBotaoEntrar() {
+        homePage.clicarBotaoEntrar();
+    }
+
     @Entao("devo ser redirecionado para a página de Informações")
     public void validarUrlPaginaInscricao() {
         assertTrue(homePage.validarUrlAtual().contains("subscription"));
+    }
+
+    @Entao("devo ser redirecionado para a página de Login")
+    public void validarUrlPaginaLogin() {
+        assertTrue(homePage.validarUrlAtual().contains("login"));
     }
 
     @Dado("que acesso a página de Inscrição")
