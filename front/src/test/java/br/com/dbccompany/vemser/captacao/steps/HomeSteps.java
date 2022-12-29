@@ -26,7 +26,7 @@ public class HomeSteps {
         assertTrue(homePage.validarUrlAtual().contains("subscription"));
     }
 
-    @Dado("que acesso a página de Informações")
+    @Dado("que acesso a página de Inscrição")
     public void validarPaginaInscricaoInformacoes() {
         homePage.clicarBotaoInscricao();
         assertTrue(homePage.validarUrlAtual().contains("subscription"));
