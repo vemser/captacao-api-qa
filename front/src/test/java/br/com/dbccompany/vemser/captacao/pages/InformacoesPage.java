@@ -40,22 +40,25 @@ public class InformacoesPage extends BasePage {
 
     @Step("Preencher campo cpf")
     public void preencherCampoCPF(String cpf) {
+        click(campoCPF);
         sendKeys(campoCPF, cpf);
     }
 
     @Step("Preencher campo telefone")
     public void preencherCampoTelefone(String telefone) {
+        click(campoTelefone);
         sendKeys(campoTelefone, telefone);
     }
 
     @Step("Preencher campo data de nascimento")
     public void preencherCampoDataDeNascimento(String dataNascimento) {
+        click(campoDataNascimento);
         sendKeys(campoDataNascimento, dataNascimento);
     }
 
     @Step("Preencher campo cidade")
     public void preencherCampoCidade(String cidade) {
-        sendKeys(campoDataNascimento, cidade);
+        sendKeys(campoCidade, cidade);
     }
 
     @Step("Clicar no botão Próximo")
