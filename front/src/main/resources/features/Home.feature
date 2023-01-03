@@ -11,7 +11,7 @@ Funcionalidade: Home
     Quando clico em ‘Inscrição’
     Então devo ser redirecionado para a página de Informações
 
-  @wip
+  @smoke
   Cenario: Validar botão de logar comon administrador com sucesso
     Dado que estou na página inicial
     Quando clico em ‘ENTRAR COMO ADMINISTRADOR’

@@ -42,4 +42,10 @@ public class HomeSteps {
         assertTrue(homePage.validarUrlAtual().contains("subscription"));
     }
 
+    @Dado("que acesso a página de Login")
+    public void validarPaginaLogin() {
+        homePage.clicarBotaoEntrar();
+        assertTrue(homePage.validarUrlAtual().contains("login"));
+    }
+
 }
