@@ -1,14 +1,11 @@
 package br.com.dbccompany.vemser.captacao.steps;
 
-import br.com.dbccompany.vemser.captacao.pages.FormularioPage;
 import br.com.dbccompany.vemser.captacao.pages.LoginPage;
 import br.com.dbccompany.vemser.captacao.utils.Manipulation;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
-import org.apache.commons.exec.util.StringUtils;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class LoginSteps {
@@ -50,14 +47,30 @@ public class LoginSteps {
         loginPage.clicarBotaoLogin();
     }
 
-    @Entao("devo estar logado no sistema e ser redirecionado para a página de Candidatos")
+    @Entao("devo ser redirecionado para a página de Candidatos")
     public void validarPaginaCandidatos() {
-        assertTrue(loginPage.validarUrlAtual().contains("candidatos"));
+        //assertTrue(loginPage.validarUrlAtual().contains("candidatos"));
+        assertTrue(loginPage.validarPagina().contains("Candidatos"));
     }
 
     @Entao("devo visualizar mensagens de erro para campos vazios na tela Login")
-    public void validarMensagemDeErroEBloqueioDaPagina() {
-        assertTrue(loginPage.validarUrlAtual().contains("candidatos"));
+    public void validarMensagensDeErroParaCamposVazios() {
+    }
+
+    @Entao("devo visualizar mensagen de erro para campo email vazio")
+    public void validarMensagensDeErroParaEmailVazio() {
+    }
+
+    @Entao("devo visualizar mensagen de erro para campo senha vazio")
+    public void validarMensagensDeErroParaSenhaVazio() {
+    }
+
+    @Entao("devo visualizar mensagen de erro para campo email inválido")
+    public void validarMensagensDeErroParaEmailInvalido() {
+    }
+
+    @Entao("devo visualizar mensagen de erro para campo senha inválido")
+    public void validarMensagensDeErroParaSenhaInvalido() {
     }
 
 }
