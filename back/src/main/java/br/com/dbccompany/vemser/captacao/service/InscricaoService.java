@@ -1,7 +1,6 @@
 package br.com.dbccompany.vemser.captacao.service;
 
 import br.com.dbccompany.vemser.captacao.utils.Utils;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;

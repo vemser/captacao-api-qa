@@ -128,6 +128,28 @@ public class CandidatoService {
                 ;
     }
 
+    public Response atualizarNotaParecerTecnico(Integer idCandidato, String nota) {
+        return
+                given()
+                        .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
+                        .body(nota)
+                        .when()
+                        .put(Utils.getBaseUrl() + "/candidato/nota-parecer-tecnico/{idCandidato}")
+                ;
+    }
+
+    public Response atualizarNotaComportamental(Integer idCandidato, String nota) {
+        return
+                given()
+                        .pathParam("idCandidato", idCandidato)
+                        .contentType(ContentType.JSON)
+                        .body(nota)
+                        .when()
+                        .put(Utils.getBaseUrl() + "/candidato/nota-comportamental/{idCandidato}")
+                ;
+    }
+
     public Response atualizarFotoInvalido(String email) {
         return
                 given()

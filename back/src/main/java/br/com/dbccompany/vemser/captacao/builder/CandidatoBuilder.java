@@ -2,7 +2,8 @@ package br.com.dbccompany.vemser.captacao.builder;
 
 import br.com.dbccompany.vemser.captacao.dto.TipoValidacao;
 import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoCreateDTO;
-import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoNotaDTO;
+import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoNotaComportamentalDTO;
+import br.com.dbccompany.vemser.captacao.dto.candidato.CandidatoTecnicoNotaDTO;
 import br.com.dbccompany.vemser.captacao.dto.candidato.EdicaoDTO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +29,7 @@ public class CandidatoBuilder {
                 .build();
     }
 
-    public CandidatoCreateDTO criarCandidatoSemPreencherCamposObrigatorios(){
+    public CandidatoCreateDTO criarCandidatoSemPreencherCamposObrigatorios() {
         CandidatoCreateDTO candidatoInvalido = criarCandidato();
         candidatoInvalido.setNome(StringUtils.EMPTY);
         candidatoInvalido.setDataNascimento(StringUtils.EMPTY);
@@ -40,7 +41,7 @@ public class CandidatoBuilder {
         return candidatoInvalido;
     }
 
-    public CandidatoCreateDTO atualizarCandidato(){
+    public CandidatoCreateDTO atualizarCandidato() {
         CandidatoCreateDTO candidatoAtualizado = criarCandidato();
         candidatoAtualizado.setNome("Atualizado");
         candidatoAtualizado.setTelefone("51 00000-0000");
@@ -52,4 +53,45 @@ public class CandidatoBuilder {
         return candidatoAtualizado;
     }
 
+    public CandidatoNotaComportamentalDTO notaComportamental() {
+        return CandidatoNotaComportamentalDTO.builder()
+                .notaComportamental(50.0)
+                .parecerComportamental("testeComportamental")
+                .build();
+    }
+
+    public CandidatoNotaComportamentalDTO notaComportamentalNegativa() {
+        CandidatoNotaComportamentalDTO candidatoNotaNegativa = notaComportamental();
+        candidatoNotaNegativa.setNotaComportamental(-1);
+        candidatoNotaNegativa.setParecerComportamental(StringUtils.EMPTY);
+        return candidatoNotaNegativa;
+    }
+
+    public CandidatoNotaComportamentalDTO notaComportamentalMaior100() {
+        CandidatoNotaComportamentalDTO candidatoNotaMaior100 = notaComportamental();
+        candidatoNotaMaior100.setNotaComportamental(101);
+        candidatoNotaMaior100.setParecerComportamental(StringUtils.EMPTY);
+        return candidatoNotaMaior100;
+    }
+
+    public CandidatoTecnicoNotaDTO notaTecnica() {
+        return CandidatoTecnicoNotaDTO.builder()
+                .notaTecnico(50.0)
+                .parecerTecnico("teste Parecer tecnico")
+                .build();
+    }
+
+    public CandidatoTecnicoNotaDTO notaTecnicaNegativa() {
+        CandidatoTecnicoNotaDTO candidatoNotaNegativa = notaTecnica();
+        candidatoNotaNegativa.setNotaTecnico(-1);
+        candidatoNotaNegativa.setParecerTecnico(StringUtils.EMPTY);
+        return candidatoNotaNegativa;
+    }
+
+    public CandidatoTecnicoNotaDTO notaTecnicaMaior100() {
+        CandidatoTecnicoNotaDTO candidatoNotaMaior100 = notaTecnica();
+        candidatoNotaMaior100.setNotaTecnico(101);
+        candidatoNotaMaior100.setParecerTecnico(StringUtils.EMPTY);
+        return candidatoNotaMaior100;
+    }
 }
