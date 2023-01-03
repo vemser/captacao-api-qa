@@ -1,6 +1,5 @@
 package br.com.dbccompany.vemser.captacao.dto.inscricao;
 
-import br.com.dbccompany.vemser.captacao.dto.formulario.FormularioDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
