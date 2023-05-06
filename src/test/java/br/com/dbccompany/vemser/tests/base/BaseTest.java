@@ -1,16 +1,13 @@
 package br.com.dbccompany.vemser.tests.base;
 
 import io.restassured.RestAssured;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.edicao.EdicaoModel;
-import models.formulario.FormularioCriacaoResponseModel;
-import models.linguagem.LinguagemModel;
-import models.trilha.TrilhaModel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import service.*;
+import utils.Auth;
 
 public abstract class BaseTest {
+
+    private static Auth auth = new Auth();
     @BeforeAll
     public static void setUp() {
 
@@ -18,6 +15,8 @@ public abstract class BaseTest {
         RestAssured.port = 8080;
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+        auth.login();
     }
 
     @AfterAll

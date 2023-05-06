@@ -14,6 +14,7 @@ import service.AvaliacaoService;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de cadastro de avaliação")
 public class CadastrarAvaliacaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

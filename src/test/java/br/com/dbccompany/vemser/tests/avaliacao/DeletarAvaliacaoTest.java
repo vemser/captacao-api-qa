@@ -13,6 +13,7 @@ import service.AvaliacaoService;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de remoção de avaliação")
 public class DeletarAvaliacaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

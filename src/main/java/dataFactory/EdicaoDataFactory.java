@@ -1,10 +1,7 @@
 package dataFactory;
 
 import models.edicao.EdicaoModel;
-import net.datafaker.Faker;
 import service.EdicaoService;
-
-import java.util.Locale;
 
 public class EdicaoDataFactory {
 

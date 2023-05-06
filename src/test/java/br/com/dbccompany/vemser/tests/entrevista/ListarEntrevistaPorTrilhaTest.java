@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Feature;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -18,8 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-
-@Feature("Lista entrevista por trilha")
+@DisplayName("Endpoint de listagem de entrevistas por trilha")
 public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();
@@ -39,8 +37,9 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()

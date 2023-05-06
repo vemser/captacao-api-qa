@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.ProvaService;
 
+@DisplayName("Endpoint de marcação da prova do candidato")
 public class CadastrarProvaTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

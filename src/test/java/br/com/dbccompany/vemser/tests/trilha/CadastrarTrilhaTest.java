@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.TrilhaService;
 
+@DisplayName("Endpoint de cadastro de trilhas")
 public class CadastrarTrilhaTest extends BaseTest {
 
     private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();

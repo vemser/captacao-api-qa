@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.ProvaService;
 
+@DisplayName("Endpoint de atualização de parecer técnico")
 public class AtualizarParecerTecnicoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

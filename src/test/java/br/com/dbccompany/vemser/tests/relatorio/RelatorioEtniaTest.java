@@ -11,6 +11,7 @@ import service.RelatorioService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint para emissão de relatório de etnias")
 public class RelatorioEtniaTest extends BaseTest {
 
     private static RelatorioService relatorioService = new RelatorioService();

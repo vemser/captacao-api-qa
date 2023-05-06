@@ -11,7 +11,6 @@ public class InscricaoService {
 
         Response response =
                 given()
-                        .header("Authorization", Auth.getToken())
                         .queryParam("idCandidato", idCandidato)
                 .when()
                         .post("/inscricao/cadastro");

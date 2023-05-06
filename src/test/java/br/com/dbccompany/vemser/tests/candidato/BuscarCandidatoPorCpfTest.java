@@ -3,7 +3,6 @@ package br.com.dbccompany.vemser.tests.candidato;
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.CandidatoDataFactory;
 import dataFactory.FormularioDataFactory;
-import io.qameta.allure.Feature;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Feature("Buscar candidato por cpf")
+@DisplayName("Endpoint de busca de candidato por CPF")
 public class BuscarCandidatoPorCpfTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();

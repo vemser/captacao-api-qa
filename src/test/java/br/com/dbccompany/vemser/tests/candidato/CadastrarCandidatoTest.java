@@ -3,7 +3,6 @@ package br.com.dbccompany.vemser.tests.candidato;
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.CandidatoDataFactory;
 import dataFactory.FormularioDataFactory;
-import io.qameta.allure.Feature;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.candidato.CandidatoCriacaoModel;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Feature("Cadastrar candidato")
+@DisplayName("Endpoint de cadastro de candidato")
 public class CadastrarCandidatoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

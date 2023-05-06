@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.FormularioDataFactory;
-import io.qameta.allure.Feature;
 import io.restassured.http.ContentType;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
@@ -25,7 +24,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-@Feature("Cadastrar formulário")
+@DisplayName("Endpoint de cadastro de formulário")
 public class CadastrarFormularioTest extends BaseTest {
 
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();

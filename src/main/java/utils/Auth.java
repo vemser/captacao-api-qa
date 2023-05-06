@@ -1,10 +1,35 @@
 package utils;
 
+import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
+
+import static io.restassured.RestAssured.given;
+
 public class Auth {
 
-    private static String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlbnJpcXVlLnNvYXJlcyIsImp0aSI6IjgiLCJjYXJnb3MiOlsiUk9MRV9HRVNUQU9fREVfUEVTU09BUyIsIlJPTEVfSU5TVFJVVE9SIiwiUk9MRV9BTFVOTyJdLCJpYXQiOjE2ODIzNjExNzQsImV4cCI6MTY4NDk1MzE3NH0.FEHcgOURpGvn-xq1ZXpPFWTKTTz0NJl7lg7EhPlGy10";
-
+    private static String token;
+    private static AdmLoginData admLoginData = new AdmLoginData();
     public static String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void login() {
+
+        String response =
+                given()
+                        .contentType(ContentType.JSON)
+                        .body(admLoginData)
+                .when()
+                        .post("http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/usuario/login")
+                .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .asString();
+
+        this.setToken(response);
     }
 }

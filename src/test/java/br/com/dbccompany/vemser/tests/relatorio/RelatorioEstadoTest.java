@@ -11,6 +11,7 @@ import service.RelatorioService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint para emissão de relatório de estados")
 public class RelatorioEstadoTest extends BaseTest {
 
     private static RelatorioService relatorioService = new RelatorioService();

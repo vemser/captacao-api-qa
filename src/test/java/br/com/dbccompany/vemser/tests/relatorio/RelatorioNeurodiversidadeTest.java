@@ -11,6 +11,7 @@ import service.RelatorioService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint para emissão de relatório de neurodiversidade")
 public class RelatorioNeurodiversidadeTest extends BaseTest {
 
     private static RelatorioService relatorioService = new RelatorioService();

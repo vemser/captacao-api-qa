@@ -10,7 +10,7 @@ import service.EdicaoService;
 
 import java.util.*;
 
-
+@DisplayName("Endpoint de castro de edição")
 public class CadastrarEdicaoTest extends BaseTest {
 
     private static EdicaoService edicaoService = new EdicaoService();

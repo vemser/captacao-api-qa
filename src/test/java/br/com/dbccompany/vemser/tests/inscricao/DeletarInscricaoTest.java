@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de remoção de inscrição")
 public class DeletarInscricaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

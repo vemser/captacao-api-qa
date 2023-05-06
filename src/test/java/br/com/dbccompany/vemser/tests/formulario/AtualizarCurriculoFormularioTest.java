@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.FormularioDataFactory;
-import io.qameta.allure.Feature;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Feature("Atualizar currículo no formulário")
+@DisplayName("Endpoint de atualização de currículo do candidato")
 public class AtualizarCurriculoFormularioTest extends BaseTest {
 
     private static FormularioService formularioService = new FormularioService();

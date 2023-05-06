@@ -15,4 +15,5 @@ public class EntrevistaCriacaoModel {
     private LocalDateTime dataEntrevista;
     private String observacoes;
     private String avaliado;
+    private Integer idTrilha;
 }

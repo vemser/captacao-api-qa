@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 
+@DisplayName("Endpoint de remoção de candidato")
 public class DeletarCandidatoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

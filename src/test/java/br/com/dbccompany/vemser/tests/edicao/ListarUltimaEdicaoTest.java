@@ -10,6 +10,7 @@ import service.EdicaoService;
 
 import java.util.*;
 
+@DisplayName("Endpoint que lista a última edição")
 public class ListarUltimaEdicaoTest extends BaseTest {
 
     private static EdicaoService edicaoService = new EdicaoService();

@@ -11,6 +11,7 @@ import service.LinguagemService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint de remoção de linguagens")
 public class DeletarLinguagemTest extends BaseTest {
 
     private static LinguagemService linguagemService = new LinguagemService();

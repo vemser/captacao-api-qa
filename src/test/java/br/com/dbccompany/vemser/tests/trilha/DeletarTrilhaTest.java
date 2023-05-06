@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.TrilhaService;
 
+@DisplayName("Endpoint de remoção de trilhas")
 public class DeletarTrilhaTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();

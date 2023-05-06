@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint de atualização de candidato")
 public class AtualizarCandidatoTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();
@@ -62,8 +63,6 @@ public class AtualizarCandidatoTest extends BaseTest {
 
 
         CandidatoCriacaoModel candidatoCriadoComNovoNome = candidatoDataFactory.candidatoComNovoNome(candidatoCriado);
-
-        System.out.println(candidatoCadastrado.getIdCandidato());
 
         CandidatoCriacaoResponseModel candidatoAtualizado = candidatoService.atualizarCandidato(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoNome)
                 .then()
@@ -121,7 +120,6 @@ public class AtualizarCandidatoTest extends BaseTest {
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
 
-        System.out.println(candidatoCadastrado.getIdCandidato());
         var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);

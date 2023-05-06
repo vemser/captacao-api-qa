@@ -12,11 +12,14 @@ public class EntrevistaDataFactory {
     private static Faker faker = new Faker(new Locale("pt-BR"));
     private static Random random = new Random();
 
-    public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado) {
-        return novaEntrevistaCriacao(emailDoCandidato, avaliado);
+    public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
+        return novaEntrevistaCriacao(emailDoCandidato, avaliado, idTrilha);
     }
 
-    public static EntrevistaCriacaoModel entrevistaValidaComDataEspecifica(Integer anoEntrevista, Integer mesEntrevista, String emailDoCandidato, Boolean avaliado) {
+    public static EntrevistaCriacaoModel entrevistaValidaComDataEspecifica(Integer anoEntrevista, Integer mesEntrevista,
+                                                                           String emailDoCandidato, Boolean avaliado,
+                                                                           Integer idTrilha
+    ) {
 
         Integer horaAleatoria = random.nextInt(18);
         Integer minutoAleatorio = random.nextInt(60);
@@ -35,6 +38,7 @@ public class EntrevistaDataFactory {
         entrevista.setDataEntrevista(dataEntrevista);
         entrevista.setObservacoes(faker.lorem().sentence(4));
         entrevista.setAvaliado(candidatoAvaliado);
+        entrevista.setIdTrilha(idTrilha);
 
         return entrevista;
     }
@@ -49,7 +53,7 @@ public class EntrevistaDataFactory {
         return entrevista;
     }
 
-    private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado) {
+    private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
 
         Integer horaAleatoria = random.nextInt(18);
         Integer minutoAleatorio = random.nextInt(60);
@@ -70,6 +74,7 @@ public class EntrevistaDataFactory {
         entrevista.setDataEntrevista(dataEntrevista);
         entrevista.setObservacoes(faker.lorem().sentence(4));
         entrevista.setAvaliado(candidatoAvaliado);
+        entrevista.setIdTrilha(idTrilha);
 
         return entrevista;
     }

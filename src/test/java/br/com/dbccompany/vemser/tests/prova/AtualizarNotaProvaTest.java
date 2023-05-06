@@ -13,6 +13,7 @@ import service.ProvaService;
 
 import java.util.Random;
 
+@DisplayName("Endpoint de atualização da nota do candidato")
 public class AtualizarNotaProvaTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Feature;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -16,7 +15,7 @@ import service.EntrevistaService;
 
 import java.util.Locale;
 
-@Feature("Atualizar entrevista")
+@DisplayName("Endpoint de atualização de entrevista")
 public class AtualizarEntrevistaTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();
@@ -40,8 +39,9 @@ public class AtualizarEntrevistaTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -84,8 +84,9 @@ public class AtualizarEntrevistaTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()

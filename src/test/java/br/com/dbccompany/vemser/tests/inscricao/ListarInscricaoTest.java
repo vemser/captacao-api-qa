@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de listagem de inscrições")
 public class ListarInscricaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

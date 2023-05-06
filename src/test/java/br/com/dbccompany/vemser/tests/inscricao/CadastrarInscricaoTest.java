@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de cadastro de inscrição")
 public class CadastrarInscricaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

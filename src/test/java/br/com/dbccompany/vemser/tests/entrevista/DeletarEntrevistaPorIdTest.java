@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Feature;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.EntrevistaService;
 
-@Feature("Deletar entrevista por id")
+@DisplayName("Endpoint de remoção de entrevista")
 public class DeletarEntrevistaPorIdTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();
@@ -31,8 +30,9 @@ public class DeletarEntrevistaPorIdTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -61,8 +61,9 @@ public class DeletarEntrevistaPorIdTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()

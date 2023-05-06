@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.*;
 
+@DisplayName("Endpoint de atualização de nota de candidato")
 public class AtualizarNotaCandidatoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

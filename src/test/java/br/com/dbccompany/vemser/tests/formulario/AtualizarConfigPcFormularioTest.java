@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.FormularioDataFactory;
-import io.qameta.allure.Feature;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Feature("Atualizar configuração do pc no formulário")
+@DisplayName("Endpoint de atualização de configuração do PC do candidato")
 public class AtualizarConfigPcFormularioTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();

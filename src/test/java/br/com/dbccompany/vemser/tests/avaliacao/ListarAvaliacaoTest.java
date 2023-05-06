@@ -15,6 +15,7 @@ import service.AvaliacaoService;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de listagem de avaliação")
 public class ListarAvaliacaoTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

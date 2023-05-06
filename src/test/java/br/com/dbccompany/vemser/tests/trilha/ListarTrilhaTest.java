@@ -13,6 +13,7 @@ import service.TrilhaService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint de listagem de trilhas")
 public class ListarTrilhaTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();

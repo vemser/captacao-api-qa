@@ -144,10 +144,8 @@ public class CandidatoService {
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-        System.out.println(formulario);
 
         FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
-        System.out.println(formularioCriado);
 
         formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
@@ -155,7 +153,6 @@ public class CandidatoService {
         LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
-        System.out.println(candidatoCriado);
 
         Response response =
                 given()
@@ -181,10 +178,8 @@ public class CandidatoService {
         listaDeNomeDeTrilhas.add(listaDeTrilhas.stream().filter(trilha -> trilha.getNome().equals(nomeDaTrilha)).toList().get(0).getNome());
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-        System.out.println(formulario);
 
         FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
-        System.out.println(formularioCriado);
 
         formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
@@ -192,7 +187,6 @@ public class CandidatoService {
         LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
-        System.out.println(candidatoCriado);
 
         Response response =
                 given()
@@ -344,7 +338,6 @@ public class CandidatoService {
     }
 
     public Response deletarCandidato(Integer idCandidato) {
-        System.out.println("Deletando");
 
         Response response =
                 given()

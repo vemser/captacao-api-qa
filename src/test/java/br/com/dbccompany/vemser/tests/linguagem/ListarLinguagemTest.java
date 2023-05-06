@@ -11,6 +11,7 @@ import service.LinguagemService;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Endpoint de listagem de linguagens")
 public class ListarLinguagemTest extends BaseTest {
 
     private static LinguagemService linguagemService = new LinguagemService();

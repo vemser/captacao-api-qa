@@ -9,6 +9,7 @@ import service.EdicaoService;
 
 import java.util.*;
 
+@DisplayName("Endpoint de remoção de edição")
 public class DeletarEdicaoTest extends BaseTest {
 
     private static EdicaoService edicaoService = new EdicaoService();

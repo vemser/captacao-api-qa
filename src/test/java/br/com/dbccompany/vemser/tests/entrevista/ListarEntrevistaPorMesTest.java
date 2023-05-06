@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
 import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Feature;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.EntrevistaService;
 
-@Feature("Lista entrevista por mês")
+@DisplayName("Endpoint de listagem de entrevistas por mês")
 public class ListarEntrevistaPorMesTest extends BaseTest {
     private static CandidatoService candidatoService = new CandidatoService();
     private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
@@ -36,8 +35,10 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
+        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista, mesEntrevista, emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
+                mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
                 .then()

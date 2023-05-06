@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.ProvaService;
 
+@DisplayName("Endpoint de atualização de data da prova do candidato")
 public class AtualizarDataProvaTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

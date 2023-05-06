@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.LinguagemService;
 
+@DisplayName("Endpoint de cadastro de linguagens")
 public class CadastrarLinguagemTest extends BaseTest {
 
     private static LinguagemService linguagemService = new LinguagemService();

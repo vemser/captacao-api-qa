@@ -24,4 +24,5 @@ public class EntrevistaCriacaoResponseModel {
     private GestorModel gestorDTO;
     private String legenda;
     private String aprovado;
+    private Integer idTrilha;
 }

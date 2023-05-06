@@ -1,8 +1,6 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import models.formulario.JSONListaFormularioResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.FormularioService;
 
-@Epic("Listar formulários")
-@Feature("Listar formulários")
+@DisplayName("Endpoint de listagem de formulários")
 public class ListarFormulariosTest extends BaseTest {
 
     FormularioService formularioService = new FormularioService();

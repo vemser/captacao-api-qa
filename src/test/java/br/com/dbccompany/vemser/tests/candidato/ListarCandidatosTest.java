@@ -1,7 +1,6 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import io.qameta.allure.Feature;
 import models.JSONFailureResponseWithArrayModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 
-@Feature("Listar candidatos")
+@DisplayName("Endpoint de listagem de candidatos")
 public class ListarCandidatosTest extends BaseTest {
 
     private static CandidatoService candidatoService = new CandidatoService();

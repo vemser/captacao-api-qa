@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import service.CandidatoService;
 import service.InscricaoService;
 
+@DisplayName("Endpoint de listagem de inscrição por id")
 public class ListarInscricaoPorIdTest extends BaseTest {
 
     private static InscricaoService inscricaoService = new InscricaoService();
