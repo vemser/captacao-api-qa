@@ -27,17 +27,13 @@ public class DeletarInscricaoTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
         var deletarInscricao = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
-
-//        var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
-//                .then()
-//                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
@@ -52,7 +48,7 @@ public class DeletarInscricaoTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
@@ -63,9 +59,5 @@ public class DeletarInscricaoTest extends BaseTest {
         var deletarInscricaoAutenticado = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
-
-//        var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
-//                .then()
-//                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

@@ -64,7 +64,7 @@ public class FormularioService {
                 .when()
                         .post("/formulario/cadastro")
                 .then()
-                        .statusCode(HttpStatus.SC_OK)
+                        .statusCode(HttpStatus.SC_CREATED)
                         .extract()
                         .as(FormularioCriacaoResponseModel.class);
 
@@ -81,7 +81,7 @@ public class FormularioService {
                 .when()
                         .post("/formulario/cadastro")
                 .then()
-                        .statusCode(HttpStatus.SC_OK)
+                        .statusCode(HttpStatus.SC_CREATED)
                         .extract()
                         .as(FormularioCriacaoResponseModel.class);
 

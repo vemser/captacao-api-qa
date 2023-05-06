@@ -29,7 +29,7 @@ public class ListarInscricaoPorIdTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
@@ -42,10 +42,6 @@ public class ListarInscricaoPorIdTest extends BaseTest {
         var deletarInscricao = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
-
-//        var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
-//                .then()
-//                .statusCode(HttpStatus.SC_NO_CONTENT);
 
 
         Assertions.assertNotNull(inscricaoListada);
@@ -67,7 +63,7 @@ public class ListarInscricaoPorIdTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
@@ -78,9 +74,5 @@ public class ListarInscricaoPorIdTest extends BaseTest {
         var deletarInscricao = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
-
-//        var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
-//                .then()
-//                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

@@ -12,7 +12,6 @@ public class Auth {
     public static String getToken() {
         return token;
     }
-
     public void setToken(String token) {
         this.token = token;
     }

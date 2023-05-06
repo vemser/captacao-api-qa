@@ -35,7 +35,7 @@ public class CadastrarAvaliacaoTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
@@ -44,7 +44,7 @@ public class CadastrarAvaliacaoTest extends BaseTest {
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoService.cadastrarAvaliacao(avaliacao)
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(AvaliacaoModel.class);
 
@@ -71,7 +71,7 @@ public class CadastrarAvaliacaoTest extends BaseTest {
 
         InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
