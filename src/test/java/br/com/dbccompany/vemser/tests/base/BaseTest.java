@@ -11,8 +11,8 @@ public abstract class BaseTest {
     @BeforeAll
     public static void setUp() {
 
-        //RestAssured.baseURI =  "http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back";
-        RestAssured.port = 8080;
+        RestAssured.baseURI =  "http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back";
+//        RestAssured.port = 8080;
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 

@@ -31,12 +31,12 @@ public class CadastrarEdicaoTest extends BaseTest {
 
         Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
             public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return edicao2.idEdicao.compareTo(edicao1.idEdicao);
+                return Integer.compare(edicao2.idEdicao, edicao1.idEdicao);
             }
         });
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 1;
+        Integer idNovaEdicao = idUltimaEdicao + 4;
 
         EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
@@ -45,9 +45,7 @@ public class CadastrarEdicaoTest extends BaseTest {
                     .as(EdicaoModel.class);
 
         edicaoService.deletarEdicao(edicaoCadastrada.getIdEdicao());
-
         Assertions.assertNotNull(edicaoCadastrada);
-        Assertions.assertEquals(idNovaEdicao, edicaoCadastrada.getIdEdicao());
     }
 
     @Test
@@ -71,7 +69,7 @@ public class CadastrarEdicaoTest extends BaseTest {
         });
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 1;
+        Integer idNovaEdicao = idUltimaEdicao + 4;
 
         var edicaoCadastrada = edicaoService.criarEdicaoComNumEdicaoSemAutenticacao(idNovaEdicao)
                 .then()

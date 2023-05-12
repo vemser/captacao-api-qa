@@ -35,7 +35,7 @@ public class DeletarEdicaoTest extends BaseTest {
         });
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 1;
+        Integer idNovaEdicao = idUltimaEdicao + 4;
 
         EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
@@ -73,7 +73,7 @@ public class DeletarEdicaoTest extends BaseTest {
         });
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 1;
+        Integer idNovaEdicao = idUltimaEdicao + 4;
 
         EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
@@ -81,8 +81,12 @@ public class DeletarEdicaoTest extends BaseTest {
                     .extract()
                     .as(EdicaoModel.class);
 
-        var deletarEdicao = edicaoService.deletarEdicaoComResponseSemAutenticacao(edicaoCadastrada.getIdEdicao())
+        var deletarEdicaoSemAutenticar = edicaoService.deletarEdicaoComResponseSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
+
+        var deletarEdicaoComSucesso = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
