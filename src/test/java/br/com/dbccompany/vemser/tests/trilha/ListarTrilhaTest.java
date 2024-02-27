@@ -14,14 +14,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de listagem de trilhas")
-public class ListarTrilhaTest extends BaseTest {
+class ListarTrilhaTest extends BaseTest {
 
     private static TrilhaService trilhaService = new TrilhaService();
     private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista as trilhas com sucesso")
-    public void testListarTrilhasComSucesso() {
+    void testListarTrilhasComSucesso() {
         String nomeTrilha = "TRILHA_TESTE";
 
         TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
@@ -58,7 +58,7 @@ public class ListarTrilhaTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando lista as trilhas sem autenticação")
-    public void testListarTrilhasSemAutenticacao() {
+    void testListarTrilhasSemAutenticacao() {
 
         var response = trilhaService.listarTodasAsTrilhasSemAutenticacao()
                 .then()

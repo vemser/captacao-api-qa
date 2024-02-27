@@ -7,12 +7,11 @@ import utils.Auth;
 
 public abstract class BaseTest {
 
-    private static Auth auth = new Auth();
+    private static final Auth auth = new Auth();
     @BeforeAll
     public static void setUp() {
 
         RestAssured.baseURI =  "http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back";
-//        RestAssured.port = 8080;
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 

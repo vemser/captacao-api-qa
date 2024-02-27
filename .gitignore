@@ -93,3 +93,5 @@ allure-results/
 allure-reports/
 allure-report/
 allure-backup/
+
+.idea
