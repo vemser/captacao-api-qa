@@ -1,10 +1,10 @@
-package dataFactory;
+package factory;
 
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.JSONListaFormularioResponse;
 import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
-import service.FormularioService;
+import client.FormularioClient;
 import utils.Tools;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.Random;
 public class FormularioDataFactory {
 
     private static Faker faker = new Faker(new Locale("pt-BR"));
-    private static FormularioService formularioService = new FormularioService();
+    private static FormularioClient formularioClient = new FormularioClient();
     private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
     private static Random random = new Random();
     private static List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
@@ -57,7 +57,7 @@ public class FormularioDataFactory {
 
     public static Integer idFormularioNaoCadastrado() {
 
-        Integer idUltimoFormulario = formularioService.listarNumDeFormulariosOrdemDecrescente(1)
+        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()

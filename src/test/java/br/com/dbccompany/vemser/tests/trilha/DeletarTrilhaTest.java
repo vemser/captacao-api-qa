@@ -1,18 +1,18 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.TrilhaDataFactory;
+import factory.TrilhaDataFactory;
 import models.trilha.TrilhaApenasNomeModel;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.TrilhaService;
+import client.TrilhaClient;
 
 @DisplayName("Endpoint de remoção de trilhas")
 public class DeletarTrilhaTest extends BaseTest {
 
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
     private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
 
     @Test
@@ -22,17 +22,17 @@ public class DeletarTrilhaTest extends BaseTest {
 
         TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
 
-        TrilhaModel trilhaCadastrada = trilhaService.criarTrilhaPassandoNome(trilha)
+        TrilhaModel trilhaCadastrada = trilhaClient.criarTrilhaPassandoNome(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(TrilhaModel.class);
 
-        var deletarTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
+        var deletarTrilha = trilhaClient.deletarTrilha(trilhaCadastrada.getIdTrilha())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        var confirmaDelecaoTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
+        var confirmaDelecaoTrilha = trilhaClient.deletarTrilha(trilhaCadastrada.getIdTrilha())
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
@@ -44,17 +44,17 @@ public class DeletarTrilhaTest extends BaseTest {
 
         TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
 
-        TrilhaModel trilhaCadastrada = trilhaService.criarTrilhaPassandoNome(trilha)
+        TrilhaModel trilhaCadastrada = trilhaClient.criarTrilhaPassandoNome(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(TrilhaModel.class);
 
-        var deletarTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
+        var deletarTrilha = trilhaClient.deletarTrilha(trilhaCadastrada.getIdTrilha())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        var confirmaDelecaoTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
+        var confirmaDelecaoTrilha = trilhaClient.deletarTrilha(trilhaCadastrada.getIdTrilha())
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
     }

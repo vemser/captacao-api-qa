@@ -1,6 +1,6 @@
-package service;
+package client;
 
-import dataFactory.TrilhaDataFactory;
+import factory.TrilhaDataFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.trilha.TrilhaApenasNomeModel;
@@ -10,7 +10,7 @@ import utils.Auth;
 
 import static io.restassured.RestAssured.given;
 
-public class TrilhaService {
+public class TrilhaClient {
 
     TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
 

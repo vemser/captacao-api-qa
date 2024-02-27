@@ -1,9 +1,9 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.NotaDataFactory;
-import dataFactory.ParecerTecnicoDataFactory;
-import dataFactory.ProvaDataFactory;
+import factory.NotaDataFactory;
+import factory.ParecerTecnicoDataFactory;
+import factory.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.parecerTecnico.ParecerTecnicoModel;
 import models.prova.ProvaCriacaoModel;
@@ -12,16 +12,16 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.ProvaService;
+import client.CandidatoClient;
+import client.ProvaClient;
 
 @DisplayName("Endpoint de atualização de parecer técnico")
 public class AtualizarParecerTecnicoTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static ParecerTecnicoDataFactory parecerTecnicoDataFactory = new ParecerTecnicoDataFactory();
     private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static ProvaService provaService = new ProvaService();
+    private static ProvaClient provaClient = new ProvaClient();
     private static NotaDataFactory notaDataFactory = new NotaDataFactory();
 
     @Test
@@ -29,20 +29,20 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
     public void testAtualizarParecerTecnicoComSucesso() {
         Double nota = 80.0;
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(ProvaCriacaoResponseModel.class);
 
-        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoService
+        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(
                         candidatoCadastrado.getIdCandidato(),
                         notaDataFactory.notaValida(nota)
@@ -54,7 +54,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
 
         ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
 
-        CandidatoCriacaoResponseModel candidatoParecerTecnicoAtualizado = candidatoService.atualizarParecerTecnico(candidatoCadastrado.getIdCandidato(), parecerTecnico)
+        CandidatoCriacaoResponseModel candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnico(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -71,20 +71,20 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
     public void testAtualizarParecerTecnicoSemAutenticacao() {
         Double nota = 80.0;
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(ProvaCriacaoResponseModel.class);
 
-        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoService
+        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(
                         candidatoCadastrado.getIdCandidato(),
                         notaDataFactory.notaValida(nota)
@@ -96,7 +96,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
 
         ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
 
-        var candidatoParecerTecnicoAtualizado = candidatoService.atualizarParecerTecnicoSemAutenticacao(candidatoCadastrado.getIdCandidato(), parecerTecnico)
+        var candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnicoSemAutenticacao(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import factory.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -9,8 +9,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+import client.CandidatoClient;
+import client.EntrevistaClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,16 +20,16 @@ import static org.hamcrest.Matchers.equalTo;
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista entrevistas de trilhas existentes")
     public void testListarEntrevistasPorTrilhaComSucesso() {
         String trilha = "QA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(trilha)
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -41,14 +41,14 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
         EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
 
-        var lista = entrevistaService.listarTodasAsEntrevistasPorTrilha(trilha)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -56,7 +56,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
         List<EntrevistaCriacaoResponseModel> listaDeEntrevistas = Arrays.stream(lista).toList();
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -69,7 +69,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
     public void testListarEntrevistasPorTrilhaNaoExistente() {
         String trilhaNaoExistente = "-*/-*/-*/-*/-*/";
 
-        var lista = entrevistaService.listarTodasAsEntrevistasPorTrilha(trilhaNaoExistente)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilhaNaoExistente)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(equalTo("[]"));
@@ -80,7 +80,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
     public void testListarEntrevistasPorTrilhaSemAutenticacao() {
         String trilha = "QA";
 
-        var lista = entrevistaService.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(trilha)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(trilha)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

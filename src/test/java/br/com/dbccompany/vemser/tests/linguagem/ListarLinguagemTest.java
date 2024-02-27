@@ -6,7 +6,7 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.LinguagemService;
+import client.LinguagemClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @DisplayName("Endpoint de listagem de linguagens")
 public class ListarLinguagemTest extends BaseTest {
 
-    private static LinguagemService linguagemService = new LinguagemService();
+    private static LinguagemClient linguagemClient = new LinguagemClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar linguagens com sucesso")
@@ -22,13 +22,13 @@ public class ListarLinguagemTest extends BaseTest {
 
         String novaLinguagem = "LINGUAGEM_TESTE";
 
-        LinguagemModel linguagemCadastrada = linguagemService.criarLinguagemPassandoNome(novaLinguagem)
+        LinguagemModel linguagemCadastrada = linguagemClient.criarLinguagemPassandoNome(novaLinguagem)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(LinguagemModel.class);
 
-        var response = linguagemService.listarLinguagens()
+        var response = linguagemClient.listarLinguagens()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -44,7 +44,7 @@ public class ListarLinguagemTest extends BaseTest {
             }
         }
 
-        var linguagemDeletada = linguagemService.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
+        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -55,7 +55,7 @@ public class ListarLinguagemTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 ao listar linguagens sem autenticação")
     public void testListarLinguagensSemAutenticacao() {
 
-        var response = linguagemService.listarLinguagensSemAutenticacao()
+        var response = linguagemClient.listarLinguagensSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_OK);
     }

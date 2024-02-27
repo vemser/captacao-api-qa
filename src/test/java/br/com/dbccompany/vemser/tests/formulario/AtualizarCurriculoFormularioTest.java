@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import factory.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -11,8 +11,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
-import service.TrilhaService;
+import client.FormularioClient;
+import client.TrilhaClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,16 +21,16 @@ import java.util.List;
 @DisplayName("Endpoint de atualização de currículo do candidato")
 public class AtualizarCurriculoFormularioTest extends BaseTest {
 
-    private static FormularioService formularioService = new FormularioService();
+    private static FormularioClient formularioClient = new FormularioClient();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao enviar currículo com sucesso")
     public void testEnviarCurriculoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -41,16 +41,16 @@ public class AtualizarCurriculoFormularioTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
     }
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 ao enviar currículo para formulário não existente")
     public void testEnviarCurriculoParaFormularioNaoExistente() {
 
-        Integer idUltimoFormulario = formularioService.listarNumDeFormulariosOrdemDecrescente(1)
+        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
                         .then()
                                 .extract()
                                 .as(JSONListaFormularioResponse.class)
@@ -60,7 +60,7 @@ public class AtualizarCurriculoFormularioTest extends BaseTest {
 
         Integer idFormularioNaoExistente = idUltimoFormulario + 1000;
 
-        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioService.incluiCurriculoEmFormularioSemValidacao(idFormularioNaoExistente)
+        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioClient.incluiCurriculoEmFormularioSemValidacao(idFormularioNaoExistente)
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()

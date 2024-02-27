@@ -1,4 +1,4 @@
-package service;
+package client;
 
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
@@ -7,7 +7,7 @@ import utils.Auth;
 
 import static io.restassured.RestAssured.given;
 
-public class EdicaoService {
+public class EdicaoClient {
     public Response listarTodasAsEdicoes() {
 
         Response response =

@@ -6,20 +6,20 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
+import client.EdicaoClient;
 
 import java.util.*;
 
 @DisplayName("Endpoint de castro de edição")
 public class CadastrarEdicaoTest extends BaseTest {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar edição com sucesso")
     public void testCadastrarEdicaoComSucesso() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -38,13 +38,13 @@ public class CadastrarEdicaoTest extends BaseTest {
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);
 
-        edicaoService.deletarEdicao(edicaoCadastrada.getIdEdicao());
+        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
         Assertions.assertNotNull(edicaoCadastrada);
     }
 
@@ -52,7 +52,7 @@ public class CadastrarEdicaoTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar edição sem autenticação")
     public void testCadastrarEdicaoSemAutenticacao() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -71,7 +71,7 @@ public class CadastrarEdicaoTest extends BaseTest {
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        var edicaoCadastrada = edicaoService.criarEdicaoComNumEdicaoSemAutenticacao(idNovaEdicao)
+        var edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(idNovaEdicao)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

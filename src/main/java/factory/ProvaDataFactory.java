@@ -1,4 +1,4 @@
-package dataFactory;
+package factory;
 
 import models.prova.ProvaCriacaoModel;
 

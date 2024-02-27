@@ -6,32 +6,32 @@ import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.InscricaoService;
+import client.CandidatoClient;
+import client.InscricaoClient;
 
 @DisplayName("Endpoint de remoção de inscrição")
 public class DeletarInscricaoTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static InscricaoService inscricaoService = new InscricaoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
+    private static InscricaoClient inscricaoClient = new InscricaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar inscrição com sucesso")
     public void testDeletarInscricaoComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
-        var deletarInscricao = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        var deletarInscricao = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
@@ -40,23 +40,23 @@ public class DeletarInscricaoTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar inscrição sem autenticação")
     public void testDeletarInscricaoSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
-        var deletarInscricaoSemAutenticacao = inscricaoService.deletarInscricaoSemAutenticacao(inscricaoCadastrada.getIdInscricao())
+        var deletarInscricaoSemAutenticacao = inscricaoClient.deletarInscricaoSemAutenticacao(inscricaoCadastrada.getIdInscricao())
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarInscricaoAutenticado = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        var deletarInscricaoAutenticado = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }

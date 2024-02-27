@@ -1,20 +1,20 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.TrilhaDataFactory;
+import factory.TrilhaDataFactory;
 import models.trilha.TrilhaApenasNomeModel;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.TrilhaService;
+import client.TrilhaClient;
 
 @DisplayName("Endpoint de cadastro de trilhas")
 public class CadastrarTrilhaTest extends BaseTest {
 
     private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 quando cadastra trilha com sucesso")
@@ -23,13 +23,13 @@ public class CadastrarTrilhaTest extends BaseTest {
 
         TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
 
-        TrilhaModel trilhaCadastrada = trilhaService.criarTrilhaPassandoNome(trilha)
+        TrilhaModel trilhaCadastrada = trilhaClient.criarTrilhaPassandoNome(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(TrilhaModel.class);
 
-        var deletarTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
+        var deletarTrilha = trilhaClient.deletarTrilha(trilhaCadastrada.getIdTrilha())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -45,7 +45,7 @@ public class CadastrarTrilhaTest extends BaseTest {
 
         TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
 
-        var trilhaCadastrada = trilhaService.criarTrilhaPassandoNomeSemAutenticacao(trilha)
+        var trilhaCadastrada = trilhaClient.criarTrilhaPassandoNomeSemAutenticacao(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

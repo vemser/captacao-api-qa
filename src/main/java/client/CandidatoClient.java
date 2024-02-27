@@ -1,7 +1,7 @@
-package service;
+package client;
 
-import dataFactory.CandidatoDataFactory;
-import dataFactory.FormularioDataFactory;
+import factory.CandidatoDataFactory;
+import factory.FormularioDataFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
@@ -24,14 +24,14 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class CandidatoService {
+public class CandidatoClient {
 
     private static CandidatoDataFactory candidatoDataFactory = new CandidatoDataFactory();
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioService formularioService = new FormularioService();
-    private static EdicaoService edicaoService = new EdicaoService();
-    private static LinguagemService linguagemService = new LinguagemService();
+    private static FormularioClient formularioClient = new FormularioClient();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
+    private static LinguagemClient linguagemClient = new LinguagemClient();
 
     public Response listarTodosOsCandidatos() {
 
@@ -134,7 +134,7 @@ public class CandidatoService {
     public Response criarECadastrarCandidatoComCandidatoEntity() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -145,12 +145,12 @@ public class CandidatoService {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
@@ -168,7 +168,7 @@ public class CandidatoService {
     public Response criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(String nomeDaTrilha) {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -179,12 +179,12 @@ public class CandidatoService {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
@@ -202,7 +202,7 @@ public class CandidatoService {
     public Response criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(String emailCandidato) {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -213,12 +213,12 @@ public class CandidatoService {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);
 

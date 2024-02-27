@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import factory.FormularioDataFactory;
 import io.restassured.http.ContentType;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
@@ -11,9 +11,9 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
-import service.FormularioService;
-import service.TrilhaService;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
 import utils.Auth;
 import utils.Tools;
 
@@ -28,9 +28,9 @@ import static io.restassured.RestAssured.given;
 public class CadastrarFormularioTest extends BaseTest {
 
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static EdicaoService edicaoService = new EdicaoService();
-    private static TrilhaService trilhaService = new TrilhaService();
-    private static FormularioService formularioService = new FormularioService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
+    private static FormularioClient formularioClient = new FormularioClient();
 
     private static Map<Object, Object> listaBooleana = Map.of(
             true, "T",
@@ -45,7 +45,7 @@ public class CadastrarFormularioTest extends BaseTest {
     public void testCadastrarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
@@ -56,7 +56,7 @@ public class CadastrarFormularioTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         Assertions.assertEquals(listaBooleana.get(formulario.getMatriculadoBoolean()), formularioCriado.getMatriculado());
         Assertions.assertEquals(formulario.getCurso(), formularioCriado.getCurso());
@@ -86,7 +86,7 @@ public class CadastrarFormularioTest extends BaseTest {
     public void testCadastrarFormularioComMatriculadoFalse() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()

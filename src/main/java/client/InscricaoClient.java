@@ -1,11 +1,11 @@
-package service;
+package client;
 
 import io.restassured.response.Response;
 import utils.Auth;
 
 import static io.restassured.RestAssured.given;
 
-public class InscricaoService {
+public class InscricaoClient {
 
     public Response cadastrarInscricao(Integer idCandidato) {
 

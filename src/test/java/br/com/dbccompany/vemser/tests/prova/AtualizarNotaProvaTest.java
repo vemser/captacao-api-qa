@@ -1,24 +1,24 @@
 package br.com.dbccompany.vemser.tests.prova;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.ProvaDataFactory;
+import factory.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.ProvaService;
+import client.CandidatoClient;
+import client.ProvaClient;
 
 import java.util.Random;
 
 @DisplayName("Endpoint de atualização da nota do candidato")
 public class AtualizarNotaProvaTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static ProvaService provaService = new ProvaService();
+    private static ProvaClient provaClient = new ProvaClient();
     private static Random random = new Random();
 
     @Test
@@ -26,7 +26,7 @@ public class AtualizarNotaProvaTest extends BaseTest {
     public void testAtualizarNotaDaProvaComSucesso() {
         Integer novaNota = random.nextInt(100);
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -34,13 +34,13 @@ public class AtualizarNotaProvaTest extends BaseTest {
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
 
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(ProvaCriacaoResponseModel.class);
 
-        var provaComNotaAtualizada = provaService.atualizarNotaProva(provaCriada.getIdCandidato(), novaNota)
+        var provaComNotaAtualizada = provaClient.atualizarNotaProva(provaCriada.getIdCandidato(), novaNota)
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
@@ -50,7 +50,7 @@ public class AtualizarNotaProvaTest extends BaseTest {
     public void testAtualizarNotaDaProvaSemAutenticacao() {
         Integer novaNota = random.nextInt(100);
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
@@ -58,13 +58,13 @@ public class AtualizarNotaProvaTest extends BaseTest {
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
 
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(ProvaCriacaoResponseModel.class);
 
-        var provaComNotaAtualizada = provaService.atualizarNotaProvaSemAutenticacao(provaCriada.getIdCandidato(), novaNota)
+        var provaComNotaAtualizada = provaClient.atualizarNotaProvaSemAutenticacao(provaCriada.getIdCandidato(), novaNota)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

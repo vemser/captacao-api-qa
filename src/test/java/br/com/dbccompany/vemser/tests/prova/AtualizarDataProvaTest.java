@@ -1,28 +1,28 @@
 package br.com.dbccompany.vemser.tests.prova;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.ProvaDataFactory;
+import factory.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.ProvaService;
+import client.CandidatoClient;
+import client.ProvaClient;
 
 @DisplayName("Endpoint de atualização de data da prova do candidato")
 public class AtualizarDataProvaTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static ProvaService provaService = new ProvaService();
+    private static ProvaClient provaClient = new ProvaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 quando atualiza data da prova do candidato com sucesso")
     public void testAtualizarDataProvaComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
@@ -30,7 +30,7 @@ public class AtualizarDataProvaTest extends BaseTest {
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
 
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -38,7 +38,7 @@ public class AtualizarDataProvaTest extends BaseTest {
 
         ProvaCriacaoModel provaDataAtualizada = provaDataFactory.provaComNovaData(prova);
 
-        var dataDaProvaAtualizada = provaService.atualizarDataProva(candidatoCadastrado.getIdCandidato(), provaDataAtualizada)
+        var dataDaProvaAtualizada = provaClient.atualizarDataProva(candidatoCadastrado.getIdCandidato(), provaDataAtualizada)
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
@@ -47,7 +47,7 @@ public class AtualizarDataProvaTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 quando atualiza data da prova do candidato sem autenticação")
     public void testAtualizarDataProvaSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
@@ -55,7 +55,7 @@ public class AtualizarDataProvaTest extends BaseTest {
 
         ProvaCriacaoModel prova = provaDataFactory.provaValida();
 
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -63,7 +63,7 @@ public class AtualizarDataProvaTest extends BaseTest {
 
         ProvaCriacaoModel provaDataAtualizada = provaDataFactory.provaComNovaData(prova);
 
-        var dataDaProvaAtualizada = provaService.atualizarDataProvaSemAutenticacao(candidatoCadastrado.getIdCandidato(), provaDataAtualizada)
+        var dataDaProvaAtualizada = provaClient.atualizarDataProvaSemAutenticacao(candidatoCadastrado.getIdCandidato(), provaDataAtualizada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

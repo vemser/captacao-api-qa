@@ -6,20 +6,20 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
+import client.EdicaoClient;
 
 import java.util.*;
 
 @DisplayName("Endpoint que lista a última edição")
 public class ListarUltimaEdicaoTest extends BaseTest {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar a última edição com sucesso")
     public void testListarUltimaEdicaoComSucesso() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -38,15 +38,15 @@ public class ListarUltimaEdicaoTest extends BaseTest {
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);
 
-        String ultimaEdicao = edicaoService.listaEdicaoAtual();
+        String ultimaEdicao = edicaoClient.listaEdicaoAtual();
 
-        edicaoService.deletarEdicao(edicaoCadastrada.getIdEdicao());
+        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
 
         Assertions.assertNotNull(ultimaEdicao);
         Assertions.assertEquals(edicaoCadastrada.getNome().toLowerCase(), ultimaEdicao.toLowerCase());
@@ -56,7 +56,7 @@ public class ListarUltimaEdicaoTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 ao listar a última edição sem autenticação")
     public void testListarUltimaEdicaoSemAutenticacao() {
 
-        String ultimaEdicao = edicaoService.listaEdicaoAtualSemAutenticacao();
+        String ultimaEdicao = edicaoClient.listaEdicaoAtualSemAutenticacao();
 
         Assertions.assertNotNull(ultimaEdicao);
     }

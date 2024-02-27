@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import factory.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -10,14 +10,14 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+import client.CandidatoClient;
+import client.EntrevistaClient;
 
 @DisplayName("Endpoint de listagem de entrevistas por mês")
 public class ListarEntrevistaPorMesTest extends BaseTest {
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
 
 
     @Test
@@ -27,7 +27,7 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
@@ -40,20 +40,20 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
         EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
                 mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
 
-        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaListaResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -70,7 +70,7 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
         Integer anoEntrevista = 2025;
 
 
-        var response = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        var response = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_OK);
 

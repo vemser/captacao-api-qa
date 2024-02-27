@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import factory.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -10,8 +10,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+import client.CandidatoClient;
+import client.EntrevistaClient;
 import utils.Email;
 
 import java.util.Locale;
@@ -19,9 +19,9 @@ import java.util.Locale;
 @DisplayName("Endpoint de listagem de entrevistas por email")
 public class ListarEntrevistaPorEmailTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
     private static Faker faker = new Faker(new Locale("pt-BR"));
 
 
@@ -30,7 +30,7 @@ public class ListarEntrevistaPorEmailTest extends BaseTest {
     public void testListaEntrevistaPorEmailComSucesso() {
         String email = Email.getEmail();
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(email)
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(email)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -42,19 +42,19 @@ public class ListarEntrevistaPorEmailTest extends BaseTest {
 
         EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        EntrevistaCriacaoResponseModel entrevista = entrevistaService.listarTodasAsEntrevistasPorEmail(emailDoCandidato)
+        EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -67,7 +67,7 @@ public class ListarEntrevistaPorEmailTest extends BaseTest {
     public void testListaEntrevistaPorEmailSemAutenticacao() {
         String emailDoCandidato = Email.getEmail();
 
-        var response = entrevistaService.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
+        var response = entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

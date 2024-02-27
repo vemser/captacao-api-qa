@@ -7,19 +7,19 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
+import client.CandidatoClient;
 
 @DisplayName("Endpoint de listagem de candidatos")
 public class ListarCandidatosTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e lista contendo 20 elementos com sucesso")
     public void testListarTodosOsCandidatos() {
 
 
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarTodosOsCandidatos()
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -38,7 +38,7 @@ public class ListarCandidatosTest extends BaseTest {
     public void testListarTodosOsCandidatosSemAutenticacao() {
 
         try {
-            var response = candidatoService.listarTodosOsCandidatosSemAutenticacao()
+            var response = candidatoClient.listarTodosOsCandidatosSemAutenticacao()
                     .then()
                         .log().status()
                         .statusCode(HttpStatus.SC_FORBIDDEN)
@@ -54,7 +54,7 @@ public class ListarCandidatosTest extends BaseTest {
     public void testListarDezCandidatos() {
         Integer numDeCandidatos = 10;
 
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -69,7 +69,7 @@ public class ListarCandidatosTest extends BaseTest {
     public void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
-        JSONFailureResponseWithArrayModel failureResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        JSONFailureResponseWithArrayModel failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -85,7 +85,7 @@ public class ListarCandidatosTest extends BaseTest {
     public void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 
-        var failureResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        var failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
     }

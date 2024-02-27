@@ -23,7 +23,7 @@ public class Auth {
 
     public void login() {
         Properties props = new Properties();
-        try(InputStream input = new FileInputStream("src/properties/config.properties")) {
+        try(InputStream input = new FileInputStream("src/main/resources/application-config.properties")) {
             props.load(input);
 
             admLoginData.setUsername(props.getProperty("USER_LOGIN"));

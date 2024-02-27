@@ -1,28 +1,28 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import factory.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+import client.CandidatoClient;
+import client.EntrevistaClient;
 
 @DisplayName("Endpoint de marcação de entrevista")
 public class CadastrarEntrevistaTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar entrevista com sucesso")
     public void testCadastrarEntrevistaComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -34,13 +34,13 @@ public class CadastrarEntrevistaTest extends BaseTest {
 
         EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -50,7 +50,7 @@ public class CadastrarEntrevistaTest extends BaseTest {
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar entrevista sem autenticação")
     public void testCadastrarEntrevistaSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -62,7 +62,7 @@ public class CadastrarEntrevistaTest extends BaseTest {
 
         EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        var entrevistaCadastrada = entrevistaService.cadastrarEntrevistaSemAutenticacao(entrevistaCriada)
+        var entrevistaCadastrada = entrevistaClient.cadastrarEntrevistaSemAutenticacao(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

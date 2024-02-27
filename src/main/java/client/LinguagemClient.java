@@ -1,6 +1,6 @@
-package service;
+package client;
 
-import dataFactory.LinguagemDataFactory;
+import factory.LinguagemDataFactory;
 import io.restassured.response.Response;
 import models.linguagem.LinguagemModel;
 import org.apache.http.HttpStatus;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class LinguagemService {
+public class LinguagemClient {
 
     private static LinguagemDataFactory linguagemDataFactory = new LinguagemDataFactory();
 

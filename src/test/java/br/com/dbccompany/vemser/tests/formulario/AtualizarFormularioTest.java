@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import factory.FormularioDataFactory;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
@@ -9,8 +9,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
-import service.TrilhaService;
+import client.FormularioClient;
+import client.TrilhaClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,16 +19,16 @@ import java.util.List;
 @DisplayName("Endpoint de atualização do formulário")
 public class AtualizarFormularioTest extends BaseTest {
 
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioService formularioService = new FormularioService();
+    private static FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao atualizar atualizar formulário com sucesso")
     public void testAtualizarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                             .statusCode(HttpStatus.SC_OK)
                             .extract()
@@ -39,12 +39,12 @@ public class AtualizarFormularioTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         FormularioCriacaoModel formularioInstituicaoAtualizada = formularioDataFactory
                 .formularioComInstituicaoAtualizada(formulario);
 
-        FormularioCriacaoResponseModel formularioAtualizado = formularioService.atualizaFormulario(
+        FormularioCriacaoResponseModel formularioAtualizado = formularioClient.atualizaFormulario(
                 formularioCriado.getIdFormulario(),
                 formularioInstituicaoAtualizada
         );

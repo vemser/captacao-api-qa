@@ -5,20 +5,20 @@ import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
+import client.EdicaoClient;
 
 import java.util.*;
 
 @DisplayName("Endpoint de remoção de edição")
 public class DeletarEdicaoTest extends BaseTest {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
     public void testDeletarEdicaoComSucesso() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -37,17 +37,17 @@ public class DeletarEdicaoTest extends BaseTest {
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);
 
-        var deletarEdicao = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
+        var deletarEdicao = edicaoClient.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        var confirmaDelecaoEdicao = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
+        var confirmaDelecaoEdicao = edicaoClient.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND);
     }
@@ -56,7 +56,7 @@ public class DeletarEdicaoTest extends BaseTest {
     @DisplayName("Cenário 1: Deve retornar 403 ao deletar edição sem autenticação")
     public void testDeletarEdicaoSemAutenticacao() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -75,17 +75,17 @@ public class DeletarEdicaoTest extends BaseTest {
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);
 
-        var deletarEdicaoSemAutenticar = edicaoService.deletarEdicaoComResponseSemAutenticacao(edicaoCadastrada.getIdEdicao())
+        var deletarEdicaoSemAutenticar = edicaoClient.deletarEdicaoComResponseSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarEdicaoComSucesso = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
+        var deletarEdicaoComSucesso = edicaoClient.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }

@@ -1,6 +1,6 @@
-package service;
+package client;
 
-import dataFactory.FormularioDataFactory;
+import factory.FormularioDataFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.formulario.FormularioCriacaoModel;
@@ -13,7 +13,7 @@ import java.io.File;
 
 import static io.restassured.RestAssured.given;
 
-public class FormularioService {
+public class FormularioClient {
 
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
 

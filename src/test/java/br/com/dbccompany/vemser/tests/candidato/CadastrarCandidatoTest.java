@@ -1,8 +1,9 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.CandidatoDataFactory;
-import dataFactory.FormularioDataFactory;
+import client.*;
+import factory.CandidatoDataFactory;
+import factory.FormularioDataFactory;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.candidato.CandidatoCriacaoModel;
@@ -16,7 +17,6 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +25,11 @@ import java.util.List;
 @DisplayName("Endpoint de cadastro de candidato")
 public class CadastrarCandidatoTest extends BaseTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static FormularioService formularioService = new FormularioService();
-    private static EdicaoService edicaoService = new EdicaoService();
-    private static TrilhaService trilhaService = new TrilhaService();
-    private static LinguagemService linguagemService = new LinguagemService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
+    private static FormularioClient formularioClient = new FormularioClient();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
+    private static LinguagemClient linguagemClient = new LinguagemClient();
     private static CandidatoDataFactory candidatoDataFactory = new CandidatoDataFactory();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
 
@@ -39,7 +39,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                             .statusCode(HttpStatus.SC_OK)
                             .extract()
@@ -50,24 +50,24 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        CandidatoModel candidatoCadastrado = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoModel.class);
 
-        var deletarCandidato = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        edicaoService.deletarEdicao(edicaoCriada.getIdEdicao());
+        edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
 
 
@@ -93,7 +93,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoSemNome() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -104,14 +104,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComNomeNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -127,7 +127,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComNomeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -138,14 +138,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComNomeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -161,7 +161,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComDataNascimentoNoFuturo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -172,14 +172,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataNascimentoNoFuturo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -194,7 +194,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComMenosDeDezesseisAnos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -205,14 +205,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComMenosDeDezesseisAnos(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -227,7 +227,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComDataDeNascimentoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -238,14 +238,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -260,7 +260,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComDataDeNascimentoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -271,14 +271,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -293,7 +293,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComDataDeNascimentoInvalida() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -304,14 +304,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -326,7 +326,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEmailNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -337,14 +337,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -359,7 +359,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEmailEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -370,14 +370,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -392,7 +392,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEmailSemDominio() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -403,14 +403,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailSemDominio(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -426,7 +426,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEmailInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -437,14 +437,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -460,7 +460,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEmailJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -471,14 +471,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -493,7 +493,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComTelefoneNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -504,14 +504,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComTelefoneNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -526,7 +526,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComTelefoneEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -537,14 +537,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComTelefoneEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -560,7 +560,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComRgNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -571,14 +571,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -593,7 +593,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComRgEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -604,14 +604,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -627,7 +627,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComRgMaiorQueTrintaCaracteres() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -638,14 +638,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgMaiorQueTrinta(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -660,7 +660,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCpfNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -671,14 +671,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -693,7 +693,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCpfEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -704,14 +704,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -727,7 +727,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCpfInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -738,14 +738,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -760,7 +760,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCpfJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -771,14 +771,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -792,7 +792,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEstadoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -803,14 +803,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEstadoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
@@ -825,7 +825,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEstadoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -836,14 +836,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEstadoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
@@ -858,7 +858,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCidadeNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -869,14 +869,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCidadeNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -891,7 +891,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComCidadeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -902,14 +902,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCidadeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -924,7 +924,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComPcdNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -935,14 +935,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComPcdNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -957,7 +957,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComPcdEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -968,14 +968,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComPcdEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -990,7 +990,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComAtivoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1001,14 +1001,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComAtivoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -1023,7 +1023,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComAtivoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1034,14 +1034,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComAtivoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -1056,7 +1056,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComListaNulaDeLinguagem() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1067,14 +1067,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaNulaDeLinguagem(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
@@ -1090,7 +1090,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComListaDeLinguagemEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1101,14 +1101,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaDeLinguagemEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()
@@ -1123,7 +1123,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComListaDeLinguagemNaoCadastrada() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1134,14 +1134,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaDeLinguagemNaoCadastrada(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND)
                 .extract()
@@ -1156,7 +1156,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEdicaoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1167,14 +1167,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEdicaoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -1189,7 +1189,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComEdicaoNaoExistente() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1200,14 +1200,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEdicaoNaoExistente(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -1222,7 +1222,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComIdFormularioNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1231,14 +1231,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormulario(listaDeNomeDeTrilhas.get(0));
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormulario(listaDeNomeDeTrilhas.get(0));
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComIdFormularioNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -1254,7 +1254,7 @@ public class CadastrarCandidatoTest extends BaseTest {
     public void testCadastrarCandidatoComIdFormularioNaoCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -1263,14 +1263,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormulario(listaDeNomeDeTrilhas.get(0));
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormulario(listaDeNomeDeTrilhas.get(0));
 
-        EdicaoModel edicaoCriada = edicaoService.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemService.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComIdFormularioNaoCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoService.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()

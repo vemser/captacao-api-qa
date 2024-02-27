@@ -1,11 +1,11 @@
-package dataFactory;
+package factory;
 
 import models.edicao.EdicaoModel;
-import service.EdicaoService;
+import client.EdicaoClient;
 
 public class EdicaoDataFactory {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
 
     public static EdicaoModel edicaoValida() {
         return novaEdicao();

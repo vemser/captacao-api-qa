@@ -6,12 +6,12 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.LinguagemService;
+import client.LinguagemClient;
 
 @DisplayName("Endpoint de cadastro de linguagens")
 public class CadastrarLinguagemTest extends BaseTest {
 
-    private static LinguagemService linguagemService = new LinguagemService();
+    private static LinguagemClient linguagemClient = new LinguagemClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar linguagem com sucesso")
@@ -19,7 +19,7 @@ public class CadastrarLinguagemTest extends BaseTest {
 
         String novaLinguagem = "LINGUAGEM_TESTE";
 
-        LinguagemModel linguagemCadastrada = linguagemService.criarLinguagemPassandoNome(novaLinguagem)
+        LinguagemModel linguagemCadastrada = linguagemClient.criarLinguagemPassandoNome(novaLinguagem)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -28,7 +28,7 @@ public class CadastrarLinguagemTest extends BaseTest {
         Assertions.assertNotNull(linguagemCadastrada);
         Assertions.assertEquals(novaLinguagem.toLowerCase(), linguagemCadastrada.getNome().toLowerCase());
 
-        var response = linguagemService.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
+        var response = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
@@ -39,7 +39,7 @@ public class CadastrarLinguagemTest extends BaseTest {
 
         String novaLinguagem = "Python";
 
-        var erroLinguagemCadastrada = linguagemService.criarLinguagemPassandoNomeSemAutenticacao(novaLinguagem)
+        var erroLinguagemCadastrada = linguagemClient.criarLinguagemPassandoNomeSemAutenticacao(novaLinguagem)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 

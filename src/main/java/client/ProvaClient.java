@@ -1,4 +1,4 @@
-package service;
+package client;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -7,7 +7,7 @@ import utils.Auth;
 
 import static io.restassured.RestAssured.given;
 
-public class ProvaService {
+public class ProvaClient {
 
     public Response criarProva(Integer idCandidato, ProvaCriacaoModel prova) {
 

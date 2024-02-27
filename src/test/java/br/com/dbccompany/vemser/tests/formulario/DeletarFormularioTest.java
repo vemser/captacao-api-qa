@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import factory.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -10,8 +10,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
-import service.TrilhaService;
+import client.FormularioClient;
+import client.TrilhaClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,16 +20,16 @@ import java.util.List;
 @DisplayName("Endpoint de remoção de formulário")
 public class DeletarFormularioTest extends BaseTest {
 
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static TrilhaClient trilhaClient = new TrilhaClient();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioService formularioService = new FormularioService();
+    private static FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar um formulário com sucesso")
     public void testDeletarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -40,13 +40,13 @@ public class DeletarFormularioTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        var response = formularioService.deletarFormulario(formularioCriado.getIdFormulario())
+        var response = formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        JSONFailureResponseWithoutArrayModel erroDelecaoFormulario = formularioService.deletarFormulario(formularioCriado.getIdFormulario())
+        JSONFailureResponseWithoutArrayModel erroDelecaoFormulario = formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
                 .then()
                     .extract()
                     .as(JSONFailureResponseWithoutArrayModel.class);
@@ -60,7 +60,7 @@ public class DeletarFormularioTest extends BaseTest {
     public void testDeletarFormularioSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -71,9 +71,9 @@ public class DeletarFormularioTest extends BaseTest {
 
         FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        var response = formularioService.deletarFormularioSemAutenticacao(formularioCriado.getIdFormulario())
+        var response = formularioClient.deletarFormularioSemAutenticacao(formularioCriado.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

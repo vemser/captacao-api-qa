@@ -1,12 +1,12 @@
-package dataFactory;
+package factory;
 
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.JSONListaCandidatoResponse;
 import models.edicao.EdicaoModel;
 import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
-import service.CandidatoService;
-import service.FormularioService;
+import client.CandidatoClient;
+import client.FormularioClient;
 import utils.Email;
 
 import java.text.SimpleDateFormat;
@@ -21,9 +21,9 @@ public class CandidatoDataFactory {
 
     private static Faker faker = new Faker(new Locale("pt-BR"));
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static FormularioService formularioService = new FormularioService();
+    private static FormularioClient formularioClient = new FormularioClient();
     private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static CandidatoClient candidatoClient = new CandidatoClient();
     private static EdicaoDataFactory edicaoDataFactory = new EdicaoDataFactory();
 
 
@@ -192,7 +192,7 @@ public class CandidatoDataFactory {
     }
 
     public static CandidatoCriacaoModel candidatoComEmailJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarNumCandidatos(1)
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(1)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -329,7 +329,7 @@ public class CandidatoDataFactory {
     }
 
     public static CandidatoCriacaoModel candidatoComCpfJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarNumCandidatos(1)
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(1)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract()

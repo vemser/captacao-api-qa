@@ -7,7 +7,9 @@ allure-results*
 ## Environment
 ##############################
 src/properties/config.properties
-
+src/main/resources/application-config.properties
+src/main/resources/application-config.yml
+src/main/resources/*
 ##############################
 ## Java
 ##############################
@@ -100,3 +102,5 @@ allure-report/
 allure-backup/
 
 .idea
+application-config.yml
+application-config.properties
