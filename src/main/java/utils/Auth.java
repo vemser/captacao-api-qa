@@ -3,6 +3,11 @@ package utils;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import static io.restassured.RestAssured.given;
 
 public class Auth {
@@ -17,6 +22,15 @@ public class Auth {
     }
 
     public void login() {
+        Properties props = new Properties();
+        try(InputStream input = new FileInputStream("src/properties/config.properties")) {
+            props.load(input);
+
+            admLoginData.setUsername(props.getProperty("USER_LOGIN"));
+            admLoginData.setPassword(props.getProperty("USER_PSW"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         String response =
                 given()

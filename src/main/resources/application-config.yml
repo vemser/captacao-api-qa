@@ -17,4 +17,7 @@ human-resources:
   user: gp.teste
   password: Jvs9^@B809lP
 
+USER_LOGIN: admin.teste
+USER_PSW: Jvs9^@B809lP
+
 
