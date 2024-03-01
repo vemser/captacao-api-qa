@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.EntrevistaDataFactory;
+import client.candidato.CandidatoClient;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -10,19 +11,16 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.EntrevistaClient;
 
 @DisplayName("Endpoint de listagem de entrevistas por mês")
-public class ListarEntrevistaPorMesTest extends BaseTest {
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
+class ListarEntrevistaPorMesTest {
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista trilha por mês com sucesso")
-    public void testListarEntrevistasPorMesComSucesso() {
+    void testListarEntrevistasPorMesComSucesso() {
 
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
@@ -37,7 +35,7 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
                 mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
@@ -64,7 +62,7 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
-    public void testListarEntrevistasPorMesSemEstarAutenticado() {
+    void testListarEntrevistasPorMesSemEstarAutenticado() {
 
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;

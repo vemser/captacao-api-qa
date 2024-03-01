@@ -1,9 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import client.*;
-import factory.CandidatoDataFactory;
-import factory.FormularioDataFactory;
+import client.candidato.CandidatoClient;
+import client.edicao.EdicaoClient;
+import client.formulario.FormularioClient;
+import client.linguagem.LinguagemClient;
+import client.trilha.TrilhaClient;
+import factory.candidato.CandidatoDataFactory;
+import factory.formulario.FormularioDataFactory;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.candidato.CandidatoCriacaoModel;
@@ -23,20 +26,18 @@ import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de cadastro de candidato")
-public class CadastrarCandidatoTest extends BaseTest {
+class CadastrarCandidatoTest{
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static FormularioClient formularioClient = new FormularioClient();
-    private static EdicaoClient edicaoClient = new EdicaoClient();
-    private static TrilhaClient trilhaClient = new TrilhaClient();
-    private static LinguagemClient linguagemClient = new LinguagemClient();
-    private static CandidatoDataFactory candidatoDataFactory = new CandidatoDataFactory();
-    private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final FormularioClient formularioClient = new FormularioClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final LinguagemClient linguagemClient = new LinguagemClient();
 
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e cadastrar candidato com sucesso")
-    public void testCadastrarCandidatoComSucesso() {
+    void testCadastrarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -48,14 +49,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -90,7 +91,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 400 quando tenta cadastrar candidato com nome nulo")
-    public void testCadastrarCandidatoSemNome() {
+    void testCadastrarCandidatoSemNome() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -102,14 +103,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComNomeNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComNomeNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -124,7 +125,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 quando tenta cadastrar candidato com nome em branco")
-    public void testCadastrarCandidatoComNomeEmBranco() {
+    void testCadastrarCandidatoComNomeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -136,14 +137,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComNomeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComNomeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -158,7 +159,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento no futuro")
-    public void testCadastrarCandidatoComDataNascimentoNoFuturo() {
+    void testCadastrarCandidatoComDataNascimentoNoFuturo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -170,14 +171,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataNascimentoNoFuturo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataNascimentoNoFuturo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -191,7 +192,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 5: Deve retornar 400 quando tenta cadastrar candidato com menos de 16 anos")
-    public void testCadastrarCandidatoComMenosDeDezesseisAnos() {
+    void testCadastrarCandidatoComMenosDeDezesseisAnos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -203,14 +204,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComMenosDeDezesseisAnos(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComMenosDeDezesseisAnos(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -224,7 +225,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 6: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento nula")
-    public void testCadastrarCandidatoComDataDeNascimentoNula() {
+    void testCadastrarCandidatoComDataDeNascimentoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -236,14 +237,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -257,7 +258,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 7: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento em branco")
-    public void testCadastrarCandidatoComDataDeNascimentoEmBranco() {
+    void testCadastrarCandidatoComDataDeNascimentoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -269,14 +270,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -290,7 +291,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 8: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento inválida")
-    public void testCadastrarCandidatoComDataDeNascimentoInvalida() {
+    void testCadastrarCandidatoComDataDeNascimentoInvalida() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -302,14 +303,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -323,7 +324,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 9: Deve retornar 400 quando tenta cadastrar candidato com e-mail nulo")
-    public void testCadastrarCandidatoComEmailNulo() {
+    void testCadastrarCandidatoComEmailNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -335,14 +336,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -356,7 +357,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 10: Deve retornar 400 quando tenta cadastrar candidato com e-mail em branco")
-    public void testCadastrarCandidatoComEmailEmBranco() {
+    void testCadastrarCandidatoComEmailEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -368,14 +369,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -389,7 +390,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 11: Deve retornar 400 quando tenta cadastrar candidato com e-mail sem domínio")
-    public void testCadastrarCandidatoComEmailSemDominio() {
+    void testCadastrarCandidatoComEmailSemDominio() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -401,14 +402,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailSemDominio(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailSemDominio(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -417,13 +418,13 @@ public class CadastrarCandidatoTest extends BaseTest {
                     .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("email: deve ser um endereço de e-mail bem formado")
-                || erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("email: must be a well-formed email address"));
+        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
+                || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: must be a well-formed email address"));
     }
 
     @Test
     @DisplayName("Cenário 12: Deve retornar 400 quando tenta cadastrar candidato com e-mail inválido")
-    public void testCadastrarCandidatoComEmailInvalido() {
+    void testCadastrarCandidatoComEmailInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -435,14 +436,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -451,13 +452,13 @@ public class CadastrarCandidatoTest extends BaseTest {
                     .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("email: deve ser um endereço de e-mail bem formado")
-                || erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("email: must be a well-formed email address"));
+        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
+                || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: must be a well-formed email address"));
     }
 
     @Test
     @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
-    public void testCadastrarCandidatoComEmailJaCadastrado() {
+    void testCadastrarCandidatoComEmailJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -469,14 +470,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEmailJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -490,7 +491,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 14: Deve retornar 400 quando tenta cadastrar candidato com telefone nulo")
-    public void testCadastrarCandidatoComTelefoneNulo() {
+    void testCadastrarCandidatoComTelefoneNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -502,14 +503,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComTelefoneNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComTelefoneNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -523,7 +524,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 15: Deve retornar 400 quando tenta cadastrar candidato com telefone em branco")
-    public void testCadastrarCandidatoComTelefoneEmBranco() {
+    void testCadastrarCandidatoComTelefoneEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -535,14 +536,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComTelefoneEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComTelefoneEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -557,7 +558,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 16: Deve retornar 400 quando tenta cadastrar candidato com rg nulo")
-    public void testCadastrarCandidatoComRgNulo() {
+    void testCadastrarCandidatoComRgNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -569,14 +570,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -590,7 +591,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 17: Deve retornar 400 quando tenta cadastrar candidato com rg em branco")
-    public void testCadastrarCandidatoComRgEmBranco() {
+    void testCadastrarCandidatoComRgEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -602,14 +603,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -624,7 +625,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 18: Deve retornar 400 quando tenta cadastrar candidato com rg com mais de 13 caracteres")
-    public void testCadastrarCandidatoComRgMaiorQueTrintaCaracteres() {
+    void testCadastrarCandidatoComRgMaiorQueTrintaCaracteres() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -636,14 +637,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComRgMaiorQueTrinta(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgMaiorQueTrinta(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -657,7 +658,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 19: Deve retornar 400 quando tenta cadastrar candidato com cpf nulo")
-    public void testCadastrarCandidatoComCpfNulo() {
+    void testCadastrarCandidatoComCpfNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -669,14 +670,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -690,7 +691,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 20: Deve retornar 400 quando tenta cadastrar candidato com cpf em branco")
-    public void testCadastrarCandidatoComCpfEmBranco() {
+    void testCadastrarCandidatoComCpfEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -702,14 +703,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -724,7 +725,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 21: Deve retornar 400 quando tenta cadastrar candidato com cpf inválido")
-    public void testCadastrarCandidatoComCpfInvalido() {
+    void testCadastrarCandidatoComCpfInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -736,14 +737,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfInvalido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -757,7 +758,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 22: Deve retornar 400 quando tenta cadastrar candidato com cpf já cadastrado")
-    public void testCadastrarCandidatoComCpfJaCadastrado() {
+    void testCadastrarCandidatoComCpfJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -769,14 +770,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCpfJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -789,7 +790,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 23: Deve retornar 400 quando tenta cadastrar candidato com estado nulo")
-    public void testCadastrarCandidatoComEstadoNulo() {
+    void testCadastrarCandidatoComEstadoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -801,14 +802,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEstadoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEstadoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -822,7 +823,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 24: Deve retornar 400 quando tenta cadastrar candidato com estado em branco")
-    public void testCadastrarCandidatoComEstadoEmBranco() {
+    void testCadastrarCandidatoComEstadoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -834,14 +835,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEstadoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEstadoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -855,7 +856,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 25: Deve retornar 400 quando tenta cadastrar candidato com cidade nula")
-    public void testCadastrarCandidatoComCidadeNula() {
+    void testCadastrarCandidatoComCidadeNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -867,14 +868,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCidadeNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCidadeNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -888,7 +889,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 26: Deve retornar 400 quando tenta cadastrar candidato com cidade em branco")
-    public void testCadastrarCandidatoComCidadeEmBranco() {
+    void testCadastrarCandidatoComCidadeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -900,14 +901,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComCidadeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCidadeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -921,7 +922,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 27: Deve retornar 400 quando tenta cadastrar candidato com pcd nulo")
-    public void testCadastrarCandidatoComPcdNulo() {
+    void testCadastrarCandidatoComPcdNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -933,14 +934,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComPcdNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComPcdNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -954,7 +955,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 28: Deve retornar 400 quando tenta cadastrar candidato com pcd em branco")
-    public void testCadastrarCandidatoComPcdEmBranco() {
+    void testCadastrarCandidatoComPcdEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -966,14 +967,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComPcdEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComPcdEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -987,7 +988,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 29: Deve retornar 400 quando tenta cadastrar candidato com ativo nulo")
-    public void testCadastrarCandidatoComAtivoNulo() {
+    void testCadastrarCandidatoComAtivoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -999,14 +1000,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComAtivoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComAtivoNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1020,7 +1021,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 30: Deve retornar 400 quando tenta cadastrar candidato com ativo em branco")
-    public void testCadastrarCandidatoComAtivoEmBranco() {
+    void testCadastrarCandidatoComAtivoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1032,14 +1033,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComAtivoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComAtivoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1053,7 +1054,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 31: Deve retornar 400 quando tenta cadastrar candidato com lista nula de linguagem")
-    public void testCadastrarCandidatoComListaNulaDeLinguagem() {
+    void testCadastrarCandidatoComListaNulaDeLinguagem() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1065,14 +1066,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaNulaDeLinguagem(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComListaNulaDeLinguagem(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1081,13 +1082,13 @@ public class CadastrarCandidatoTest extends BaseTest {
                 .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("linguagens: não deve ser nulo")
-                || erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("linguagens: must not be null"));
+        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("linguagens: não deve ser nulo")
+                || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("linguagens: must not be null"));
     }
 
     @Test
     @DisplayName("Cenário 32: Deve retornar 400 quando tenta cadastrar candidato com lista de linguagem em branco")
-    public void testCadastrarCandidatoComListaDeLinguagemEmBranco() {
+    void testCadastrarCandidatoComListaDeLinguagemEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1099,14 +1100,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaDeLinguagemEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComListaDeLinguagemEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1120,7 +1121,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 33: Deve retornar 400 quando tenta cadastrar candidato com lista de linguagem não cadastrada")
-    public void testCadastrarCandidatoComListaDeLinguagemNaoCadastrada() {
+    void testCadastrarCandidatoComListaDeLinguagemNaoCadastrada() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1132,14 +1133,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComListaDeLinguagemNaoCadastrada(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComListaDeLinguagemNaoCadastrada(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1153,7 +1154,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 34: Deve retornar 400 quando tenta cadastrar candidato com edicão nula")
-    public void testCadastrarCandidatoComEdicaoNula() {
+    void testCadastrarCandidatoComEdicaoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1165,14 +1166,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEdicaoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEdicaoNula(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1186,7 +1187,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 35: Deve retornar 400 quando tenta cadastrar candidato com edicão não existente")
-    public void testCadastrarCandidatoComEdicaoNaoExistente() {
+    void testCadastrarCandidatoComEdicaoNaoExistente() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1198,14 +1199,14 @@ public class CadastrarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComEdicaoNaoExistente(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEdicaoNaoExistente(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1219,7 +1220,7 @@ public class CadastrarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 36: Deve retornar 400 quando tenta cadastrar candidato com id formulário nulo")
-    public void testCadastrarCandidatoComIdFormularioNulo() {
+    void testCadastrarCandidatoComIdFormularioNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1236,7 +1237,7 @@ public class CadastrarCandidatoTest extends BaseTest {
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComIdFormularioNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComIdFormularioNulo(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -1245,13 +1246,13 @@ public class CadastrarCandidatoTest extends BaseTest {
                     .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("formulario: não deve ser nulo")
-                || erroCadastroCandidato.getErrors().get(0).toLowerCase().equals("formulario: must not be null"));
+        Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: não deve ser nulo")
+                || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: must not be null"));
     }
 
     @Test
     @DisplayName("Cenário 37: Deve retornar 400 quando tenta cadastrar candidato com id formulário não cadastrado")
-    public void testCadastrarCandidatoComIdFormularioNaoCadastrado() {
+    void testCadastrarCandidatoComIdFormularioNaoCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -1268,7 +1269,7 @@ public class CadastrarCandidatoTest extends BaseTest {
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoComIdFormularioNaoCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComIdFormularioNaoCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()

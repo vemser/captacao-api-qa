@@ -1,9 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import client.*;
-import factory.CandidatoDataFactory;
-import factory.FormularioDataFactory;
+import client.candidato.CandidatoClient;
+import client.edicao.EdicaoClient;
+import client.formulario.FormularioClient;
+import client.linguagem.LinguagemClient;
+import client.trilha.TrilhaClient;
+import factory.candidato.CandidatoDataFactory;
+import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
@@ -21,19 +24,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de busca de candidato por CPF")
-public class BuscarCandidatoPorCpfTest extends BaseTest {
+class BuscarCandidatoPorCpfTest{
 
-    private static TrilhaClient trilhaClient = new TrilhaClient();
-    private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioClient formularioClient = new FormularioClient();
-    private static EdicaoClient edicaoClient = new EdicaoClient();
-    private static LinguagemClient linguagemClient = new LinguagemClient();
-    private static CandidatoDataFactory candidatoDataFactory = new CandidatoDataFactory();
-    private static CandidatoClient candidatoClient = new CandidatoClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final FormularioClient formularioClient = new FormularioClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
+    private static final LinguagemClient linguagemClient = new LinguagemClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando busca candidato por cpf com sucesso")
-    public void testBuscarCandidatoPorCpfComSucesso() {
+    void testBuscarCandidatoPorCpfComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -45,14 +46,14 @@ public class BuscarCandidatoPorCpfTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -85,12 +86,12 @@ public class BuscarCandidatoPorCpfTest extends BaseTest {
         Assertions.assertEquals(candidatoCadastrado.getParecerTecnico(), candidatoBuscado.getParecerTecnico());
         Assertions.assertEquals(candidatoCadastrado.getMedia(), candidatoBuscado.getMedia());
 
-        candidatoCadastrado.getLinguagens().stream().forEach(linguagemCadastrada -> {
-            candidatoBuscado.getLinguagens().stream().forEach(linguagemBuscada -> {
-                Assertions.assertEquals(linguagemCadastrada.getIdLinguagem(), linguagemBuscada.getIdLinguagem());
-                Assertions.assertEquals(linguagemCadastrada.getNome(), linguagemBuscada.getNome());
-            });
-        });
+        candidatoCadastrado.getLinguagens().forEach(linguagemCadastrada ->
+                candidatoBuscado.getLinguagens().forEach(linguagemBuscada -> {
+                    Assertions.assertEquals(linguagemCadastrada.getIdLinguagem(), linguagemBuscada.getIdLinguagem());
+                    Assertions.assertEquals(linguagemCadastrada.getNome(), linguagemBuscada.getNome());
+                })
+        );
 
         Assertions.assertEquals(candidatoCadastrado.getEdicao().getIdEdicao(), candidatoBuscado.getEdicao().getIdEdicao());
         Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), candidatoBuscado.getFormulario().getIdFormulario());
@@ -102,7 +103,7 @@ public class BuscarCandidatoPorCpfTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando busca candidato por cpf sem autenticação")
-    public void testBuscarCandidatoPorCpfSemAutenticacao() {
+    void testBuscarCandidatoPorCpfSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -114,14 +115,14 @@ public class BuscarCandidatoPorCpfTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()

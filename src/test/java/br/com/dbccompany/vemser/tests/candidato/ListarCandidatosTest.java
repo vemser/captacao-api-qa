@@ -1,22 +1,21 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
 import models.JSONFailureResponseWithArrayModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
 
 @DisplayName("Endpoint de listagem de candidatos")
-public class ListarCandidatosTest extends BaseTest {
+class ListarCandidatosTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e lista contendo 20 elementos com sucesso")
-    public void testListarTodosOsCandidatos() {
+    void testListarTodosOsCandidatos() {
 
 
         JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos()
@@ -35,7 +34,7 @@ public class ListarCandidatosTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 sem body por não estar autenticado")
-    public void testListarTodosOsCandidatosSemAutenticacao() {
+    void testListarTodosOsCandidatosSemAutenticacao() {
 
         try {
             var response = candidatoClient.listarTodosOsCandidatosSemAutenticacao()
@@ -51,7 +50,7 @@ public class ListarCandidatosTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 200 e body deve conter 10 candidatos")
-    public void testListarDezCandidatos() {
+    void testListarDezCandidatos() {
         Integer numDeCandidatos = 10;
 
         JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
@@ -66,7 +65,7 @@ public class ListarCandidatosTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd negativa de candidatos")
-    public void testListarCandidatosComTamanhoInvalido() {
+    void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
         JSONFailureResponseWithArrayModel failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
@@ -82,7 +81,7 @@ public class ListarCandidatosTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 5: Deve retornar 400 quando é passado qtd de candidatos como string")
-    public void testListarCandidatosComTamanhoString() {
+    void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 
         var failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)

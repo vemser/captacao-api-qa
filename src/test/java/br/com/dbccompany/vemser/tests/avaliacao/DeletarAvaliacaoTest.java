@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.AvaliacaoDataFactory;
+import client.avaliacao.AvaliacaoClient;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
+import factory.avaliacao.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -9,21 +11,17 @@ import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.AvaliacaoClient;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de remoção de avaliação")
-public class DeletarAvaliacaoTest extends BaseTest {
+class DeletarAvaliacaoTest{
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
-    private static AvaliacaoDataFactory avaliacaoDataFactory = new AvaliacaoDataFactory();
-    private static AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 quando deleta avaliação com sucesso")
-    public void testDeletarAvaliacaoComSucesso() {
+    void testDeletarAvaliacaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -39,7 +37,7 @@ public class DeletarAvaliacaoTest extends BaseTest {
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
@@ -58,7 +56,7 @@ public class DeletarAvaliacaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando deleta avaliação sem autenticação")
-    public void testDeletarAvaliacaoSemAutenticacao() {
+    void testDeletarAvaliacaoSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -74,7 +72,7 @@ public class DeletarAvaliacaoTest extends BaseTest {
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()

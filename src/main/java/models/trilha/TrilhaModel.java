@@ -9,6 +9,6 @@ import lombok.*;
 @ToString
 public class TrilhaModel {
 
-    public String nome;
-    public Integer idTrilha;
+    private Integer idTrilha;
+    private String nome;
 }

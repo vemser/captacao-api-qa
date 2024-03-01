@@ -1,23 +1,22 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de remoção de inscrição")
-public class DeletarInscricaoTest extends BaseTest {
+class DeletarInscricaoTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar inscrição com sucesso")
-    public void testDeletarInscricaoComSucesso() {
+    void testDeletarInscricaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -38,7 +37,7 @@ public class DeletarInscricaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar inscrição sem autenticação")
-    public void testDeletarInscricaoSemAutenticacao() {
+    void testDeletarInscricaoSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()

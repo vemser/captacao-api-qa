@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoListaResponseModel;
 import models.inscricao.InscricaoModel;
@@ -8,18 +9,16 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de listagem de inscrições")
-public class ListarInscricaoTest extends BaseTest {
+class ListarInscricaoTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista inscrições com sucesso")
-    public void testListarInscricoesComSucesso() {
+    void testListarInscricoesComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()

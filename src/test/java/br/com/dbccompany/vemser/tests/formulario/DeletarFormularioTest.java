@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.FormularioDataFactory;
+import client.formulario.FormularioClient;
+import client.trilha.TrilhaClient;
+import factory.formulario.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -10,23 +11,20 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.FormularioClient;
-import client.TrilhaClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de remoção de formulário")
-public class DeletarFormularioTest extends BaseTest {
+class DeletarFormularioTest {
 
-    private static TrilhaClient trilhaClient = new TrilhaClient();
-    private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioClient formularioClient = new FormularioClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar um formulário com sucesso")
-    public void testDeletarFormularioComSucesso() {
+    void testDeletarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -38,7 +36,7 @@ public class DeletarFormularioTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
@@ -57,7 +55,7 @@ public class DeletarFormularioTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando tenta deletar formulário sem estar autenticado")
-    public void testDeletarFormularioSemAutenticacao() {
+    void testDeletarFormularioSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -69,7 +67,7 @@ public class DeletarFormularioTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 

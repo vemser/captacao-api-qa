@@ -1,9 +1,10 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.NotaDataFactory;
-import factory.ParecerTecnicoDataFactory;
-import factory.ProvaDataFactory;
+import client.candidato.CandidatoClient;
+import client.prova.ProvaClient;
+import factory.nota.NotaDataFactory;
+import factory.parecer.ParecerTecnicoDataFactory;
+import factory.prova.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.parecerTecnico.ParecerTecnicoModel;
 import models.prova.ProvaCriacaoModel;
@@ -12,21 +13,17 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.ProvaClient;
 
 @DisplayName("Endpoint de atualização de parecer técnico")
-public class AtualizarParecerTecnicoTest extends BaseTest {
+class AtualizarParecerTecnicoTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static ParecerTecnicoDataFactory parecerTecnicoDataFactory = new ParecerTecnicoDataFactory();
-    private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static ProvaClient provaClient = new ProvaClient();
-    private static NotaDataFactory notaDataFactory = new NotaDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final ProvaClient provaClient = new ProvaClient();
+    private static final NotaDataFactory notaDataFactory = new NotaDataFactory();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando atualiza parecer técnico com sucesso")
-    public void testAtualizarParecerTecnicoComSucesso() {
+    void testAtualizarParecerTecnicoComSucesso() {
         Double nota = 80.0;
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -35,7 +32,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
         ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -52,7 +49,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
+        ParecerTecnicoModel parecerTecnico = ParecerTecnicoDataFactory.parecerTecnicoValido();
 
         CandidatoCriacaoResponseModel candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnico(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()
@@ -68,7 +65,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando atualiza parecer técnico sem autenticação")
-    public void testAtualizarParecerTecnicoSemAutenticacao() {
+    void testAtualizarParecerTecnicoSemAutenticacao() {
         Double nota = 80.0;
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -77,7 +74,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                 .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
         ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
@@ -94,7 +91,7 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                 .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
-        ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
+        ParecerTecnicoModel parecerTecnico = ParecerTecnicoDataFactory.parecerTecnicoValido();
 
         var candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnicoSemAutenticacao(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()

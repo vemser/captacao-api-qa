@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.EntrevistaDataFactory;
+import client.candidato.CandidatoClient;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -9,8 +10,6 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.EntrevistaClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,15 +17,14 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
-public class ListarEntrevistaPorTrilhaTest extends BaseTest {
+class ListarEntrevistaPorTrilhaTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista entrevistas de trilhas existentes")
-    public void testListarEntrevistasPorTrilhaComSucesso() {
+    void testListarEntrevistasPorTrilhaComSucesso() {
         String trilha = "QA";
 
         CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(trilha)
@@ -39,7 +37,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -66,7 +64,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
-    public void testListarEntrevistasPorTrilhaNaoExistente() {
+    void testListarEntrevistasPorTrilhaNaoExistente() {
         String trilhaNaoExistente = "-*/-*/-*/-*/-*/";
 
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilhaNaoExistente)
@@ -77,7 +75,7 @@ public class ListarEntrevistaPorTrilhaTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
-    public void testListarEntrevistasPorTrilhaSemAutenticacao() {
+    void testListarEntrevistasPorTrilhaSemAutenticacao() {
         String trilha = "QA";
 
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(trilha)

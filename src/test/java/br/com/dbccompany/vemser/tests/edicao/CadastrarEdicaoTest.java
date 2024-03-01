@@ -1,23 +1,22 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.edicao.EdicaoClient;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.EdicaoClient;
 
 import java.util.*;
 
 @DisplayName("Endpoint de castro de edição")
-public class CadastrarEdicaoTest extends BaseTest {
+class CadastrarEdicaoTest {
 
-    private static EdicaoClient edicaoClient = new EdicaoClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar edição com sucesso")
-    public void testCadastrarEdicaoComSucesso() {
+    void testCadastrarEdicaoComSucesso() {
 
         var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
@@ -29,11 +28,8 @@ public class CadastrarEdicaoTest extends BaseTest {
 
         List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
 
-        Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
-            public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return Integer.compare(edicao2.idEdicao, edicao1.idEdicao);
-            }
-        });
+        listaDeEdicoesOrdenada.sort((edicao1, edicao2) -> Integer.compare(edicao2.getIdEdicao(), edicao1.getIdEdicao()));
+
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
@@ -50,7 +46,7 @@ public class CadastrarEdicaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar edição sem autenticação")
-    public void testCadastrarEdicaoSemAutenticacao() {
+    void testCadastrarEdicaoSemAutenticacao() {
 
         var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
@@ -62,11 +58,7 @@ public class CadastrarEdicaoTest extends BaseTest {
 
         List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
 
-        Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
-            public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return edicao2.idEdicao.compareTo(edicao1.idEdicao);
-            }
-        });
+        listaDeEdicoesOrdenada.sort((edicao1, edicao2) -> edicao2.getIdEdicao().compareTo(edicao1.getIdEdicao()));
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;

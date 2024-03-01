@@ -1,24 +1,23 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de listagem de inscrição por id")
-public class ListarInscricaoPorIdTest extends BaseTest {
+class ListarInscricaoPorIdTest {
 
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
-    private static CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista inscrição por id com sucesso")
-    public void testListarInscricaoPorIdComSucesso() {
+    void testListarInscricaoPorIdComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -52,7 +51,7 @@ public class ListarInscricaoPorIdTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando lista inscrição por id sem autenticação")
-    public void testListarInscricaoPorIdSemAutenticacao() {
+    void testListarInscricaoPorIdSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()

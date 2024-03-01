@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.AvaliacaoDataFactory;
+import client.avaliacao.AvaliacaoClient;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
+import factory.avaliacao.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -10,57 +12,51 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.AvaliacaoClient;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de atualização de avaliação")
-public class AtualizarAvaliacaoTest extends BaseTest {
+class AtualizarAvaliacaoTest {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
-    private static AvaliacaoDataFactory avaliacaoDataFactory = new AvaliacaoDataFactory();
-    private static AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
+    private final CandidatoClient candidatoClient = new CandidatoClient();
+    private final InscricaoClient inscricaoClient = new InscricaoClient();
+    private final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao atualizar avaliação com sucesso")
-    public void testAtualizarAvaliacaoComSucesso() {
+    void testAtualizarAvaliacaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(InscricaoModel.class);
 
-        Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        boolean aprovado = true;
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(AvaliacaoModel.class);
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(AvaliacaoModel.class);
 
         aprovado = false;
-        AvaliacaoCriacaoModel avaliacaoParaAtualizacao = avaliacaoDataFactory.avaliacaoAtualizada(avaliacao, aprovado);
+        AvaliacaoCriacaoModel avaliacaoParaAtualizacao = AvaliacaoDataFactory.avaliacaoAtualizada(avaliacao, aprovado);
 
         AvaliacaoModel avaliacaoAtualizada = avaliacaoClient.atualizarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), avaliacaoParaAtualizacao)
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(AvaliacaoModel.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
+                .as(AvaliacaoModel.class);
 
         var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
+                .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertNotNull(avaliacaoAtualizada);
         Assertions.assertEquals(avaliacaoCadastrada.getIdAvaliacao(), avaliacaoAtualizada.getIdAvaliacao());
@@ -71,39 +67,37 @@ public class AtualizarAvaliacaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao atualizar avaliação sem autenticação")
-    public void testAtualizarAvaliacaoSemAutenticacao() {
-
+    void testAtualizarAvaliacaoSemAutenticacao() {
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(InscricaoModel.class);
 
-        Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        boolean aprovado = true;
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(AvaliacaoModel.class);
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(AvaliacaoModel.class);
 
         aprovado = false;
-        AvaliacaoCriacaoModel avaliacaoParaAtualizacao = avaliacaoDataFactory.avaliacaoAtualizada(avaliacao, aprovado);
+        AvaliacaoCriacaoModel avaliacaoParaAtualizacao = AvaliacaoDataFactory.avaliacaoAtualizada(avaliacao, aprovado);
 
         var avaliacaoAtualizada = avaliacaoClient.atualizarAvaliacaoSemAutenticacao(avaliacaoCadastrada.getIdAvaliacao(), avaliacaoParaAtualizacao)
                 .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
+                .statusCode(HttpStatus.SC_FORBIDDEN);
 
         var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

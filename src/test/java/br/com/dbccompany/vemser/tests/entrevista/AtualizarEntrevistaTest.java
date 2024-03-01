@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.EntrevistaDataFactory;
+import client.candidato.CandidatoClient;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -10,22 +11,19 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.CandidatoClient;
-import client.EntrevistaClient;
 
 import java.util.Locale;
 
 @DisplayName("Endpoint de atualização de entrevista")
-public class AtualizarEntrevistaTest extends BaseTest {
+class AtualizarEntrevistaTest  {
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaClient entrevistaClient = new EntrevistaClient();
-    private static Faker faker = new Faker(new Locale("pt-BR"));
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final Faker faker = new Faker(new Locale("pt-BR"));
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao atualizar entrevista com sucesso")
-    public void testAtualizarEntrevistaComSucesso() {
+    void testAtualizarEntrevistaComSucesso() {
 
         String observacoes = faker.lorem().sentence(3);
         Boolean avaliado = false;
@@ -41,7 +39,7 @@ public class AtualizarEntrevistaTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -49,7 +47,7 @@ public class AtualizarEntrevistaTest extends BaseTest {
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        EntrevistaCriacaoModel entrevistaComNovosDados = entrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
+        EntrevistaCriacaoModel entrevistaComNovosDados = EntrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
 
         EntrevistaCriacaoResponseModel entrevistaAtualizada = entrevistaClient.atualizarEntrevista(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
                 .then()
@@ -70,7 +68,7 @@ public class AtualizarEntrevistaTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
-    public void testAtualizarEntrevistaSemAutenticacao() {
+    void testAtualizarEntrevistaSemAutenticacao() {
 
         String observacoes = faker.lorem().sentence(3);
         Boolean avaliado = false;
@@ -86,7 +84,7 @@ public class AtualizarEntrevistaTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -94,7 +92,7 @@ public class AtualizarEntrevistaTest extends BaseTest {
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        EntrevistaCriacaoModel entrevistaComNovosDados = entrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
+        EntrevistaCriacaoModel entrevistaComNovosDados = EntrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
 
         var entrevistaAtualizada = entrevistaClient.atualizarEntrevistaSemAutenticacao(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
                 .then()

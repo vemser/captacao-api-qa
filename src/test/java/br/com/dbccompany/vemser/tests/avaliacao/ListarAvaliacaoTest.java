@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import factory.AvaliacaoDataFactory;
+import client.avaliacao.AvaliacaoClient;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
+import factory.avaliacao.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoListaResponseModel;
 import models.avaliacao.AvaliacaoModel;
@@ -11,21 +13,17 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import client.AvaliacaoClient;
-import client.CandidatoClient;
-import client.InscricaoClient;
 
 @DisplayName("Endpoint de listagem de avaliação")
-public class ListarAvaliacaoTest extends BaseTest {
+class ListarAvaliacaoTest{
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static InscricaoClient inscricaoClient = new InscricaoClient();
-    private static AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
-    private static AvaliacaoDataFactory avaliacaoDataFactory = new AvaliacaoDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar avaliações com sucesso")
-    public void testListarAvaliacoesComSucesso() {
+    void testListarAvaliacoesComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -41,7 +39,7 @@ public class ListarAvaliacaoTest extends BaseTest {
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
@@ -74,7 +72,7 @@ public class ListarAvaliacaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao listar avaliações sem autenticação")
-    public void testListarAvaliacoesSemAutenticacao() {
+    void testListarAvaliacoesSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -90,7 +88,7 @@ public class ListarAvaliacaoTest extends BaseTest {
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()

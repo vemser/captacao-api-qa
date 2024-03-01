@@ -1,9 +1,9 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import client.*;
-import factory.NotaDataFactory;
-import factory.ProvaDataFactory;
+import client.candidato.CandidatoClient;
+import client.prova.ProvaClient;
+import factory.nota.NotaDataFactory;
+import factory.prova.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaCriacaoResponseModel;
@@ -13,19 +13,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de atualização de nota de candidato")
-public class AtualizarNotaCandidatoTest extends BaseTest {
+class AtualizarNotaCandidatoTest{
 
-    private static CandidatoClient candidatoClient = new CandidatoClient();
-    private static NotaDataFactory notaDataFactory = new NotaDataFactory();
-    private static ProvaClient provaClient = new ProvaClient();
-    private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static FormularioClient formularioClient = new FormularioClient();
-    private static EdicaoClient edicaoClient = new EdicaoClient();
-    private static LinguagemClient linguagemClient = new LinguagemClient();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final NotaDataFactory notaDataFactory = new NotaDataFactory();
+    private static final ProvaClient provaClient = new ProvaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando atualiza nota do candidato com sucesso")
-    public void testAtualizarNotaDoCandidatoComSucesso() {
+    void testAtualizarNotaDoCandidatoComSucesso() {
         Double nota = 80.0;
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -34,7 +30,7 @@ public class AtualizarNotaCandidatoTest extends BaseTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
         ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -60,7 +56,7 @@ public class AtualizarNotaCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando atualiza nota do candidato sem autenticação")
-    public void testAtualizarNotaDoCandidatoSemAutenticacao() {
+    void testAtualizarNotaDoCandidatoSemAutenticacao() {
         Double nota = 80.0;
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -69,7 +65,7 @@ public class AtualizarNotaCandidatoTest extends BaseTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
         ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)

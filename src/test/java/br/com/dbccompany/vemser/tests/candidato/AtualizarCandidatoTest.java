@@ -1,9 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import client.*;
-import factory.CandidatoDataFactory;
-import factory.FormularioDataFactory;
+import client.candidato.CandidatoClient;
+import client.edicao.EdicaoClient;
+import client.formulario.FormularioClient;
+import client.linguagem.LinguagemClient;
+import client.trilha.TrilhaClient;
+import factory.candidato.CandidatoDataFactory;
+import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
@@ -22,19 +25,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de atualização de candidato")
-public class AtualizarCandidatoTest extends BaseTest {
+class AtualizarCandidatoTest {
 
-    private static TrilhaClient trilhaClient = new TrilhaClient();
-    private FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private FormularioClient formularioClient = new FormularioClient();
-    private EdicaoClient edicaoClient = new EdicaoClient();
-    private LinguagemClient linguagemClient = new LinguagemClient();
-    private CandidatoDataFactory candidatoDataFactory = new CandidatoDataFactory();
-    private CandidatoClient candidatoClient = new CandidatoClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private final FormularioClient formularioClient = new FormularioClient();
+    private final EdicaoClient edicaoClient = new EdicaoClient();
+    private final LinguagemClient linguagemClient = new LinguagemClient();
+    private final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao atualizar candidato com sucesso")
-    public void testAtualizarCandidatoComSucesso() {
+    void testAtualizarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -46,14 +47,14 @@ public class AtualizarCandidatoTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -62,7 +63,7 @@ public class AtualizarCandidatoTest extends BaseTest {
                     .as(CandidatoModel.class);
 
 
-        CandidatoCriacaoModel candidatoCriadoComNovoNome = candidatoDataFactory.candidatoComNovoNome(candidatoCriado);
+        CandidatoCriacaoModel candidatoCriadoComNovoNome = CandidatoDataFactory.candidatoComNovoNome(candidatoCriado);
 
         CandidatoCriacaoResponseModel candidatoAtualizado = candidatoClient.atualizarCandidato(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoNome)
                 .then()
@@ -86,7 +87,7 @@ public class AtualizarCandidatoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao atualizar candidato sem autenticação")
-    public void testAtualizarCandidatoSemAutenticacao() {
+    void testAtualizarCandidatoSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -104,7 +105,7 @@ public class AtualizarCandidatoTest extends BaseTest {
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
-        CandidatoCriacaoModel candidatoCriado = candidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
@@ -113,7 +114,7 @@ public class AtualizarCandidatoTest extends BaseTest {
                 .as(CandidatoModel.class);
 
 
-        CandidatoCriacaoModel candidatoCriadoComNovoEmail = candidatoDataFactory.candidatoComNovoEmail(candidatoCriado);
+        CandidatoCriacaoModel candidatoCriadoComNovoEmail = CandidatoDataFactory.candidatoComNovoEmail(candidatoCriado);
 
         var candidatoAtualizado = candidatoClient.atualizarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoEmail)
                 .then()
