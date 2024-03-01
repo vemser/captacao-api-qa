@@ -8,11 +8,15 @@ import specs.auth.AuthSpecs;
 import static io.restassured.RestAssured.given;
 
 public class AuthClient {
-    private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario-controller/login";
+    private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
 
     @Getter
     @Setter
     private static String token;
+
+    @Getter
+    @Setter
+    private static String tokenInvalido;
 
     public AuthClient() {
     }
@@ -31,14 +35,14 @@ public class AuthClient {
         setToken(response);
     }
 
-    public void loginInvalido(LoginModel loginModel) {
+    public void loginComOutroUsuario(LoginModel loginModel) {
         String response =
                 given()
                         .spec(AuthSpecs.authReqSpec())
                         .body(loginModel)
-                        .when()
+                    .when()
                         .post(LOGIN_ENDPOINT)
-                        .then()
+                    .then()
                         .extract()
                         .asString();
 

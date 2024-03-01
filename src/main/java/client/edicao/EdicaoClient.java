@@ -120,11 +120,11 @@ public class EdicaoClient {
     }
 
     public Response deletarEdicaoSemAutenticacao(Integer idEdicao) {
-        Auth.usuarioNaoAutenticado();
+        Auth.usuarioAluno();
 
         return given()
+                .header(AUTHORIZATION, AuthClient.getTokenInvalido())
                 .spec(EdicaoSpecs.edicaoReqSpec())
-                .header(AUTHORIZATION, AuthClient.getToken())
                 .pathParam(ID_EDICAO, idEdicao)
                 .when()
                 .delete(EDICAO_DELETE_FISICO_ID_EDICAO);

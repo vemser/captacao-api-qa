@@ -95,9 +95,5 @@ class AtualizarAvaliacaoTest {
         var avaliacaoAtualizada = avaliacaoClient.atualizarAvaliacaoSemAutenticacao(avaliacaoCadastrada.getIdAvaliacao(), avaliacaoParaAtualizacao)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

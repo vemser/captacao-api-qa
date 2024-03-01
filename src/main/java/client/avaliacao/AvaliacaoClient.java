@@ -16,7 +16,7 @@ public class AvaliacaoClient {
     private static final String ID_AVALIACAO = "idAvaliacao";
 
     public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -29,10 +29,12 @@ public class AvaliacaoClient {
     }
 
     public Response cadastrarAvaliacaoSemAutenticacao(AvaliacaoCriacaoModel avaliacao) {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(avaliacao)
                 .when()
                         .post(AVALIACAO)
@@ -40,7 +42,7 @@ public class AvaliacaoClient {
     }
 
     public Response deletarAvaliacao(Integer idAvaliacao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -53,11 +55,11 @@ public class AvaliacaoClient {
     }
 
     public Response deletarAvaliacaoSemAutenticacao(Integer idAvaliacao) {
-        String tokenInvalido = "dadada";
+        Auth.usuarioAluno();
 
         return
                 given()
-                        .header(AUTHORIZATION, tokenInvalido)
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()
@@ -104,7 +106,7 @@ public class AvaliacaoClient {
     }
 
     public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -118,10 +120,12 @@ public class AvaliacaoClient {
     }
 
     public Response atualizarAvaliacaoSemAutenticacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                         .body(avaliacao)
                 .when()

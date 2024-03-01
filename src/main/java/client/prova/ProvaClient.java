@@ -10,41 +10,28 @@ import static io.restassured.RestAssured.given;
 
 public class ProvaClient {
 
-    public static final String ID_CANDIDATO_MARCAR_PROVA = "/{idCandidato}/marcar-prova";
-    public static final String ID_CANDIDATO_DATA = "/{idCandidato}/data";
-    public static final String ID_CANDIDATO_NOTA = "/{idCandidato}/nota";
+    public static final String CRIAR_PROVA = "/criar-prova";
+    public static final String ID_CANDIDATO_NOTA = "/candidato/nota-prova/{idCandidato}";
     private static final String AUTHORIZATION = "Authorization";
     public static final String ID_CANDIDATO = "idCandidato";
     public static final String NOTA = "nota";
 
-    public Response criarProva(Integer idCandidato, ProvaCriacaoModel prova) {
-        Auth.obterTokenComoAdmin();
+    public Response criarProva(Integer id, ProvaCriacaoModel prova) {
+        Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(ProvaSpecs.provaReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .pathParam(ID_CANDIDATO, id)
                         .body(prova)
                 .when()
-                        .post(ID_CANDIDATO_MARCAR_PROVA)
+                        .post(CRIAR_PROVA)
                 ;
     }
 
     public Response criarProvaSemAutenticacao(Integer idCandidato, ProvaCriacaoModel prova) {
-
-        return
-                given()
-                        .spec(ProvaSpecs.provaReqSpec())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(prova)
-                .when()
-                        .post(ID_CANDIDATO_MARCAR_PROVA)
-                ;
-    }
-
-    public Response atualizarDataProva(Integer idCandidato, ProvaCriacaoModel prova) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioAluno();
 
         return
                 given()
@@ -53,24 +40,12 @@ public class ProvaClient {
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(prova)
                 .when()
-                        .put(ID_CANDIDATO_DATA)
-                ;
-    }
-
-    public Response atualizarDataProvaSemAutenticacao(Integer idCandidato, ProvaCriacaoModel prova) {
-
-        return
-                given()
-                        .spec(ProvaSpecs.provaReqSpec())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(prova)
-                .when()
-                        .put(ID_CANDIDATO_DATA)
+                        .post(CRIAR_PROVA)
                 ;
     }
 
     public Response atualizarNotaProva(Integer idCandidato, Integer nota) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioInstrutor();
 
         return
                 given()
@@ -84,10 +59,12 @@ public class ProvaClient {
     }
 
     public Response atualizarNotaProvaSemAutenticacao(Integer idCandidato, Integer nota) {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(ProvaSpecs.provaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .queryParam(NOTA, nota)
                 .when()

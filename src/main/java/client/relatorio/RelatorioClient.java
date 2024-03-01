@@ -142,10 +142,12 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEdicaoSemAutenticacao() {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO)
                 ;

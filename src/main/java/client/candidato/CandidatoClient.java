@@ -141,11 +141,12 @@ public class CandidatoClient {
     }
 
     public Response atualizarCandidatoSemAutenticacao(Integer idCandidato, CandidatoCriacaoModel novosDados) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(novosDados)
                 .when()
@@ -154,6 +155,7 @@ public class CandidatoClient {
     }
 
     public Response criarECadastrarCandidatoComCandidatoEntity() {
+        Auth.usuarioGestaoDePessoas();
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -281,7 +283,7 @@ public class CandidatoClient {
     }
 
     public Response atualizarNotaCandidato(Integer idCandidato, NotaModel nota) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioInstrutor();
 
         return
                 given()
@@ -333,7 +335,7 @@ public class CandidatoClient {
     }
 
     public Response atualizarParecerComportamental(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

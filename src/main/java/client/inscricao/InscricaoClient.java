@@ -17,7 +17,7 @@ public class InscricaoClient {
     public static final String INSCRICAO_FIND_BY_ID_INSCRICAO = "/inscricao/find-by-idInscricao";
 
     public Response cadastrarInscricao(Integer idCandidato) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

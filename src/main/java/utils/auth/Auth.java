@@ -14,18 +14,54 @@ public class Auth {
     public static void obterTokenComoAdmin() {
         LoginModel loginModel = new LoginModel();
 
-        loginModel.setUsername(Manipulation.getProp().getProperty("USER_LOGIN"));
-        loginModel.setPassword(Manipulation.getProp().getProperty("USER_PSW"));
+        loginModel.setUsername(Manipulation.getProp().getProperty("ADMIN_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("ADMIN_PSW"));
 
         authClient.logar(loginModel);
     }
 
-    public static void usuarioNaoAutenticado() {
+    public static void usuarioAluno() {
         LoginModel loginModel = new LoginModel();
 
-        loginModel.setUsername(Manipulation.getProp().getProperty("USER_NOT_AUTHENTICATED"));
-        loginModel.setPassword(Manipulation.getProp().getProperty("USER_NOT_AUTHENTICATED.USER_PSW"));
+        loginModel.setUsername(Manipulation.getProp().getProperty("ALUNO_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("ALUNO_PSW"));
 
-        authClient.loginInvalido(loginModel);
+        authClient.loginComOutroUsuario(loginModel);
+    }
+
+    public static void usuarioGestaoDePessoas() {
+        LoginModel loginModel = new LoginModel();
+
+        loginModel.setUsername(Manipulation.getProp().getProperty("GP_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("GP_PSW"));
+
+        authClient.loginComOutroUsuario(loginModel);
+    }
+
+    public static void usuarioColaborador() {
+        LoginModel loginModel = new LoginModel();
+
+        loginModel.setUsername(Manipulation.getProp().getProperty("COLABORADOR_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("COLABORADOR_PSW"));
+
+        authClient.loginComOutroUsuario(loginModel);
+    }
+
+    public static void usuarioInstrutor() {
+        LoginModel loginModel = new LoginModel();
+
+        loginModel.setUsername(Manipulation.getProp().getProperty("INSTRUTOR_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("INSTRUTOR_PSW"));
+
+        authClient.loginComOutroUsuario(loginModel);
+    }
+
+    public static void usuarioGestor() {
+        LoginModel loginModel = new LoginModel();
+
+        loginModel.setUsername(Manipulation.getProp().getProperty("GESTOR_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("GESTOR_PSW"));
+
+        authClient.loginComOutroUsuario(loginModel);
     }
 }

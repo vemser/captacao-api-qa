@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.config;
 
 public class InicialSpecs {
-    private static final String BASE_URI = "https://captacao-back-hml.onrender.com";
+    private static final String BASE_URI = "https://captacao-back-release.onrender.com";
 
     private InicialSpecs() {
 

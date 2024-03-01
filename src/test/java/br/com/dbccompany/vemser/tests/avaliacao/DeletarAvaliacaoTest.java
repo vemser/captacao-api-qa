@@ -4,9 +4,11 @@ import client.avaliacao.AvaliacaoClient;
 import client.candidato.CandidatoClient;
 import client.inscricao.InscricaoClient;
 import factory.avaliacao.AvaliacaoDataFactory;
+import factory.candidato.CandidatoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
+import models.candidato.CandidatoModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +73,7 @@ class DeletarAvaliacaoTest{
                     .extract()
                     .as(InscricaoModel.class);
 
-        Boolean aprovado = true;
+        boolean aprovado = true;
         AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
         AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
@@ -80,13 +82,14 @@ class DeletarAvaliacaoTest{
                     .extract()
                     .as(AvaliacaoModel.class);
 
-
-        var deletarAvaliacaoSemAutenticacao = avaliacaoClient.deletarAvaliacaoSemAutenticacao(avaliacaoCadastrada.getIdAvaliacao())
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
+
+        avaliacaoClient.deletarAvaliacaoSemAutenticacao(avaliacaoCadastrada.getIdAvaliacao())
+                .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
