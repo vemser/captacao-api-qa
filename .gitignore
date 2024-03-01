@@ -8,7 +8,6 @@ allure-results*
 ##############################
 src/properties/config.properties
 src/main/resources/application-config.properties
-src/main/resources/application-config.yml
 src/main/resources/*
 ##############################
 ## Java
