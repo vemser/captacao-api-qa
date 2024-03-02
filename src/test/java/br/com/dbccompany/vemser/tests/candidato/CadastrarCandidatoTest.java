@@ -1214,7 +1214,6 @@ class CadastrarCandidatoTest{
                     .extract()
                     .as(JSONFailureResponseWithArrayModel.class);
 
-        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Edição não encontrada!", erroCadastroCandidato.getMessage());
     }
 

@@ -17,7 +17,7 @@ public class TrilhaClient {
     private static final String ID_TRILHA = "idTrilha";
 
     public Response listarTodasAsTrilhas() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

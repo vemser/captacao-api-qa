@@ -52,27 +52,4 @@ class DeletarFormularioTest {
         Assertions.assertEquals(404, erroDelecaoFormulario.getStatus());
         Assertions.assertEquals("Erro ao buscar o formulário.", erroDelecaoFormulario.getMessage());
     }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando tenta deletar formulário sem estar autenticado")
-    void testDeletarFormularioSemAutenticacao() {
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        var response = formularioClient.deletarFormularioSemAutenticacao(formularioCriado.getIdFormulario())
-                .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
 }

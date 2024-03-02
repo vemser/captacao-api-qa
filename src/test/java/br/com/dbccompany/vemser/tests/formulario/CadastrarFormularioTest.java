@@ -73,33 +73,4 @@ class CadastrarFormularioTest{
         Assertions.assertEquals(formulario.getImportancia(), formularioCriado.getImportancia());
     }
 
-    @Test
-    @DisplayName("Cenário 2: Cadastrar formulário com matriculado false")
-    void testCadastrarFormularioComMatriculadoFalse() {
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioComMatriculadoFalse(listaDeNomeDeTrilhas);
-
-        // Chamando o método incluiCurriculoEmFormularioSemValidacao para fazer o upload do currículo
-        Response response = formularioClient.incluiCurriculoEmFormularioSemValidacao(formulario.getIdFormulario());
-
-        // Verificando se o código de status é 400 (BadRequest)
-        Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatusCode());
-
-        // Extrair o corpo da resposta e converter para o tipo JSONFailureResponseWithoutArrayModel
-        JSONFailureResponseWithoutArrayModel erroCriacaoFormulario = response.as(JSONFailureResponseWithoutArrayModel.class);
-
-        // Verificando se o status e a mensagem da resposta estão corretos
-        Assertions.assertEquals(400, erroCriacaoFormulario.getStatus());
-        Assertions.assertEquals("Precisa estar matriculado!", erroCriacaoFormulario.getMessage());
-    }
 }

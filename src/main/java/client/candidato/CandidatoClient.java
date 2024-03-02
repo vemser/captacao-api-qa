@@ -65,10 +65,12 @@ public class CandidatoClient {
     }
 
     public Response listarTodosOsCandidatosSemAutenticacao() {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(CANDIDATO)
                 ;
@@ -114,7 +116,7 @@ public class CandidatoClient {
     }
 
     public Response cadastrarCandidatoComCandidatoEntity(CandidatoCriacaoModel candidato) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

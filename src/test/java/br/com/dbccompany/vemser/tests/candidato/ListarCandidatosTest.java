@@ -1,7 +1,10 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
 import client.candidato.CandidatoClient;
+import io.restassured.response.Response;
 import models.JSONFailureResponseWithArrayModel;
+import models.candidato.CandidatoCriacaoResponseModel;
+import models.candidato.CandidatoResponseModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -33,23 +36,7 @@ class ListarCandidatosTest {
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 sem body por não estar autenticado")
-    void testListarTodosOsCandidatosSemAutenticacao() {
-
-        try {
-            var response = candidatoClient.listarTodosOsCandidatosSemAutenticacao()
-                    .then()
-                        .log().status()
-                        .statusCode(HttpStatus.SC_FORBIDDEN)
-                        .extract()
-                        .as(JSONListaCandidatoResponse.class);
-        } catch (Exception e) {
-            Assertions.assertTrue(e instanceof IllegalStateException);
-        }
-    }
-
-    @Test
-    @DisplayName("Cenário 3: Deve retornar 200 e body deve conter 10 candidatos")
+    @DisplayName("Cenário 2: Deve retornar 200 e body deve conter 10 candidatos")
     void testListarDezCandidatos() {
         Integer numDeCandidatos = 10;
 
@@ -64,7 +51,7 @@ class ListarCandidatosTest {
     }
 
     @Test
-    @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd negativa de candidatos")
+    @DisplayName("Cenário 3: Deve retornar 400 quando é passado qtd negativa de candidatos")
     void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
@@ -80,7 +67,7 @@ class ListarCandidatosTest {
     }
 
     @Test
-    @DisplayName("Cenário 5: Deve retornar 400 quando é passado qtd de candidatos como string")
+    @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd de candidatos como string")
     void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 

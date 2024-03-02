@@ -64,4 +64,12 @@ public class Auth {
 
         authClient.loginComOutroUsuario(loginModel);
     }
+    public static void usuarioInvalido() {
+        LoginModel loginModel = new LoginModel();
+
+        loginModel.setUsername(Manipulation.getProp().getProperty("INVALIDO_LOGIN"));
+        loginModel.setPassword(Manipulation.getProp().getProperty("INVALIDO_PSW"));
+
+        authClient.loginComOutroUsuario(loginModel);
+    }
 }

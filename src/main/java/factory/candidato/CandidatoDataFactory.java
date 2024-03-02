@@ -581,8 +581,8 @@ public class CandidatoDataFactory {
         List<String> linguagens = new ArrayList<>();
         linguagens.add(linguagem);
 
-        Integer idEdicao = 11;
-        String nomeEdicao = "VEMSER_11";
+        Integer idEdicao = faker.random().nextInt(100,10000);
+        String nomeEdicao = "VEMSER_"+faker.random().nextInt(100,10000);
         EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao);
 
         Integer idFormulario = 1;

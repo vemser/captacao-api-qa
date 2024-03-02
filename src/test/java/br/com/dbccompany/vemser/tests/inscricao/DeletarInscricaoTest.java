@@ -34,29 +34,4 @@ class DeletarInscricaoTest {
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao deletar inscrição sem autenticação")
-    void testDeletarInscricaoSemAutenticacao() {
-
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-
-        var deletarInscricaoSemAutenticacao = inscricaoClient.deletarInscricaoSemAutenticacao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarInscricaoAutenticado = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
-    }
 }

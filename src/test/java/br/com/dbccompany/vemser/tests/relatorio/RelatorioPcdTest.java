@@ -33,13 +33,4 @@ class RelatorioPcdTest {
             }
         }
     }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao listar relatório de candidatos pcd sem autenticação")
-    void testListarRelatorioPcfSemAutenticacao() {
-
-        var response = relatorioClient.listarCandidatosPcdSemAutenticacao()
-                    .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
 }

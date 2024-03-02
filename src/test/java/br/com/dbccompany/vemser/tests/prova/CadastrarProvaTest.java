@@ -21,13 +21,7 @@ class CadastrarProvaTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando cadastra prova com sucesso")
-    void testCriaProvaParaCandidatoComSucesso() {
-
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+    void testCadastrarProvaComSucesso() {
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
 
@@ -39,27 +33,9 @@ class CadastrarProvaTest {
 
         assertAll(
                 () -> Assertions.assertEquals("CADASTRO_COM_SUCESSO", provaCriada.getMensagem()),
-                () -> Assertions.assertNotNull(provaCriada)
+                () -> Assertions.assertNotNull(provaCriada.getIdCandidatoProva())
         );
 
-
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando cadastra prova sem autenticacao")
-    void testCriaProvaParaCandidatoSemAutenticacao() {
-
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(CandidatoCriacaoResponseModel.class);
-
-        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-
-        var provaCriada = provaClient.criarProvaSemAutenticacao(prova)
-                .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 
 }

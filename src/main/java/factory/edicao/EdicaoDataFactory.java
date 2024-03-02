@@ -15,7 +15,8 @@ public class EdicaoDataFactory {
     private static EdicaoModel novaEdicao() {
 
         EdicaoModel edicao = new EdicaoModel();
-        edicao.setNome("VEMSER_"+faker.random().nextInt(100));
+        edicao.setIdEdicao(faker.random().nextInt(100, 100000));
+        edicao.setNome("VEMSER_"+faker.random().nextInt(100, 100000));
 
         return edicao;
     }

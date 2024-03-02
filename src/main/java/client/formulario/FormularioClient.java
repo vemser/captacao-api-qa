@@ -89,7 +89,7 @@ public class FormularioClient {
     }
 
     public FormularioCriacaoResponseModel criarFormularioComFormularioEntity(FormularioCriacaoModel formulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -123,10 +123,9 @@ public class FormularioClient {
 
 
     public Response incluiCurriculoEmFormularioSemValidacao(Integer idFormulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioAluno();
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
         File file = new File(filePath);
-        Auth.obterTokenComoAdmin();
 
         return
                 given()
@@ -141,7 +140,7 @@ public class FormularioClient {
 
 
     public Response incluiConfigPcEmFormularioSemValidacao(Integer idFormulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\config_pc.png";
         File file = new File(filePath);
@@ -149,7 +148,7 @@ public class FormularioClient {
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
-
+                        .contentType("multipart/form-data")
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
                         .multiPart(FILE, file)
@@ -198,10 +197,12 @@ public class FormularioClient {
     }
 
     public Response deletarFormularioSemAutenticacao(Integer idFormulario) {
+        Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
                 .when()
                         .delete(FORMULARIO_DELETE_FISICO_ID_FORMULARIO);

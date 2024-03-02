@@ -47,11 +47,9 @@ class DeletarEdicaoTest {
                 .statusCode(201)
                 .extract().as(EdicaoResponse.class);
 
-
-        Integer idEdicao = Integer.parseInt(String.valueOf(edicaoCadastrada.getIdEdicao()));
-
-        Response response = edicaoClient.deletarEdicaoSemAutenticacao(idEdicao);
-
-        response.then().statusCode(403);
+        edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }
