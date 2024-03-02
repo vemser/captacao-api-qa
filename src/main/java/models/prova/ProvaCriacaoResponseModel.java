@@ -3,6 +3,7 @@ package models.prova;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,10 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class ProvaCriacaoResponseModel {
-
-    private LocalDateTime dataInicio;
-    private LocalDateTime dataFinal;
-    private Integer idCandidato;
-    private Integer idProva;
-    private Integer notaProva;
+    private Integer idCandidatoProva;
+    private String mensagem;
 }

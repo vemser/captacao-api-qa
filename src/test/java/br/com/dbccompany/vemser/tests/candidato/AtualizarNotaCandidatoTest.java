@@ -2,11 +2,15 @@ package br.com.dbccompany.vemser.tests.candidato;
 
 import client.candidato.CandidatoClient;
 import client.prova.ProvaClient;
+import client.questao.QuestaoClient;
 import factory.nota.NotaDataFactory;
 import factory.prova.ProvaDataFactory;
+import factory.questoes.QuestoesDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaCriacaoResponseModel;
+import models.questoes.QuestaoObjetivaModel;
+import models.questoes.QuestaoObjetivaResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +22,7 @@ class AtualizarNotaCandidatoTest{
     private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final NotaDataFactory notaDataFactory = new NotaDataFactory();
     private static final ProvaClient provaClient = new ProvaClient();
+    private static final QuestaoClient questaoClient = new QuestaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando atualiza nota do candidato com sucesso")
@@ -30,8 +35,13 @@ class AtualizarNotaCandidatoTest{
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
+        QuestaoObjetivaModel questaoObjetivaModel = QuestoesDataFactory.questaoObjetivaValida();
+        QuestaoObjetivaResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva()
+
+
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()

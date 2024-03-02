@@ -36,8 +36,6 @@ class CadastrarProvaTest {
                     .as(ProvaCriacaoResponseModel.class);
 
         Assertions.assertNotNull(provaCriada);
-        Assertions.assertEquals(prova.getDataInicio(), provaCriada.getDataInicio());
-        Assertions.assertEquals(prova.getDataFinal(), provaCriada.getDataFinal());
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), provaCriada.getIdCandidato());
     }
 
