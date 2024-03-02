@@ -1,4 +1,4 @@
-package models.questoes;
+package models.questao;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class QuestaoPraticaResponse extends QuestaoPraticaModel{
-    private String message;
+public class QuestaoObjetivaResponse extends QuestaoObjetivaModel{
+    private String mensagem;
     private Integer idCandidatoProva;
 }

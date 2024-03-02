@@ -1,14 +1,14 @@
-package factory.questoes;
+package factory.questao;
 
-import models.questoes.AlternativasModel;
-import models.questoes.ExemplosModel;
-import models.questoes.QuestaoObjetivaModel;
-import models.questoes.QuestaoPraticaModel;
+import models.questao.AlternativasModel;
+import models.questao.ExemplosModel;
+import models.questao.QuestaoObjetivaModel;
+import models.questao.QuestaoPraticaModel;
 import net.datafaker.Faker;
 
 import java.util.*;
 
-public class QuestoesDataFactory {
+public class QuestaoDataFactory {
     private static Faker faker = new Faker(new Locale("pt-BR"));
 
     public static QuestaoObjetivaModel questaoObjetivaValida(){

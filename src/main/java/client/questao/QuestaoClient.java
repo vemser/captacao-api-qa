@@ -2,9 +2,9 @@ package client.questao;
 
 import client.auth.AuthClient;
 import io.restassured.response.Response;
-import models.questoes.QuestaoObjetivaModel;
-import models.questoes.QuestaoPraticaModel;
-import specs.questoes.QuestoesSpecs;
+import models.questao.QuestaoObjetivaModel;
+import models.questao.QuestaoPraticaModel;
+import specs.questao.QuestaoSpecs;
 import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
@@ -23,7 +23,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(questaoObjetivaModel)
                     .when()
@@ -36,7 +36,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(questaoPraticaModel)
                         .when()
@@ -49,7 +49,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                     .when()
                         .get(LISTAR_QUESTOES)
@@ -63,7 +63,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .when()
                         .get(POR_TIPO)
@@ -76,7 +76,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .when()
                         .get(POR_DIFICULDADE)
@@ -90,7 +90,7 @@ public class QuestaoClient {
 
         return
                 given()
-                        .spec(QuestoesSpecs.questoesReqSpec())
+                        .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .when()
                         .get(LISTAR_QUESTOES_ALEATORIAS)

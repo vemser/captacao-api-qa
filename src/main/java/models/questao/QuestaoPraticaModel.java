@@ -1,4 +1,4 @@
-package models.questoes;
+package models.questao;
 
 import lombok.*;
 
@@ -9,12 +9,10 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class QuestaoObjetivaModel {
-    private Integer respostaObjetiva;
+public class QuestaoPraticaModel {
     private String titulo;
     private String dificuldade;
     private String enunciado;
-    private boolean ativo;
     private String tipo;
-    private List<AlternativasModel> alternativasObjetivas;
+    private List<ExemplosModel> exemplos;
 }

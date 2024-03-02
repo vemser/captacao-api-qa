@@ -1,4 +1,4 @@
-package models.questoes;
+package models.questao;
 
 import lombok.*;
 

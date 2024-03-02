@@ -33,7 +33,7 @@ class AtualizarParecerTecnicoTest {
                     .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -75,7 +75,7 @@ class AtualizarParecerTecnicoTest {
                 .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()

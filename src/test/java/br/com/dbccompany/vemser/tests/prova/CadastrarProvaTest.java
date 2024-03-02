@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 @DisplayName("Endpoint de marcação da prova do candidato")
 class CadastrarProvaTest {
 
@@ -29,14 +31,18 @@ class CadastrarProvaTest {
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
 
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(ProvaCriacaoResponseModel.class);
 
-        Assertions.assertNotNull(provaCriada);
-        Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), provaCriada.getIdCandidato());
+        assertAll(
+                () -> Assertions.assertEquals("CADASTRO_COM_SUCESSO", provaCriada.getMensagem()),
+                () -> Assertions.assertNotNull(provaCriada)
+        );
+
+
     }
 
     @Test
@@ -51,8 +57,9 @@ class CadastrarProvaTest {
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
 
-        var provaCriada = provaClient.criarProvaSemAutenticacao(candidatoCadastrado.getIdCandidato(), prova)
+        var provaCriada = provaClient.criarProvaSemAutenticacao(prova)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }
+
 }
