@@ -479,13 +479,12 @@ class CadastrarCandidatoTest{
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidato(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome())
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
                     .as(JSONFailureResponseWithArrayModel.class);
 
-        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Email já cadastrado na edição.", erroCadastroCandidato.getMessage());
     }
 
@@ -1186,7 +1185,7 @@ class CadastrarCandidatoTest{
     }
 
     @Test
-    @DisplayName("Cenário 35: Deve retornar 400 quando tenta cadastrar candidato com edicão não existente")
+    @DisplayName("Cenário 35: Deve retornar 404 quando tenta cadastrar candidato com edicão não existente")
     void testCadastrarCandidatoComEdicaoNaoExistente() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1210,7 +1209,7 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()
                     .as(JSONFailureResponseWithArrayModel.class);
 

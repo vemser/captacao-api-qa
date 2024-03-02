@@ -103,13 +103,13 @@ public class CandidatoClient {
     }
 
     public Response cadastrarCandidato(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(CandidatoDataFactory.candidatoCriacaoValido(edicao, idFormulario, nomeLinguagem))
+                        .body(CandidatoDataFactory.candidatoCriacaoEmailJaCadastrado(edicao, idFormulario, nomeLinguagem))
                 .when()
                         .post(CANDIDATO)
                 ;

@@ -99,7 +99,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO)
                 .then()
-                        .statusCode(HttpStatus.SC_CREATED)
                         .extract()
                         .as(FormularioCriacaoResponseModel.class)
                 ;

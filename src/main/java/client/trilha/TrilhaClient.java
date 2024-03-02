@@ -29,7 +29,7 @@ public class TrilhaClient {
     }
 
     public Response cadastrarTrilha(TrilhaModel trilha) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -43,7 +43,7 @@ public class TrilhaClient {
     }
 
     public Response deletarTrilhaPorId(Integer idTrilha) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

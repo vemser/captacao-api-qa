@@ -76,10 +76,12 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosGeneroSemAutenticacao() {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_GENERO)
                 ;
@@ -98,10 +100,12 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEtniaSemAutenticacao() {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ETNIA)
                 ;
@@ -120,10 +124,12 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEstadoSemAutenticacao() {
+        Auth.usuarioAluno();
 
         Response response =
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ESTADO)
                 ;

@@ -34,6 +34,17 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
+    public static CandidatoCriacaoModel candidatoCriacaoEmailJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
+
+        CandidatoCriacaoModel candidato = novoCandidato();
+        candidato.setEmail("igor.henriques@live.com");
+        candidato.setEdicao(edicao);
+        candidato.setFormulario(idFormulario);
+        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
+
+        return candidato;
+    }
+
     public static CandidatoCriacaoModel candidatoComNomeNulo(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
 
         CandidatoCriacaoModel candidato = novoCandidato();
