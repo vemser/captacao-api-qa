@@ -35,7 +35,7 @@ class EditarQuestaoObjetivaTest {
 
 
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questaoEditada)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questaoEditada)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -59,7 +59,7 @@ class EditarQuestaoObjetivaTest {
 
         questao.setAlternativasObjetivas(criarCincoAlternativas());
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questao)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questao)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -82,7 +82,7 @@ class EditarQuestaoObjetivaTest {
 
         questao.setAlternativasObjetivas(criarCincoAlternativasFalsas());
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questao)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
