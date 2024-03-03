@@ -7,7 +7,11 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.config;
 
 public class InicialSpecs {
-    private static final String BASE_URI = "https://captacao-back-release.onrender.com";
+    // onRender
+    //private static final String BASE_URI = "https://captacao-back-release.onrender.com";
+
+    // VemSer Server
+    private static final String BASE_URI = "http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back";
 
     private InicialSpecs() {
 

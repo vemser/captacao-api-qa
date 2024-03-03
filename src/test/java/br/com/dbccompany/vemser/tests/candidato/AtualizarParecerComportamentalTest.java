@@ -97,8 +97,7 @@ class AtualizarParecerComportamentalTest{
 
         var candidatoParecerComportamentalAtualizado =
                 candidatoClient.atualizarParecerComportamentalSemAutenticacao(
-                                candidatoCadastrado.getIdCandidato(),
-                                parecerComportamental)
+                                candidatoCadastrado.getIdCandidato(), parecerComportamental)
                         .then()
                         .statusCode(HttpStatus.SC_FORBIDDEN);
     }

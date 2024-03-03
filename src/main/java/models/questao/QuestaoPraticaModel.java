@@ -4,15 +4,10 @@ import lombok.*;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
-public class QuestaoPraticaModel {
-    private String titulo;
-    private String dificuldade;
-    private String enunciado;
-    private String tipo;
+public class QuestaoPraticaModel extends Questao {
     private List<ExemplosModel> exemplos;
 }

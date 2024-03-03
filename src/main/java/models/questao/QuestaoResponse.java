@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class QuestaoResponse extends QuestaoPraticaModel {
+public class QuestaoResponse extends Questao {
     private String mensagem;
     private String id;
 }

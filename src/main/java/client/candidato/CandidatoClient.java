@@ -351,10 +351,12 @@ public class CandidatoClient {
     }
 
     public Response atualizarParecerComportamentalSemAutenticacao(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
+        Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(parecerComportamental)
                 .when()
