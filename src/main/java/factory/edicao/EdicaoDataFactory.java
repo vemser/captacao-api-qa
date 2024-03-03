@@ -12,11 +12,22 @@ public class EdicaoDataFactory {
         return novaEdicao();
     }
 
+    public static EdicaoModel idNovaEdicao() {
+        return criandoIdNovaEdicao();
+    }
+
     private static EdicaoModel novaEdicao() {
 
         EdicaoModel edicao = new EdicaoModel();
         edicao.setIdEdicao(faker.random().nextInt(100, 100000));
         edicao.setNome("VEMSER_"+faker.random().nextInt(100, 100000));
+
+        return edicao;
+    }
+
+    private static EdicaoModel criandoIdNovaEdicao(){
+        EdicaoModel edicao = new EdicaoModel();
+        edicao.setIdEdicao(faker.random().nextInt(100, 100000));
 
         return edicao;
     }

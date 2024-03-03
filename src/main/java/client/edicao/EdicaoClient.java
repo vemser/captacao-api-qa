@@ -19,7 +19,7 @@ public class EdicaoClient {
     public static final String NUMERO_EDICAO = "numeroEdicao";
 
     public Response listarTodasAsEdicoes() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -31,7 +31,7 @@ public class EdicaoClient {
     }
 
     public String listaEdicaoAtual() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -45,10 +45,11 @@ public class EdicaoClient {
     }
 
     public String listaEdicaoAtualSemAutenticacao() {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(EDICAO_EDICAO_ATUAL)
                         .thenReturn()
@@ -57,7 +58,7 @@ public class EdicaoClient {
     }
 
     public EdicaoModel criarEdicao() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -73,7 +74,7 @@ public class EdicaoClient {
     }
 
     public Response cadastrarEdicao(EdicaoModel model) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

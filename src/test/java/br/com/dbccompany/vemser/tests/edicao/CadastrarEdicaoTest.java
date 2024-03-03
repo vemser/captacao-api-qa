@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
 import client.edicao.EdicaoClient;
+import factory.edicao.EdicaoDataFactory;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -17,22 +18,7 @@ class CadastrarEdicaoTest {
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar edição com sucesso")
     void testCadastrarEdicaoComSucesso() {
-
-        var response = edicaoClient.listarTodasAsEdicoes()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EdicaoModel[].class);
-
-        List<EdicaoModel> listaDeEdicoes = Arrays.stream(response).toList();
-
-        List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
-
-        listaDeEdicoesOrdenada.sort((edicao1, edicao2) -> Integer.compare(edicao2.getIdEdicao(), edicao1.getIdEdicao()));
-
-
-        Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 4;
+        Integer idNovaEdicao = EdicaoDataFactory.idNovaEdicao().getIdEdicao();
 
         EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
@@ -47,23 +33,7 @@ class CadastrarEdicaoTest {
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar edição sem autenticação")
     void testCadastrarEdicaoSemAutenticacao() {
-
-        var response = edicaoClient.listarTodasAsEdicoes()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EdicaoModel[].class);
-
-        List<EdicaoModel> listaDeEdicoes = Arrays.stream(response).toList();
-
-        List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
-
-        listaDeEdicoesOrdenada.sort((edicao1, edicao2) -> edicao2.getIdEdicao().compareTo(edicao1.getIdEdicao()));
-
-        Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 4;
-
-        var edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(idNovaEdicao)
+        edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(1)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

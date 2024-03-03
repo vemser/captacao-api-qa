@@ -3,7 +3,6 @@ package br.com.dbccompany.vemser.tests.prova;
 import client.candidato.CandidatoClient;
 import client.prova.ProvaClient;
 import factory.prova.ProvaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
@@ -33,7 +32,7 @@ class CadastrarProvaTest {
 
         assertAll(
                 () -> Assertions.assertEquals("CADASTRO_COM_SUCESSO", provaCriada.getMensagem()),
-                () -> Assertions.assertNotNull(provaCriada.getIdCandidatoProva())
+                () -> Assertions.assertNotNull(provaCriada.getId())
         );
 
     }
