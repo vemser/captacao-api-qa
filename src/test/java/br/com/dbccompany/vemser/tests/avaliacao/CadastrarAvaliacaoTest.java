@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.AvaliacaoDataFactory;
+import client.avaliacao.AvaliacaoClient;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
+import factory.avaliacao.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -10,45 +12,41 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.AvaliacaoService;
-import service.CandidatoService;
-import service.InscricaoService;
 
 @DisplayName("Endpoint de cadastro de avaliação")
-public class CadastrarAvaliacaoTest extends BaseTest {
+class CadastrarAvaliacaoTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static InscricaoService inscricaoService = new InscricaoService();
-    private static AvaliacaoService avaliacaoService = new AvaliacaoService();
-    private static AvaliacaoDataFactory avaliacaoDataFactory = new AvaliacaoDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar avaliação com sucesso")
-    public void testCadastrarAvaliacaoComSucesso() {
+    void testCadastrarAvaliacaoComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoService.cadastrarAvaliacao(avaliacao)
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(AvaliacaoModel.class);
 
-        var deletarAvaliacao = avaliacaoService.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
+        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -60,25 +58,25 @@ public class CadastrarAvaliacaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar avaliação sem autenticação")
-    public void testCadastrarAvaliacaoSemAutenticacao() {
+    void testCadastrarAvaliacaoSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        var avaliacaoCadastrada = avaliacaoService.cadastrarAvaliacaoSemAutenticacao(avaliacao)
+        var avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacaoSemAutenticacao(avaliacao)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

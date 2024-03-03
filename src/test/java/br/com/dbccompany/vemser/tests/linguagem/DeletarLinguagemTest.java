@@ -1,34 +1,33 @@
 package br.com.dbccompany.vemser.tests.linguagem;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.linguagem.LinguagemClient;
 import models.linguagem.LinguagemModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.LinguagemService;
 
 import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de remoção de linguagens")
-public class DeletarLinguagemTest extends BaseTest {
+class DeletarLinguagemTest {
 
-    private static LinguagemService linguagemService = new LinguagemService();
+    private static final LinguagemClient linguagemClient = new LinguagemClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar uma linguagem com sucesso")
-    public void testDeletarLinguagemComSucesso() {
+    void testDeletarLinguagemComSucesso() {
 
         String novaLinguagem = "LINGUAGEM_TESTE";
 
-        LinguagemModel linguagemCadastrada = linguagemService.criarLinguagemPassandoNome(novaLinguagem)
+        LinguagemModel linguagemCadastrada = linguagemClient.criarLinguagemPassandoNome(novaLinguagem)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(LinguagemModel.class);
 
-        var response = linguagemService.listarLinguagens()
+        var response = linguagemClient.listarLinguagens()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -36,19 +35,21 @@ public class DeletarLinguagemTest extends BaseTest {
 
         List<LinguagemModel> listaDeLinguagens = Arrays.stream(response).toList();
 
-        Boolean linguagemCadastradaEstaListada = false;
+        boolean linguagemCadastradaEstaListada = false;
 
-        for (int i = 0; i < listaDeLinguagens.size(); i++) {
-            if (listaDeLinguagens.get(i).getNome().toLowerCase().equals(novaLinguagem.toLowerCase())) {
+        for (LinguagemModel linguagem : listaDeLinguagens) {
+            if (linguagem.getNome().equalsIgnoreCase(novaLinguagem)) {
                 linguagemCadastradaEstaListada = true;
+                break; // Terminar o loop após a condição ser atendida
             }
         }
 
-        var linguagemDeletada = linguagemService.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
+
+        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        var responseDelete = linguagemService.listarLinguagens()
+        var responseDelete = linguagemClient.listarLinguagens()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -56,13 +57,15 @@ public class DeletarLinguagemTest extends BaseTest {
 
         List<LinguagemModel> listaDeLinguagensAposDelecao = Arrays.stream(responseDelete).toList();
 
-        Boolean linguagemDeletadaNaoEstaListada = true;
+        boolean linguagemDeletadaNaoEstaListada = true;
 
-        for (int i = 0; i < listaDeLinguagensAposDelecao.size(); i++) {
-            if (listaDeLinguagensAposDelecao.get(i).getNome().toLowerCase().equals(novaLinguagem.toLowerCase())) {
+        for (LinguagemModel linguagemModel : listaDeLinguagensAposDelecao) {
+            if (linguagemModel.getNome().equalsIgnoreCase(novaLinguagem)) {
                 linguagemDeletadaNaoEstaListada = false;
+                break; // Terminar o loop após a condição ser atendida
             }
         }
+
 
         Assertions.assertTrue(linguagemCadastradaEstaListada);
         Assertions.assertTrue(linguagemDeletadaNaoEstaListada);
@@ -70,9 +73,9 @@ public class DeletarLinguagemTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar uma linguagem sem autenticação")
-    public void testDeletarLinguagemSemAutenticacao() {
+    void testDeletarLinguagemSemAutenticacao() {
 
-        var response = linguagemService.listarLinguagens()
+        var response = linguagemClient.listarLinguagens()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -82,7 +85,7 @@ public class DeletarLinguagemTest extends BaseTest {
 
         LinguagemModel linguagem = listaDeLinguagens.get(0);
 
-        var linguagemDeletada = linguagemService.deletarLinguagemPorIdSemAutenticacao(linguagem.getIdLinguagem())
+        var linguagemDeletada = linguagemClient.deletarLinguagemPorIdSemAutenticacao(linguagem.getIdLinguagem())
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

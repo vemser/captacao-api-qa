@@ -1,7 +1,9 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.AvaliacaoDataFactory;
+import client.avaliacao.AvaliacaoClient;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
+import factory.avaliacao.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoListaResponseModel;
 import models.avaliacao.AvaliacaoModel;
@@ -11,46 +13,42 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.AvaliacaoService;
-import service.CandidatoService;
-import service.InscricaoService;
 
 @DisplayName("Endpoint de listagem de avaliação")
-public class ListarAvaliacaoTest extends BaseTest {
+class ListarAvaliacaoTest{
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static InscricaoService inscricaoService = new InscricaoService();
-    private static AvaliacaoService avaliacaoService = new AvaliacaoService();
-    private static AvaliacaoDataFactory avaliacaoDataFactory = new AvaliacaoDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
+    private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar avaliações com sucesso")
-    public void testListarAvaliacoesComSucesso() {
+    void testListarAvaliacoesComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoService.cadastrarAvaliacao(avaliacao)
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(AvaliacaoModel.class);
 
 
-        AvaliacaoListaResponseModel listaDeAvaliacoes = avaliacaoService.listarUltimaAvaliacao()
+        AvaliacaoListaResponseModel listaDeAvaliacoes = avaliacaoClient.listarUltimaAvaliacao()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -59,7 +57,7 @@ public class ListarAvaliacaoTest extends BaseTest {
         AvaliacaoModel ultimaAvaliacao = listaDeAvaliacoes.getElementos().get(0);
 
 
-        var deletarAvaliacao = avaliacaoService.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
+        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -74,36 +72,36 @@ public class ListarAvaliacaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao listar avaliações sem autenticação")
-    public void testListarAvaliacoesSemAutenticacao() {
+    void testListarAvaliacoesSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
         Boolean aprovado = true;
-        AvaliacaoCriacaoModel avaliacao = avaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoService.cadastrarAvaliacao(avaliacao)
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(AvaliacaoModel.class);
 
 
-        var listaDeAvaliacoes = avaliacaoService.listarUltimaAvaliacaoSemAutenticacao()
+        var listaDeAvaliacoes = avaliacaoClient.listarUltimaAvaliacaoSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarAvaliacao = avaliacaoService.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
+        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }

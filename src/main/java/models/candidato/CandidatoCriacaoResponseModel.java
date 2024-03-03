@@ -39,35 +39,5 @@ public class CandidatoCriacaoResponseModel {
     private Integer imagem;
 }
 
-/*
-{
-    "idCandidato": null,
-    "nome": "NOME SOBRENOME",
-    "dataNascimento": "1959-12-29",
-    "email": "sanofaj597@fitzola.com",
-    "telefone": "(93) 98950-9498",
-    "rg": "11.027.125-7",
-    "cpf": "441.637.232-93",
-    "estado": "PE",
-    "cidade": "Arauá",
-    "pcd": "Não possui",
-    "ativo": "T",
-    "linguagens": [
-        "PYTHON"
-    ],
-    "edicao": {
-        "idEdicao": 442,
-        "nome": "VEMSER_438"
-    },
-    "formulario": 452,
-    "observacoes": null,
-    "notaEntrevistaComportamental": null,
-    "notaEntrevistaTecnica": null,
-    "parecerComportamental": null,
-    "parecerTecnico": null,
-    "media": null
-}
- */
-
 
 

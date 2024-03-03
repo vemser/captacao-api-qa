@@ -4,6 +4,12 @@
 allure-results*
 
 ##############################
+## Environment
+##############################
+src/properties/application-config.properties
+src/main/resources/application-config.properties
+src/main/resources/*
+##############################
 ## Java
 ##############################
 .mtj.tmp/
@@ -93,3 +99,7 @@ allure-results/
 allure-reports/
 allure-report/
 allure-backup/
+
+.idea
+application-config.yml
+application-config.properties

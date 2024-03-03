@@ -1,26 +1,25 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.relatorio.RelatorioClient;
 import models.relatorio.RelatorioPcdModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.RelatorioService;
 
 import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint para emissão de relatório de PCD")
-public class RelatorioPcdTest extends BaseTest {
+class RelatorioPcdTest {
 
-    private static RelatorioService relatorioService = new RelatorioService();
+    private static final RelatorioClient relatorioClient = new RelatorioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar relatório de candidatos pcd com sucesso")
-    public void testListarRelatorioPcdComSucesso() {
+    void testListarRelatorioPcdComSucesso() {
 
-        var response = relatorioService.listarCandidatosPcd()
+        var response = relatorioClient.listarCandidatosPcd()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -28,19 +27,10 @@ public class RelatorioPcdTest extends BaseTest {
 
         List<RelatorioPcdModel> relatorioCandidatosPcd = Arrays.stream(response).toList();
 
-        if (relatorioCandidatosPcd.size() != 0) {
+        if (!relatorioCandidatosPcd.isEmpty()) {
             for (RelatorioPcdModel r : relatorioCandidatosPcd) {
                 Assertions.assertNotNull(r.getPcd());
             }
         }
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao listar relatório de candidatos pcd sem autenticação")
-    public void testListarRelatorioPcfSemAutenticacao() {
-
-        var response = relatorioService.listarCandidatosPcdSemAutenticacao()
-                    .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }

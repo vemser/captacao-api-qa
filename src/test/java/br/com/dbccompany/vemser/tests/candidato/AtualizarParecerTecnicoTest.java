@@ -1,9 +1,10 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.NotaDataFactory;
-import dataFactory.ParecerTecnicoDataFactory;
-import dataFactory.ProvaDataFactory;
+import client.candidato.CandidatoClient;
+import client.prova.ProvaClient;
+import factory.nota.NotaDataFactory;
+import factory.parecer.ParecerTecnicoDataFactory;
+import factory.prova.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.parecerTecnico.ParecerTecnicoModel;
 import models.prova.ProvaCriacaoModel;
@@ -12,37 +13,33 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.ProvaService;
 
 @DisplayName("Endpoint de atualização de parecer técnico")
-public class AtualizarParecerTecnicoTest extends BaseTest {
+class AtualizarParecerTecnicoTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static ParecerTecnicoDataFactory parecerTecnicoDataFactory = new ParecerTecnicoDataFactory();
-    private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
-    private static ProvaService provaService = new ProvaService();
-    private static NotaDataFactory notaDataFactory = new NotaDataFactory();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final ProvaClient provaClient = new ProvaClient();
+    private static final NotaDataFactory notaDataFactory = new NotaDataFactory();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando atualiza parecer técnico com sucesso")
-    public void testAtualizarParecerTecnicoComSucesso() {
+    void testAtualizarParecerTecnicoComSucesso() {
         Double nota = 80.0;
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(ProvaCriacaoResponseModel.class);
 
-        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoService
+        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(
                         candidatoCadastrado.getIdCandidato(),
                         notaDataFactory.notaValida(nota)
@@ -52,9 +49,9 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
+        ParecerTecnicoModel parecerTecnico = ParecerTecnicoDataFactory.parecerTecnicoValido();
 
-        CandidatoCriacaoResponseModel candidatoParecerTecnicoAtualizado = candidatoService.atualizarParecerTecnico(candidatoCadastrado.getIdCandidato(), parecerTecnico)
+        CandidatoCriacaoResponseModel candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnico(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -68,23 +65,23 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando atualiza parecer técnico sem autenticação")
-    public void testAtualizarParecerTecnicoSemAutenticacao() {
+    void testAtualizarParecerTecnicoSemAutenticacao() {
         Double nota = 80.0;
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
+        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(ProvaCriacaoResponseModel.class);
 
-        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoService
+        CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(
                         candidatoCadastrado.getIdCandidato(),
                         notaDataFactory.notaValida(nota)
@@ -94,9 +91,9 @@ public class AtualizarParecerTecnicoTest extends BaseTest {
                 .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
-        ParecerTecnicoModel parecerTecnico = parecerTecnicoDataFactory.parecerTecnicoValido();
+        ParecerTecnicoModel parecerTecnico = ParecerTecnicoDataFactory.parecerTecnicoValido();
 
-        var candidatoParecerTecnicoAtualizado = candidatoService.atualizarParecerTecnicoSemAutenticacao(candidatoCadastrado.getIdCandidato(), parecerTecnico)
+        var candidatoParecerTecnicoAtualizado = candidatoClient.atualizarParecerTecnicoSemAutenticacao(candidatoCadastrado.getIdCandidato(), parecerTecnico)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

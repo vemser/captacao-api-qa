@@ -1,5 +1,6 @@
 package models.formulario;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.util.List;

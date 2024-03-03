@@ -1,23 +1,22 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.formulario.FormularioClient;
 import models.formulario.JSONListaFormularioResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
 
 @DisplayName("Endpoint de listagem de formulários")
-public class ListarFormulariosTest extends BaseTest {
+class ListarFormulariosTest{
 
-    FormularioService formularioService = new FormularioService();
+    FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e listar formulários ordenados")
-    public void testListarFormulariosComSucesso() {
+    void testListarFormulariosComSucesso() {
 
-        JSONListaFormularioResponse listaFormularioResponse = formularioService.listarTodosOsFormularios()
+        JSONListaFormularioResponse listaFormularioResponse = formularioClient.listarTodosOsFormularios()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()

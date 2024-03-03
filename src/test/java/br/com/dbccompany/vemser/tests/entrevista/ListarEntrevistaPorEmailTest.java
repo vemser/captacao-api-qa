@@ -1,36 +1,29 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import client.candidato.CandidatoClient;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
-import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
-import utils.Email;
-
-import java.util.Locale;
+import utils.auth.Email;
 
 @DisplayName("Endpoint de listagem de entrevistas por email")
-public class ListarEntrevistaPorEmailTest extends BaseTest {
+class ListarEntrevistaPorEmailTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
-    private static Faker faker = new Faker(new Locale("pt-BR"));
-
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao buscar entrevista por email do candidato com sucesso")
-    public void testListaEntrevistaPorEmailComSucesso() {
+    void testListaEntrevistaPorEmailComSucesso() {
         String email = Email.getEmail();
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(email)
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(email)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -40,21 +33,21 @@ public class ListarEntrevistaPorEmailTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        EntrevistaCriacaoResponseModel entrevista = entrevistaService.listarTodasAsEntrevistasPorEmail(emailDoCandidato)
+        EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -64,10 +57,10 @@ public class ListarEntrevistaPorEmailTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
-    public void testListaEntrevistaPorEmailSemAutenticacao() {
+    void testListaEntrevistaPorEmailSemAutenticacao() {
         String emailDoCandidato = Email.getEmail();
 
-        var response = entrevistaService.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
+        var response = entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

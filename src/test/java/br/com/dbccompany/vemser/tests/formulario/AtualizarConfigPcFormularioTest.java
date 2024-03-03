@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import client.formulario.FormularioClient;
+import client.trilha.TrilhaClient;
+import factory.formulario.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -11,26 +12,23 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
-import service.TrilhaService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de atualização de configuração do PC do candidato")
-public class AtualizarConfigPcFormularioTest extends BaseTest {
+class AtualizarConfigPcFormularioTest {
 
-    private static TrilhaService trilhaService = new TrilhaService();
-    private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static FormularioService formularioService = new FormularioService();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao adicionar imagem com configuração do pc com sucesso")
-    public void testEnviarInfoConfigPcComSucesso() {
+    void testEnviarInfoConfigPcComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -39,20 +37,20 @@ public class AtualizarConfigPcFormularioTest extends BaseTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiConfigPcEmFormularioSemValidacao(formularioCriado.getIdFormulario())
+        formularioClient.incluiConfigPcEmFormularioSemValidacao(formularioCriado.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 ao adicionar imagem com configuração do pc em formulário não existente")
-    public void testEnviarInfoConfigPcParaFormularioNaoExistente() {
+    void testEnviarInfoConfigPcParaFormularioNaoExistente() {
 
-        Integer idUltimoFormulario = formularioService.listarNumDeFormulariosOrdemDecrescente(1)
+        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
                 .then()
                     .extract()
                     .as(JSONListaFormularioResponse.class)
@@ -62,7 +60,7 @@ public class AtualizarConfigPcFormularioTest extends BaseTest {
 
         Integer idFormularioNaoExistente = idUltimoFormulario + 1000;
 
-        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioService.incluiConfigPcEmFormularioSemValidacao(idFormularioNaoExistente)
+        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioClient.incluiConfigPcEmFormularioSemValidacao(idFormularioNaoExistente)
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()
