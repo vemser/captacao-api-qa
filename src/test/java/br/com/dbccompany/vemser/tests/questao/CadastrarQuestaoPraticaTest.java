@@ -9,7 +9,7 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Endpoint de cadastrar prova prática")
+@DisplayName("Endpoint de cadastrar questão prática")
 class CadastrarQuestaoPraticaTest {
 
     private final QuestaoPraticaClient questaoPraticaClient = new QuestaoPraticaClient();

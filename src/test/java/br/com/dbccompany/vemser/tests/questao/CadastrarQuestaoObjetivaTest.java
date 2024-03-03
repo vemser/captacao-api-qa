@@ -8,7 +8,7 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Endpoint de cadastrar prova objetiva")
+@DisplayName("Endpoint de cadastrar questão objetiva")
 class CadastrarQuestaoObjetivaTest {
 
     private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
@@ -20,10 +20,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 

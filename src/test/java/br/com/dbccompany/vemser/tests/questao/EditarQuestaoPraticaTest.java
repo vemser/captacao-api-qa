@@ -8,7 +8,10 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Endpoint de cadastrar prova objetiva")
+import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
+import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
+
+@DisplayName("Endpoint de editar questao pratica")
 class EditarQuestaoPraticaTest {
 
     private final QuestaoPraticaClient questaoPraticaClient = new QuestaoPraticaClient();
