@@ -10,7 +10,7 @@
 
 Repositório para alocar os testes automatizados de API com Rest-Assured que foram desenvolvidos durante o trabalho final da 13° edição do programa Vem Ser.
 
-## Link
+## Links
 - [Captação + Provas](http://vemser-dbc.dbccompany.com.br:39000/vemser/vemser-front)
 - [API Swagger](http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back-release/swagger-ui/index.html)
 - [API Swagger Login](http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/swagger-ui/index.html)
@@ -33,51 +33,90 @@ Repositório para alocar os testes automatizados de API com Rest-Assured que for
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <lombok.version>1.18.24</lombok.version>
+        <rest-assured.version>5.4.0</rest-assured.version>
+        <junit5.version>5.10.0</junit5.version>
+        <junit-platform.version>1.5.2</junit-platform.version>
+        <datafaker.version>1.7.0</datafaker.version>
+        <gson.version>2.8.9</gson.version>
+        <allure-junit5.version>2.14.0</allure-junit5.version>
+        <allure-maven.version>2.10.0</allure-maven.version>
+        <aspectj.version>1.9.7</aspectj.version>
+        <allure.version>2.20.1</allure.version>
+        <log4j.version>2.13.1</log4j.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <junit-surefire.version>1.3.2</junit-surefire.version>
+        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+        <jackson-databind.version>2.14.1</jackson-databind.version>
+        <jackson-datatype.version>2.13.4</jackson-datatype.version>
+        <skipITs>true</skipITs>
+        <skipTests>false</skipTests>
+        <skipUTs>${skipTests}</skipUTs>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.5.1</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.datafaker</groupId>
-            <artifactId>datafaker</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.14.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>2.14.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-            <scope>provided</scope>
+            <version>${lombok.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit-platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.13.4</version>
+            <version>${jackson-datatype.version}</version>
         </dependency>
     </dependencies>
 ```
@@ -88,11 +127,6 @@ Repositório para alocar os testes automatizados de API com Rest-Assured que for
 
 - **Rest-Assured**: Uma ferramenta para automação de testes de api.
 - **Intellij**
-
-## Casos de Teste
-
-### 1. NOME DO CENARIO DE TESTE
-Descrever o caso de teste
 
 
 ## Colaboradores 🧑‍💻

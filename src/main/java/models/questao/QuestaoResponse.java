@@ -9,5 +9,5 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QuestaoResponse extends Questao {
     private String mensagem;
-    private String id;
+    private Integer id;
 }

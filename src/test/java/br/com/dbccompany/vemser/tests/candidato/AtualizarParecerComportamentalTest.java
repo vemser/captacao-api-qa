@@ -101,5 +101,4 @@ class AtualizarParecerComportamentalTest{
                         .then()
                         .statusCode(HttpStatus.SC_FORBIDDEN);
     }
-
 }

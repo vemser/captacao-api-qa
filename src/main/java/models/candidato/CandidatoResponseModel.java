@@ -9,5 +9,4 @@ import lombok.*;
 @ToString
 public class CandidatoResponseModel extends CandidatoModel{
     private String mensagem;
-
 }

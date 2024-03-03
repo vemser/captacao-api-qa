@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProvaResponse {
-    private String id;
+    private Integer id;
     private String mensagem;
 }

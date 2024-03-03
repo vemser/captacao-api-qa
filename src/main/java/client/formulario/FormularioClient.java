@@ -31,32 +31,19 @@ public class FormularioClient {
 
 
     public Response listarTodosOsFormularios() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(FORMULARIO_LISTAR)
-                ;
-    }
-
-    public Response listarNumDeFormularios(Integer numDeFormularios) {
-        Auth.obterTokenComoAdmin();
-
-        return
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(TAMANHO, numDeFormularios)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;
     }
 
     public Response listarNumDeFormulariosOrdemDecrescente(Integer numDeFormulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         Integer ordemDecrescente = 1;
 
@@ -72,7 +59,7 @@ public class FormularioClient {
     }
 
     public FormularioCriacaoResponseModel criarFormulario(String nomeDeTrilhaExistente) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -105,7 +92,7 @@ public class FormularioClient {
     }
 
     public void incluiCurriculoEmFormularioComValidacao(Integer idFormulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
         File file = new File(filePath);
@@ -156,7 +143,7 @@ public class FormularioClient {
     }
 
     public FormularioCriacaoResponseModel atualizaFormulario(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -172,19 +159,8 @@ public class FormularioClient {
                         .as(FormularioCriacaoResponseModel.class);
     }
 
-    public Response atualizaFormularioSemAutenticacao(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {
-
-        return
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .pathParam(ID_FORMULARIO, idFormulario)
-                        .body(formularioAtualizado)
-                .when()
-                        .put(FORMULARIO_ATUALIZAR_FORMULARIO_ID_FORMULARIO);
-    }
-
     public Response deletarFormulario(Integer idFormulario) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -193,34 +169,5 @@ public class FormularioClient {
                         .pathParam(ID_FORMULARIO, idFormulario)
                 .when()
                         .delete(FORMULARIO_DELETE_FISICO_ID_FORMULARIO);
-    }
-
-    public Response deletarFormularioSemAutenticacao(Integer idFormulario) {
-        Auth.usuarioInstrutor();
-
-        return
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_FORMULARIO, idFormulario)
-                .when()
-                        .delete(FORMULARIO_DELETE_FISICO_ID_FORMULARIO);
-    }
-
-    public Boolean verificaSeExistemFormulariosCadastrados() {
-        Auth.obterTokenComoAdmin();
-
-        var response =
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(FORMULARIO_LISTAR)
-                .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(JSONListaFormularioResponse.class);
-
-        return ! response.getElementos().isEmpty();
     }
 }

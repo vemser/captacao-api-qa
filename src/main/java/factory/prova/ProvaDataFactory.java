@@ -2,15 +2,22 @@ package factory.prova;
 
 import models.edicao.EdicaoModel;
 import models.prova.ProvaCriacaoModel;
+import models.prova.ProvaEditarDadosModel;
+import models.prova.ProvaEditarDuracaoModel;
+import models.prova.ProvaEditarQuestoesModel;
 import net.datafaker.Faker;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ProvaDataFactory {
 
     private static final Random RANDOM = new Random();
     private static final Faker faker = new Faker(new Locale("pt-BR"));
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     // Construtor privado para impedir a instânciação da classe
     private ProvaDataFactory() {
@@ -54,7 +61,11 @@ public class ProvaDataFactory {
     private static ProvaCriacaoModel criarProvaBase() {
         // Gera datas de início e final aleatórias
         LocalDateTime dataInicio = gerarDataAleatoria();
-        LocalDateTime dataFinal = gerarDataAleatoria();
+        LocalDateTime dataFinal = gerarDataAleatoria().plusDays(RANDOM.nextInt(10) + 1); // Adiciona um número aleatório de dias à data de início
+        // Verifica se a data final é anterior à data de início e ajusta, se necessário
+        if (dataFinal.isBefore(dataInicio)) {
+            dataFinal = dataInicio.plusDays(1); // Adiciona um dia à data de início
+        }
         // Cria uma nova prova com as informações comuns
         ProvaCriacaoModel prova = new ProvaCriacaoModel();
         prova.setDataInicio(dataInicio);
@@ -150,5 +161,50 @@ public class ProvaDataFactory {
         ProvaCriacaoModel prova = criarProvaBase();
 
         return prova;
+    }
+
+    // Método para criar uma prova válida com questões editadas
+    public static ProvaEditarQuestoesModel provaValidaComQuestoesEditadas() {
+        // Cria uma prova base com informações comuns
+        ProvaEditarQuestoesModel provaEditarQuestoesModel = new ProvaEditarQuestoesModel();
+
+        // Seleciona aleatoriamente um subconjunto de questões e define como as questões da prova
+        List<Integer> questoesSelecionadas = new ArrayList<>();
+
+        for (int i = 323; i <= 332; i++) {
+            questoesSelecionadas.add(i);
+        }
+
+        provaEditarQuestoesModel.setIdsQuestoes(questoesSelecionadas);
+
+        return provaEditarQuestoesModel;
+    }
+
+    public static ProvaEditarDuracaoModel provaEditarDuracaoProva() {
+        // Cria uma prova base com informações comuns
+        ProvaEditarDuracaoModel provaCriacaoModel = new ProvaEditarDuracaoModel();
+
+        LocalDateTime futureDateTime = LocalDateTime.of(2024, 4, 20, 9, 12, 28);
+        Instant futureInstant = futureDateTime.toInstant(ZoneOffset.UTC);
+        String formattedDate = DateTimeFormatter.ISO_INSTANT.format(futureInstant);
+
+        LocalDateTime futureDateTime2 = LocalDateTime.of(2025, 3, 20, 9, 12, 28);
+        Instant futureInstant2 = futureDateTime2.toInstant(ZoneOffset.UTC);
+        String formattedDate2 = DateTimeFormatter.ISO_INSTANT.format(futureInstant2);
+
+        provaCriacaoModel.setDataInicio(formattedDate);
+        provaCriacaoModel.setDataFim(formattedDate2);
+
+        return provaCriacaoModel;
+    }
+
+    public static ProvaEditarDadosModel provaEditarDadosProva() {
+        // Cria uma prova base com informações comuns
+        ProvaEditarDadosModel editarDadosModel = new ProvaEditarDadosModel();
+
+        editarDadosModel.setTituloProva("Prova do VemSer");
+        editarDadosModel.setEnunciadoProva("Prova objetiva e técnica");
+
+        return editarDadosModel;
     }
 }

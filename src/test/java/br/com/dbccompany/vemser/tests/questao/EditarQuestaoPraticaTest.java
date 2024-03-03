@@ -27,7 +27,7 @@ class EditarQuestaoPraticaTest {
                     .as(QuestaoResponse.class)
                 ;
 
-        QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getMensagem(), questaoEditada)
+        QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getId(), questaoEditada)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -51,7 +51,7 @@ class EditarQuestaoPraticaTest {
 
         questao.setExemplos(QuestaoPraticaDataFactory.criarExemplosVazios());
 
-        QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getMensagem(), questao)
+        QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getId(), questao)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)

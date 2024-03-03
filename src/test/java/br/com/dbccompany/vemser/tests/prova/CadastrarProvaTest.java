@@ -94,4 +94,18 @@ class CadastrarProvaTest {
                 .extract()
                 .as(ProvaResponse.class);
     }
+
+    @Test
+    @DisplayName("Cenário 1: Deve retornar 400 quando cadastra sem autenticação")
+    void testCadastrarProvaSemAutenticacao() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
+
+        ProvaResponse provaCriada = provaClient.criarProvaSemAutenticacao(prova)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(ProvaResponse.class);
+    }
 }

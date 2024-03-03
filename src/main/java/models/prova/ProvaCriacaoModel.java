@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @ToString
 public class ProvaCriacaoModel {
-
+    private Integer idProva;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFinal;
     private Integer versaoProva;

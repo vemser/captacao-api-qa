@@ -39,10 +39,11 @@ public class EntrevistaClient {
     }
 
     public Response cadastrarEntrevistaSemAutenticacao(EntrevistaCriacaoModel entrevista) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(entrevista)
                 .when()
                         .post(ENTREVISTA_MARCAR_ENTREVISTA)
@@ -50,7 +51,7 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistas() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -62,7 +63,7 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorEmail(String emailDoCandidato) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -75,10 +76,11 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorEmailSemAutenticacao(String emailDoCandidato) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(EMAIL, emailDoCandidato)
                 .when()
                         .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL)
@@ -86,7 +88,7 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorTrilha(String trilha) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -99,10 +101,12 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorTrilhaSemAutenticacao(String trilha) {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(TRILHA, trilha)
                 .when()
                         .get(ENTREVISTA_POR_TRILHA)
@@ -124,10 +128,12 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorMesSemAutenticacao(Integer anoEntrevista, Integer mesEntrevista) {
+        Auth.usuarioAluno();
 
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(MES, mesEntrevista)
                         .queryParam(ANO, anoEntrevista)
                 .when()
@@ -136,9 +142,11 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasSemAutenticacao() {
+        Auth.usuarioAluno();
 
         return
                 given()
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                 .when()
                         .get(ENTREVISTA)
@@ -146,7 +154,7 @@ public class EntrevistaClient {
     }
 
     public Response atualizarEntrevista(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -161,10 +169,11 @@ public class EntrevistaClient {
     }
 
     public Response atualizarEntrevistaSemAutenticacao(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                         .queryParam(LEGENDA, status)
                         .body(dadosAtualizados)
@@ -174,7 +183,7 @@ public class EntrevistaClient {
     }
 
     public Response deletarEntrevistaPorId(Integer idEntrevista) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -187,10 +196,11 @@ public class EntrevistaClient {
     }
 
     public Response deletarEntrevistaPorIdSemAutenticacao(Integer idEntrevista) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                 .when()
                         .delete(ENTREVISTA_ID_ENTREVISTA)

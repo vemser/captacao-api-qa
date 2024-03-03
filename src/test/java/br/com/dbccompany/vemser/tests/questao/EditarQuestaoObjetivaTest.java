@@ -2,19 +2,16 @@ package br.com.dbccompany.vemser.tests.questao;
 
 import client.questao.QuestaoObjetivaClient;
 import factory.questao.QuestaoObjetivaDataFactory;
-import models.questao.AlternativasModel;
 import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
 
-@DisplayName("Endpoint de cadastrar prova objetiva")
+@DisplayName("Endpoint de editar prova objetiva")
 class EditarQuestaoObjetivaTest {
 
     private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
@@ -35,7 +32,7 @@ class EditarQuestaoObjetivaTest {
 
 
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questaoEditada)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questaoEditada)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -59,7 +56,7 @@ class EditarQuestaoObjetivaTest {
 
         questao.setAlternativasObjetivas(criarCincoAlternativas());
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questao)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questao)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)
@@ -82,7 +79,7 @@ class EditarQuestaoObjetivaTest {
 
         questao.setAlternativasObjetivas(criarCincoAlternativasFalsas());
 
-        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getMensagem(), questao)
+        QuestaoResponse edicaoResponse = questaoObjetivaClient.editarQuestaoObjetiva(cadastroResponse.getId(), questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)

@@ -52,19 +52,6 @@ public class InscricaoClient {
                 ;
     }
 
-    public Response deletarInscricaoSemAutenticacao(Integer idInscricao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(InscricaoSpecs.authReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_INSCRICAO, idInscricao)
-                .when()
-                        .delete(INSCRICAO_ID_INSCRICAO)
-                ;
-    }
-
     public Response listaUltimaInscricao() {
         Auth.obterTokenComoAdmin();
 
