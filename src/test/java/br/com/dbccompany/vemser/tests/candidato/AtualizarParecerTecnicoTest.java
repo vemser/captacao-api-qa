@@ -8,7 +8,7 @@ import factory.prova.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.parecerTecnico.ParecerTecnicoModel;
 import models.prova.ProvaCriacaoModel;
-import models.prova.ProvaCriacaoResponseModel;
+import models.prova.ProvaResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -33,11 +33,11 @@ class AtualizarParecerTecnicoTest {
                     .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
-                    .as(ProvaCriacaoResponseModel.class);
+                    .as(ProvaResponse.class);
 
         CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(
@@ -75,11 +75,11 @@ class AtualizarParecerTecnicoTest {
                 .as(CandidatoCriacaoResponseModel.class);
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
-        ProvaCriacaoResponseModel provaCriada = provaClient.criarProva(prova)
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
-                .as(ProvaCriacaoResponseModel.class);
+                .as(ProvaResponse.class);
 
         CandidatoCriacaoResponseModel candidatoComNotaAtualizada = candidatoClient
                 .atualizarNotaCandidato(

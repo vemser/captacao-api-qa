@@ -68,7 +68,7 @@ public class AvaliacaoClient {
     }
 
     public Response listarUltimaAvaliacao() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         Integer pagina = 0;
         Integer tamanho = 1;
@@ -88,6 +88,7 @@ public class AvaliacaoClient {
     }
 
     public Response listarUltimaAvaliacaoSemAutenticacao() {
+        Auth.usuarioGestaoDePessoas();
 
         Integer pagina = 0;
         Integer tamanho = 1;
@@ -96,6 +97,7 @@ public class AvaliacaoClient {
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("pagina", pagina)
                         .queryParam("tamanho", tamanho)
                         .queryParam("sort", ID_AVALIACAO)

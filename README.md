@@ -12,7 +12,7 @@ Repositório para alocar os testes automatizados de API com Rest-Assured que for
 
 ## Link
 - [Captação + Provas](http://vemser-dbc.dbccompany.com.br:39000/vemser/vemser-front)
-- [API Swagger](http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back/swagger-ui/index.html)
+- [API Swagger](http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back-release/swagger-ui/index.html)
 - [API Swagger Login](http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/swagger-ui/index.html)
 - [API Swagger no Render](https://captacao-back-release.onrender.com/swagger-ui/index.html#/Questão/criarQuestaoPratica)
 - [API Swagger Login no Render](https://usuario-back.onrender.com/swagger-ui/index.html#/)

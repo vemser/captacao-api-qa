@@ -1,5 +1,6 @@
 package models.prova;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @NoArgsConstructor
@@ -7,7 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class ProvaCriacaoResponseModel {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProvaResponse {
     private String id;
     private String mensagem;
 }

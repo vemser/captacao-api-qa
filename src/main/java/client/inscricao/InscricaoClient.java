@@ -100,10 +100,11 @@ public class InscricaoClient {
     }
 
     public Response listarInscricaoPorIdSemAutenticacao(Integer idInscricao) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(InscricaoSpecs.authReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("id", idInscricao)
                 .when()
                         .get(INSCRICAO_FIND_BY_ID_INSCRICAO);

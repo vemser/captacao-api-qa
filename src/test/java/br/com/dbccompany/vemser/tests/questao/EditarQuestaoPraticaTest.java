@@ -1,18 +1,12 @@
 package br.com.dbccompany.vemser.tests.questao;
 
-import client.questao.QuestaoObjetivaClient;
 import client.questao.QuestaoPraticaClient;
-import factory.questao.QuestaoObjetivaDataFactory;
 import factory.questao.QuestaoPraticaDataFactory;
-import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoPraticaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
-import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
 
 @DisplayName("Endpoint de cadastrar prova objetiva")
 class EditarQuestaoPraticaTest {
@@ -32,8 +26,6 @@ class EditarQuestaoPraticaTest {
                     .extract()
                     .as(QuestaoResponse.class)
                 ;
-
-
 
         QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getMensagem(), questaoEditada)
                 .then()
