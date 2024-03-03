@@ -17,6 +17,7 @@ Repositório para alocar os testes automatizados de API com Rest-Assured que for
 - [API Swagger no Render](https://captacao-back-release.onrender.com/swagger-ui/index.html#/Questão/criarQuestaoPratica)
 - [API Swagger Login no Render](https://usuario-back.onrender.com/swagger-ui/index.html#/)
 
+
 ## Pré-requisitos ⚙️
 
 - [Intellij Idea](https://www.jetbrains.com/idea/)
