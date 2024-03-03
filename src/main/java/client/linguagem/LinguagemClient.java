@@ -15,21 +15,6 @@ public class LinguagemClient {
     public static final String LINGUAGEM_DELETE_FISICO_ID_LINGUAGEM = "/linguagem/delete-fisico/{idLinguagem}";
     public static final String NOME = "nome";
     public static final String ID_LINGUAGEM = "idLinguagem";
-    LinguagemDataFactory linguagemDataFactory = new LinguagemDataFactory();
-
-    public Response criarLinguagemBase() {
-        Auth.obterTokenComoAdmin();
-
-        return
-                given()
-                        .spec(LinguagemSpecs.linguagemReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(NOME, linguagemDataFactory.linguagemValida().getNome())
-                .when()
-                        .post(LINGUAGEM)
-                        .thenReturn()
-                ;
-    }
 
     public Response criarLinguagemPassandoNome(String nomeDaLinguagem) {
         Auth.obterTokenComoAdmin();

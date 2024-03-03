@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 public class QuestaoPraticaClient {
     private static final String AUTHORIZATION = "Authorization";
     private static final String CRIAR_PRATICA = "/questao/criar-pratica";
-    private static final String EDITAR_PRATICA = "/questao/{id}";
+    private static final String EDITAR_PRATICA = "/questao/editar-pratica/{idQuestao}";
     private static final String LISTAR_QUESTOES = "/questao";
     private static final String POR_TIPO = "/questao/por-tipo";
     private static final String POR_DIFICULDADE = "/questao/por-dificuldade";
@@ -31,14 +31,14 @@ public class QuestaoPraticaClient {
                 ;
     }
 
-    public Response editarQuestaoPratica(String id, QuestaoPraticaModel questaoPraticaModel){
+    public Response editarQuestaoPratica(Integer id, QuestaoPraticaModel questaoPraticaModel){
         Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam("id", id)
+                        .pathParam("idQuestao", id)
                         .body(questaoPraticaModel)
                 .when()
                         .put(EDITAR_PRATICA)

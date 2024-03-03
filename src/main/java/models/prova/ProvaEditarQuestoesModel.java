@@ -2,12 +2,13 @@ package models.prova;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class ProvaCriacaoResponseModel {
-    private String id;
-    private String mensagem;
+public class ProvaEditarQuestoesModel {
+    private List<Integer> idsQuestoes;
 }

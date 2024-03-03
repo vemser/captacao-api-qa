@@ -1,13 +1,15 @@
-package models.questao;
+package models.prova;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class QuestaoResponse extends Questao {
-    private String mensagem;
+public class ProvaResponse {
     private Integer id;
+    private String mensagem;
 }

@@ -1,10 +1,7 @@
 package br.com.dbccompany.vemser.tests.questao;
 
-import client.questao.QuestaoObjetivaClient;
 import client.questao.QuestaoPraticaClient;
-import factory.questao.QuestaoObjetivaDataFactory;
 import factory.questao.QuestaoPraticaDataFactory;
-import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoPraticaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
@@ -32,8 +29,6 @@ class EditarQuestaoPraticaTest {
                     .extract()
                     .as(QuestaoResponse.class)
                 ;
-
-
 
         QuestaoResponse edicaoResponse = questaoPraticaClient.editarQuestaoPratica(cadastroResponse.getId(), questaoEditada)
                 .then()

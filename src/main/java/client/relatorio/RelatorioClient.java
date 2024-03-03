@@ -64,7 +64,7 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosGenero() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
 import client.relatorio.RelatorioClient;
+import io.restassured.response.Response;
 import models.relatorio.RelatorioGeneroModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -38,8 +39,10 @@ class RelatorioGeneroTest {
     @DisplayName("Cenário 2: Deve retonar 403 ao listar relatório de candidatos por gênero sem autenticação")
     void testListarRelatorioGeneroComSucessoSemAutenticacao() {
 
-        var response = relatorioClient.listarCandidatosGeneroSemAutenticacao()
+        Response response = relatorioClient.listarCandidatosGeneroSemAutenticacao()
                 .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+                .log().all()
+                .statusCode(HttpStatus.SC_FORBIDDEN)
+                .extract().as(Response.class);
     }
 }

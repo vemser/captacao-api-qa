@@ -53,7 +53,7 @@ public class CandidatoClient {
     public static final String LISTAR_TRILHAS = "/listarTrilhas";
 
     public Response listarTodosOsCandidatos() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -77,7 +77,7 @@ public class CandidatoClient {
     }
 
     public Response listarNumCandidatos(Object numCandidatos) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -90,7 +90,7 @@ public class CandidatoClient {
     }
 
     public Response listarCandidatoPorEmail(String email) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -129,7 +129,7 @@ public class CandidatoClient {
     }
 
     public Response atualizarCandidato(Integer idCandidato, CandidatoCriacaoModel novosDados) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -261,7 +261,7 @@ public class CandidatoClient {
     }
 
     public Response buscarCandidatoPorCpf(String cpf) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -274,6 +274,7 @@ public class CandidatoClient {
     }
 
     public Response buscarCandidatoPorCpfSemAutenticacao(String cpf) {
+        Auth.usuarioAluno();
 
         return
                 given()
@@ -299,9 +300,11 @@ public class CandidatoClient {
     }
 
     public Response atualizarNotaCandidatoSemAutenticacao(Integer idCandidato, NotaModel nota) {
+        Auth.usuarioAluno();
 
         return
                 given()
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(nota)
@@ -311,7 +314,7 @@ public class CandidatoClient {
     }
 
     public Response atualizarParecerTecnico(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -325,9 +328,10 @@ public class CandidatoClient {
     }
 
     public Response atualizarParecerTecnicoSemAutenticacao(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-
+        Auth.usuarioAluno();
         return
                 given()
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(parecerTecnico)
@@ -351,7 +355,7 @@ public class CandidatoClient {
     }
 
     public Response atualizarParecerComportamentalSemAutenticacao(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.usuarioInstrutor();
+        Auth.usuarioAluno();
 
         return
                 given()
@@ -365,7 +369,7 @@ public class CandidatoClient {
     }
 
     public Response deletarCandidato(Integer idCandidato) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -378,9 +382,10 @@ public class CandidatoClient {
     }
 
     public Response deletarCandidatoSemAutenticacao(Integer idCandidato) {
-
+        Auth.usuarioAluno();
         return
                 given()
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -389,7 +394,7 @@ public class CandidatoClient {
     }
 
     public Response atribuirNotasEmLote() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\notas_em_lote.xlsx";
         File file = new File(filePath);
@@ -406,7 +411,7 @@ public class CandidatoClient {
 
     ///////// MÉTODOS DO BEFORE ALL
     public CandidatoCriacaoResponseModel cadastrarUsuarioBase(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

@@ -2,14 +2,11 @@ package br.com.dbccompany.vemser.tests.questao;
 
 import client.questao.QuestaoObjetivaClient;
 import factory.questao.QuestaoObjetivaDataFactory;
-import models.questao.AlternativasModel;
 import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;

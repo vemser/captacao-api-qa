@@ -20,6 +20,7 @@ class ListarUltimaEdicaoTest {
 
         var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EdicaoModel[].class);
@@ -35,6 +36,7 @@ class ListarUltimaEdicaoTest {
 
         EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);

@@ -44,7 +44,11 @@ public class QuestaoPraticaDataFactory {
         exemplosModel.setSaidaExplicacao("");
         exemplosModel.setExemploEntrada("");
         exemplosModel.setExemploSaida("");
-        return criarExemplosVazios();
+
+        List<ExemplosModel> list = new ArrayList<>();
+        list.add(exemplosModel);
+
+        return list;
     }
 
     private static QuestaoPraticaModel novaQuestaoPratica(){
