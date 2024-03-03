@@ -38,6 +38,14 @@ public class QuestaoPraticaDataFactory {
     public static QuestaoPraticaModel questaoComPraticaComExemplosVazios(){
         return novaQuestaoPraticaComExemplosVazios();
     }
+    public static List<ExemplosModel> criarExemplosVazios(){
+        ExemplosModel exemplosModel = new ExemplosModel();
+        exemplosModel.setEntradaExplicacao("");
+        exemplosModel.setSaidaExplicacao("");
+        exemplosModel.setExemploEntrada("");
+        exemplosModel.setExemploSaida("");
+        return criarExemplosVazios();
+    }
 
     private static QuestaoPraticaModel novaQuestaoPratica(){
         QuestaoPraticaModel questaoPraticaModel = new QuestaoPraticaModel();

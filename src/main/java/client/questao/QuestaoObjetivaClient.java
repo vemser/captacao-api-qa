@@ -9,10 +9,10 @@ import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
 
-public class QuestaoClient {
+public class QuestaoObjetivaClient {
     private static final String AUTHORIZATION = "Authorization";
-    private static final String CRIAR_PRATICA = "/questao/criar-pratica";
     private static final String CRIAR_OBJETIVA = "/questao/criar-objetiva";
+    private static final String EDITAR_OBJETIVA = "/questao/{id}";
     private static final String LISTAR_QUESTOES = "/questao";
     private static final String POR_TIPO = "/questao/por-tipo";
     private static final String POR_DIFICULDADE = "/questao/por-dificuldade";
@@ -31,16 +31,17 @@ public class QuestaoClient {
                 ;
     }
 
-    public Response criarQuestaoPratica(QuestaoPraticaModel questaoPraticaModel){
+    public Response editarQuestaoObjetiva(String id, QuestaoObjetivaModel questaoObjetivaModel){
         Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(questaoPraticaModel)
-                        .when()
-                        .post(CRIAR_PRATICA)
+                        .pathParam("id", id)
+                        .body(questaoObjetivaModel)
+                .when()
+                        .put(EDITAR_OBJETIVA)
                 ;
     }
 

@@ -16,6 +16,10 @@ public class QuestaoObjetivaDataFactory {
         return criarQuestaoObjetiva(faker.book().title(), faker.lorem().sentence(), DIFICULDADE_FACIL, criarAlternativasPadrao());
     }
 
+    public static QuestaoObjetivaModel questaoObjetivaComDuasAlternativas() {
+        return criarQuestaoObjetiva(faker.book().title(), faker.lorem().sentence(), DIFICULDADE_FACIL, criarDuasAlternativas());
+    }
+
     public static QuestaoObjetivaModel questaoSemTitulo() {
         return criarQuestaoObjetiva("", faker.lorem().sentence(), DIFICULDADE_FACIL, criarAlternativasPadrao());
     }
@@ -56,9 +60,28 @@ public class QuestaoObjetivaDataFactory {
         return criarQuestaoObjetiva(faker.book().title(), faker.lorem().sentence(), DIFICULDADE_FACIL, alternativas);
     }
 
+    public static List<AlternativasModel> criarCincoAlternativas() {
+        return criarAlternativasPadrao();
+    }
+
+    public static List<AlternativasModel> criarCincoAlternativasFalsas() {
+        List<AlternativasModel> alternativas = criarAlternativasPadrao();
+        alternativas.get(0).setCorreta(false);
+        return alternativas;
+    }
+
     private static List<AlternativasModel> criarAlternativasPadrao() {
         List<AlternativasModel> alternativas = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        alternativas.add(new AlternativasModel("Alternativa 1", true));
+        for (int i = 2; i <= 5; i++) {
+            alternativas.add(new AlternativasModel("Alternativa " + i, false));
+        }
+        return alternativas;
+    }
+
+    private static List<AlternativasModel> criarDuasAlternativas() {
+        List<AlternativasModel> alternativas = new ArrayList<>();
+        for (int i = 1; i <= 2; i++) {
             alternativas.add(new AlternativasModel("Alternativa " + i, i == 1));
         }
         return alternativas;

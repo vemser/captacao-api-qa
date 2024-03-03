@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.questao;
 
-import client.questao.QuestaoClient;
+import client.questao.QuestaoObjetivaClient;
 import factory.questao.QuestaoObjetivaDataFactory;
 import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoResponse;
@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Endpoint de cadastrar prova objetiva")
 class CadastrarQuestaoObjetivaTest {
 
-    private final QuestaoClient questaoClient = new QuestaoClient();
+    private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 quando cadastra questão objetiva com sucesso")
     void testCadastrarQuestaoObjetivaComSucesso() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaValida();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_CREATED)
@@ -32,7 +32,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComTituloEmBranco() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoSemTitulo();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -46,7 +46,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaExcedendoOs100Caracteres() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoExcedendoOs100CaracteresNoTitulo();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -60,7 +60,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComEnunciadoVazio() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaComEnunciadoVazio();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -74,7 +74,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaExcedendoOs4000CaracteresNoEnunciado() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaExcedendoOs4000CaracteresNoEnunciado();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -88,7 +88,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComDificuldadeInexistente() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaComDificuldadeInexistente();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -102,7 +102,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComNenhumaAlternativaCorreta() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaComNenhumaAlternativaCorreta();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -116,7 +116,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComApenasUmaAlternativa() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaComApenasUmaAlternativa();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
@@ -131,7 +131,7 @@ class CadastrarQuestaoObjetivaTest {
     void testCadastrarQuestaoObjetivaComMaisDeCincoAlternativas() {
         QuestaoObjetivaModel questao = QuestaoObjetivaDataFactory.questaoObjetivaComMaisDeCincoAlternativas();
 
-        QuestaoResponse questaoObjetivaResponse = questaoClient.criarQuestaoObjetiva(questao)
+        QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
