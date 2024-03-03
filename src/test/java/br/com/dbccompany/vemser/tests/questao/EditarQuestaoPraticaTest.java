@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
 
-@DisplayName("Endpoint de cadastrar prova objetiva")
+@DisplayName("Endpoint de editar questao pratica")
 class EditarQuestaoPraticaTest {
 
     private final QuestaoPraticaClient questaoPraticaClient = new QuestaoPraticaClient();

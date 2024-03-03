@@ -14,7 +14,7 @@ import java.util.List;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
 
-@DisplayName("Endpoint de cadastrar prova objetiva")
+@DisplayName("Endpoint de editar questão objetiva")
 class EditarQuestaoObjetivaTest {
 
     private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
