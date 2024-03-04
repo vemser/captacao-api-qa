@@ -26,7 +26,7 @@ public class EntrevistaClient {
     public static final String LEGENDA = "legenda";
 
     public Response cadastrarEntrevista(EntrevistaCriacaoModel entrevista) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -114,7 +114,7 @@ public class EntrevistaClient {
     }
 
     public Response listarTodasAsEntrevistasPorMes(Integer anoEntrevista, Integer mesEntrevista) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()

@@ -86,7 +86,7 @@ public class EdicaoClient {
     }
 
     public Response criarEdicaoComNumEdicao(Integer numeroEdicao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -99,10 +99,11 @@ public class EdicaoClient {
     }
 
     public Response criarEdicaoComNumEdicaoSemAutenticacao(Integer numeroEdicao) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(NUMERO_EDICAO, numeroEdicao)
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
@@ -110,7 +111,7 @@ public class EdicaoClient {
     }
 
     public Response deletarEdicao(Integer idEdicao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
@@ -132,7 +133,7 @@ public class EdicaoClient {
     }
 
     public Boolean verificaSeExistemEdicoesCadastradas() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         String emptyResponse = "[]";
 
@@ -153,7 +154,7 @@ public class EdicaoClient {
     }
 
     public Response deletarEdicaoSemResponse(Integer idEdicao) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
@@ -165,10 +166,11 @@ public class EdicaoClient {
     }
 
     public Response deletarEdicaoComResponseSemAutenticacao(Integer idEdicao) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_EDICAO, idEdicao)
                 .when()
                         .delete(EDICAO_DELETE_FISICO_ID_EDICAO)

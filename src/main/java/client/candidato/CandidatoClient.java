@@ -1,3 +1,4 @@
+
 package client.candidato;
 
 import client.auth.AuthClient;
@@ -7,7 +8,6 @@ import client.linguagem.LinguagemClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
 import factory.formulario.FormularioDataFactory;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -34,6 +34,7 @@ public class CandidatoClient {
 
     public static final String CANDIDATO = "/candidato";
     public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
+    public static final String LINGUAGEM = "/linguagem";
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
     public static final String CANDIDATO_ULTIMA_EDICAO = "/candidato/ultima-edicao";
     public static final String CANDIDATO_NOTA_PROVA_ID_CANDIDATO = "/candidato/nota-prova/{idCandidato}";
@@ -196,7 +197,7 @@ public class CandidatoClient {
 
 
     public Response criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(String nomeDaTrilha) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -230,7 +231,7 @@ public class CandidatoClient {
     }
 
     public Response criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(String emailCandidato) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()

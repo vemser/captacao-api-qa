@@ -29,10 +29,11 @@ public class InscricaoClient {
     }
 
     public Response cadastrarInscricaoSemAutenticacao(Integer idCandidato) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(InscricaoSpecs.authReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(ID_CANDIDATO, idCandidato)
                 .when()
                         .post(INSCRICAO_CADASTRO)
@@ -40,7 +41,7 @@ public class InscricaoClient {
     }
 
     public Response deletarInscricao(Integer idInscricao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -53,7 +54,7 @@ public class InscricaoClient {
     }
 
     public Response listaUltimaInscricao() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         Integer pagina = 0;
         Integer tamanho = 1;
@@ -74,7 +75,7 @@ public class InscricaoClient {
     }
 
     public Response listarInscricaoPorId(Integer idInscricao) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
