@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-@DisplayName("Endpoint de castro de edição")
+@DisplayName("Endpoint de cadastro de edição")
 class CadastrarEdicaoTest {
 
     private static final EdicaoClient edicaoClient = new EdicaoClient();

@@ -37,6 +37,7 @@ public class FormularioClient {
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("pagina", 1)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;

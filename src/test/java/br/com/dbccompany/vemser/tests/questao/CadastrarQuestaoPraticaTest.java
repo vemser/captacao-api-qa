@@ -1,18 +1,23 @@
 package br.com.dbccompany.vemser.tests.questao;
 
+import client.questao.QuestaoClient;
 import client.questao.QuestaoObjetivaClient;
 import client.questao.QuestaoPraticaClient;
 import factory.questao.QuestaoPraticaDataFactory;
 import models.questao.QuestaoPraticaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de cadastrar questão prática")
 class CadastrarQuestaoPraticaTest {
 
     private final QuestaoPraticaClient questaoPraticaClient = new QuestaoPraticaClient();
+    private final QuestaoClient questaoClient = new QuestaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 quando cadastra questão pratica com sucesso")
@@ -27,7 +32,12 @@ class CadastrarQuestaoPraticaTest {
                     .as(QuestaoResponse.class)
                 ;
 
-        questaoResponse.getMensagem();
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", questaoResponse.getMensagem()),
+                () -> Assertions.assertNotNull(questaoResponse.getId())
+        );
+
+        questaoClient.deletarQuestao(questaoResponse.getId());
     }
 
     @Test
@@ -42,6 +52,7 @@ class CadastrarQuestaoPraticaTest {
                 .extract()
                 .as(QuestaoResponse.class);
     }
+
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 ao tentar criar questão prática com título excedendo os 100 caracteres")
     void testCadastrarQuestaoPraticaComTituloExcedendoOs100Caracteres() {
