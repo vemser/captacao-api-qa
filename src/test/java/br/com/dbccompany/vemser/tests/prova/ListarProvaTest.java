@@ -29,7 +29,7 @@ public class ListarProvaTest {
     @DisplayName("Cenário 2: Deve retornar 200 quando listar prova por id")
     void testListarProvaPorId() {
 
-        ProvaResponse listaDeQuestoes = provaClient.pegarProva(258)
+        ProvaResponse listaDeQuestoes = provaClient.pegarProva(113)
                 .then()
                     .log().all()
                     .statusCode(HttpStatus.SC_OK)

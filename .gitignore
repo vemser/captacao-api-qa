@@ -95,11 +95,6 @@ nb-configuration.xml
 ##############################
 .DS_Store
 
-allure-results/
-allure-reports/
-allure-report/
-allure-backup/
-
 .idea
 application-config.yml
 application-config.properties
