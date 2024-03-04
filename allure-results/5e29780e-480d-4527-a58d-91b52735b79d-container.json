@@ -1,1 +1,0 @@
-{"uuid":"5e29780e-480d-4527-a58d-91b52735b79d","name":"Cenário 2: Deve retornar 400 quando tenta cadastrar candidato com nome nulo","children":["acacdca6-401e-46ea-9b20-327db4dceeb4"],"befores":[],"afters":[],"links":[],"start":1709357242777,"stop":1709357289026}

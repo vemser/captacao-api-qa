@@ -1,1 +1,0 @@
-{"uuid":"3274fdc3-c64c-4bc8-b874-8a801de8027a","name":"Cenário 23: Deve retornar 400 quando tenta cadastrar candidato com estado nulo","children":["f0ac2230-f70e-4a97-966b-81c13a8e9463"],"befores":[],"afters":[],"links":[],"start":1709320787593,"stop":1709320787597}

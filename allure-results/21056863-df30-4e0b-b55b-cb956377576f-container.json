@@ -1,1 +1,0 @@
-{"uuid":"21056863-df30-4e0b-b55b-cb956377576f","name":"Cenário 2: Deve retornar 403 ao listar avaliações sem autenticação","children":["125ac40d-f362-4d8a-a7a9-1b0663a2648a"],"befores":[],"afters":[],"links":[],"start":1709529137496,"stop":1709529155234}

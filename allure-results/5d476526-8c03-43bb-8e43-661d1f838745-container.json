@@ -1,1 +1,0 @@
-{"uuid":"5d476526-8c03-43bb-8e43-661d1f838745","name":"Cenário 12: Deve retornar 400 quando tenta cadastrar candidato com e-mail inválido","children":["9e858dec-b142-48fa-ab29-000aff1619f7"],"befores":[],"afters":[],"links":[],"start":1709320787774,"stop":1709320787777}

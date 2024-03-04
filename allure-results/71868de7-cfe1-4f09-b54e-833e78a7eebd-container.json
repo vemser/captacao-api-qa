@@ -1,1 +1,0 @@
-{"uuid":"71868de7-cfe1-4f09-b54e-833e78a7eebd","name":"Cenário 3: Deve retornar 400 ao tentar criar questão prática com título excedendo os 100 caracteres","children":["9f99afd5-2a1b-4eca-a4c8-8762b423d653"],"befores":[],"afters":[],"links":[],"start":1709487250780,"stop":1709487251088}

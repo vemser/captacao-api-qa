@@ -1,1 +1,0 @@
-{"uuid":"bc1b9315-6a6d-43b2-9d5f-2f4b95d1f611","name":"Cenário 3: Deve retornar 400 quando tenta cadastrar prova com Título com mais de 100 caracteres","children":["46cc1a24-9fee-4bd7-b229-1d9d5ad177f7"],"befores":[],"afters":[],"links":[],"start":1709529398546,"stop":1709529399197}

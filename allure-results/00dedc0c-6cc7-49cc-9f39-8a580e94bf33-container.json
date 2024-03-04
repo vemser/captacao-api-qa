@@ -1,1 +1,0 @@
-{"uuid":"00dedc0c-6cc7-49cc-9f39-8a580e94bf33","name":"Cenário 14: Deve retornar 400 quando tenta cadastrar candidato com telefone nulo","children":["201b13f3-47c5-4866-aa72-f1171fdf6f4c"],"befores":[],"afters":[],"links":[],"start":1709320491347,"stop":1709320491350}

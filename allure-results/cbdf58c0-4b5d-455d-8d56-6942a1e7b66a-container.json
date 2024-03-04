@@ -1,1 +1,0 @@
-{"uuid":"cbdf58c0-4b5d-455d-8d56-6942a1e7b66a","name":"Cenário 2: Deve retornar 403 quando deleta trilha sem autenticação","children":["edf007c1-9b38-4b64-921f-2f466f0276ac"],"befores":[],"afters":[],"links":[],"start":1709066366091,"stop":1709066366272}

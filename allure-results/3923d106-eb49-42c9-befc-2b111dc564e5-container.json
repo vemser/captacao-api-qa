@@ -1,1 +1,0 @@
-{"uuid":"3923d106-eb49-42c9-befc-2b111dc564e5","name":"Cenário 16: Deve retornar 400 quando tenta cadastrar candidato com rg nulo","children":["bbcd35ee-d762-4600-b149-9e0d2d92d965"],"befores":[],"afters":[],"links":[],"start":1709320787606,"stop":1709320787611}

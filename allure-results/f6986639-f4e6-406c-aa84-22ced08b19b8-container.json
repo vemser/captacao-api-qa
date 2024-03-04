@@ -1,1 +1,0 @@
-{"uuid":"f6986639-f4e6-406c-aa84-22ced08b19b8","name":"Cenário 2: Deve retornar 403 quando lista trilha por mês sem estar autenticado","children":["6ac1e855-c052-47d0-946c-30c7c9ae3191"],"befores":[],"afters":[],"links":[],"start":1709324926939,"stop":1709324929081}

@@ -1,1 +1,0 @@
-{"uuid":"1e2de23e-efd3-4933-8fd4-57ee904c1a23","name":"Cenário 4: Deve retornar 400 quando é passado qtd de candidatos como string","children":["6df35959-8cf6-457e-ab86-9f8e50577608"],"befores":[],"afters":[],"links":[],"start":1709521831065,"stop":1709521831383}

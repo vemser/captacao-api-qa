@@ -1,1 +1,0 @@
-{"uuid":"464fbdd4-379a-4b4d-aaea-361aa43718f6","name":"Cenário 2: Deve retornar 403 ao listar relatório de candidato por edição sem autenticação","children":["8ac9b404-af18-43ef-a544-ce43133ff658"],"befores":[],"afters":[],"links":[],"start":1709321526514,"stop":1709321527367}

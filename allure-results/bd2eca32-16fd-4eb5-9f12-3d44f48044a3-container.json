@@ -1,1 +1,0 @@
-{"uuid":"bd2eca32-16fd-4eb5-9f12-3d44f48044a3","name":"Cenário 2: Deve retornar 403 ao cadastrar edição sem autenticação","children":["079f2ff9-c1f3-4e85-9ff4-179bcc49176e"],"befores":[],"afters":[],"links":[],"start":1709590915044,"stop":1709590915191}

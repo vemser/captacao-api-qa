@@ -1,1 +1,0 @@
-{"uuid":"d72146c7-62ae-4153-baf0-e0d9ab61c123","name":"Cenário 2: Deve retornar 403 quando atualiza nota da prova sem autenticação","children":["f7ded854-3e91-4e27-95e7-d28b2350fba1"],"befores":[],"afters":[],"links":[],"start":1709059836669,"stop":1709059837029}

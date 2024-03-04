@@ -1,1 +1,0 @@
-{"uuid":"4b6478a9-e9e7-4ecd-adcf-0dbcb4e7360a","name":"Cenário 2: Deve retornar 403 ao deletar entrevista por id sem autenticação","children":["6095b4e6-bc7a-41a5-a54d-daac65fd472b"],"befores":[],"afters":[],"links":[],"start":1709579810266,"stop":1709579810905}

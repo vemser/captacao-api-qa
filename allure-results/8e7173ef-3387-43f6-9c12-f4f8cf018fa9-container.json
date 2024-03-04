@@ -1,1 +1,0 @@
-{"uuid":"8e7173ef-3387-43f6-9c12-f4f8cf018fa9","name":"Cenário 1: Deve retornar 403 ao listar relatório de candidatos por estado sem autenticação","children":["e8d7dfdf-d2c7-4cc5-88bc-82627e510270"],"befores":[],"afters":[],"links":[],"start":1709359693132,"stop":1709359693943}

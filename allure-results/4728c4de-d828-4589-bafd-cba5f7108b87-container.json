@@ -1,1 +1,0 @@
-{"uuid":"4728c4de-d828-4589-bafd-cba5f7108b87","name":"Cenário 31: Deve retornar 400 quando tenta cadastrar candidato com lista nula de linguagem","children":["dc5b05a2-3384-4b7b-a36b-22796ba09348"],"befores":[],"afters":[],"links":[],"start":1709525433306,"stop":1709525436076}

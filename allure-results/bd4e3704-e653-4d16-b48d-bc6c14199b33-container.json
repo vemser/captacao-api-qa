@@ -1,1 +1,0 @@
-{"uuid":"bd4e3704-e653-4d16-b48d-bc6c14199b33","name":"Cenário 2: Deve retornar 403 quando deleta avaliação sem autenticação","children":["d3323f13-8d74-49b4-aa1f-a492cb06ae04"],"befores":[],"afters":[],"links":[],"start":1709487470682,"stop":1709487477157}

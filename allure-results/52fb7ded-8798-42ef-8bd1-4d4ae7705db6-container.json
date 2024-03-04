@@ -1,1 +1,0 @@
-{"uuid":"52fb7ded-8798-42ef-8bd1-4d4ae7705db6","name":"Cenário 11: Deve retornar 400 quando tenta cadastrar candidato com e-mail sem domínio","children":["00b67b47-f98c-475d-bf51-e5093e08547d"],"befores":[],"afters":[],"links":[],"start":1709521558781,"stop":1709521561617}

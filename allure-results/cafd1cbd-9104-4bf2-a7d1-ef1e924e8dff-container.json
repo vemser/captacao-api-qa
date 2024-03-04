@@ -1,1 +1,0 @@
-{"uuid":"cafd1cbd-9104-4bf2-a7d1-ef1e924e8dff","name":"Cenário 29: Deve retornar 400 quando tenta cadastrar candidato com ativo nulo","children":["bc2a5d1d-b9ff-419f-9f06-27beaf3eb9b4"],"befores":[],"afters":[],"links":[],"start":1709564359869,"stop":1709564370119}

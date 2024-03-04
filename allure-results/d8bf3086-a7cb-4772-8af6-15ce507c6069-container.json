@@ -1,1 +1,0 @@
-{"uuid":"d8bf3086-a7cb-4772-8af6-15ce507c6069","name":"Cenário 26: Deve retornar 400 quando tenta cadastrar candidato com cidade em branco","children":["d2e191ed-e240-4ede-b60e-136ca191b1ed"],"befores":[],"afters":[],"links":[],"start":1709525481095,"stop":1709525484029}

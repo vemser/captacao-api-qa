@@ -1,1 +1,0 @@
-{"uuid":"f3339c60-b81d-4662-9a9b-700d5588d2d6","name":"Cenário 2: Deve retornar 403 ao retornar relatório com quantidade de candidatos com neurodiversidade sem autenticação","children":["d84aece3-8f66-4742-bed2-f813d79f140c"],"befores":[],"afters":[],"links":[],"start":1709066360663,"stop":1709066360844}

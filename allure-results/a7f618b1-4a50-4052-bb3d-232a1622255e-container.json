@@ -1,1 +1,0 @@
-{"uuid":"a7f618b1-4a50-4052-bb3d-232a1622255e","name":"Cenário 33: Deve retornar 400 quando tenta cadastrar candidato com lista de linguagem não cadastrada","children":["adce625e-b9f7-42eb-b292-ec2c06c54941"],"befores":[],"afters":[],"links":[],"start":1709525447872,"stop":1709525450869}

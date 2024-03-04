@@ -1,1 +1,0 @@
-{"uuid":"08dea142-0fbd-4cd4-aa6d-c8148d41b36c","name":"Cenário 3: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação","children":["5b90f6aa-e8fb-4428-9873-8e375a1bb0a4"],"befores":[],"afters":[],"links":[],"start":1709564748749,"stop":1709564749677}

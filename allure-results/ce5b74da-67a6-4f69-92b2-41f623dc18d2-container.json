@@ -1,1 +1,0 @@
-{"uuid":"ce5b74da-67a6-4f69-92b2-41f623dc18d2","name":"Cenário 2: Deve retornar 403 quando lista as trilhas sem autenticação","children":["8e395a5a-b55c-4da6-a495-45e9337b3916"],"befores":[],"afters":[],"links":[],"start":1709059837722,"stop":1709059837883}

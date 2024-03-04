@@ -1,1 +1,0 @@
-{"uuid":"f8040e93-1b12-4c9c-872a-b3767e0f7301","name":"Cenário 17: Deve retornar 400 quando tenta cadastrar candidato com rg em branco","children":["af0d7ebd-594d-4616-abff-7486d3f637f5"],"befores":[],"afters":[],"links":[],"start":1709529267714,"stop":1709529270635}

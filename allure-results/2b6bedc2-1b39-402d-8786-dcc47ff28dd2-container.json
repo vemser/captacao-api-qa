@@ -1,1 +1,0 @@
-{"uuid":"2b6bedc2-1b39-402d-8786-dcc47ff28dd2","name":"Cenário 18: Deve retornar 400 quando tenta cadastrar candidato com rg com mais de 13 caracteres","children":["e95c2305-664f-41a0-ad3e-8459589bd71c"],"befores":[],"afters":[],"links":[],"start":1709357549540,"stop":1709357593512}

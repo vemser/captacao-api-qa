@@ -1,1 +1,0 @@
-{"uuid":"3040250e-823b-4b25-b40b-83c38a83b92e","name":"Cenário 5: Deve retornar 400 quando tenta cadastrar candidato com menos de 16 anos","children":["9dc0f504-0c23-497d-b8ae-cfe52fed745b"],"befores":[],"afters":[],"links":[],"start":1709059871473,"stop":1709059871797}

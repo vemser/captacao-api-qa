@@ -1,1 +1,0 @@
-{"uuid":"4f9b7eb0-daa0-47b2-9d2f-9dbfae149176","name":"Cenário 20: Deve retornar 400 quando tenta cadastrar candidato com cpf em branco","children":["f70fd7f5-96fb-495c-9526-debf366d4a3f"],"befores":[],"afters":[],"links":[],"start":1709527571708,"stop":1709527574605}

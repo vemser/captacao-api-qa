@@ -1,1 +1,0 @@
-{"uuid":"a9597844-d0af-4aef-b18b-40c6fb191623","name":"Cenário 5: Deve retornar 400 quando tenta cadastrar questão objetiva excedendo os 4000 caracteres no enunciado","children":["e06d72f0-5d92-404e-812c-ce94b58717d6"],"befores":[],"afters":[],"links":[],"start":1709521738716,"stop":1709521739049}

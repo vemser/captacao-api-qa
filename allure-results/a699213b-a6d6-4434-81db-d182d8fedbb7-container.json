@@ -1,1 +1,0 @@
-{"uuid":"a699213b-a6d6-4434-81db-d182d8fedbb7","name":"Cenário 21: Deve retornar 400 quando tenta cadastrar candidato com cpf inválido","children":["3bc716e5-03cd-4c23-89e2-2d92a255c341"],"befores":[],"afters":[],"links":[],"start":1709529209101,"stop":1709529212080}

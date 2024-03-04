@@ -1,1 +1,0 @@
-{"uuid":"7a730f53-063e-4450-81c5-d72adfb7768a","name":"Cenário 36: Deve retornar 400 quando tenta cadastrar candidato com id formulário nulo","children":["32703886-2d82-457c-a559-f582571f1998"],"befores":[],"afters":[],"links":[],"start":1709529203055,"stop":1709529206039}
