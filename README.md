@@ -10,6 +10,11 @@
 
 Repositório para alocar os testes automatizados de API com Rest-Assured que foram desenvolvidos durante o trabalho final da 13° edição do programa Vem Ser.
 
+## Documentação
+- [Plano de Testes](https://docs.google.com/document/d/1VYfTStATCmQv_4LrLfesFFRp3tFiYMGKj9X8MYQ-TIw)
+- [User Stories + Cenários de Testes](https://drive.google.com/file/d/1sUtOdkRkSD8SSjM0HYnmp3xVuOXup5Eh/view)
+- [Trello](https://trello.com/b/y0mKWbUq/captação-provas)
+
 ## Links
 - [Captação + Provas](http://vemser-dbc.dbccompany.com.br:39000/vemser/vemser-front)
 - [API Swagger](http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back-release/swagger-ui/index.html)
