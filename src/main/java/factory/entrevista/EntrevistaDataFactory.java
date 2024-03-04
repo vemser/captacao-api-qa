@@ -26,7 +26,7 @@ public class EntrevistaDataFactory {
 
         Integer diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
 
-        LocalDateTime dataEntrevista = LocalDateTime.of(anoEntrevista, mesEntrevista, diaFuturo, 15, 47, 2, 602000000);
+        LocalDateTime dataEntrevista = LocalDateTime.of(anoEntrevista, mesEntrevista, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
 
         String candidatoAvaliado = avaliado ? "T" : "F";
 
@@ -62,7 +62,7 @@ public class EntrevistaDataFactory {
         Integer mesFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getMonthValue();
         Integer anoFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getYear();
 
-        LocalDateTime dataEntrevista = LocalDateTime.of(anoFuturo, mesFuturo, diaFuturo, 15, 47, 2, 602000000);
+        LocalDateTime dataEntrevista = LocalDateTime.of(anoFuturo, mesFuturo, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
 
         String candidatoAvaliado = avaliado ? "T" : "F";
 

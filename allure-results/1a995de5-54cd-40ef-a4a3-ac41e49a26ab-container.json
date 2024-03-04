@@ -1,0 +1,1 @@
+{"uuid":"1a995de5-54cd-40ef-a4a3-ac41e49a26ab","name":"Cenário 2: Deve retornar 403 ao cadastrar entrevista sem autenticação","children":["931bcb05-78e6-432e-b483-b0e2577ad115"],"befores":[],"afters":[],"links":[],"start":1709590948884,"stop":1709590954512}
