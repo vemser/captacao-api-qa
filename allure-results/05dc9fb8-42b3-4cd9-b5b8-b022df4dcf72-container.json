@@ -1,0 +1,1 @@
+{"uuid":"05dc9fb8-42b3-4cd9-b5b8-b022df4dcf72","name":"Cenário 34: Deve retornar 400 quando tenta cadastrar candidato com edicão nula","children":["61c521f6-fc52-4518-8010-398c27290313"],"befores":[],"afters":[],"links":[],"start":1709521546405,"stop":1709521549104}

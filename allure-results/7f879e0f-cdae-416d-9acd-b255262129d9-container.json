@@ -1,0 +1,1 @@
+{"uuid":"7f879e0f-cdae-416d-9acd-b255262129d9","name":"Cenário 2: Deve retornar 403 ao cadastrar avaliação sem autenticação","children":["c1563361-3bde-41d3-9b61-d7111f8e288d"],"befores":[],"afters":[],"links":[],"start":1709322413775,"stop":1709322422303}

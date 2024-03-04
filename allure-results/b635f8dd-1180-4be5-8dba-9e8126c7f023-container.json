@@ -1,0 +1,1 @@
+{"uuid":"b635f8dd-1180-4be5-8dba-9e8126c7f023","name":"Cenário 2: Deve retornar 403 ao listar relatório de candidatos pcd sem autenticação","children":["b4e16f5b-3f74-4ef9-8abf-6a099165a4f0"],"befores":[],"afters":[],"links":[],"start":1709320459629,"stop":1709320460494}

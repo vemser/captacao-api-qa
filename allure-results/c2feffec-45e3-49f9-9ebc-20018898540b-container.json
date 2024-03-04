@@ -1,0 +1,1 @@
+{"uuid":"c2feffec-45e3-49f9-9ebc-20018898540b","name":"Cenário 2: Deve retornar 403 ao deletar edição sem autenticação","children":["97167471-1716-4a2e-86b8-08065df64df7"],"befores":[],"afters":[],"links":[],"start":1709525290460,"stop":1709525292358}

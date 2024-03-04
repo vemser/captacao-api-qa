@@ -1,0 +1,1 @@
+{"uuid":"5314e5b2-684c-4a2c-a9dd-7ccd94aed51a","name":"Cenário 2: Deve retornar 403 ao listar a última edição sem autenticação","children":["9f3fab4e-22da-4456-8130-9a4c9aff3de8"],"befores":[],"afters":[],"links":[],"start":1709521447229,"stop":1709521447552}

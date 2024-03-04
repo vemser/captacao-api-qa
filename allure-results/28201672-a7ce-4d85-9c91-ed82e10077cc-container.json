@@ -1,0 +1,1 @@
+{"uuid":"28201672-a7ce-4d85-9c91-ed82e10077cc","name":"Cenário 2: Deve retornar 403 quando cadastra trilha sem autenticação","children":["87518c2f-2391-482f-8ea2-9b60743c87f5"],"befores":[],"afters":[],"links":[],"start":1709059848480,"stop":1709059848650}

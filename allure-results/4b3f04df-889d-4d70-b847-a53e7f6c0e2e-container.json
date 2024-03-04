@@ -1,0 +1,1 @@
+{"uuid":"4b3f04df-889d-4d70-b847-a53e7f6c0e2e","name":"Cenário 8: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento inválida","children":["e8a9d70e-23df-43a5-86cd-629782c66d8f"],"befores":[],"afters":[],"links":[],"start":1709321227505,"stop":1709321232190}

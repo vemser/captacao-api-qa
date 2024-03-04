@@ -1,0 +1,1 @@
+{"uuid":"f1355242-59cb-4174-8184-3bc6db6a04e7","name":"Cenário 10: Deve retornar 400 quando tenta cadastrar candidato com e-mail em branco","children":["693b807f-dec7-45f6-b61b-c8fb10bcb64b"],"befores":[],"afters":[],"links":[],"start":1709320491352,"stop":1709320491355}

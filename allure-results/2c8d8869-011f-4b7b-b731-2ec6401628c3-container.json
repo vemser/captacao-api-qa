@@ -1,0 +1,1 @@
+{"uuid":"2c8d8869-011f-4b7b-b731-2ec6401628c3","name":"Cenário 2: Deve retornar 403 quando atualiza parecer comportamental do candidato sem autenticação","children":["219371f1-6265-425a-bfad-37e13bb38dda"],"befores":[],"afters":[],"links":[],"start":1709527687003,"stop":1709527695557}

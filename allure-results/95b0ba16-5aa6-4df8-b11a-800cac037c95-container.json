@@ -1,0 +1,1 @@
+{"uuid":"95b0ba16-5aa6-4df8-b11a-800cac037c95","name":"Cenário 2: Deve retornar 403 ao atualizar entrevista sem estar autenticado","children":["c3ab18ca-ebb8-49f1-b72f-c2455cf6f700"],"befores":[],"afters":[],"links":[],"start":1709059855297,"stop":1709059855678}

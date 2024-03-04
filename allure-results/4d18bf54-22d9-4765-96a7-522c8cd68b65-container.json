@@ -1,0 +1,1 @@
+{"uuid":"4d18bf54-22d9-4765-96a7-522c8cd68b65","name":"Cenário 4: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento no futuro","children":["77ed0cbf-ca9a-46b0-8077-27faa16a8492"],"befores":[],"afters":[],"links":[],"start":1709564570083,"stop":1709564576575}

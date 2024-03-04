@@ -1,0 +1,1 @@
+{"uuid":"6d620af3-a6ce-4d5c-831f-bda6bf1949e1","name":"Cenário 4: Deve retornar 400 quando tenta cadastrar prova com titulo vazio","children":["2a932d49-2f3c-4c11-9c2b-a1270b393384"],"befores":[],"afters":[],"links":[],"start":1709517637543,"stop":1709517639319}

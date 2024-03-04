@@ -1,0 +1,1 @@
+{"uuid":"4739016e-913b-48d6-9b1f-3172235f7269","name":"Cenário 15: Deve retornar 400 quando tenta cadastrar candidato com telefone em branco","children":["5297e1eb-7fcd-4563-866e-0f703a890568"],"befores":[],"afters":[],"links":[],"start":1709320491319,"stop":1709320491322}

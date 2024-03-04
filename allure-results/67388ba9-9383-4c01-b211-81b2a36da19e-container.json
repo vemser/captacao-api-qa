@@ -1,0 +1,1 @@
+{"uuid":"67388ba9-9383-4c01-b211-81b2a36da19e","name":"Cenário 1: Deve retornar 204 ao deletar entrevista por id com sucesso","children":["b4390849-267a-4e14-84dc-c8583c5666dd"],"befores":[],"afters":[],"links":[],"start":1709525362015,"stop":1709525368674}

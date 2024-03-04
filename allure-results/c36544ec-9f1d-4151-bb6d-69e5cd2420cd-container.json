@@ -1,0 +1,1 @@
+{"uuid":"c36544ec-9f1d-4151-bb6d-69e5cd2420cd","name":"Cenário 35: Deve retornar 400 quando tenta cadastrar candidato com edicão não existente","children":["a727c20c-3e06-4219-afe6-934e623a24bd"],"befores":[],"afters":[],"links":[],"start":1709350136480,"stop":1709350214316}

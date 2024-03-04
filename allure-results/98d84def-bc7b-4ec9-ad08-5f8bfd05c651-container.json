@@ -1,0 +1,1 @@
+{"uuid":"98d84def-bc7b-4ec9-ad08-5f8bfd05c651","name":"Cenário 2: Deve retornar 403 ao atualizar candidato sem autenticação","children":["7dd20228-e1c4-4064-acb5-de229aaa6a57"],"befores":[],"afters":[],"links":[],"start":1709066358404,"stop":1709066358589}

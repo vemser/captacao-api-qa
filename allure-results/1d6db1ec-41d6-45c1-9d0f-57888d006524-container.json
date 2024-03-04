@@ -1,0 +1,1 @@
+{"uuid":"1d6db1ec-41d6-45c1-9d0f-57888d006524","name":"Cenário 1: Deve retornar 403 quando cadastra sem autenticação","children":["84c9d629-90c7-4c33-9dbd-0724da01772b"],"befores":[],"afters":[],"links":[],"start":1709517639952,"stop":1709517640621}

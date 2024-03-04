@@ -1,0 +1,1 @@
+{"uuid":"96830ad5-464b-48ea-9ea2-5cb50425843e","name":"Cenário 1: Deve retornar 204 ao deletar inscrição com sucesso","children":["400bc0f7-006f-4e1e-a183-ac15c69edf71"],"befores":[],"afters":[],"links":[],"start":1709487264126,"stop":1709487268381}

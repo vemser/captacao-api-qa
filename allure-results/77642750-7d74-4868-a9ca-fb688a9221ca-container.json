@@ -1,0 +1,1 @@
+{"uuid":"77642750-7d74-4868-a9ca-fb688a9221ca","name":"Cenário 30: Deve retornar 400 quando tenta cadastrar candidato com ativo em branco","children":["4933ad15-cb11-43da-b868-ffaa420d74e8"],"befores":[],"afters":[],"links":[],"start":1709564332955,"stop":1709564338882}

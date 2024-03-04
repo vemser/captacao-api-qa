@@ -1,0 +1,1 @@
+{"uuid":"65a36819-8d79-4d7f-94c2-2c20a920f1ad","name":"Cenário 22: Deve retornar 400 quando tenta cadastrar candidato com cpf já cadastrado","children":["7c2ccf75-2a5a-4d8c-a5bc-8b1070420372"],"befores":[],"afters":[],"links":[],"start":1709529255850,"stop":1709529257825}

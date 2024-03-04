@@ -1,0 +1,1 @@
+{"uuid":"8db91666-0c8c-41dc-aa72-fcb3a853f067","name":"Cenário 2: Deve retornar 403 quando atualiza nota do candidato sem autenticação","children":["f06e8d85-e31d-4205-9373-8d8d53379dcc"],"befores":[],"afters":[],"links":[],"start":1709066372852,"stop":1709066373052}

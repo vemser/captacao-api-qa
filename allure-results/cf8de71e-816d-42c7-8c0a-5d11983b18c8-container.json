@@ -1,0 +1,1 @@
+{"uuid":"cf8de71e-816d-42c7-8c0a-5d11983b18c8","name":"Cenário 2: Deve retornar 403 quando tenta excluir uma prova sem autenticação","children":["325fb50f-ee94-4075-8c35-a4cc0f17d45e"],"befores":[],"afters":[],"links":[],"start":1709529460080,"stop":1709529463343}

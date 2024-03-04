@@ -1,0 +1,1 @@
+{"uuid":"5f0838a3-ee99-4689-8670-a64373f879bb","name":"Cenário 9: Deve retornar 400 quando tenta cadastrar questão objetiva com mais de cinco alternativas","children":["b61074a2-28c8-4c86-8754-da30a9858cdf"],"befores":[],"afters":[],"links":[],"start":1709529471239,"stop":1709529471566}

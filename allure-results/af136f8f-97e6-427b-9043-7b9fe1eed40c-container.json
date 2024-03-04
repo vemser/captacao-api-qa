@@ -1,0 +1,1 @@
+{"uuid":"af136f8f-97e6-427b-9043-7b9fe1eed40c","name":"Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição","children":["b297aa35-9ca8-441f-836c-ca3c0aea325b"],"befores":[],"afters":[],"links":[],"start":1709521563426,"stop":1709521565229}

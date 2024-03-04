@@ -1,0 +1,1 @@
+{"uuid":"bf3485d0-3c9f-4bce-8a1e-9fb38bcfe938","name":"Cenário 2: Deve retornar 403 quando lista as entrevistas sem estar autenticado","children":["3a9826eb-c464-42cc-865c-80435cf552ef"],"befores":[],"afters":[],"links":[],"start":1709320786044,"stop":1709320786046}

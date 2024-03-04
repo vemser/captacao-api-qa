@@ -1,0 +1,1 @@
+{"uuid":"f3ec3e47-bd28-4037-891d-50d962418ac5","name":"Cenário 28: Deve retornar 400 quando tenta cadastrar candidato com pcd em branco","children":["e96cc9e0-c4d6-49a1-ad8a-a7a9c5f22acd"],"befores":[],"afters":[],"links":[],"start":1709527568759,"stop":1709527571706}

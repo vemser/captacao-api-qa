@@ -1,0 +1,1 @@
+{"uuid":"d2d841af-0785-4307-9d42-289ddd978917","name":"Cenário 2: Deve retornar 403 quando busca candidato por cpf sem autenticação","children":["93d8cc78-8945-4409-94d6-bf43eb298dc9"],"befores":[],"afters":[],"links":[],"start":1709320460505,"stop":1709320460508}

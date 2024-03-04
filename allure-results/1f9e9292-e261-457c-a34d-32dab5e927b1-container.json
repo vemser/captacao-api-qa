@@ -1,0 +1,1 @@
+{"uuid":"1f9e9292-e261-457c-a34d-32dab5e927b1","name":"Cenário 2: Deve retornar 403 quando deleta candidato sem autenticação","children":["e64fed9a-1b34-456a-9884-c13624ed27a1"],"befores":[],"afters":[],"links":[],"start":1709521442548,"stop":1709521447213}

@@ -1,0 +1,1 @@
+{"uuid":"a6b889c4-3d24-405f-84c1-9b3b6236996c","name":"Cenário 9: Deve retornar 400 quando tenta cadastrar candidato com e-mail nulo","children":["bcf78ca4-360c-4966-9e40-756211decd7b"],"befores":[],"afters":[],"links":[],"start":1709525498824,"stop":1709525501684}

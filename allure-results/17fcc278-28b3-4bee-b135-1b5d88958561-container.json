@@ -1,0 +1,1 @@
+{"uuid":"17fcc278-28b3-4bee-b135-1b5d88958561","name":"Cenário 2: Deve retornar 403 quando tentar deletar uma questão sem autenticação","children":["9a8859ce-d86b-4229-80ea-aa88b3349f2f"],"befores":[],"afters":[],"links":[],"start":1709441980549,"stop":1709441986404}

@@ -1,0 +1,1 @@
+{"uuid":"bb59ce40-c93e-4bf7-b55e-29092ed23e5c","name":"Cenário 2: Deve retornar 403 ao deletar inscrição sem autenticação","children":["99dc9580-4c6d-4850-91c0-2e3753786027"],"befores":[],"afters":[],"links":[],"start":1709347718054,"stop":1709347850204}

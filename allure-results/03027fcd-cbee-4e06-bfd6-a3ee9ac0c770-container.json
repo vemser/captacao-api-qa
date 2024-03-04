@@ -1,0 +1,1 @@
+{"uuid":"03027fcd-cbee-4e06-bfd6-a3ee9ac0c770","name":"Cenário 3: Deve retornar 400 quando é passado qtd negativa de candidatos","children":["170db1b4-74b7-4d2d-b982-d7c804cc26b2"],"befores":[],"afters":[],"links":[],"start":1709487364296,"stop":1709487364615}

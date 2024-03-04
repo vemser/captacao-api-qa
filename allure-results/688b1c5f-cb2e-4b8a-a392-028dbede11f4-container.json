@@ -1,0 +1,1 @@
+{"uuid":"688b1c5f-cb2e-4b8a-a392-028dbede11f4","name":"Cenário 6: Deve retornar 400 ao tentar criar questão prática excedendo os 4000 caracteres no enunciado","children":["322cd454-a044-42a7-8505-e81d1557fdd1"],"befores":[],"afters":[],"links":[],"start":1709521757363,"stop":1709521757681}

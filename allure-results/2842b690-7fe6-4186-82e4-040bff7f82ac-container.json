@@ -1,0 +1,1 @@
+{"uuid":"2842b690-7fe6-4186-82e4-040bff7f82ac","name":"Cenário 2: Deve retornar 403 ao cadastrar linguagem sem autenticação","children":["973fb696-b8dc-4fe5-8ae2-b04e68379b2c"],"befores":[],"afters":[],"links":[],"start":1709059883029,"stop":1709059883184}

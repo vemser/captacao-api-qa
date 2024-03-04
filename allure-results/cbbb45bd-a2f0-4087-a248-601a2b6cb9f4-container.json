@@ -1,0 +1,1 @@
+{"uuid":"cbbb45bd-a2f0-4087-a248-601a2b6cb9f4","name":"Cenário 3: Deve retornar 403 ao listar relatório de candidato por etnia sem autenticação","children":["06d5e73b-d83a-40b8-9364-e13f1f6864fe"],"befores":[],"afters":[],"links":[],"start":1709529444089,"stop":1709529444383}

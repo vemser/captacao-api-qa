@@ -1,0 +1,1 @@
+{"uuid":"76fb55b3-afb6-4c02-9754-fe7f43bb034c","name":"Cenário 6: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento nula","children":["c04fc6b6-024f-4326-acfc-ea8ba084f68c"],"befores":[],"afters":[],"links":[],"start":1709356495752,"stop":1709356540064}

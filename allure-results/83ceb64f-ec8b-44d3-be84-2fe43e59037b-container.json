@@ -1,0 +1,1 @@
+{"uuid":"83ceb64f-ec8b-44d3-be84-2fe43e59037b","name":"Cenário 1: Deve retornar 200 ao buscar entrevista por email do candidato com sucesso","children":["93adb753-7d3b-4d17-b918-7796be47b484"],"befores":[],"afters":[],"links":[],"start":1709059851073,"stop":1709059851470}

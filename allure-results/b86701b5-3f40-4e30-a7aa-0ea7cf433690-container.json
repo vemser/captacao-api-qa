@@ -1,0 +1,1 @@
+{"uuid":"b86701b5-3f40-4e30-a7aa-0ea7cf433690","name":"Cenário 24: Deve retornar 400 quando tenta cadastrar candidato com estado em branco","children":["0c747659-f73a-4d79-97a1-aa8f038c6ae3"],"befores":[],"afters":[],"links":[],"start":1709326521515,"stop":1709326548428}

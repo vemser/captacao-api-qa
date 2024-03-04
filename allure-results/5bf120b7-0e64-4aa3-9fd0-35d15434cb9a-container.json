@@ -1,0 +1,1 @@
+{"uuid":"5bf120b7-0e64-4aa3-9fd0-35d15434cb9a","name":"Cenário 2: Deve retornar 403 quando lista inscrição por id sem autenticação","children":["60a2e45c-32af-48cb-bfc7-c36f0f364b0e"],"befores":[],"afters":[],"links":[],"start":1709059843837,"stop":1709059844177}

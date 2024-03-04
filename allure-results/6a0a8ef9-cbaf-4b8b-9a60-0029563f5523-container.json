@@ -1,0 +1,1 @@
+{"uuid":"6a0a8ef9-cbaf-4b8b-9a60-0029563f5523","name":"Cenário 25: Deve retornar 400 quando tenta cadastrar candidato com cidade nula","children":["ab32a24f-6a88-4ca0-9865-5f9130cbc056"],"befores":[],"afters":[],"links":[],"start":1709529310836,"stop":1709529313720}

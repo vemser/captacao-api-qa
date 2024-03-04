@@ -1,0 +1,1 @@
+{"uuid":"f364e10e-71e8-4c07-b8a7-335865e9c682","name":"Cenário 7: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento em branco","children":["06a72368-ee3a-4875-a27c-d03f52cc11b6"],"befores":[],"afters":[],"links":[],"start":1709320787737,"stop":1709320787739}

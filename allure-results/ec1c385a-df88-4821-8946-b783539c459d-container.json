@@ -1,0 +1,1 @@
+{"uuid":"ec1c385a-df88-4821-8946-b783539c459d","name":"Cenário 19: Deve retornar 400 quando tenta cadastrar candidato com cpf nulo","children":["049dd937-f272-46bc-aaa5-3b95bfcef9c3"],"befores":[],"afters":[],"links":[],"start":1709321285618,"stop":1709321290114}

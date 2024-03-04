@@ -1,0 +1,1 @@
+{"uuid":"84f43daf-bcb8-40d3-bbee-51e804c46cd9","name":"Cenário 2: Deve retornar 403 sem body por não estar autenticado","children":["c1462560-c250-4bba-8262-6ff9d89061d7"],"befores":[],"afters":[],"links":[],"start":1709349143142,"stop":1709349148444}

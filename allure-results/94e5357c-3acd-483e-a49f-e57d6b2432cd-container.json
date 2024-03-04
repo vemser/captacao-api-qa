@@ -1,0 +1,1 @@
+{"uuid":"94e5357c-3acd-483e-a49f-e57d6b2432cd","name":"Cenário 5: Deve retornar 400 quando tenta cadastrar prova sem selecionar questões","children":["88d5a4c3-cd59-434c-9c14-0121b2d65ec7"],"befores":[],"afters":[],"links":[],"start":1709518014837,"stop":1709518018151}

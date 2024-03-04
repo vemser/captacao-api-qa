@@ -1,0 +1,1 @@
+{"uuid":"32d4e483-a867-4dbf-a0b2-9aca73727619","name":"Cenário 27: Deve retornar 400 quando tenta cadastrar candidato com pcd nulo","children":["6b554d57-9a7a-4103-9312-383efecc93b8"],"befores":[],"afters":[],"links":[],"start":1709564576576,"stop":1709564582471}

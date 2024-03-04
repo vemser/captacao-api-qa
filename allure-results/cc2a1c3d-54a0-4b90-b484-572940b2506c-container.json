@@ -1,0 +1,1 @@
+{"uuid":"cc2a1c3d-54a0-4b90-b484-572940b2506c","name":"Cenário 4: Deve retornar 400 quando tenta cadastrar questão objetiva com enunciado vazio","children":["e662ab57-f479-4ef8-977c-9c813d539154"],"befores":[],"afters":[],"links":[],"start":1709565067295,"stop":1709565067649}

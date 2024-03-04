@@ -1,0 +1,1 @@
+{"uuid":"d5fefb21-29d2-499e-914a-fde942eed948","name":"Cenário 8: Deve retornar 400 quando tenta cadastrar questão objetiva com apenas uma alternativa","children":["bad3e7fa-5305-4205-b0fa-20185760af05"],"befores":[],"afters":[],"links":[],"start":1709565065068,"stop":1709565065411}

@@ -1,0 +1,1 @@
+{"uuid":"2567aa25-f15f-4045-ada6-8fc6d377cfd0","name":"Cenário 7: Deve retornar 400 quando tenta cadastrar questão objetiva com nenhuma alternativa correta","children":["e4ad3b47-dc39-4363-8b6b-f5a80dc7334e"],"befores":[],"afters":[],"links":[],"start":1709441697517,"stop":1709441697890}
