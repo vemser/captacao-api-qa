@@ -1,7 +1,6 @@
 package client.linguagem;
 
 import client.auth.AuthClient;
-import factory.linguagem.LinguagemDataFactory;
 import io.restassured.response.Response;
 import models.linguagem.LinguagemModel;
 import specs.linguagem.LinguagemSpecs;
@@ -17,7 +16,7 @@ public class LinguagemClient {
     public static final String ID_LINGUAGEM = "idLinguagem";
 
     public Response criarLinguagemPassandoNome(String nomeDaLinguagem) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -30,10 +29,11 @@ public class LinguagemClient {
     }
 
     public Response criarLinguagemPassandoNomeSemAutenticacao(String nomeDaLinguagem) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(LinguagemSpecs.linguagemReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(NOME, nomeDaLinguagem)
                 .when()
                         .post(LINGUAGEM)
@@ -41,7 +41,7 @@ public class LinguagemClient {
     }
 
     public Response deletarLinguagemPorId(Integer idLinguagem) {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -54,10 +54,11 @@ public class LinguagemClient {
     }
 
     public Response deletarLinguagemPorIdSemAutenticacao(Integer idLinguagem) {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(LinguagemSpecs.linguagemReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_LINGUAGEM, idLinguagem)
                 .when()
                         .delete(LINGUAGEM_DELETE_FISICO_ID_LINGUAGEM)
@@ -65,7 +66,7 @@ public class LinguagemClient {
     }
 
     public Response listarLinguagens() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -77,17 +78,18 @@ public class LinguagemClient {
     }
 
     public Response listarLinguagensSemAutenticacao() {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(LinguagemSpecs.linguagemReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(LINGUAGEM)
                 ;
     }
 
     public LinguagemModel retornarPrimeiraLinguagemCadastrada() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         Response response =
                 given()

@@ -18,7 +18,7 @@ public class RelatorioClient {
     public static final String RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO = "/relatorios/quantidade-de-pessoas-inscritas-por-edicao";
 
     public Response listarCandidatosPcd() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -30,17 +30,18 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosPcdSemAutenticacao() {
-
+        Auth.usuarioAluno();
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_PCD)
                 ;
     }
 
     public Response listarCandidatosNeurodiversidade() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -88,7 +89,7 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEtnia() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -112,7 +113,7 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEstado() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
@@ -138,7 +139,7 @@ public class RelatorioClient {
     }
 
     public Response listarCandidatosEdicao() {
-        Auth.obterTokenComoAdmin();
+        Auth.usuarioGestaoDePessoas();
 
         return
                 given()
