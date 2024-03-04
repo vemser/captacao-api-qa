@@ -1,9 +1,4 @@
 ##############################
-## Reports
-##############################
-allure-results*
-
-##############################
 ## Environment
 ##############################
 src/properties/application-config.properties
