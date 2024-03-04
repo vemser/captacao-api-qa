@@ -20,14 +20,16 @@ class ListarCandidatosTest {
     @DisplayName("Cenário 1: Deve retornar 200 e lista contendo 20 elementos com sucesso")
     void testListarTodosOsCandidatos() {
 
+        Integer tamanhoPadraoLista = 20;
+        Integer pagina = 2;
 
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos()
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
                 .then()
+                    .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(JSONListaCandidatoResponse.class);
 
-        Integer tamanhoPadraoLista = 20;
         Integer idCandidato1 = listaCandidatoResponse.getElementos().get(0).getIdCandidato();
         Integer idCandidato2 = listaCandidatoResponse.getElementos().get(1).getIdCandidato();
 
@@ -38,16 +40,19 @@ class ListarCandidatosTest {
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 e body deve conter 10 candidatos")
     void testListarDezCandidatos() {
-        Integer numDeCandidatos = 10;
 
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
+        Integer tamanhoPadraoLista = 10;
+        Integer pagina = 1;
+
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
                 .then()
+                    .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(JSONListaCandidatoResponse.class);
 
-        Assertions.assertEquals(numDeCandidatos, listaCandidatoResponse.getElementos().size());
-        Assertions.assertEquals(numDeCandidatos, listaCandidatoResponse.tamanho);
+        Assertions.assertEquals(tamanhoPadraoLista, listaCandidatoResponse.getElementos().size());
+        Assertions.assertEquals(tamanhoPadraoLista, listaCandidatoResponse.tamanho);
     }
 
     @Test

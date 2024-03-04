@@ -4,8 +4,11 @@ import client.prova.ProvaClient;
 import factory.prova.ProvaDataFactory;
 import models.prova.*;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de editar prova")
 class EditarProvaTest {
@@ -26,15 +29,24 @@ class EditarProvaTest {
                 .as(ProvaResponse.class);
 
         // Cria uma nova instância de ProvaCriacaoModel com as questões editadas
-        ProvaEditarQuestoesModel provaEditada = ProvaDataFactory.provaValidaComQuestoesEditadas();
+        ProvaEditarModel provaEditada = ProvaDataFactory.provaValidaComQuestoesEditadas(provaInicial);
 
         // Edita as questões da prova
         ProvaResponse editadaResponse = provaClient.editarQuestoesProva(criadaResponse.getId(), provaEditada)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(ProvaResponse.class);
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(ProvaResponse.class)
+                ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Editado com sucesso", editadaResponse.getMensagem()),
+                () -> Assertions.assertNotNull(editadaResponse.getId())
+        );
+
+        provaClient.deletarProva(editadaResponse.getId());
+
     }
 
     @Test
@@ -52,15 +64,24 @@ class EditarProvaTest {
                 .as(ProvaResponse.class);
 
         // Cria uma nova instância de ProvaCriacaoModel com as questões editadas
-        ProvaEditarDuracaoModel provaEditada = ProvaDataFactory.provaEditarDuracaoProva();
+        ProvaEditarModel provaEditada = ProvaDataFactory.provaEditarDuracaoProva(provaInicial);
 
         // Edita as questões da prova
         ProvaResponse editadaResponse = provaClient.editarDuracaoProva(criadaResponse.getId(), provaEditada)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(ProvaResponse.class);
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(ProvaResponse.class)
+                ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Editado com sucesso", editadaResponse.getMensagem()),
+                () -> Assertions.assertNotNull(editadaResponse.getId())
+        );
+
+        provaClient.deletarProva(editadaResponse.getId());
+
     }
 
     @Test
@@ -78,14 +99,23 @@ class EditarProvaTest {
                 .as(ProvaResponse.class);
 
         // Cria uma nova instância de ProvaCriacaoModel com as questões editadas
-        ProvaEditarDadosModel provaEditada = ProvaDataFactory.provaEditarDadosProva();
+        ProvaEditarModel provaEditada = ProvaDataFactory.provaEditarDadosProva(provaInicial);
 
         // Edita as questões da prova
         ProvaResponse editadaResponse = provaClient.editarDadosProva(criadaResponse.getId(), provaEditada)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(ProvaResponse.class);
+                    .log().all()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(ProvaResponse.class)
+                ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Editado com sucesso", editadaResponse.getMensagem()),
+                () -> Assertions.assertNotNull(editadaResponse.getId())
+        );
+
+        provaClient.deletarProva(editadaResponse.getId());
+
     }
 }

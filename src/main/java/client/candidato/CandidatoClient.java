@@ -52,13 +52,16 @@ public class CandidatoClient {
 
     public static final String LISTAR_TRILHAS = "/listarTrilhas";
 
-    public Response listarTodosOsCandidatos() {
+    public Response listarTodosOsCandidatos(Integer pagina, Integer tamanho) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("pagina", pagina)
+                        .queryParam("tamanho", tamanho)
+                        .queryParam("sort", "idCandidato")
                 .when()
                         .get(CANDIDATO)
                 ;

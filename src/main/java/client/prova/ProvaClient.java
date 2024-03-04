@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaEditarDadosModel;
 import models.prova.ProvaEditarDuracaoModel;
-import models.prova.ProvaEditarQuestoesModel;
+import models.prova.ProvaEditarModel;
 import specs.prova.ProvaSpecs;
 import utils.auth.Auth;
 
@@ -15,12 +15,12 @@ public class ProvaClient {
 
     public static final String CRIAR_PROVA = "/prova/criar-prova";
     // Endpoints de edição
-    public static final String EDITAR_QUESTOES_PROVA = "/prova/editar-questoes-prova/{idProva}";
+    public static final String EDITAR_PROVA = "/prova/editar-prova/{idProva}";
     public static final String EDITAR_DURACAO_PROVA = "/prova/editar-duracao-prova/{idProva}";
     public static final String EDITAR_DADOS_PROVA = "/prova/editar-dados-prova/{idProva}";
 
     // Endpoints de obtenção de dados
-    public static final String PEGAR_PROVA_POR_ID = "/prova/pegar-prova";
+    public static final String PEGAR_PROVA_POR_ID = "/prova/pegar-prova/{idProva}";
     public static final String LISTAR_PROVAS = "/prova/listar-provas";
     public static final String LISTAR_PROVAS_PALAVRAS_CHAVE = "/prova/listar-provas-palavra-chave";
     public static final String LISTAR_PROVAS_POR_DATA = "/prova/listar-provas-periodo-datas";
@@ -57,33 +57,20 @@ public class ProvaClient {
                 ;
     }
 
-    public Response editarQuestoesProva(Integer id, ProvaEditarQuestoesModel provaEditarQuestoesModel) {
+    public Response editarQuestoesProva(Integer id, ProvaEditarModel provaEditarModel) {
         Auth.usuarioInstrutor();
 
         return given()
-                .spec(ProvaSpecs.provaReqSpec())
-                .header(AUTHORIZATION, AuthClient.getToken())
-                .pathParam("idProva", id)
-                .body(provaEditarQuestoesModel)
+                    .spec(ProvaSpecs.provaReqSpec())
+                    .header(AUTHORIZATION, AuthClient.getToken())
+                    .pathParam("idProva", id)
+                    .body(provaEditarModel)
                 .when()
-                .put(EDITAR_QUESTOES_PROVA);
-    }
-
-    public Response editarDuracaoProva(Integer id, ProvaEditarDuracaoModel prova) {
-        Auth.usuarioInstrutor();
-
-        return
-                given()
-                        .spec(ProvaSpecs.provaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam("idProva", id)
-                        .body(prova)
-                        .when()
-                        .put(EDITAR_DURACAO_PROVA)
+                    .put(EDITAR_PROVA)
                 ;
     }
 
-    public Response editarDadosProva(Integer id, ProvaEditarDadosModel prova) {
+    public Response editarDuracaoProva(Integer id, ProvaEditarModel prova) {
         Auth.usuarioInstrutor();
 
         return
@@ -92,8 +79,22 @@ public class ProvaClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam("idProva", id)
                         .body(prova)
-                        .when()
-                        .put(EDITAR_DADOS_PROVA)
+                .when()
+                        .put(EDITAR_PROVA)
+                ;
+    }
+
+    public Response editarDadosProva(Integer id, ProvaEditarModel prova) {
+        Auth.usuarioInstrutor();
+
+        return
+                given()
+                        .spec(ProvaSpecs.provaReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam("idProva", id)
+                        .body(prova)
+                .when()
+                        .put(EDITAR_PROVA)
                 ;
     }
 
@@ -104,8 +105,9 @@ public class ProvaClient {
                 given()
                         .spec(ProvaSpecs.provaReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam("idProva", id)
                         .queryParam("idProva", id)
-                        .when()
+                .when()
                         .get(PEGAR_PROVA_POR_ID)
                 ;
     }

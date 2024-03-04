@@ -5,8 +5,11 @@ import factory.prova.ProvaDataFactory;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaResponse;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de cadastrar prova")
 class CadastrarProvaTest {
@@ -24,6 +27,13 @@ class CadastrarProvaTest {
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(ProvaResponse.class);
+
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", provaCriada.getMensagem()),
+                () -> Assertions.assertNotNull(provaCriada.getId())
+        );
+
+        provaClient.deletarProva(provaCriada.getId());
     }
 
     @Test
@@ -38,6 +48,13 @@ class CadastrarProvaTest {
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(ProvaResponse.class);
+
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", provaCriada.getMensagem()),
+                () -> Assertions.assertNotNull(provaCriada.getId())
+        );
+
+        provaClient.deletarProva(provaCriada.getId());
     }
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 quando tenta cadastrar prova com Título com mais de 100 caracteres")
@@ -96,7 +113,7 @@ class CadastrarProvaTest {
     }
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 403 quando cadastra sem autenticação")
+    @DisplayName("Cenário 7: Deve retornar 403 quando cadastra sem autenticação")
     void testCadastrarProvaSemAutenticacao() {
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();

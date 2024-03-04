@@ -1,20 +1,24 @@
 package br.com.dbccompany.vemser.tests.questao;
 
+import client.questao.QuestaoClient;
 import client.questao.QuestaoObjetivaClient;
 import factory.questao.QuestaoObjetivaDataFactory;
 import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativas;
 import static factory.questao.QuestaoObjetivaDataFactory.criarCincoAlternativasFalsas;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de editar questão objetiva")
 class EditarQuestaoObjetivaTest {
 
     private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
+    private final QuestaoClient questaoClient = new QuestaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando editar questão objetiva com sucesso")
@@ -39,6 +43,14 @@ class EditarQuestaoObjetivaTest {
                     .extract()
                     .as(QuestaoResponse.class)
                 ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Editado com sucesso", edicaoResponse.getMensagem()),
+                () -> Assertions.assertNotNull(edicaoResponse.getId())
+        );
+
+        questaoClient.deletarQuestao(edicaoResponse.getId());
+
     }
 
     @Test
@@ -63,6 +75,14 @@ class EditarQuestaoObjetivaTest {
                     .extract()
                     .as(QuestaoResponse.class)
                 ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Editado com sucesso", edicaoResponse.getMensagem()),
+                () -> Assertions.assertNotNull(edicaoResponse.getId())
+        );
+
+        questaoClient.deletarQuestao(edicaoResponse.getId());
+
     }
 
     @Test

@@ -1,17 +1,23 @@
 package br.com.dbccompany.vemser.tests.questao;
 
+import client.questao.QuestaoClient;
 import client.questao.QuestaoObjetivaClient;
 import factory.questao.QuestaoObjetivaDataFactory;
 import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoResponse;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de cadastrar questão objetiva")
 class CadastrarQuestaoObjetivaTest {
 
     private final QuestaoObjetivaClient questaoObjetivaClient = new QuestaoObjetivaClient();
+
+    private final QuestaoClient questaoClient = new QuestaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 quando cadastra questão objetiva com sucesso")
@@ -25,6 +31,13 @@ class CadastrarQuestaoObjetivaTest {
                     .extract()
                     .as(QuestaoResponse.class)
                 ;
+
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", questaoObjetivaResponse.getMensagem()),
+                () -> Assertions.assertNotNull(questaoObjetivaResponse.getId())
+        );
+
+        questaoClient.deletarQuestao(questaoObjetivaResponse.getId());
     }
 
     @Test
@@ -34,10 +47,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -48,10 +61,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -62,10 +75,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -76,10 +89,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -90,10 +103,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -104,10 +117,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -118,10 +131,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 
@@ -133,10 +146,10 @@ class CadastrarQuestaoObjetivaTest {
 
         QuestaoResponse questaoObjetivaResponse = questaoObjetivaClient.criarQuestaoObjetiva(questao)
                 .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(QuestaoResponse.class)
+                    .log().all()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(QuestaoResponse.class)
                 ;
     }
 }
