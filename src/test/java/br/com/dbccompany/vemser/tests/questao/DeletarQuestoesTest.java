@@ -51,7 +51,7 @@ class DeletarQuestoesTest {
                 .as(QuestaoResponse.class)
                 ;
 
-        Response response = questaoClient.deletarQuestao(questaoObjetivaResponse.getId());
+        Response response = questaoClient.deletarQuestaoSemAutenticacao(questaoObjetivaResponse.getId());
         response.then().log().all().statusCode(HttpStatus.SC_FORBIDDEN);
 
     }

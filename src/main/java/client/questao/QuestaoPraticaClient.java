@@ -13,10 +13,6 @@ public class QuestaoPraticaClient {
     private static final String AUTHORIZATION = "Authorization";
     private static final String CRIAR_PRATICA = "/questao/criar-pratica";
     private static final String EDITAR_PRATICA = "/questao/editar-pratica/{idQuestao}";
-    private static final String LISTAR_QUESTOES = "/questao";
-    private static final String POR_TIPO = "/questao/por-tipo";
-    private static final String POR_DIFICULDADE = "/questao/por-dificuldade";
-    private static final String LISTAR_QUESTOES_ALEATORIAS = "/questao/listar-questoes-aleatorias";
 
     public Response criarQuestaoPratica(QuestaoPraticaModel questaoPraticaModel){
         Auth.usuarioInstrutor();

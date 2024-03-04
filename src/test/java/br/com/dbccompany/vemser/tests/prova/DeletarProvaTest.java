@@ -36,7 +36,7 @@ public class DeletarProvaTest {
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 400 quando tenta excluir uma prova sem autenticação")
+    @DisplayName("Cenário 2: Deve retornar 403 quando tenta excluir uma prova sem autenticação")
     void testExcluirProvaSemAutenticacao() {
         // Cria uma prova inicial válida
         ProvaCriacaoModel provaInicial = ProvaDataFactory.provaValida();
@@ -53,7 +53,7 @@ public class DeletarProvaTest {
         ProvaResponse provaExcluida = provaClient.deletarProvaSemAutenticacao(response.getId())
                 .then()
                 .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .statusCode(HttpStatus.SC_FORBIDDEN)
                 .extract()
                 .as(ProvaResponse.class);
     }

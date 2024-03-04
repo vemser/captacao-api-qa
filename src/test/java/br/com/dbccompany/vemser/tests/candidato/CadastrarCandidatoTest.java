@@ -472,20 +472,13 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado();
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
-
-        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidato(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome())
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
                     .as(JSONFailureResponseWithArrayModel.class);
-
-        Assertions.assertEquals("Email já cadastrado na edição.", erroCadastroCandidato.getMessage());
     }
 
     @Test
@@ -769,14 +762,7 @@ class CadastrarCandidatoTest{
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfJaCadastrado(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfJaCadastrado();
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()

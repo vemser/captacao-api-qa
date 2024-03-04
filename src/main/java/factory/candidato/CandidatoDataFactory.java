@@ -199,23 +199,10 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(1)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(JSONListaCandidatoResponse.class);
-
-        String emailCadastrado = listaCandidatoResponse.getElementos().get(0).getEmail();
-        EdicaoModel edicaoCadastrada = listaCandidatoResponse.getElementos().get(0).getEdicao();
-
+    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado() {
         CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
 
-        candidato.setEmail(emailCadastrado);
-        candidato.setEdicao(edicaoCadastrada);
+        candidato.setEmail("igor.henriques@live.com");
 
         return candidato;
     }
@@ -336,22 +323,13 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComCpfJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarNumCandidatos(1)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(JSONListaCandidatoResponse.class);
 
-        String cpfCadastrado = listaCandidatoResponse.getElementos().get(0).getCpf();
-        EdicaoModel edicaoCadastrada = listaCandidatoResponse.getElementos().get(0).getEdicao();
 
+    public static CandidatoCriacaoModel candidatoComCpfJaCadastrado() {
         CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
 
-        candidato.setCpf(cpfCadastrado);
-        candidato.setEdicao(edicaoCadastrada);
+        candidato.setEmail(faker.internet().emailAddress());
+        candidato.setCpf("06291661535");
 
         return candidato;
     }

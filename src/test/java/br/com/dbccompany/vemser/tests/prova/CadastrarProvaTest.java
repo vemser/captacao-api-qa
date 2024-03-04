@@ -96,7 +96,7 @@ class CadastrarProvaTest {
     }
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 400 quando cadastra sem autenticação")
+    @DisplayName("Cenário 1: Deve retornar 403 quando cadastra sem autenticação")
     void testCadastrarProvaSemAutenticacao() {
 
         ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
@@ -104,7 +104,7 @@ class CadastrarProvaTest {
         ProvaResponse provaCriada = provaClient.criarProvaSemAutenticacao(prova)
                 .then()
                 .log().all()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .statusCode(HttpStatus.SC_FORBIDDEN)
                 .extract()
                 .as(ProvaResponse.class);
     }

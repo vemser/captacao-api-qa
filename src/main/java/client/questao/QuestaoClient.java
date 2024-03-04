@@ -15,7 +15,7 @@ public class QuestaoClient {
     private static final String POR_DIFICULDADE = "/questao/por-dificuldade";
     private static final String POR_PALAVRA_CHAVE = "/questao/por-palavra-chave";
     private static final String LISTAR_QUESTOES_ALEATORIAS = "/questao/listar-questoes-aleatorias";
-    private static final String DELETAR_QUESTAO = "/questao/{id}";
+    private static final String DELETAR_QUESTAO = "/questao/{idQuestao}";
 
     public Response listarTodasAsQuestoes() {
         Auth.usuarioInstrutor();
@@ -82,27 +82,27 @@ public class QuestaoClient {
                 ;
     }
 
-    public Response deletarQuestao(String id) {
+    public Response deletarQuestao(Integer id) {
         Auth.usuarioInstrutor();
 
         return
                 given()
                         .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam("id", id)
+                        .pathParam("idQuestao", id)
                 .when()
                         .delete(DELETAR_QUESTAO)
                 ;
     }
 
-    public Response deletarQuestaoSemAutenticacao(String id) {
+    public Response deletarQuestaoSemAutenticacao(Integer id) {
         Auth.usuarioAluno();
 
         return
                 given()
                         .spec(QuestaoSpecs.questoesReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam("id", id)
+                        .pathParam("idQuestao", id)
                 .when()
                         .delete(DELETAR_QUESTAO)
                 ;
