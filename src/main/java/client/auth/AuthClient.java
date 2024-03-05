@@ -8,10 +8,7 @@ import specs.auth.AuthSpecs;
 import static io.restassured.RestAssured.given;
 
 public class AuthClient {
-    // onRender
-    //private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
 
-    // VemSer Server
     private static final String LOGIN_ENDPOINT = "http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/usuario/login";
 
     @Getter

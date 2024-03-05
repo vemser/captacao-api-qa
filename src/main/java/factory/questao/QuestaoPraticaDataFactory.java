@@ -1,15 +1,13 @@
 package factory.questao;
 
-import models.questao.AlternativasModel;
 import models.questao.ExemplosModel;
-import models.questao.QuestaoObjetivaModel;
 import models.questao.QuestaoPraticaModel;
 import net.datafaker.Faker;
 
 import java.util.*;
 
 public class QuestaoPraticaDataFactory {
-    private static Faker faker = new Faker(new Locale("pt-BR"));
+    private static final Faker faker = new Faker(new Locale("pt-BR"));
 
     public static QuestaoPraticaModel questaoPraticaValida(){
         return novaQuestaoPratica();

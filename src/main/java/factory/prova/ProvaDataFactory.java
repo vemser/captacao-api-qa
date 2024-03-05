@@ -3,15 +3,10 @@ package factory.prova;
 import client.edicao.EdicaoClient;
 import models.edicao.EdicaoModel;
 import models.prova.ProvaCriacaoModel;
-import models.prova.ProvaEditarDadosModel;
-import models.prova.ProvaEditarDuracaoModel;
 import models.prova.ProvaEditarModel;
 import net.datafaker.Faker;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ProvaDataFactory {
@@ -19,7 +14,6 @@ public class ProvaDataFactory {
     private static final Random RANDOM = new Random();
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final EdicaoClient edicaoClient = new EdicaoClient();
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     // Construtor privado para impedir a instânciação da classe
     private ProvaDataFactory() {
@@ -192,14 +186,6 @@ public class ProvaDataFactory {
         provaEditarModel.setTituloProva(provaCriada.getTituloProva());
         provaEditarModel.setEnunciadoProva(provaCriada.getEnunciadoProva());
         provaEditarModel.setIdsQuestoes(provaCriada.getIdQuestoes());
-
-        LocalDateTime futureDateTime = LocalDateTime.of(2024, 4, 20, 9, 12, 28);
-        Instant futureInstant = futureDateTime.toInstant(ZoneOffset.UTC);
-        String formattedDate = DateTimeFormatter.ISO_INSTANT.format(futureInstant);
-
-        LocalDateTime futureDateTime2 = LocalDateTime.of(2025, 3, 20, 9, 12, 28);
-        Instant futureInstant2 = futureDateTime2.toInstant(ZoneOffset.UTC);
-        String formattedDate2 = DateTimeFormatter.ISO_INSTANT.format(futureInstant2);
 
         provaEditarModel.setDataInicio(LocalDateTime.of(2024, 4, 20, 9, 12, 28));
         provaEditarModel.setDataFim(LocalDateTime.of(2025, 3, 20, 9, 12, 28));

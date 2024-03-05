@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class ParecerTecnicoDataFactory {
 
-    private static Random random = new Random();
-    private static Faker faker = new Faker();
+    private static final Random random = new Random();
+    private static final Faker faker = new Faker();
 
     public static ParecerTecnicoModel parecerTecnicoValido() {
         return novoParecerTecnico();

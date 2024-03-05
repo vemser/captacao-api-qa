@@ -2,7 +2,6 @@ package client.questao;
 
 import client.auth.AuthClient;
 import io.restassured.response.Response;
-import models.questao.QuestaoObjetivaModel;
 import specs.questao.QuestaoSpecs;
 import utils.auth.Auth;
 

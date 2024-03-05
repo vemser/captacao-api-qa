@@ -132,48 +132,4 @@ public class EdicaoClient {
                 .delete(EDICAO_DELETE_FISICO_ID_EDICAO);
     }
 
-    public Boolean verificaSeExistemEdicoesCadastradas() {
-        Auth.usuarioGestaoDePessoas();
-
-        String emptyResponse = "[]";
-
-        var response =
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(EDICAO_LISTAR_TODAS)
-                .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract().response()
-                ;
-
-        String responseBody = response.asString();
-
-        return ! responseBody.equals(emptyResponse);
-    }
-
-    public Response deletarEdicaoSemResponse(Integer idEdicao) {
-        Auth.usuarioAluno();
-        return
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_EDICAO, idEdicao)
-                        .when()
-                        .delete(EDICAO_DELETE_FISICO_ID_EDICAO)
-                ;
-    }
-
-    public Response deletarEdicaoComResponseSemAutenticacao(Integer idEdicao) {
-        Auth.usuarioAluno();
-        return
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_EDICAO, idEdicao)
-                .when()
-                        .delete(EDICAO_DELETE_FISICO_ID_EDICAO)
-                ;
-    }
 }

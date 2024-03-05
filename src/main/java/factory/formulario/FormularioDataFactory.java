@@ -1,11 +1,10 @@
 package factory.formulario;
 
-import factory.trilha.TrilhaDataFactory;
+import client.formulario.FormularioClient;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.JSONListaFormularioResponse;
 import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
-import client.formulario.FormularioClient;
 import utils.config.Tools;
 
 import java.util.Arrays;
@@ -15,12 +14,11 @@ import java.util.Random;
 
 public class FormularioDataFactory {
 
-    private static Faker faker = new Faker(new Locale("pt-BR"));
-    private static FormularioClient formularioClient = new FormularioClient();
-    private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
-    private static Random random = new Random();
-    private static List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
-    private static List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
+    private static final Faker faker = new Faker(new Locale("pt-BR"));
+    private static final FormularioClient formularioClient = new FormularioClient();
+    private static final Random random = new Random();
+    private static final List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
+    private static final List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
 
     public static FormularioCriacaoModel formularioValido(List<String> trilhas) {
 
@@ -37,21 +35,11 @@ public class FormularioDataFactory {
         return formulario;
     }
 
-    public static FormularioCriacaoModel formularioComMatriculadoFalse(List<String> trilhas) {
-
-        FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(trilhas);
-
-        formulario.setMatriculadoBoolean(false);
-
-        return formulario;
-    }
-
 
     public static FormularioCriacaoModel formularioValidoComTrilhaExistente(String nomeDeTrilhaExistente) {
 
         FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(Arrays.asList("QA"));
+        formulario.setTrilhas(List.of("QA"));
 
         return formulario;
     }

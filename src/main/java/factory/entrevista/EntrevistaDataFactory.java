@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class EntrevistaDataFactory {
 
-    private static Faker faker = new Faker(new Locale("pt-BR"));
-    private static Random random = new Random();
+    private static final Faker faker = new Faker(new Locale("pt-BR"));
+    private static final Random random = new Random();
 
     public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
         return novaEntrevistaCriacao(emailDoCandidato, avaliado, idTrilha);
@@ -18,13 +18,13 @@ public class EntrevistaDataFactory {
 
     public static EntrevistaCriacaoModel entrevistaValidaComDataEspecifica(Integer anoEntrevista, Integer mesEntrevista, String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
 
-        Integer horaAleatoria = random.nextInt(18);
-        Integer minutoAleatorio = random.nextInt(60);
-        Integer segundoAleatorio = random.nextInt(60);
+        int horaAleatoria = random.nextInt(18);
+        int minutoAleatorio = random.nextInt(60);
+        int segundoAleatorio = random.nextInt(60);
 
-        Integer diasNoFuturo = random.nextInt(1000);
+        int diasNoFuturo = random.nextInt(1000);
 
-        Integer diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
+        int diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
 
         LocalDateTime dataEntrevista = LocalDateTime.of(anoEntrevista, mesEntrevista, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
 
@@ -52,15 +52,15 @@ public class EntrevistaDataFactory {
 
     private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
 
-        Integer horaAleatoria = random.nextInt(18);
-        Integer minutoAleatorio = random.nextInt(60);
-        Integer segundoAleatorio = random.nextInt(60);
+        int horaAleatoria = random.nextInt(18);
+        int minutoAleatorio = random.nextInt(60);
+        int segundoAleatorio = random.nextInt(60);
 
-        Integer diasNoFuturo = random.nextInt(1000);
+        int diasNoFuturo = random.nextInt(1000);
 
-        Integer diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
-        Integer mesFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getMonthValue();
-        Integer anoFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getYear();
+        int diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
+        int mesFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getMonthValue();
+        int anoFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getYear();
 
         LocalDateTime dataEntrevista = LocalDateTime.of(anoFuturo, mesFuturo, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
 

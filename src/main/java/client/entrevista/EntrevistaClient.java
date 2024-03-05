@@ -127,20 +127,6 @@ public class EntrevistaClient {
                 ;
     }
 
-    public Response listarTodasAsEntrevistasPorMesSemAutenticacao(Integer anoEntrevista, Integer mesEntrevista) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(MES, mesEntrevista)
-                        .queryParam(ANO, anoEntrevista)
-                .when()
-                        .get(ENTREVISTA_LISTAR_POR_MES)
-                ;
-    }
-
     public Response listarTodasAsEntrevistasSemAutenticacao() {
         Auth.usuarioAluno();
 

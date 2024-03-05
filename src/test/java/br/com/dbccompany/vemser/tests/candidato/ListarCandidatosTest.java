@@ -1,10 +1,7 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
 import client.candidato.CandidatoClient;
-import io.restassured.response.Response;
 import models.JSONFailureResponseWithArrayModel;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.candidato.CandidatoResponseModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;

@@ -6,7 +6,6 @@ import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
-import models.formulario.JSONListaFormularioResponse;
 import org.apache.http.HttpStatus;
 import specs.formulario.FormularioSpecs;
 import utils.auth.Auth;

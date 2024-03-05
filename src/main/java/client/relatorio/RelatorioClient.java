@@ -29,31 +29,8 @@ public class RelatorioClient {
                 ;
     }
 
-    public Response listarCandidatosPcdSemAutenticacao() {
-        Auth.usuarioAluno();
-        return
-                given()
-                        .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_PCD)
-                ;
-    }
-
     public Response listarCandidatosNeurodiversidade() {
         Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_NEURODIVERSIDADE)
-                ;
-    }
-
-    public Response listarCandidatosNeurodiversidadeSemAutenticacao() {
-        Auth.usuarioAluno();
 
         return
                 given()

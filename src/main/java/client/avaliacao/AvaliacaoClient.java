@@ -13,8 +13,6 @@ public class AvaliacaoClient {
     private static final String AVALIACAO = "/avaliacao";
     private static final String AVALIACAO_POR_ID = "/avaliacao/{idAvaliacao}";
     private static final String UPDATE_AVALIACAO = "/avaliacao/update/{idAvaliacao}";
-    private static final String FILTRO_AVALIACAO = "/avaliacao/filtro-avaliacao";
-    private static final String DELETAR_AVALIACAO = "/avaliacao/{idAvaliacao}";
     private static final String ID_AVALIACAO = "idAvaliacao";
 
     public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao) {

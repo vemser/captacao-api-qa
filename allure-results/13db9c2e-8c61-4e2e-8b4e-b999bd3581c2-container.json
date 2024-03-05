@@ -1,0 +1,1 @@
+{"uuid":"13db9c2e-8c61-4e2e-8b4e-b999bd3581c2","name":"Cenário 3: Deve retornar 400 quando tenta cadastrar candidato com nome em branco","children":["e5f0a629-abf7-4a60-bb43-7e25bb8fc427"],"befores":[],"afters":[],"links":[],"start":1709600900364,"stop":1709600904740}
