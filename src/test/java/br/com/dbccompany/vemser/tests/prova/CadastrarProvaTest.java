@@ -1,62 +1,128 @@
 package br.com.dbccompany.vemser.tests.prova;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.ProvaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
+import client.prova.ProvaClient;
+import factory.prova.ProvaDataFactory;
 import models.prova.ProvaCriacaoModel;
-import models.prova.ProvaCriacaoResponseModel;
+import models.prova.ProvaResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.ProvaService;
 
-@DisplayName("Endpoint de marcação da prova do candidato")
-public class CadastrarProvaTest extends BaseTest {
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static ProvaService provaService = new ProvaService();
-    private static ProvaDataFactory provaDataFactory = new ProvaDataFactory();
+@DisplayName("Endpoint de cadastrar prova")
+class CadastrarProvaTest {
+    private static final ProvaClient provaClient = new ProvaClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando cadastra prova com sucesso")
-    public void testCriaProvaParaCandidatoComSucesso() {
+    void testCadastrarProvaComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
                 .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+                    .as(ProvaResponse.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", provaCriada.getMensagem()),
+                () -> Assertions.assertNotNull(provaCriada.getId())
+        );
 
-        ProvaCriacaoResponseModel provaCriada = provaService.criarProva(candidatoCadastrado.getIdCandidato(), prova)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(ProvaCriacaoResponseModel.class);
-
-        Assertions.assertNotNull(provaCriada);
-        Assertions.assertEquals(prova.getDataInicio(), provaCriada.getDataInicio());
-        Assertions.assertEquals(prova.getDataFinal(), provaCriada.getDataFinal());
-        Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), provaCriada.getIdCandidato());
+        provaClient.deletarProva(provaCriada.getId());
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando cadastra prova sem autenticacao")
-    public void testCriaProvaParaCandidatoSemAutenticacao() {
+    @DisplayName("Cenário 2: Deve retornar 200 quando cadastra prova com questões aleatórias")
+    void testCadastrarProvaComQuestoesAleatorias() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        ProvaCriacaoModel prova = ProvaDataFactory.provaComQuestoesAleatorias();
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
                 .then()
+                .log().all()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
-                .as(CandidatoCriacaoResponseModel.class);
+                .as(ProvaResponse.class);
 
-        ProvaCriacaoModel prova = provaDataFactory.provaValida();
+        assertAll(
+                () -> Assertions.assertEquals("Cadastro realizado com sucesso", provaCriada.getMensagem()),
+                () -> Assertions.assertNotNull(provaCriada.getId())
+        );
 
-        var provaCriada = provaService.criarProvaSemAutenticacao(candidatoCadastrado.getIdCandidato(), prova)
+        provaClient.deletarProva(provaCriada.getId());
+    }
+    @Test
+    @DisplayName("Cenário 3: Deve retornar 400 quando tenta cadastrar prova com Título com mais de 100 caracteres")
+    void testCadastrarProvaComTituloExcedendo100Caracteres() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.provaComTituloExcedendoOs100Caracteres();
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
                 .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+                .log().all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(ProvaResponse.class);
+    }
+
+    @Test
+    @DisplayName("Cenário 4: Deve retornar 400 quando tenta cadastrar prova com titulo vazio")
+    void testCadastrarProvaComTituloVazio() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.provaComTituloVazio();
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(ProvaResponse.class);
+    }
+
+    @Test
+    @DisplayName("Cenário 5: Deve retornar 400 quando tenta cadastrar prova sem selecionar questões")
+    void testCadastrarProvaSemSelecionarQuestoes() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.criarProvaSemSelecionarQuestoes();
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(ProvaResponse.class);
+    }
+
+    @Test
+    @DisplayName("Cenário 6: Deve retornar 400 quando tenta cadastrar prova com mais de 10 questões")
+    void testCadastrarProvaComMaisDe10Questoes() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.criarProvaComMaisDe10Questoes(15);
+
+        ProvaResponse provaCriada = provaClient.criarProva(prova)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(ProvaResponse.class);
+    }
+
+    @Test
+    @DisplayName("Cenário 7: Deve retornar 403 quando cadastra sem autenticação")
+    void testCadastrarProvaSemAutenticacao() {
+
+        ProvaCriacaoModel prova = ProvaDataFactory.provaValida();
+
+        ProvaResponse provaCriada = provaClient.criarProvaSemAutenticacao(prova)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_FORBIDDEN)
+                .extract()
+                .as(ProvaResponse.class);
     }
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @ToString
 public class TrilhaListagemResponseModel {
 
-    private List<TrilhaModel> listaDeTrilhas;
+    private List<TrilhaModel> trilhas;
 }

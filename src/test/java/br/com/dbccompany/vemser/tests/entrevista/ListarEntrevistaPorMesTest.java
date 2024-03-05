@@ -1,7 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
+import client.candidato.CandidatoClient;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -10,24 +11,21 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
 
 @DisplayName("Endpoint de listagem de entrevistas por mês")
-public class ListarEntrevistaPorMesTest extends BaseTest {
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+class ListarEntrevistaPorMesTest {
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista trilha por mês com sucesso")
-    public void testListarEntrevistasPorMesComSucesso() {
+    void testListarEntrevistasPorMesComSucesso() {
 
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
@@ -37,23 +35,23 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
         Boolean candidatoAvaliado = true;
         Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
                 mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
+        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel.class);
 
 
-        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaListaResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
+        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -64,13 +62,13 @@ public class ListarEntrevistaPorMesTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
-    public void testListarEntrevistasPorMesSemEstarAutenticado() {
+    void testListarEntrevistasPorMesSemEstarAutenticado() {
 
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
 
-        var response = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        var response = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_OK);
 

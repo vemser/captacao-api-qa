@@ -1,43 +1,42 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
 
 @DisplayName("Endpoint de remoção de candidato")
-public class DeletarCandidatoTest extends BaseTest {
+class DeletarCandidatoTest{
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 quando deleta candidato com sucesso")
-    public void testDeletarCandidatoComSucesso() {
+    void testDeletarCandidatoComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        var candidatoDeletado = candidatoService.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        var candidatoDeletado = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando deleta candidato sem autenticação")
-    public void testDeletarCandidatoSemAutenticacao() {
+    void testDeletarCandidatoSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        var candidatoDeletado = candidatoService.deletarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato())
+        var candidatoDeletado = candidatoClient.deletarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

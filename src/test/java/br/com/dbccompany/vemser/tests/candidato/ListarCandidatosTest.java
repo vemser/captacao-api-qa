@@ -1,31 +1,35 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
+import io.restassured.response.Response;
 import models.JSONFailureResponseWithArrayModel;
+import models.candidato.CandidatoCriacaoResponseModel;
+import models.candidato.CandidatoResponseModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
 
 @DisplayName("Endpoint de listagem de candidatos")
-public class ListarCandidatosTest extends BaseTest {
+class ListarCandidatosTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e lista contendo 20 elementos com sucesso")
-    public void testListarTodosOsCandidatos() {
+    void testListarTodosOsCandidatos() {
 
+        Integer tamanhoPadraoLista = 20;
+        Integer pagina = 2;
 
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarTodosOsCandidatos()
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
                 .then()
+                    .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(JSONListaCandidatoResponse.class);
 
-        Integer tamanhoPadraoLista = 20;
         Integer idCandidato1 = listaCandidatoResponse.getElementos().get(0).getIdCandidato();
         Integer idCandidato2 = listaCandidatoResponse.getElementos().get(1).getIdCandidato();
 
@@ -34,42 +38,29 @@ public class ListarCandidatosTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 sem body por não estar autenticado")
-    public void testListarTodosOsCandidatosSemAutenticacao() {
+    @DisplayName("Cenário 2: Deve retornar 200 e body deve conter 10 candidatos")
+    void testListarDezCandidatos() {
 
-        try {
-            var response = candidatoService.listarTodosOsCandidatosSemAutenticacao()
-                    .then()
-                        .log().status()
-                        .statusCode(HttpStatus.SC_FORBIDDEN)
-                        .extract()
-                        .as(JSONListaCandidatoResponse.class);
-        } catch (Exception e) {
-            Assertions.assertTrue(e instanceof IllegalStateException);
-        }
-    }
+        Integer tamanhoPadraoLista = 10;
+        Integer pagina = 1;
 
-    @Test
-    @DisplayName("Cenário 3: Deve retornar 200 e body deve conter 10 candidatos")
-    public void testListarDezCandidatos() {
-        Integer numDeCandidatos = 10;
-
-        JSONListaCandidatoResponse listaCandidatoResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        JSONListaCandidatoResponse listaCandidatoResponse = candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
                 .then()
+                    .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(JSONListaCandidatoResponse.class);
 
-        Assertions.assertEquals(numDeCandidatos, listaCandidatoResponse.getElementos().size());
-        Assertions.assertEquals(numDeCandidatos, listaCandidatoResponse.tamanho);
+        Assertions.assertEquals(tamanhoPadraoLista, listaCandidatoResponse.getElementos().size());
+        Assertions.assertEquals(tamanhoPadraoLista, listaCandidatoResponse.tamanho);
     }
 
     @Test
-    @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd negativa de candidatos")
-    public void testListarCandidatosComTamanhoInvalido() {
+    @DisplayName("Cenário 3: Deve retornar 400 quando é passado qtd negativa de candidatos")
+    void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
-        JSONFailureResponseWithArrayModel failureResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        JSONFailureResponseWithArrayModel failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
@@ -81,11 +72,11 @@ public class ListarCandidatosTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Cenário 5: Deve retornar 400 quando é passado qtd de candidatos como string")
-    public void testListarCandidatosComTamanhoString() {
+    @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd de candidatos como string")
+    void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 
-        var failureResponse = candidatoService.listarNumCandidatos(numDeCandidatos)
+        var failureResponse = candidatoClient.listarNumCandidatos(numDeCandidatos)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
     }

@@ -1,26 +1,26 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.edicao.EdicaoClient;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
 
 import java.util.*;
 
 @DisplayName("Endpoint que lista a última edição")
-public class ListarUltimaEdicaoTest extends BaseTest {
+class ListarUltimaEdicaoTest {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar a última edição com sucesso")
-    public void testListarUltimaEdicaoComSucesso() {
+    void testListarUltimaEdicaoComSucesso() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        var response = edicaoClient.listarTodasAsEdicoes()
                 .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EdicaoModel[].class);
@@ -29,24 +29,21 @@ public class ListarUltimaEdicaoTest extends BaseTest {
 
         List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
 
-        Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
-            public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return edicao2.idEdicao.compareTo(edicao1.idEdicao);
-            }
-        });
+        listaDeEdicoesOrdenada.sort((edicao1, edicao2) -> edicao2.getIdEdicao().compareTo(edicao1.getIdEdicao()));
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
 
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
                 .then()
+                .log().all()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(EdicaoModel.class);
 
-        String ultimaEdicao = edicaoService.listaEdicaoAtual();
+        String ultimaEdicao = edicaoClient.listaEdicaoAtual();
 
-        edicaoService.deletarEdicao(edicaoCadastrada.getIdEdicao());
+        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
 
         Assertions.assertNotNull(ultimaEdicao);
         Assertions.assertEquals(edicaoCadastrada.getNome().toLowerCase(), ultimaEdicao.toLowerCase());
@@ -54,9 +51,9 @@ public class ListarUltimaEdicaoTest extends BaseTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao listar a última edição sem autenticação")
-    public void testListarUltimaEdicaoSemAutenticacao() {
+    void testListarUltimaEdicaoSemAutenticacao() {
 
-        String ultimaEdicao = edicaoService.listaEdicaoAtualSemAutenticacao();
+        String ultimaEdicao = edicaoClient.listaEdicaoAtualSemAutenticacao();
 
         Assertions.assertNotNull(ultimaEdicao);
     }
