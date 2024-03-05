@@ -1,0 +1,1 @@
+{"uuid":"bd4cba1a-2a93-432c-998d-4e9e8462fd9f","name":"Cenário 6: Deve retornar 400 quando tenta cadastrar questão objetiva com dificuldade inexistente","children":["0c001f87-805e-4db9-ad0f-0fedd8a4e352"],"befores":[],"afters":[],"links":[],"start":1709601264376,"stop":1709601264733}

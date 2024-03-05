@@ -1,13 +1,10 @@
 package factory.candidato;
 
-import client.candidato.CandidatoClient;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
-import models.candidato.JSONListaCandidatoResponse;
 import models.edicao.EdicaoModel;
 import net.datafaker.Faker;
-import org.apache.http.HttpStatus;
 import utils.auth.Email;
 
 import java.text.SimpleDateFormat;
@@ -22,22 +19,10 @@ public class CandidatoDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     public static CandidatoCriacaoModel candidatoCriacaoValido(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
 
         CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        return candidato;
-    }
-
-    public static CandidatoCriacaoModel candidatoCriacaoEmailJaCadastrado(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEmail("igor.henriques@live.com");
         candidato.setEdicao(edicao);
         candidato.setFormulario(idFormulario);
         candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
@@ -233,18 +218,6 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComTelefoneInvalido(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String telefoneInvalido = "f02f9ad)(*_(*";
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setTelefone(telefoneInvalido);
-
-        return candidato;
-    }
     public static CandidatoCriacaoModel candidatoComRgNulo(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
         String rgNulo = null;
 
@@ -438,20 +411,6 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComListaContendoLinguagemNula(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemNula = null;
-        List<String> listaLinguagemNula = Collections.singletonList(linguagemNula);
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setLinguagens(listaLinguagemNula);
-
-        return candidato;
-    }
-
     public static CandidatoCriacaoModel candidatoComListaNulaDeLinguagem(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
         List<String> listaNulaLinguagem = null;
 
@@ -562,7 +521,6 @@ public class CandidatoDataFactory {
     }
 
     private static CandidatoCriacaoModel novoCandidato() {
-        String rgValido = "11.027.125-7";
         String pcd = "Não possui";
         String ativo = "T";
 

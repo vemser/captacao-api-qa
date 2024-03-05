@@ -19,18 +19,13 @@ import models.linguagem.LinguagemModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaResponse;
 import models.trilha.TrilhaModel;
-import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 public class CandidatoProvaDataFactory {
-
-    private static final Faker faker = new Faker(new Locale("pt-BR"));
 
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();

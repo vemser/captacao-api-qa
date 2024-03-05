@@ -3,8 +3,6 @@ package client.prova;
 import client.auth.AuthClient;
 import io.restassured.response.Response;
 import models.prova.ProvaCriacaoModel;
-import models.prova.ProvaEditarDadosModel;
-import models.prova.ProvaEditarDuracaoModel;
 import models.prova.ProvaEditarModel;
 import specs.prova.ProvaSpecs;
 import utils.auth.Auth;
@@ -16,8 +14,6 @@ public class ProvaClient {
     public static final String CRIAR_PROVA = "/prova/criar-prova";
     // Endpoints de edição
     public static final String EDITAR_PROVA = "/prova/editar-prova/{idProva}";
-    public static final String EDITAR_DURACAO_PROVA = "/prova/editar-duracao-prova/{idProva}";
-    public static final String EDITAR_DADOS_PROVA = "/prova/editar-dados-prova/{idProva}";
 
     // Endpoints de obtenção de dados
     public static final String PEGAR_PROVA_POR_ID = "/prova/pegar-prova/{idProva}";

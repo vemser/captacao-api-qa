@@ -10,7 +10,6 @@ import factory.candidato.CandidatoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
-import models.candidato.CandidatoCriacaoResponseModel;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -23,7 +22,6 @@ import org.apache.http.HttpStatus;
 import specs.candidato.CandidatoSpecs;
 import utils.auth.Auth;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +40,7 @@ public class CandidatoClient {
     public static final String CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO = "/candidato/nota-comportamental/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
     public static final String CANDIDATO_ATRIBUIR_NOTAS_EM_LOTE = "/candidato/atribuir-notas-em-lote";
+
     public static final String AUTHORIZATION = "Authorization";
     public static final String TAMANHO = "tamanho";
     public static final String EMAIL = "email";
@@ -50,8 +49,6 @@ public class CandidatoClient {
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final LinguagemClient linguagemClient = new LinguagemClient();
-
-    public static final String LISTAR_TRILHAS = "/listarTrilhas";
 
     public Response listarTodosOsCandidatos(Integer pagina, Integer tamanho) {
         Auth.usuarioGestaoDePessoas();
@@ -68,18 +65,6 @@ public class CandidatoClient {
                 ;
     }
 
-    public Response listarTodosOsCandidatosSemAutenticacao() {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(CANDIDATO)
-                ;
-    }
-
     public Response listarNumCandidatos(Object numCandidatos) {
         Auth.usuarioGestaoDePessoas();
 
@@ -90,32 +75,6 @@ public class CandidatoClient {
                         .queryParam(TAMANHO, numCandidatos)
                 .when()
                         .get(CANDIDATO)
-                ;
-    }
-
-    public Response listarCandidatoPorEmail(String email) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(EMAIL, email)
-                .when()
-                        .get(CANDIDATO_FINDBYEMAILS)
-                ;
-    }
-
-    public Response cadastrarCandidato(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(CandidatoDataFactory.candidatoCriacaoEmailJaCadastrado(edicao, idFormulario, nomeLinguagem))
-                .when()
-                        .post(CANDIDATO)
                 ;
     }
 
@@ -303,20 +262,6 @@ public class CandidatoClient {
                 ;
     }
 
-    public Response atualizarNotaCandidatoSemAutenticacao(Integer idCandidato, NotaModel nota) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(nota)
-                .when()
-                        .put(CANDIDATO_NOTA_PROVA_ID_CANDIDATO)
-                ;
-    }
-
     public Response atualizarParecerTecnico(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
         Auth.usuarioGestaoDePessoas();
 
@@ -397,37 +342,4 @@ public class CandidatoClient {
                 ;
     }
 
-    public Response atribuirNotasEmLote() {
-        Auth.usuarioGestaoDePessoas();
-
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\notas_em_lote.xlsx";
-        File file = new File(filePath);
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .multiPart("file", file)
-                .when()
-                        .post(CANDIDATO_ATRIBUIR_NOTAS_EM_LOTE)
-                ;
-    }
-
-    ///////// MÉTODOS DO BEFORE ALL
-    public CandidatoCriacaoResponseModel cadastrarUsuarioBase(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(CandidatoDataFactory.candidatoCriacaoValido(edicao, idFormulario, nomeLinguagem))
-                .when()
-                        .post(CANDIDATO)
-                .then()
-                        .statusCode(HttpStatus.SC_CREATED)
-                        .extract()
-                        .as(CandidatoCriacaoResponseModel.class)
-                ;
-    }
 }

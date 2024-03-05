@@ -1,0 +1,1 @@
+{"uuid":"6c9f4db2-d984-462c-af76-7956a3dd5339","name":"Cenário 32: Deve retornar 400 quando tenta cadastrar candidato com lista de linguagem em branco","children":["7ad3c04c-d2ba-41e8-95d4-10afd88194a5"],"befores":[],"afters":[],"links":[],"start":1709600904742,"stop":1709600909095}

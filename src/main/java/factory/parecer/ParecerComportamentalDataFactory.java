@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class ParecerComportamentalDataFactory {
 
-    private static Random random = new Random();
-    private static Faker faker = new Faker(new Locale("pt-BR"));
+    private static final Random random = new Random();
+    private static final Faker faker = new Faker(new Locale("pt-BR"));
 
     public static ParecerComportamentalModel parecerComportamentalValido() {
         return novoParecerComportamental();

@@ -1,0 +1,1 @@
+{"uuid":"65b6f232-65e7-4541-a5d9-092e31fd3f1f","name":"Cenário 2: Deve retornar 403 ao deletar uma linguagem sem autenticação","children":["e2a12cbe-0111-4f1d-a8b1-6185f07ed2d9"],"befores":[],"afters":[],"links":[],"start":1709600639827,"stop":1709600643925}
