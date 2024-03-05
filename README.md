@@ -2,7 +2,7 @@
   <img alt="VemSerDBC" src="https://img.shields.io/badge/Vem Ser 13-00599C?style=for-the-badge&logo=java&logoColor=white">
   <img alt="DBC" src="https://img.shields.io/badge/DBC-00599C?style=for-the-badge&logo=java&logoColor=white">
   <img alt="Java" src="https://img.shields.io/badge/Java-Ff0000?style=for-the-badge&logo=coffeescript&logoColor=white">
-  <img alt="rest-assured" src="https://img.shields.io/badge/rest--assured-512DA8?style=for-the-badge&logo=selenium&logoColor=white">
+  <img alt="rest-assured" src="https://img.shields.io/badge/rest--assured-512DA8?style=for-the-badge&logo=rest-assured&logoColor=white">
 </div>
 
 
