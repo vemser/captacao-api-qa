@@ -1,1 +1,0 @@
-{"uuid":"421f06a8-f68d-4331-b746-7d683c96a1cf","name":"Cenário 37: Deve retornar 400 quando tenta cadastrar candidato com id formulário não cadastrado","children":["661e531a-13ac-4236-a2d7-ce02660f2717"],"befores":[],"afters":[],"links":[],"start":1726509972487,"stop":1726509976147}

@@ -1,1 +1,0 @@
-{"uuid":"6745d238-3b2f-4a78-b5d0-7ca79c0b2169","name":"Cenário 35: Deve retornar 404 quando tenta cadastrar candidato com edicão não existente","children":["c8ce182f-1b6c-425a-96d4-f1ab986b42c6"],"befores":[],"afters":[],"links":[],"start":1726509939375,"stop":1726509943545}

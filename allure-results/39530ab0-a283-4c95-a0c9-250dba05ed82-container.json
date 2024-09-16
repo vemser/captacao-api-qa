@@ -1,1 +1,0 @@
-{"uuid":"39530ab0-a283-4c95-a0c9-250dba05ed82","name":"Cenário 2: Deve retornar 400 quando tenta cadastrar questão objetiva com título vazio/em branco","children":["26277eed-9806-4b5f-81d1-4e495e3c28c2"],"befores":[],"afters":[],"links":[],"start":1726510085265,"stop":1726510086199}
