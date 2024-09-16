@@ -1,0 +1,1 @@
+{"uuid":"774d33df-5c70-4615-bf0d-7f8094cd8841","name":"Cenário 2: Deve retonar 403 ao listar relatório de candidatos por gênero sem autenticação","children":["17e8468c-4326-47c1-847d-556dd69ef02e"],"befores":[],"afters":[],"links":[],"start":1726510059694,"stop":1726510060273}

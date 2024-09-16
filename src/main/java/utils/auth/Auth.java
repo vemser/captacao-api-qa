@@ -29,13 +29,13 @@ public class Auth {
         authClient.loginComOutroUsuario(loginModel);
     }
 
-    public static void usuarioGestaoDePessoas() {
+    public static LoginModel usuarioGestaoDePessoas() {
         LoginModel loginModel = new LoginModel();
 
         loginModel.setUsername(Manipulation.getProp().getProperty("GP_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("GP_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+       return loginModel;
     }
 
     public static void usuarioColaborador() {

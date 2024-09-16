@@ -1,0 +1,1 @@
+{"uuid":"1e3827e9-7594-495a-a273-d41c21ccd614","name":"Cenário 2: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação","children":["4e125c3a-c254-4cf8-a123-ba7a39eed2e1"],"befores":[],"afters":[],"links":[],"start":1726510131257,"stop":1726510131838}
