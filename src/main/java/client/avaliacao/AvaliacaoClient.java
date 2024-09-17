@@ -77,7 +77,7 @@ public class AvaliacaoClient {
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Imx1aXoucG9saWRvIiwianRpIjoiNTUiLCJjYXJnb3MiOltdLCJpYXQiOjE3MjY1MTYzMjksImV4cCI6MTcyOTEwODMyOX0._fwtBWfaAB5ebKXciv1BmMLXfom7ulm0oNxDeIua8oo")
                         .queryParam("pagina", pagina)
                         .queryParam("tamanho", tamanho)
                         .queryParam("sort", ID_AVALIACAO)

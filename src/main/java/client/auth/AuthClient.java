@@ -26,12 +26,14 @@ public class AuthClient {
         String response =
                 given()
                         .body(loginModel)
-                        .when()
+                .when()
                         .post(LOGIN_ENDPOINT)
-                        .then()
+                .then()
                         .extract()
-                        .asString();
+                        .asString()
+                ;
 
+        setToken(response);
         return response;
     }
 
