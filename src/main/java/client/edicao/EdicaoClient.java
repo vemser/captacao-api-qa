@@ -67,11 +67,32 @@ public class EdicaoClient {
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()
+						.log().all()
                         .statusCode(HttpStatus.SC_CREATED)
                         .extract()
                         .as(EdicaoModel.class)
                 ;
     }
+
+	public EdicaoModel criarEdicao2() {
+		Auth.usuarioGestaoDePessoas();
+
+		Response response =
+				given()
+						.spec(EdicaoSpecs.edicaoReqSpec())
+						.header("Authorization", AuthClient.getToken())
+						.contentType("application/json")
+						.body(new EdicaoModel(20, "Teste3", 70)) // Certifique-se de que o corpo está correto
+						.when()
+						.post("https://captacao-back-hml.onrender.com/edicao/criar-edicao")
+						.then()
+						.log().all() // Adicione logs para depuração
+						.statusCode(201)
+						.extract()
+						.response();
+
+		return response.as(EdicaoModel.class);
+	}
 
     public Response cadastrarEdicao(EdicaoModel model) {
         Auth.usuarioGestaoDePessoas();

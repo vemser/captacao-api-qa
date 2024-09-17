@@ -1,5 +1,6 @@
 package models.candidato;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -37,6 +38,7 @@ public class CandidatoCriacaoResponseModel {
     private EdicaoModel edicao;
     private FormularioCriacaoResponseModel formulario;
     private Integer imagem;
+	private String statusCandidato;
 }
 
 

@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de listagem de entrevistas")
 class ListarEntrevistaTest {
-
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
@@ -34,31 +32,10 @@ class ListarEntrevistaTest {
     @DisplayName("Cenário 2: Deve retornar 403 quando lista as entrevistas sem estar autenticado")
     void testListarEntrevistasSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-
         var listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
+
 }

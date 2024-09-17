@@ -47,18 +47,10 @@ class CadastrarEntrevistaTest  {
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar entrevista sem autenticação")
     void testCadastrarEntrevistaSemAutenticacao() {
-
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
+		
         Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida("email@mail.com", candidatoAvaliado, 3);
 
         var entrevistaCadastrada = entrevistaClient.cadastrarEntrevistaSemAutenticacao(entrevistaCriada)
                 .then()

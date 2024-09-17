@@ -530,7 +530,8 @@ public class CandidatoDataFactory {
 
         Integer idEdicao = faker.random().nextInt(100,10000);
         String nomeEdicao = "VEMSER_"+faker.random().nextInt(100,10000);
-        EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao);
+		Integer notaCorte = faker.random().nextInt(0,100);
+        EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao, notaCorte);
 
         Integer idFormulario = 1;
 
