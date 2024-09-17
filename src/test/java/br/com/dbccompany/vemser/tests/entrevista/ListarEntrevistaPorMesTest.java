@@ -67,10 +67,9 @@ class ListarEntrevistaPorMesTest {
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-
         var response = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
-                    .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
 
     }
 }

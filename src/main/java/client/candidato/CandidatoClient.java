@@ -183,6 +183,7 @@ public class CandidatoClient {
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+						.log().all()
                         .body(candidatoCriado)
                 .when()
                         .post(CANDIDATO)

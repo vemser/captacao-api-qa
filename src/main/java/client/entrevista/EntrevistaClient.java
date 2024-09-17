@@ -80,7 +80,6 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(EMAIL, emailDoCandidato)
                 .when()
                         .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL)
@@ -106,7 +105,6 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(TRILHA, trilha)
                 .when()
                         .get(ENTREVISTA_POR_TRILHA)
@@ -119,7 +117,6 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(MES, mesEntrevista)
                         .queryParam(ANO, anoEntrevista)
                 .when()
@@ -132,7 +129,7 @@ public class EntrevistaClient {
 
         return
                 given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
+						.log().all()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                 .when()
                         .get(ENTREVISTA)

@@ -50,6 +50,7 @@ out/
 *.iml
 *.ipr
 *.iws
+allure-results
 
 ##############################
 ## Eclipse
