@@ -4,6 +4,7 @@ import client.auth.AuthClient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
+import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -90,7 +91,7 @@ public class FormularioClient {
                 ;
     }
 
-    public JSONFailureResponseWithoutArrayModel criarFormularioNaoMatriculado(FormularioCriacaoModel formulario) {
+    public JSONFailureResponseWithoutArrayModel criarFormularioDadoInvalido(FormularioCriacaoModel formulario) {
         Auth.usuarioGestaoDePessoas();
 
         return
@@ -103,6 +104,22 @@ public class FormularioClient {
                 .then()
                         .extract()
                         .as(JSONFailureResponseWithoutArrayModel.class)
+                ;
+    }
+
+    public JSONFailureResponseWithArrayModel criarFormularioInstituicaoVazia(FormularioCriacaoModel formulario) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(formulario)
+                .when()
+                        .post(FORMULARIO_CADASTRO)
+                .then()
+                        .extract()
+                        .as(JSONFailureResponseWithArrayModel.class)
                 ;
     }
 
