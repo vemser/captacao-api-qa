@@ -25,13 +25,13 @@ public class AuthClient {
     public String logar(LoginModel loginModel) {
         String response =
                 given()
-                        .spec(AuthSpecs.authReqSpec())
-                        .body(loginModel)
-                        .when()
-                        .post(LOGIN_ENDPOINT)
-                        .then()
-                        .extract()
-                        .asString();
+                    .spec(AuthSpecs.authReqSpec())
+                    .body(loginModel)
+                .when()
+                    .post(LOGIN_ENDPOINT)
+                .then()
+                    .extract()
+                    .asString();
 
         setToken(response);
 
@@ -41,13 +41,13 @@ public class AuthClient {
     public void loginComOutroUsuario(LoginModel loginModel) {
         String response =
                 given()
-                        .spec(AuthSpecs.authReqSpec())
-                        .body(loginModel)
-                    .when()
-                        .post(LOGIN_ENDPOINT)
-                    .then()
-                        .extract()
-                        .asString();
+                    .spec(AuthSpecs.authReqSpec())
+                    .body(loginModel)
+                .when()
+                    .post(LOGIN_ENDPOINT)
+                .then()
+                    .extract()
+                    .asString();
 
         setToken(response);
     }
