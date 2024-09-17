@@ -21,7 +21,7 @@ public class TrilhaClient {
 
         return
                 given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
                         .spec(TrilhaSpecs.trilhaReqSpec())
                 .when()
                         .get(LISTAR_TRILHAS)

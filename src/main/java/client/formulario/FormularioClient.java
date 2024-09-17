@@ -30,6 +30,7 @@ public class FormularioClient {
     public static final String ID_FORMULARIO = "idFormulario";
     public static final String FILE = "file";
 
+    private AuthClient authClient = new AuthClient();
 
     public Response listarTodosOsFormularios() {
         Auth.usuarioGestaoDePessoas();
@@ -81,7 +82,7 @@ public class FormularioClient {
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, authClient.logar(Auth.usuarioGestaoDePessoas()))
                         .body(formulario)
                 .when()
                         .post(FORMULARIO_CADASTRO)
@@ -132,7 +133,7 @@ public class FormularioClient {
         given()
                 .spec(FormularioSpecs.formularioReqSpec())
                 .contentType("multipart/form-data")
-                .header(AUTHORIZATION, AuthClient.getToken())
+                .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
                 .pathParam(ID_FORMULARIO, idFormulario)
                 .multiPart(FILE, file)
             .when()

@@ -59,11 +59,11 @@ public class EdicaoClient {
 
     public EdicaoModel criarEdicao() {
         Auth.usuarioGestaoDePessoas();
-
+        System.out.println(AuthClient.getToken());
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()
