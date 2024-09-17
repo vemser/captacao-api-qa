@@ -13,13 +13,14 @@ public class UsuarioClient extends UsuarioSpecs {
     private static final String CONTAS_INATIVAS = "/contas-inativas";
     private static final String UPLOAD_IMAGEM = "/upload-imagem";
     private static final String DESATIVAR_CONTA = "/desativacao-conta";
+    private static final String AUTHORIZATION = "Authorization";
 
     public Response listarGestores(String token){
         return
                 given()
                         .spec(super.usuarioSetUp())
                         .contentType(ContentType.JSON)
-                        .header("Authorization", token)
+                        .header(AUTHORIZATION, token)
                 .when()
                         .get(USUARIO)
                 ;
@@ -30,10 +31,20 @@ public class UsuarioClient extends UsuarioSpecs {
                 given()
                         .spec(super.usuarioSetUp())
                         .contentType(ContentType.JSON)
-                        .header("Authorization", token)
+                        .header(AUTHORIZATION, token)
                         .queryParam("idGestor", id)
                 .when()
-                        .get(USUARIO+ID_GESTOR);
+                        .get(USUARIO + ID_GESTOR);
 
+    }
+
+    public Response listarTodaContaInativaGestor(String token){
+        return
+                given()
+                        .spec(super.usuarioSetUp())
+                        .contentType(ContentType.JSON)
+                        .header(AUTHORIZATION, token)
+                .when()
+                        .get(USUARIO + CONTAS_INATIVAS);
     }
 }
