@@ -24,7 +24,7 @@ public class FormularioClient {
     public static final String FORMULARIO_UPLOAD_PRINT_CONFIG_PC_ID_FORMULARIO = "/formulario/upload-print-config-pc/{idFormulario}";
     public static final String FORMULARIO_ATUALIZAR_FORMULARIO_ID_FORMULARIO = "/formulario/atualizar-formulario/{idFormulario}";
     public static final String FORMULARIO_DELETE_FISICO_ID_FORMULARIO = "/formulario/delete-fisico/{idFormulario}";
-    public static final String TAMANHO = "tamanho";
+    public static final String SORT = "sort";
     public static final String ORDER = "order";
     public static final String ID_FORMULARIO = "idFormulario";
     public static final String FILE = "file";
@@ -32,12 +32,10 @@ public class FormularioClient {
 
     public Response listarTodosOsFormularios() {
         Auth.usuarioGestaoDePessoas();
-
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("pagina", 1)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;
@@ -52,8 +50,8 @@ public class FormularioClient {
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(TAMANHO, numDeFormulario)
                         .queryParam(ORDER, ordemDecrescente)
+                        .queryParam(SORT, ID_FORMULARIO)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;

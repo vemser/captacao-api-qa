@@ -32,12 +32,10 @@ public class FormularioModel {
     private String ingles;
     private String espanhol;
     private String neurodiversidade;
-    private String etnia;
     private String efetivacao;
     private String genero;
     private String orientacao;
     private String disponibilidade;
     private List<TrilhaModel> trilhas;
-    private Integer imagemConfigPc;
-    private String Importancia;
+    private String importancia;
 }
