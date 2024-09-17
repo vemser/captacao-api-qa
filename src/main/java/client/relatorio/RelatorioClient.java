@@ -64,17 +64,6 @@ public class RelatorioClient {
                 ;
     }
 
-    public Response listarCandidatosEtniaSemAutenticacao() {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(RelatorioSpecs.relatorioReqSpec())
-                .when()
-                        .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ETNIA)
-                ;
-    }
-
     public Response listarCandidatosEstado() {
         Auth.usuarioGestaoDePessoas();
 
