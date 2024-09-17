@@ -43,7 +43,6 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(entrevista)
                 .when()
                         .post(ENTREVISTA_MARCAR_ENTREVISTA)
