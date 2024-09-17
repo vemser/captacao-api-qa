@@ -1,5 +1,6 @@
 package models.edicao;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
@@ -11,4 +12,6 @@ public class EdicaoModel {
 
     private Integer idEdicao;
     private String nome;
+	@JsonProperty("notaCorte")
+	private Integer notaCorte;
 }

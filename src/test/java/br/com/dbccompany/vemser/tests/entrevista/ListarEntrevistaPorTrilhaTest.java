@@ -19,8 +19,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 class ListarEntrevistaPorTrilhaTest {
-
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
@@ -55,4 +53,5 @@ class ListarEntrevistaPorTrilhaTest {
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }
+
 }

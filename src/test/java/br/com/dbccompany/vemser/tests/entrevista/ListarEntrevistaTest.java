@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de listagem de entrevistas")
 class ListarEntrevistaTest {
-
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
@@ -39,4 +37,5 @@ class ListarEntrevistaTest {
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
     }
+
 }
