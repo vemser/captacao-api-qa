@@ -22,30 +22,32 @@ public class AuthClient {
     public AuthClient() {
     }
 
-    public static String logar(LoginModel loginModel) {
+    public String logar(LoginModel loginModel) {
         String response =
                 given()
-                        .body(loginModel)
+                    .spec(AuthSpecs.authReqSpec())
+                    .body(loginModel)
                 .when()
-                        .post(LOGIN_ENDPOINT)
+                    .post(LOGIN_ENDPOINT)
                 .then()
-                        .extract()
-                        .asString()
-                ;
+                    .extract()
+                    .asString();
 
         setToken(response);
+
         return response;
     }
 
     public void loginComOutroUsuario(LoginModel loginModel) {
         String response =
                 given()
-                        .body(loginModel)
-                    .when()
-                        .post(LOGIN_ENDPOINT)
-                    .then()
-                        .extract()
-                        .asString();
+                    .spec(AuthSpecs.authReqSpec())
+                    .body(loginModel)
+                .when()
+                    .post(LOGIN_ENDPOINT)
+                .then()
+                    .extract()
+                    .asString();
 
         setToken(response);
     }

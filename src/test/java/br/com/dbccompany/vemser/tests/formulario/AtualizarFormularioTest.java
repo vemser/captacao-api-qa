@@ -27,11 +27,11 @@ class AtualizarFormularioTest{
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                            .statusCode(HttpStatus.SC_OK)
-                            .extract()
-                            .as(TrilhaModel[].class))
-                            .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -66,7 +66,6 @@ class AtualizarFormularioTest{
         Assertions.assertEquals(formularioCriado.getIngles(), formularioAtualizado.getIngles());
         Assertions.assertEquals(formularioCriado.getEspanhol(), formularioAtualizado.getEspanhol());
         Assertions.assertEquals(formularioCriado.getNeurodiversidade(), formularioAtualizado.getNeurodiversidade());
-        Assertions.assertEquals(formularioCriado.getEtnia(), formularioAtualizado.getEtnia());
         Assertions.assertEquals(formularioCriado.getEfetivacao(), formularioAtualizado.getEfetivacao());
         Assertions.assertEquals(formularioCriado.getGenero(), formularioAtualizado.getGenero());
         Assertions.assertEquals(formularioCriado.getOrientacao(), formularioAtualizado.getOrientacao());

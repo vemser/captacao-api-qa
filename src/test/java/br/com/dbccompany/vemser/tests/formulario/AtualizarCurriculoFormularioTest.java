@@ -29,11 +29,11 @@ class AtualizarCurriculoFormularioTest{
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -49,14 +49,14 @@ class AtualizarCurriculoFormularioTest{
     void testEnviarCurriculoParaFormularioNaoExistente() {
 
         Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
-                        .then()
-                                .extract()
-                                .as(JSONListaFormularioResponse.class)
-                                .getElementos()
-                                .get(0)
-                                .getIdFormulario();
+                .then()
+                    .extract()
+                    .as(JSONListaFormularioResponse.class)
+                    .getElementos()
+                    .get(0)
+                    .getIdFormulario();
 
-        Integer idFormularioNaoExistente = idUltimoFormulario + 1000;
+        Integer idFormularioNaoExistente = idUltimoFormulario + 90000;
 
         JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioClient.incluiCurriculoEmFormularioSemValidacao(idFormularioNaoExistente)
                 .then()

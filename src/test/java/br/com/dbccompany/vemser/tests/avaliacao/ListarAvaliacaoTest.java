@@ -24,7 +24,7 @@ class ListarAvaliacaoTest{
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao listar avaliações com sucesso")
     void testListarAvaliacoesComSucesso() {
-
+//
 //        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
 //                .then()
 //                    .statusCode(HttpStatus.SC_CREATED)
@@ -46,7 +46,7 @@ class ListarAvaliacaoTest{
 //                    .statusCode(HttpStatus.SC_CREATED)
 //                    .extract()
 //                    .as(AvaliacaoModel.class);
-
+//
 
         AvaliacaoListaResponseModel listaDeAvaliacoes = avaliacaoClient.listarUltimaAvaliacao()
                 .then()
@@ -56,11 +56,11 @@ class ListarAvaliacaoTest{
 
         AvaliacaoModel ultimaAvaliacao = listaDeAvaliacoes.getElementos().get(0);
 
-
+//
 //        var deletarAvaliacao = avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao())
 //                .then()
 //                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
+//
 
 
         Assertions.assertNotNull(ultimaAvaliacao);

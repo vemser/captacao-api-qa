@@ -28,18 +28,27 @@ public class FormularioDataFactory {
         return formulario;
     }
 
-    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+    public static FormularioCriacaoModel formularioNaoMatriculado(List<String> trilhas) {
 
-        formulario.setInstituicao(faker.lorem().sentence(3));
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setMatriculadoBoolean(false);
+
+        formulario.setTrilhas(trilhas);
 
         return formulario;
     }
 
+    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+
+        formulario.setInstituicao(faker.university().name());
+
+        return formulario;
+    }
 
     public static FormularioCriacaoModel formularioValidoComTrilhaExistente(String nomeDeTrilhaExistente) {
 
         FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(List.of("QA"));
+        formulario.setTrilhas(List.of(nomeDeTrilhaExistente));
 
         return formulario;
     }
@@ -58,14 +67,13 @@ public class FormularioDataFactory {
         return idUltimoFormulario + 100;
     }
 
-
     private static FormularioCriacaoModel novoFormulario() {
         String linkedinUrl = "https://www.linkedin.com";
         String githubUrl = "https://www.github.com";
 
         FormularioCriacaoModel formulario = new FormularioCriacaoModel();
         formulario.setMatriculadoBoolean(true);
-        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.lorem().sentence()));
+        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.educator().course()));
         formulario.setTurno(turnosValidos.get(random.nextInt(turnosValidos.size())));
         formulario.setInstituicao(Tools.removerCaracteresEspeciais(faker.university().name()));
         formulario.setGithub(githubUrl);

@@ -64,6 +64,7 @@ public class Auth {
 
         authClient.loginComOutroUsuario(loginModel);
     }
+
     public static void usuarioInvalido() {
         LoginModel loginModel = new LoginModel();
 
