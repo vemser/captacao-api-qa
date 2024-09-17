@@ -23,7 +23,6 @@ public class FormularioCriacaoModel {
     private Boolean reconhecimentoBoolean;
     private Boolean altruismoBoolean;
     private String resposta;
-    private Integer curriculo;
     private Boolean lgpdBoolean;
     private Boolean provaBoolean;
     private String ingles;
@@ -31,10 +30,13 @@ public class FormularioCriacaoModel {
     private String neurodiversidade;
     private String etnia;
     private Boolean efetivacaoBoolean;
+    private Boolean disponibilidadeBoolean;
     private String genero;
     private String orientacao;
-    private Boolean disponibilidadeBoolean;
     private List<String> trilhas;
-    private Object imagemConfigPc;
     private String importancia;
+    private Integer qtdSemestres;
+    private Integer semestreAtual;
+    private String tipoGraduacao;
+    private String descConfigPc;
 }

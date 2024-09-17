@@ -6,7 +6,6 @@ import factory.formulario.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
-import models.formulario.JSONListaFormularioResponse;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -29,11 +28,11 @@ class AtualizarConfigPcFormularioTest {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -50,15 +49,7 @@ class AtualizarConfigPcFormularioTest {
     @DisplayName("Cenário 2: Deve retornar 404 ao adicionar imagem com configuração do pc em formulário não existente")
     void testEnviarInfoConfigPcParaFormularioNaoExistente() {
 
-        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
-                .then()
-                    .extract()
-                    .as(JSONListaFormularioResponse.class)
-                    .getElementos()
-                    .get(0)
-                    .getIdFormulario();
-
-        Integer idFormularioNaoExistente = idUltimoFormulario + 1000;
+        Integer idFormularioNaoExistente = 90000;
 
         JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioClient.incluiConfigPcEmFormularioSemValidacao(idFormularioNaoExistente)
                 .then()

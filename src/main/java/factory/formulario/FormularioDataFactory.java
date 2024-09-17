@@ -19,6 +19,7 @@ public class FormularioDataFactory {
     private static final Random random = new Random();
     private static final List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
     private static final List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
+    private static final String TURNO_INVALIDO = "TARDE";
 
     public static FormularioCriacaoModel formularioValido(List<String> trilhas) {
 
@@ -28,18 +29,67 @@ public class FormularioDataFactory {
         return formulario;
     }
 
-    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+    public static FormularioCriacaoModel formularioNaoMatriculado(List<String> trilhas) {
 
-        formulario.setInstituicao(faker.lorem().sentence(3));
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setMatriculadoBoolean(false);
+
+        formulario.setTrilhas(trilhas);
 
         return formulario;
     }
 
+    public static FormularioCriacaoModel formularioTurnoInvalido(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setTurno(TURNO_INVALIDO);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioSemestreNegativo(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setSemestreAtual(-1);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioQntSemestresNegativo(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setQtdSemestres(-1);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioInstituicaoNula(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setInstituicao(null);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+
+        formulario.setInstituicao(faker.university().name());
+
+        return formulario;
+    }
 
     public static FormularioCriacaoModel formularioValidoComTrilhaExistente(String nomeDeTrilhaExistente) {
 
         FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(List.of("QA"));
+        formulario.setTrilhas(List.of(nomeDeTrilhaExistente));
 
         return formulario;
     }
@@ -58,14 +108,13 @@ public class FormularioDataFactory {
         return idUltimoFormulario + 100;
     }
 
-
     private static FormularioCriacaoModel novoFormulario() {
         String linkedinUrl = "https://www.linkedin.com";
         String githubUrl = "https://www.github.com";
 
         FormularioCriacaoModel formulario = new FormularioCriacaoModel();
         formulario.setMatriculadoBoolean(true);
-        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.lorem().sentence()));
+        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.educator().course()));
         formulario.setTurno(turnosValidos.get(random.nextInt(turnosValidos.size())));
         formulario.setInstituicao(Tools.removerCaracteresEspeciais(faker.university().name()));
         formulario.setGithub(githubUrl);

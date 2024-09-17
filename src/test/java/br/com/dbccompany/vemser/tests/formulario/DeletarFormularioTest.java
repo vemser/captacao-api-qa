@@ -1,5 +1,6 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
+import client.auth.AuthClient;
 import client.formulario.FormularioClient;
 import client.trilha.TrilhaClient;
 import factory.formulario.FormularioDataFactory;
@@ -28,11 +29,11 @@ class DeletarFormularioTest {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -40,7 +41,7 @@ class DeletarFormularioTest {
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        var response = formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
+        formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 

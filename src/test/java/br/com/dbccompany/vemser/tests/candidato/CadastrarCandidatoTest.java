@@ -42,10 +42,10 @@ class CadastrarCandidatoTest{
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
-                            .statusCode(HttpStatus.SC_OK)
-                            .extract()
-                            .as(TrilhaModel[].class))
-                            .toList();
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -60,13 +60,13 @@ class CadastrarCandidatoTest{
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoModel.class);
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
+                .as(CandidatoModel.class);
 
         var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
 
         edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
@@ -86,7 +86,7 @@ class CadastrarCandidatoTest{
         Assertions.assertEquals(candidatoCriado.getEdicao().getIdEdicao(), candidatoCadastrado.getEdicao().getIdEdicao());
         Assertions.assertEquals(candidatoCriado.getEdicao().getNome().toLowerCase(), candidatoCadastrado.getEdicao().getNome().toLowerCase());
         Assertions.assertEquals(candidatoCriado.getFormulario(), candidatoCadastrado.getFormulario().getIdFormulario());
-   }
+    }
 
 
     @Test
@@ -114,9 +114,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
@@ -148,9 +148,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("nome: Campo nome não pode ser branco ou nulo.")
@@ -182,9 +182,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: A data de nascimento deve ser uma data no passado", erroCadastroCandidato.getErrors().get(0));
@@ -215,9 +215,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Idade menor que 16 anos.", erroCadastroCandidato.getMessage());
@@ -248,9 +248,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: Campo dataNascimento não pode nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -281,9 +281,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: Campo dataNascimento não pode nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -314,9 +314,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithoutArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithoutArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Campo dataNascimento com valor inválido.", erroCadastroCandidato.getErrors());
@@ -347,9 +347,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("email: Campo email não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -380,9 +380,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("email: Campo email não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -413,9 +413,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
@@ -447,9 +447,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
@@ -476,9 +476,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
     }
 
     @Test
@@ -506,9 +506,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("telefone: Campo telefone não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -539,9 +539,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("telefone: O nome deve ter de 8 a 30 caracteres")
@@ -573,9 +573,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("rg: Campo rg não deve ser vazio ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -606,13 +606,13 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("rg: O rg deve ter de 8 a 30 caracteres")
-                    || erroCadastroCandidato.getErrors().get(0).equals("rg: Campo rg não deve ser vazio ou nulo."));
+                || erroCadastroCandidato.getErrors().get(0).equals("rg: Campo rg não deve ser vazio ou nulo."));
     }
 
     @Test
@@ -640,9 +640,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("rg: O rg deve ter de 8 a 30 caracteres", erroCadastroCandidato.getErrors().get(0));
@@ -673,9 +673,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cpf: Campo CPF não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -706,9 +706,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("cpf: Campo CPF não pode ser branco ou nulo.")
@@ -740,9 +740,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cpf: Campo CPF inválido.", erroCadastroCandidato.getErrors().get(0));
@@ -766,9 +766,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
     }
@@ -864,9 +864,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cidade: Campo cidade não deve ser vazio ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -897,9 +897,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cidade: Campo cidade não deve ser vazio ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -930,9 +930,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("pcd: Campo pcd não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -963,9 +963,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("pcd: Campo pcd não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -996,9 +996,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("ativo: Campo ativo não pode ser branco ou nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -1029,9 +1029,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithoutArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithoutArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithoutArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Campo ativo com valor inválido.", erroCadastroCandidato.getErrors());
@@ -1096,9 +1096,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(404, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Linguagem  não cadastrada!", erroCadastroCandidato.getMessage());
@@ -1162,9 +1162,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("edicao: Campo edição não pode ser nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -1195,9 +1195,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals("Edição não encontrada!", erroCadastroCandidato.getMessage());
     }
@@ -1225,9 +1225,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: não deve ser nulo")
@@ -1257,9 +1257,9 @@ class CadastrarCandidatoTest{
 
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
                 .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(404, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Erro ao buscar o formulário.", erroCadastroCandidato.getMessage());
