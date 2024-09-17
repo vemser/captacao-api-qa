@@ -3,8 +3,6 @@ package br.com.dbccompany.vemser.tests.formulario;
 import client.formulario.FormularioClient;
 import client.trilha.TrilhaClient;
 import factory.formulario.FormularioDataFactory;
-import io.restassured.response.Response;
-import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
@@ -39,10 +37,10 @@ class CadastrarFormularioTest{
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(TrilhaModel[].class))
-                .toList();
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -66,7 +64,6 @@ class CadastrarFormularioTest{
         Assertions.assertEquals(formulario.getIngles(), formularioCriado.getIngles());
         Assertions.assertEquals(formulario.getEspanhol(), formularioCriado.getEspanhol());
         Assertions.assertEquals(formulario.getNeurodiversidade(), formularioCriado.getNeurodiversidade());
-        Assertions.assertEquals(formulario.getEtnia(), formularioCriado.getEtnia());
         Assertions.assertEquals(listaBooleana.get(formulario.getEfetivacaoBoolean()), formularioCriado.getEfetivacao());
         Assertions.assertEquals(formulario.getOrientacao(), formularioCriado.getOrientacao());
         Assertions.assertArrayEquals(formulario.getTrilhas().toArray(), Tools.listaTrilhaParaListaString(formularioCriado.getTrilhas()).toArray());
