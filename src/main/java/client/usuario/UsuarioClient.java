@@ -3,8 +3,6 @@ package client.usuario;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import specs.usuario.UsuarioSpecs;
-import utils.auth.Auth;
-
 import static io.restassured.RestAssured.*;
 
 public class UsuarioClient extends UsuarioSpecs {
@@ -16,8 +14,7 @@ public class UsuarioClient extends UsuarioSpecs {
     private static final String UPLOAD_IMAGEM = "/upload-imagem";
     private static final String DESATIVAR_CONTA = "/desativacao-conta";
 
-    public Response getUsuarios(String token){
-
+    public Response listarGestores(String token){
         return
                 given()
                         .spec(super.usuarioSetUp())
@@ -26,5 +23,17 @@ public class UsuarioClient extends UsuarioSpecs {
                 .when()
                         .get(USUARIO)
                 ;
+    }
+
+    public Response listarGestorPorId(String token, String id){
+        return
+                given()
+                        .spec(super.usuarioSetUp())
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", token)
+                        .queryParam("idGestor", id)
+                .when()
+                        .get(USUARIO+ID_GESTOR);
+
     }
 }
