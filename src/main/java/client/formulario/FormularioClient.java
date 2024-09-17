@@ -82,7 +82,7 @@ public class FormularioClient {
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, authClient.logar(Auth.usuarioGestaoDePessoas()))
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(formulario)
                 .when()
                         .post(FORMULARIO_CADASTRO)
@@ -133,7 +133,7 @@ public class FormularioClient {
         given()
                 .spec(FormularioSpecs.formularioReqSpec())
                 .contentType("multipart/form-data")
-                .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
+                .header(AUTHORIZATION, AuthClient.getToken())
                 .pathParam(ID_FORMULARIO, idFormulario)
                 .multiPart(FILE, file)
             .when()

@@ -63,7 +63,7 @@ public class EdicaoClient {
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
+                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()
