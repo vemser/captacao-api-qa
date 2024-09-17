@@ -107,7 +107,7 @@ public class FormularioClient {
                 ;
     }
 
-    public JSONFailureResponseWithArrayModel criarFormularioInstituicaoVazia(FormularioCriacaoModel formulario) {
+    public JSONFailureResponseWithArrayModel criarFormularioInstituicaoNula(FormularioCriacaoModel formulario) {
         Auth.usuarioGestaoDePessoas();
 
         return

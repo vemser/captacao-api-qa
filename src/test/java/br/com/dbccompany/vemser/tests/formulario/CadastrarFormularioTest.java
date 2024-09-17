@@ -136,7 +136,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 5: Tentar cadastrar formulário com campo semetre atual negativo")
+    @DisplayName("Cenário 5: Tentar cadastrar formulário com campo semestre atual negativo")
     void testTentarCadastrarFormularioSemestreAtualNegativo() {
         String MSG_ERRO = "Semestre atual inválido!";
 
@@ -183,7 +183,7 @@ class CadastrarFormularioTest{
 
     @Test
     @DisplayName("Cenário 7: Tentar cadastrar formulário com campo instituição nulo")
-    void testTentarCadastrarFormularioInstituicaoVazia() {
+    void testTentarCadastrarFormularioInstituicaoNula() {
         String MSG_ERRO = "instituicao: O campo Instituição não deve ser vazio ou nulo.";
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -198,7 +198,7 @@ class CadastrarFormularioTest{
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioInstituicaoNula(listaDeNomeDeTrilhas);
 
-        JSONFailureResponseWithArrayModel erroNaoMatriculado = formularioClient.criarFormularioInstituicaoVazia(formulario);
+        JSONFailureResponseWithArrayModel erroNaoMatriculado = formularioClient.criarFormularioInstituicaoNula(formulario);
 
         Assertions.assertEquals(erroNaoMatriculado.getErrors().get(0), MSG_ERRO);
         Assertions.assertEquals(erroNaoMatriculado.getStatus(), HttpStatus.SC_BAD_REQUEST);
