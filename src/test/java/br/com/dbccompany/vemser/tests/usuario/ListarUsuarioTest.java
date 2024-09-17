@@ -6,15 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
 
-public class GetUsuariosTest {
+public class ListarUsuarioTest {
 
     private final UsuarioClient usuarioClient = new UsuarioClient();
     private String token;
 
+
     @BeforeEach
     public void setUp(){
         token = AuthClient.logar(Auth.usuarioGestaoDePessoas());
-        System.out.println("token" + token);
+        System.out.println("token:" + token);
     }
 
     @Test
@@ -24,6 +25,5 @@ public class GetUsuariosTest {
                 .then()
                 .statusCode(200)
         ;
-
     }
 }

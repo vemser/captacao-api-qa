@@ -1,4 +1,4 @@
 package br.com.dbccompany.vemser.tests.usuario;
 
-public class PostUsuariosTest {
+public class AtualizarUsuarioTest {
 }

@@ -22,7 +22,7 @@ public class AuthClient {
     public AuthClient() {
     }
 
-    public String logar(LoginModel loginModel) {
+    public static String logar(LoginModel loginModel) {
         String response =
                 given()
                     .spec(AuthSpecs.authReqSpec())
