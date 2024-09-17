@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@DisplayName("Endpoint de busca de candidato por CPF")
+@DisplayName("Endpoint de busca de candidato")
 class BuscarCandidatoPorCpfTest{
 
     private static final TrilhaClient trilhaClient = new TrilhaClient();
@@ -33,33 +33,102 @@ class BuscarCandidatoPorCpfTest{
     private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando busca candidato por cpf com sucesso")
-    void testBuscarCandidatoPorCpfComSucesso() {
+    @DisplayName("Cenário 1: Deve retornar 200 quando busca a lista de candidatos no sistema")
+    void testListarCandidatosComSucesso() {
 
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+//        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+//        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+//                        .then()
+//                        .statusCode(HttpStatus.SC_OK)
+//                        .extract()
+//                        .as(TrilhaModel[].class))
+//                .toList();
+//
+//        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+//
+//        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+//
+//        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+//
+//        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+//        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+//
+//        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+//
+//        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+//                .then()
+//                .statusCode(HttpStatus.SC_CREATED)
+//                .extract()
+//                .as(CandidatoModel.class);
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        CandidatoModel candidatoBuscado = candidatoClient.listarTodosOsCandidatos(0, 20)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(CandidatoModel.class);
+
+        Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoBuscado.getIdCandidato());
+        Assertions.assertEquals(candidatoCadastrado.getNome(), candidatoBuscado.getNome());
+        Assertions.assertEquals(candidatoCadastrado.getDataNascimento(), candidatoBuscado.getDataNascimento());
+        Assertions.assertEquals(candidatoCadastrado.getEmail(), candidatoBuscado.getEmail());
+        Assertions.assertEquals(candidatoCadastrado.getTelefone(), candidatoBuscado.getTelefone());
+        Assertions.assertEquals(candidatoCadastrado.getRg(), candidatoBuscado.getRg());
+        Assertions.assertEquals(candidatoCadastrado.getCpf(), candidatoBuscado.getCpf());
+        Assertions.assertEquals(candidatoCadastrado.getEstado(), candidatoBuscado.getEstado());
+        Assertions.assertEquals(candidatoCadastrado.getCidade(), candidatoBuscado.getCidade());
+        Assertions.assertEquals(candidatoCadastrado.getNota(), candidatoBuscado.getNota());
+        Assertions.assertEquals(candidatoCadastrado.getPcd(), candidatoBuscado.getPcd());
+        Assertions.assertEquals(candidatoCadastrado.getObservacoes(), candidatoBuscado.getObservacoes());
+        Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaComportamental(), candidatoBuscado.getNotaEntrevistaComportamental());
+        Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaTecnica(), candidatoBuscado.getNotaEntrevistaTecnica());
+        Assertions.assertEquals(candidatoCadastrado.getAtivo(), candidatoBuscado.getAtivo());
+        Assertions.assertEquals(candidatoCadastrado.getParecerComportamental(), candidatoBuscado.getParecerComportamental());
+        Assertions.assertEquals(candidatoCadastrado.getParecerTecnico(), candidatoBuscado.getParecerTecnico());
+        Assertions.assertEquals(candidatoCadastrado.getMedia(), candidatoBuscado.getMedia());
+
+        candidatoCadastrado.getLinguagens().forEach(linguagemCadastrada ->
+                candidatoBuscado.getLinguagens().forEach(linguagemBuscada -> {
+                    Assertions.assertEquals(linguagemCadastrada.getIdLinguagem(), linguagemBuscada.getIdLinguagem());
+                    Assertions.assertEquals(linguagemCadastrada.getNome(), linguagemBuscada.getNome());
+                })
+        );
+
+        Assertions.assertEquals(candidatoCadastrado.getEdicao().getIdEdicao(), candidatoBuscado.getEdicao().getIdEdicao());
+        Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), candidatoBuscado.getFormulario().getIdFormulario());
+
+//        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+//                .then()
+//                    .statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("Cenário 1: Deve retornar 200 quando busca um candidato por CPF no sistema")
+    void testListarCandidatosPorCpfComSucesso() {
+
+//        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+//        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+//                        .then()
+//                        .statusCode(HttpStatus.SC_OK)
+//                        .extract()
+//                        .as(TrilhaModel[].class))
+//                .toList();
+//
+//        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+//
+//        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+//
+//        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+//
+//        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+//        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+//
+//        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+//
+//        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+//                .then()
+//                .statusCode(HttpStatus.SC_CREATED)
+//                .extract()
+//                .as(CandidatoModel.class);
 
         CandidatoModel candidatoBuscado = candidatoClient.buscarCandidatoPorCpf(candidatoCadastrado.getCpf())
                 .then()
@@ -96,9 +165,9 @@ class BuscarCandidatoPorCpfTest{
         Assertions.assertEquals(candidatoCadastrado.getEdicao().getIdEdicao(), candidatoBuscado.getEdicao().getIdEdicao());
         Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), candidatoBuscado.getFormulario().getIdFormulario());
 
-        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+//        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+//                .then()
+//                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test

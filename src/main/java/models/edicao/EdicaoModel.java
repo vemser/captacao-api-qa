@@ -11,4 +11,5 @@ public class EdicaoModel {
 
     private Integer idEdicao;
     private String nome;
+    private Integer notaCorte;
 }

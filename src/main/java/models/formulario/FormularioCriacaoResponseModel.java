@@ -1,5 +1,6 @@
 package models.formulario;
 
+import groovy.lang.GString;
 import lombok.*;
 import models.trilha.TrilhaModel;
 
@@ -30,12 +31,15 @@ public class FormularioCriacaoResponseModel {
     private String ingles;
     private String espanhol;
     private String neurodiversidade;
-    private String etnia;
     private String efetivacao;
     private String genero;
     private String orientacao;
     private String disponibilidade;
     private List<TrilhaModel> trilhas;
     private Object imagemConfigPc;
+    private Integer qtdSemestres;
+    private Integer semestreAtual;
+    private Integer tipoGraduacao;
+    private String descConfigPc;
     private String importancia;
 }

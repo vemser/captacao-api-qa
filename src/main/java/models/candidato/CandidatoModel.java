@@ -23,7 +23,7 @@ public class CandidatoModel {
     public String cpf;
     public String estado;
     public String cidade;
-    private Double nota;
+    public String StatusCandidato;
     public String pcd;
     public Object observacoes;
     public Double notaProva;

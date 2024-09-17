@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class AuthClient {
 
-    private static final String LOGIN_ENDPOINT = "http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/usuario/login";
+    private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
 
     @Getter
     @Setter
