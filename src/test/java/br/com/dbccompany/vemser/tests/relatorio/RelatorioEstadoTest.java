@@ -38,7 +38,7 @@ class RelatorioEstadoTest  {
     @DisplayName("Cenário 1: Deve retornar 403 ao listar relatório de candidatos por estado sem autenticação")
     void testListarRelatorioEstadoComSucessoSemAutenticacao() {
 
-        var response = relatorioClient.listarCandidatosEstadoSemAutenticacao()
+        relatorioClient.listarCandidatosEstadoSemAutenticacao()
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

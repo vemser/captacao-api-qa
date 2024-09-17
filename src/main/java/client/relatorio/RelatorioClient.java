@@ -59,21 +59,8 @@ public class RelatorioClient {
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_GENERO)
-                ;
-    }
-
-    public Response listarCandidatosEtnia() {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ETNIA)
                 ;
     }
 
@@ -83,7 +70,6 @@ public class RelatorioClient {
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ETNIA)
                 ;
@@ -107,7 +93,6 @@ public class RelatorioClient {
         Response response =
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ESTADO)
                 ;
@@ -133,9 +118,19 @@ public class RelatorioClient {
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO)
+                ;
+    }
+
+    public Response listarCandidatosNeurodiversidadeSemAutenticacao() {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(RelatorioSpecs.relatorioReqSpec())
+                .when()
+                        .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_NEURODIVERSIDADE)
                 ;
     }
 }

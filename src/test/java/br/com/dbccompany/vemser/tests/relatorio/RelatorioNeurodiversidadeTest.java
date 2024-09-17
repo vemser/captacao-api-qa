@@ -33,15 +33,14 @@ class RelatorioNeurodiversidadeTest {
             }
         }
     }
-/*
+
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao retornar relatório com quantidade de candidatos com neurodiversidade sem autenticação")
     void testListarRelatorioNeurodiversidadeSemAutenticacao() {
 
-        var response = relatorioClient.listarCandidatosNeurodiversidadeSemAutenticacao()
+        relatorioClient.listarCandidatosNeurodiversidadeSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 
- */
 }
