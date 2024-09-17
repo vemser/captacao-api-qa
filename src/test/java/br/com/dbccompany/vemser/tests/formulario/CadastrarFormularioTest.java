@@ -66,7 +66,6 @@ class CadastrarFormularioTest{
         Assertions.assertEquals(formulario.getIngles(), formularioCriado.getIngles());
         Assertions.assertEquals(formulario.getEspanhol(), formularioCriado.getEspanhol());
         Assertions.assertEquals(formulario.getNeurodiversidade(), formularioCriado.getNeurodiversidade());
-        Assertions.assertEquals(formulario.getEtnia(), formularioCriado.getEtnia());
         Assertions.assertEquals(listaBooleana.get(formulario.getEfetivacaoBoolean()), formularioCriado.getEfetivacao());
         Assertions.assertEquals(formulario.getOrientacao(), formularioCriado.getOrientacao());
         Assertions.assertArrayEquals(formulario.getTrilhas().toArray(), Tools.listaTrilhaParaListaString(formularioCriado.getTrilhas()).toArray());

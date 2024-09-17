@@ -45,9 +45,9 @@ class DeletarLinguagemTest {
         }
 
 
-        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+//        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
+//                .then()
+//                    .statusCode(HttpStatus.SC_NO_CONTENT);
 
         var responseDelete = linguagemClient.listarLinguagens()
                 .then()

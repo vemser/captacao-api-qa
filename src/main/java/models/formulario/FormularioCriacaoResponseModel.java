@@ -39,7 +39,7 @@ public class FormularioCriacaoResponseModel {
     private Object imagemConfigPc;
     private Integer qtdSemestres;
     private Integer semestreAtual;
-    private Integer tipoGraduacao;
+    private String tipoGraduacao;
     private String descConfigPc;
     private String importancia;
 }

@@ -14,6 +14,12 @@ import java.util.List;
 @ToString
 public class CandidatoModel {
 
+
+    public Integer totalElementos;
+    public Integer quantidadePaginas;
+    public Integer pagina;
+    public Integer tamanho;
+    public List<CandidatoModel> elementos;
     public Integer idCandidato;
     public String nome;
     public String dataNascimento;
@@ -26,13 +32,13 @@ public class CandidatoModel {
     public String StatusCandidato;
     public String pcd;
     public Object observacoes;
-    public Double notaProva;
-    public Double notaEntrevistaComportamental;
-    public Double notaEntrevistaTecnica;
+    public Integer notaProva;
+    public Integer notaEntrevistaComportamental;
+    public Integer notaEntrevistaTecnica;
     public String ativo;
     public String parecerComportamental;
     public String parecerTecnico;
-    public Double media;
+    public Integer media;
     public List<LinguagemModel> linguagens;
     public EdicaoModel edicao;
     public FormularioCriacaoResponseModel formulario;
