@@ -3,6 +3,7 @@ package br.com.dbccompany.vemser.tests.formulario;
 import client.formulario.FormularioClient;
 import client.trilha.TrilhaClient;
 import factory.formulario.FormularioDataFactory;
+import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
@@ -70,4 +71,26 @@ class CadastrarFormularioTest{
         Assertions.assertEquals(formulario.getImportancia(), formularioCriado.getImportancia());
     }
 
+    @Test
+    @DisplayName("Cenário 2: Tentar cadastrar formulário sem estar matriculado em um curso")
+    void testTentarCadastrarFormularioNaoMatriculado() {
+        String MSG_ERRO = "Precisa estar matriculado!";
+
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                        .toList();
+
+        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioNaoMatriculado(listaDeNomeDeTrilhas);
+
+        JSONFailureResponseWithoutArrayModel erroNaoMatriculado = formularioClient.criarFormularioNaoMatriculado(formulario);
+
+        Assertions.assertEquals(erroNaoMatriculado.getMessage(), MSG_ERRO);
+        Assertions.assertEquals(erroNaoMatriculado.getStatus(), HttpStatus.SC_BAD_REQUEST);
+    }
 }

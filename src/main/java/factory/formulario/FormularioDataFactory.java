@@ -28,6 +28,16 @@ public class FormularioDataFactory {
         return formulario;
     }
 
+    public static FormularioCriacaoModel formularioNaoMatriculado(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setMatriculadoBoolean(false);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
     public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
 
         formulario.setInstituicao(faker.university().name());
