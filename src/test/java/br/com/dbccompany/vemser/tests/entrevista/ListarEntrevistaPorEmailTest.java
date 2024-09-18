@@ -27,7 +27,7 @@ class ListarEntrevistaPorEmailTest {
 		;
 	}
 
-
+	@Test
 	@DisplayName("Cenário 2: Deve retornar 200 ao buscar entrevista por email do candidato com sucesso")
 	@Tag("Regression")
 	void testListaEntrevistaPorEmailComSucesso() {
@@ -42,12 +42,13 @@ class ListarEntrevistaPorEmailTest {
 		Assertions.assertEquals("email@mail.com", entrevista.getCandidatoEmail());
 	}
 
-  @DisplayName("Cenário 3: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
+	@Test
+  	@DisplayName("Cenário 3: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
 	@Tag("Regression")
     void testListaEntrevistaPorEmailSemAutenticacao() {
         String emailDoCandidato = Email.getEmail();
 
-        var response = entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
+        entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }
