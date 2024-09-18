@@ -21,7 +21,6 @@ public class ListarUsuarioTest {
     @BeforeEach
     public void setUp(){
         token = AuthClient.logar(Auth.usuarioGestaoDePessoas());
-        System.out.println(token);
     }
 
     @Test
