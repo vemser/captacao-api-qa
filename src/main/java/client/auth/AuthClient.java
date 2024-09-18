@@ -21,17 +21,20 @@ public class AuthClient {
     @Setter
     private static String tokenInvalido;
 
+
+
     public void logar(LoginModel loginModel) {
         String response =
                 given()
-                    .spec(AuthSpecs.authReqSpec())
-                    .body(loginModel)
-                .when()
-                    .post(LOGIN_ENDPOINT)
-                .then()
-                    .extract()
-                    .asString();
+                        .spec(AuthSpecs.authReqSpec())
+                        .body(loginModel)
+                        .when()
+                        .post(LOGIN_ENDPOINT)
+                        .then()
+                        .extract()
+                        .asString();
 
         setToken(response);
     }
+
 }
