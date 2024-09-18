@@ -20,6 +20,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -473,6 +474,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -781,6 +783,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 22: Deve retornar 400 quando tenta cadastrar candidato com cpf já cadastrado")
+    @Tag("Regression")
     void testCadastrarCandidatoComCpfJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

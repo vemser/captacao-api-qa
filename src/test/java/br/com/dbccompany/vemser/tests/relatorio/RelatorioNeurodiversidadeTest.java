@@ -5,6 +5,7 @@ import models.relatorio.RelatorioNeurodiversidadeModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ class RelatorioNeurodiversidadeTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao retornar relatório com quantidade de candidatos com neurodiversidade com sucesso")
+    @Tag("Regression")
     void testListarRelatorioNeurodiversidadeComSucesso() {
 
         var response = relatorioClient.listarCandidatosNeurodiversidade()
@@ -36,6 +38,7 @@ class RelatorioNeurodiversidadeTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao retornar relatório com quantidade de candidatos com neurodiversidade sem autenticação")
+    @Tag("Regression")
     void testListarRelatorioNeurodiversidadeSemAutenticacao() {
 
         relatorioClient.listarCandidatosNeurodiversidadeSemAutenticacao()

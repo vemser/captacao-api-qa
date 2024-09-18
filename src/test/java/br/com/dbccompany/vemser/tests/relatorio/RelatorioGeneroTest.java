@@ -5,6 +5,7 @@ import models.relatorio.RelatorioGeneroModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ class RelatorioGeneroTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retonar 200 ao listar com sucesso relatório de candidatos por gênero")
+    @Tag("Regression")
     void testListarRelatorioGeneroComSucesso() {
 
         var response = relatorioClient.listarCandidatosGenero()
@@ -36,6 +38,7 @@ class RelatorioGeneroTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retonar 403 ao listar relatório de candidatos por gênero sem autenticação")
+    @Tag("Regression")
     void testListarRelatorioGeneroComSucessoSemAutenticacao() {
 
         relatorioClient.listarCandidatosGeneroSemAutenticacao()

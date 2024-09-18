@@ -8,6 +8,7 @@ import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de marcação de entrevista")
@@ -41,6 +42,7 @@ class CadastrarEntrevistaTest  {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar entrevista sem autenticação")
+    @Tag("Regression")
     void testCadastrarEntrevistaSemAutenticacao() {
 		
         Boolean candidatoAvaliado = true;

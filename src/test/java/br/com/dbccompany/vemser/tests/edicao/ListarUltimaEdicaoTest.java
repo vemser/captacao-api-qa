@@ -8,6 +8,7 @@ import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -65,6 +66,7 @@ class ListarUltimaEdicaoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao listar a última edição sem autenticação")
+	@Tag("Regression")
     void testListarUltimaEdicaoSemAutenticacao() {
 
         String ultimaEdicao = edicaoClient.listaEdicaoAtualSemAutenticacao();

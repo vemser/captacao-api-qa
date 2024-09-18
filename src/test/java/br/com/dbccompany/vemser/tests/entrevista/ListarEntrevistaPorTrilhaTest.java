@@ -10,6 +10,7 @@ import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -23,6 +24,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista entrevistas de trilhas existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaComSucesso() {
         String trilha = "QA";
 
@@ -35,6 +37,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaNaoExistente() {
         String trilhaNaoExistente = "-*/-*/-*/-*/-*/";
 
@@ -46,6 +49,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaSemAutenticacao() {
         String trilha = "QA";
 

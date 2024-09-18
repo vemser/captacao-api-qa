@@ -10,6 +10,7 @@ import models.entrevista.EntrevistaListaResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de listagem de entrevistas por mês")
@@ -20,6 +21,7 @@ class ListarEntrevistaPorMesTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista trilha por mês com sucesso")
+    @Tag("Regression")
     void testListarEntrevistasPorMesComSucesso() {
 
         Integer mesEntrevista = 9;
@@ -38,6 +40,7 @@ class ListarEntrevistaPorMesTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
+    @Tag("Regression")
     void testListarEntrevistasPorMesSemEstarAutenticado() {
 
         Integer mesEntrevista = 3;
