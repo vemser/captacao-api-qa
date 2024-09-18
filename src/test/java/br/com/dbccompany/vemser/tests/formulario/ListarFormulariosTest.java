@@ -5,6 +5,7 @@ import models.formulario.JSONListaFormularioResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -15,14 +16,9 @@ class ListarFormulariosTest{
     private static final String PATH_SCHEMA_LISTAR_FORMULARIOS = "schemas/formulario/listar_formularios.json";
     FormularioClient formularioClient = new FormularioClient();
 
-    @Test
-    @DisplayName("Cenário 1: Validar contrato listar formulários")
-    void testValidarContratoListarFormularios() {
-        formularioClient.listarTodosOsFormularios()
-                .then()
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_FORMULARIOS))
-        ;
-    }
+    @DisplayName("Cenário 1: Validar contrato listar formulários ordenados")
+    @Tag("Regression")
+    void testListarFormulariosComSucesso() {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 e listar formulários ordenados")

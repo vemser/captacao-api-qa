@@ -1,5 +1,6 @@
 package models.edicao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @NoArgsConstructor
@@ -7,9 +8,10 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EdicaoModel {
 
-    private Integer idEdicao;
-    private String nome;
+	private Integer idEdicao;
+	private String nome;
 	private Integer notaCorte;
 }

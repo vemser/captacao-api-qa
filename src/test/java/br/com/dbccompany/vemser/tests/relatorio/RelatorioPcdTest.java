@@ -5,6 +5,7 @@ import models.relatorio.RelatorioPcdModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -30,6 +31,7 @@ class RelatorioPcdTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 ao listar relatório de candidatos pcd com sucesso")
+    @Tag("Regression")
     void testListarRelatorioPcdComSucesso() {
 
         var response = relatorioClient.listarCandidatosPcd()

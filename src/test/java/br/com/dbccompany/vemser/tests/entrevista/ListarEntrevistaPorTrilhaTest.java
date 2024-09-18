@@ -4,6 +4,7 @@ import client.entrevista.EntrevistaClient;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -28,6 +29,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 quando lista entrevistas de trilhas existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaComSucesso() {
 
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
@@ -39,6 +41,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaNaoExistente() {
 
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_NAO_EXISTENTE)
@@ -49,6 +52,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaSemAutenticacao() {
 
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(TRILHA_VALIDA)

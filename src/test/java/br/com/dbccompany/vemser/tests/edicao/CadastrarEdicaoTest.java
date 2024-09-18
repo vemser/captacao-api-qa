@@ -15,42 +15,42 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @DisplayName("Endpoint de cadastro de edição")
 class CadastrarEdicaoTest {
 
-    private static final EdicaoClient edicaoClient = new EdicaoClient();
-    private static final String PATH_SCHEMA_CADASTRAR_EDICAO = "schemas/edicao/post_edicao.json";
 
-    @Test
-    @DisplayName("Cenário 1: Validação de contrato de cadastrar edicao")
-    public void testValidarContratoCadastrarEdicao() {
+	private static final EdicaoClient edicaoClient = new EdicaoClient();
 
-        EdicaoModel edicao = EdicaoDataFactory.idNovaEdicao();
+	@Test
+	@DisplayName("Cenário 1: Deve validar o contrato de cadastrar edição")
+	public void testValidarContraroCadastrarEdicao() {
 
-        edicaoClient.cadastrarEdicao(edicao)
-                .then()
-                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_CADASTRAR_EDICAO))
-        ;
-    }
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 201 ao cadastrar edição com sucesso")
-    void testCadastrarEdicaoComSucesso() {
+		edicaoClient.cadastrarEdicao(edicao)
+				.then()
+				.statusCode(HttpStatus.SC_CREATED)
+				.body(matchesJsonSchemaInClasspath("schemas/edicao/cadastrarEdicao.json"));
+	}
 
-		EdicaoModel edicao = EdicaoDataFactory.idNovaEdicao();
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 201 ao cadastrar edição com sucesso")
+	void testCadastrarEdicaoComSucesso() {
 
-        EdicaoModel edicaoCadastrada = edicaoClient.cadastrarEdicao(edicao)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EdicaoModel.class);
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
-        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
-        Assertions.assertNotNull(edicaoCadastrada);
-    }
+		EdicaoModel edicaoCadastrada = edicaoClient.cadastrarEdicao(edicao)
+				.then()
+				.statusCode(HttpStatus.SC_CREATED)
+				.extract()
+				.as(EdicaoModel.class);
 
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao cadastrar edição sem autenticação")
-    void testCadastrarEdicaoSemAutenticacao() {
-        edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(1)
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
+		edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
+		Assertions.assertNotNull(edicaoCadastrada);
+	}
+
+	@Test
+	@DisplayName("Cenário 3: Deve retornar 403 ao cadastrar edição sem autenticação")
+	void testCadastrarEdicaoSemAutenticacao() {
+		edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(1)
+				.then()
+				.statusCode(HttpStatus.SC_FORBIDDEN);
+	}
 }

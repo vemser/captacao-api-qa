@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f05623f9-3a58-4f03-b477-6a1c38135098",
+		"_postman_id": "9322d752-6b24-4e97-af3d-f6daf54fc57f",
 		"name": "tf_captacao_postman",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26746286",
-		"_collection_link": "https://warped-shadow-571926.postman.co/workspace/Team-Workspace~4ccd720c-0301-48b5-81fa-d580ed0108c2/collection/31276637-f05623f9-3a58-4f03-b477-6a1c38135098?action=share&source=collection_link&creator=26746286"
+		"_exporter_id": "37495315"
 	},
 	"item": [
 		{
@@ -3589,7 +3588,8 @@
 											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -3603,26 +3603,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/prova/pegar-prova/:id?idProva=520",
+									"raw": "{{base_url}}/avaliacao/xxx",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"prova",
-										"pegar-prova",
-										":id"
-									],
-									"query": [
-										{
-											"key": "idProva",
-											"value": "520"
-										}
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "520"
-										}
+										"avaliacao",
+										"xxx"
 									]
 								}
 							},
@@ -3635,11 +3622,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test('Verificar código de status', function () {\r",
+											"pm.test('Verificar código de status 200', function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -3653,13 +3641,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/prova/listar-provas",
+									"raw": "{{base_url}}/avaliacao",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"prova",
-										"listar-provas"
+										"avaliacao"
 									]
 								}
 							},
@@ -5912,6 +5899,3644 @@
 											"key": "idProva",
 											"value": "999"
 										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Listar gestores",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar gestores por id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/id-gestor?idGestor=2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"id-gestor"
+									],
+									"query": [
+										{
+											"key": "idGestor",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar gestor por id, nao cadastrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonResp = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('object');\r",
+											"     pm.expect(pm.response.json().message).to.contains([\r",
+											"        'Usuario não encontrado!'\r",
+											"     ]);\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/id-gestor?idGestor=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"id-gestor"
+									],
+									"query": [
+										{
+											"key": "idGestor",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar gestor por id invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonResp = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/id-gestor?idGestor=\"2\"",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"id-gestor"
+									],
+									"query": [
+										{
+											"key": "idGestor",
+											"value": "\"2\""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar gestor por nome, email e cargo",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/usuario/gestor-by-nome-email?nome=ADMIN&email=joao.kriger@dbccompany.com.br&cargo[idCargo]=2&cargo[nome]=ROLE_GESTAO_DE_PESSOAS",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"gestor-by-nome-email"
+									],
+									"query": [
+										{
+											"key": "nome",
+											"value": "ADMIN"
+										},
+										{
+											"key": "email",
+											"value": "joao.kriger@dbccompany.com.br"
+										},
+										{
+											"key": "cargo[idCargo]",
+											"value": "2"
+										},
+										{
+											"key": "cargo[nome]",
+											"value": "ROLE_GESTAO_DE_PESSOAS"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar gestores inativos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/contas-inativas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"contas-inativas"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Inserir imagem para o  cadastro de usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Imagens/surf 2.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/usuario/upload-imagem/{email}?email=thales.brasileiro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"upload-imagem",
+										"{email}"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "thales.brasileiro"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inserir imagem para usuario nao cadastrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonResp = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('object');\r",
+											"     pm.expect(pm.response.json().message).to.contains([\r",
+											"        \"Email não encontrado\"\r",
+											"     ]);\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Imagens/Capturas de tela/Captura de tela 2024-09-17 144813.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/usuario/upload-imagem/{email}?email=thales",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"upload-imagem",
+										"{email}"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "thales"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Desativar conta de usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/desativacao-conta/3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"desativacao-conta",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Desativar conta de usuario inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Usuario não encontrado!\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/desativacao-conta/0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"desativacao-conta",
+										"0"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Deletar gestor nao encontrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Usuario não encontrado!\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/usuario/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"usuario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Formulario",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Pegar print de usuario sem print cadastrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Usuário não possui print das configurações do pc cadastrado.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-print-config-pc?idFormulario=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-print-config-pc"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pegar print de usuario nao cadastrado no sistema",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-print-config-pc?idFormulario=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-print-config-pc"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pegar print de usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-print-config-pc?idFormulario=3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-print-config-pc"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar curriculo usuario sem curriculo cadastrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Usuário não possui currículo cadastrado.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-curriculo?idFormulario=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-curriculo"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar curriculo usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-curriculo?idFormulario=55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-curriculo"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "55"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar curriculo usuario nao cadastrado no sistema",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-curriculo?idFormulario=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-curriculo"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar doc",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Usuário não possui documentos.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-comp-matricula?idFormulario=55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-comp-matricula"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "55"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar doc usuario nao cadastrado no sistema",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-comp-matricula?idFormulario=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-comp-matricula"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar doc de usuario sem doc cadastrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Usuário não possui documentos.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/recuperar-comp-matricula?idFormulario=2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"recuperar-comp-matricula"
+									],
+									"query": [
+										{
+											"key": "idFormulario",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos formularios com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/listar?pagina=0&tamanho=10&sort=idFormulario",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"listar"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "sort",
+											"value": "idFormulario"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos formularios com \"pagina\" < 0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Page ou Size não pode ser menor que zero.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/listar?pagina=-1&tamanho=10&sort=idFormulario",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"listar"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "-1"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "sort",
+											"value": "idFormulario"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos formularios com \"tamanho\" < 0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Page ou Size não pode ser menor que zero.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/listar?pagina=0&tamanho=-1&sort=idFormulario",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"listar"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "-1"
+										},
+										{
+											"key": "sort",
+											"value": "idFormulario"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos formularios com \"sort\" invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/formulario/listar?pagina=0&tamanho=10&sort=2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"listar"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "sort",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Cadastrar formulario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 8,\r\n  \"semestreAtual\": 4,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/cadastro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"cadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar formulario com qtd de semestres negativos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": -1,\r\n  \"semestreAtual\": 10,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/cadastro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"cadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar formulario com o semestre atual maior que a quantidade de semestre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 10,\r\n  \"semestreAtual\": 12,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/cadastro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"cadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar formulario com o semestre atual negativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 10,\r\n  \"semestreAtual\": -2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/cadastro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"cadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar formulario com o turno \"TARDE\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"TARDE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 10,\r\n  \"semestreAtual\": -2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/cadastro",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"cadastro"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Atualizar config pc id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Imagens/Capturas de tela/Captura de tela 2024-09-15 211201.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-print-config-pc/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-print-config-pc",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar curriculo por id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Documentos/Documento1 química Lavagem a Seco.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-curriculo/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-curriculo",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar curriculo por id valido Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Documentos/Documento1 química Lavagem a Seco.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-comp-matricula/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-comp-matricula",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar formulario com id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\")\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"Analise e Desenvolvimento de Software\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"PUC\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Não possuo\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": \"TDAH\",\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 4,\r\n  \"semestreAtual\": 2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"Intel i7-4790K, 16Gb, 240Gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/atualizar-formulario/-10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"atualizar-formulario",
+										"-10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar formulario com sucesso Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"Analise e Desenvolvimento de Software\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"PUC\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Não possuo\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": \"TDAH\",\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 4,\r\n  \"semestreAtual\": 2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"Intel i7-4790K, 16Gb, 240Gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/atualizar-formulario/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"atualizar-formulario",
+										"55"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Deletar formulario com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/delete-fisico/101",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"delete-fisico",
+										"101"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar formulario ja deletado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\");\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/delete-fisico/101",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"delete-fisico",
+										"101"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Trilha",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar nova trilha",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"E\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/trilha",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar trilha vazia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Testar respota do server\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errors).to.eql([\r",
+											"         \"nome: O campo nome não deve ser vazio\"    \r",
+											"    ]);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/trilha",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar trilha com caracteres especiais",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"@#$%¨|&\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/trilha",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "todas-trilhas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/trilha/listar",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha",
+										"listar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Deletar trilha com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/trilha/deletar/18",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha",
+										"deletar",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar sem passar id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/trilha/deletar/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha",
+										"deletar",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar com id negativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/trilha/deletar/-1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha",
+										"deletar",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar trilha ja excluida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/trilha/deletar/18",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"trilha",
+										"deletar",
+										"18"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Edicao",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar-edicoes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/listar-todas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"listar-todas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edicao-atual",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/edicao-atual",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"edicao-atual"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Deletar edicao inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/delete-fisico/-10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"delete-fisico",
+										"-10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar edicao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/delete-fisico/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"delete-fisico",
+										"10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar edicao vazia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idEdicao\" : 0,\r\n    \"nome\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/edicao/criar-edicao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"criar-edicao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar edicao com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idEdicao\" : 0,\r\n    \"nome\": \"VS25\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/edicao/criar-edicao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"criar-edicao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar edicao com caracteres especiais",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idEdicao\" : 0,\r\n    \"nome\": \"@(&*$*@¨$(%@!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/edicao/criar-edicao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"criar-edicao"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Editar nota de corte valor negativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=-100",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "-100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar nota de corte valor acima de 100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=10000000000",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "10000000000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar nota de corte com valor entre 0 a 100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "55"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Relatorios",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Buscar qtd de pessoas pcd inscritas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/relatorios/quantidade-de-pessoas-inscritas-por-pcd",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"relatorios",
+										"quantidade-de-pessoas-inscritas-por-pcd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar qtd de pessoas com neurodiversidade inscritas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/relatorios/quantidade-de-pessoas-inscritas-por-neurodiversidade",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"relatorios",
+										"quantidade-de-pessoas-inscritas-por-neurodiversidade"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar qtd de pessoas inscritas por genero",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/relatorios/quantidade-de-pessoas-inscritas-por-genero",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"relatorios",
+										"quantidade-de-pessoas-inscritas-por-genero"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar qtd de pessoas inscritas por estado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/relatorios/quantidade-de-pessoas-inscritas-por-estado",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"relatorios",
+										"quantidade-de-pessoas-inscritas-por-estado"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar qtd de pessoas inscritas por edicao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/relatorios/quantidade-de-pessoas-inscritas-por-edicao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"relatorios",
+										"quantidade-de-pessoas-inscritas-por-edicao"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Entrevista",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas entrevistas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevista por trilha",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/entrevista/por-trilha?trilha=QA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"por-trilha"
+									],
+									"query": [
+										{
+											"key": "trilha",
+											"value": "QA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevista por trilha inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/entrevista/por-trilha?trilha=SCRUM",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"por-trilha"
+									],
+									"query": [
+										{
+											"key": "trilha",
+											"value": "SCRUM"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevistas por mes e ano",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/listar-por-mes?pagina=0&tamanho=20&mes=10&ano=2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"listar-por-mes"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "20"
+										},
+										{
+											"key": "mes",
+											"value": "10"
+										},
+										{
+											"key": "ano",
+											"value": "2023"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "exportar lista de entrevistados xls",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/export-xlsx",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"export-xlsx"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar entrevista por email do candidato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/buscar-entrevista-email-candidato/email@mail.com",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"buscar-entrevista-email-candidato",
+										"email@mail.com"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": []
+				},
+				{
+					"name": "PUT",
+					"item": []
+				},
+				{
+					"name": "DELETE",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Avaliacao",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas avaliacoes de aprovados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar todas avaliacoes com filtros ou retornar lista de avaliacoes aprovados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/filtro-avaliacao?pagina=1&tamanho=10&email=&edicao=VEMSER01&trilha=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"filtro-avaliacao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "1"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "email",
+											"value": ""
+										},
+										{
+											"key": "edicao",
+											"value": "VEMSER01"
+										},
+										{
+											"key": "trilha",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "adicionar uma avaliacao a um candidato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao?token={{token_user_gestor}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token_user_gestor}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "editar uma avliacao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": {{idInscricao}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editar uma avliacao inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": {{idInscricao}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/{{avaliacaoInex}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"{{avaliacaoInex}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editar uma avaliacao para inscricao inex",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Inscrição não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": -10000000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar uma avaliacao por id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem de erro\", function () {\r",
+											"     let jsonData = pm.response.json()\r",
+											"     pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/-10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"-10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletar uma avaliacao por id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem de erro\", function () {\r",
+											"     let jsonData = pm.response.json()\r",
+											"     pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"2"
 									]
 								}
 							},

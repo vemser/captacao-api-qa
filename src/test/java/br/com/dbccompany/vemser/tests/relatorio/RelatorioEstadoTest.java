@@ -5,6 +5,7 @@ import models.relatorio.RelatorioEstadoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -30,6 +31,7 @@ class RelatorioEstadoTest  {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 ao listar com sucesso relatório de candidatos por estado")
+    @Tag("Regression")
     void testListarRelatorioEstadoComSucesso() {
 
         var response = relatorioClient.listarCandidatosEstado()
@@ -49,6 +51,7 @@ class RelatorioEstadoTest  {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 403 ao listar relatório de candidatos por estado sem autenticação")
+    @Tag("Regression")
     void testListarRelatorioEstadoComSucessoSemAutenticacao() {
 
         relatorioClient.listarCandidatosEstadoSemAutenticacao()

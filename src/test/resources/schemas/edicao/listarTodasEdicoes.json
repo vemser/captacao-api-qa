@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "idEdicao": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "notaCorte": {
+          "type": ["integer", "number", "string"]
+        }
+      },
+      "required": [
+        "idEdicao",
+        "nome",
+        "notaCorte"
+      ]
+    }
+  ]
+}
