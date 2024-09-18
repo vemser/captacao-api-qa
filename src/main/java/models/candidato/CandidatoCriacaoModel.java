@@ -3,6 +3,7 @@ package models.candidato;
 import lombok.*;
 import models.edicao.EdicaoModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,7 +13,6 @@ import java.util.List;
 @ToString
 public class CandidatoCriacaoModel {
 
-    private Integer idCandidato;
     private String nome;
     private String dataNascimento;
     private String email;
@@ -26,10 +26,4 @@ public class CandidatoCriacaoModel {
     private List<String> linguagens;
     private EdicaoModel edicao;
     private Integer formulario;
-    private String observacoes;
-    private Double notaEntrevistaComportamental;
-    private Double notaEntrevistaTecnica;
-    private String parecerComportamental;
-    private String parecerTecnico;
-    private Double media;
 }

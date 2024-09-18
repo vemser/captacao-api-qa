@@ -24,7 +24,7 @@ public class CandidatoCriacaoResponseModel {
     private String cpf;
     private String estado;
     private String cidade;
-    private Double nota;
+    private String statusCandidato;
     private String pcd;
     private String observacoes;
     private Double notaProva;
@@ -38,7 +38,6 @@ public class CandidatoCriacaoResponseModel {
     private EdicaoModel edicao;
     private FormularioCriacaoResponseModel formulario;
     private Integer imagem;
-	private String statusCandidato;
 }
 
 

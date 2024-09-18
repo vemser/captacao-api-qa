@@ -34,6 +34,7 @@ class ListarUltimaEdicaoTest {
 
 		listaDeEdicoes.sort((edicao1, edicao2) -> edicao2.getIdEdicao().compareTo(edicao1.getIdEdicao()));
 
+
 		EdicaoModel novaEdicao = EdicaoDataFactory.edicaoValida();
 
 		EdicaoModel edicaoCadastrada = edicaoClient.cadastrarEdicao(novaEdicao)
