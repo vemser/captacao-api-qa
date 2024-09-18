@@ -1,8 +1,6 @@
 package client.edicao;
 
 import client.auth.AuthClient;
-import factory.edicao.EdicaoDataFactory;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
@@ -123,10 +121,19 @@ public class EdicaoClient {
 		Auth.usuarioGestaoDePessoas();
 
 		return given()
-						.log().all()
 						.spec(EdicaoSpecs.edicaoReqSpec())
 						.body(edicao)
 						.header(AUTHORIZATION, AuthClient.getToken())
+				.when()
+						.put(NOTA_DE_CORTE);
+	}
+
+	public Response atualizarNotaDeCorteSemAutenticacao(EdicaoModel edicao) {
+		Auth.usuarioGestaoDePessoas();
+
+		return given()
+						.spec(EdicaoSpecs.edicaoReqSpec())
+						.body(edicao)
 				.when()
 						.put(NOTA_DE_CORTE);
 	}

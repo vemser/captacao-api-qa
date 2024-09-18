@@ -30,4 +30,12 @@ public class EdicaoDataFactory {
         return edicao;
     }
 
+	public static EdicaoModel notaDeCorteInvalida() {
+
+        EdicaoModel edicao = new EdicaoModel();
+		edicao.setNotaCorte(faker.random().nextInt(100, 99999999));
+
+        return edicao;
+    }
+
 }
