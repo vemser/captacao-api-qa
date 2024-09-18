@@ -9,41 +9,43 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint de remoção de edição")
 class DeletarEdicaoTest {
 
-    private static final EdicaoClient edicaoClient = new EdicaoClient();
+	private static final EdicaoClient edicaoClient = new EdicaoClient();
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
-    void testDeletarEdicaoComSucesso() {
-        EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
+	@Test
+	@DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
+	void testDeletarEdicaoComSucesso() {
+		EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoResponse = edicaoClient.cadastrarEdicao(edicaoCadastrada)
-                .then()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+		EdicaoResponse edicaoResponse = edicaoClient.cadastrarEdicao(edicaoCadastrada)
+				.then()
+				.statusCode(201)
+				.extract().as(EdicaoResponse.class);
 
-        Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
+		Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
 
-        Response response = edicaoClient.deletarEdicao(idEdicao);
+		Response response = edicaoClient.deletarEdicao(idEdicao);
 
-        response.then().statusCode(204);
-    }
+		response.then().statusCode(204);
+	}
 
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
-    void testDeletarEdicaoSemAutenticacao() {
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
+	void testDeletarEdicaoSemAutenticacao() {
 
-        EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
+		EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoCadastrada = edicaoClient.cadastrarEdicao(cadastrarEdicao)
-                .then()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+		EdicaoResponse edicaoCadastrada = edicaoClient.cadastrarEdicao(cadastrarEdicao)
+				.then()
+				.statusCode(201)
+				.extract().as(EdicaoResponse.class);
 
-        edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
-                .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
+		edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
+				.then()
+				.statusCode(HttpStatus.SC_FORBIDDEN);
+	}
 }
