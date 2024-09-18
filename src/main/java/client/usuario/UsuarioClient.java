@@ -48,6 +48,17 @@ public class UsuarioClient extends UsuarioSpecs {
                         .get(USUARIO + CONTAS_INATIVAS);
     }
 
+    public Response desativarContaGestor(String token, String id){
+        return given()
+                    .spec(super.usuarioSetUp())
+                    .contentType(ContentType.JSON)
+                    .header(AUTHORIZATION, token)
+                    .pathParam("idGestor", id)
+                .when()
+                    .put(USUARIO + DESATIVAR_CONTA + "/{idGestor}");
+
+    }
+
     public Response deletarGestor(String token, String id){
         return  given()
                     .spec(super.usuarioSetUp())
