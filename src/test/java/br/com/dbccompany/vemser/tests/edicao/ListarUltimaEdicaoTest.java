@@ -13,13 +13,26 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint que lista a última edição")
 class ListarUltimaEdicaoTest {
 
     private static EdicaoClient edicaoClient = new EdicaoClient();
+	private static final String PATH_SCHEMA_LISTAR_EDICOES = "schemas/edicao/listar_edicoes.json";
 
 	@Test
-	@DisplayName("Cenário 1: Deve retornar 200 ao listar a última edição com sucesso")
+	@DisplayName("Cenário 1: Validação de contrato de listar edicoes")
+	public void testValidarContratoListarEdicoes() {
+
+		edicaoClient.listarTodasAsEdicoes()
+				.then()
+				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_EDICOES))
+		;
+	}
+
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 200 ao listar a última edição com sucesso")
 	void testListarUltimaEdicaoComSucesso() throws JsonProcessingException {
 
 		var response = edicaoClient.listarTodasAsEdicoes()
@@ -64,7 +77,7 @@ class ListarUltimaEdicaoTest {
 	}
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao listar a última edição sem autenticação")
+    @DisplayName("Cenário 3: Deve retornar 403 ao listar a última edição sem autenticação")
     void testListarUltimaEdicaoSemAutenticacao() {
 
         String ultimaEdicao = edicaoClient.listaEdicaoAtualSemAutenticacao();

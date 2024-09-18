@@ -31,6 +31,17 @@ public class EdicaoClient {
                 ;
     }
 
+    public Response listaEdicaoAtualSemAutenticacaoContrato() {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .spec(EdicaoSpecs.edicaoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                .when()
+                        .get(EDICAO_EDICAO_ATUAL)
+                ;
+    }
+
     public String listaEdicaoAtualSemAutenticacao() {
         Auth.usuarioAluno();
         return
