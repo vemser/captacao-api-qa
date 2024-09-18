@@ -38,7 +38,7 @@ public class UsuarioClient extends UsuarioSpecs {
 
     }
 
-    public Response listarTodaContaInativaGestor(String token){
+    public Response listarTodoGestorInativo(String token){
         return
                 given()
                         .spec(super.usuarioSetUp())
