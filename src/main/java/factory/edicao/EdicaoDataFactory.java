@@ -12,23 +12,19 @@ public class EdicaoDataFactory {
         return novaEdicao();
     }
 
-    public static EdicaoModel idNovaEdicao() {
-        return criandoIdNovaEdicao();
-    }
-
     private static EdicaoModel novaEdicao() {
 
         EdicaoModel edicao = new EdicaoModel();
         edicao.setIdEdicao(faker.random().nextInt(100, 100000));
         edicao.setNome("VEMSER_"+faker.random().nextInt(100, 100000));
+		edicao.setNotaCorte(faker.random().nextInt(0, 100));
 
         return edicao;
     }
 
-    private static EdicaoModel criandoIdNovaEdicao(){
+	public static EdicaoModel notaDeCorte() {
+
         EdicaoModel edicao = new EdicaoModel();
-        edicao.setIdEdicao(faker.random().nextInt(100, 100000));
-		edicao.setNome(faker.lorem().word());
 		edicao.setNotaCorte(faker.random().nextInt(0, 100));
 
         return edicao;
