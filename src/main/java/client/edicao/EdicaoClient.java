@@ -31,20 +31,6 @@ public class EdicaoClient {
                 ;
     }
 
-    public String listaEdicaoAtual() {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(EDICAO_EDICAO_ATUAL)
-                        .thenReturn()
-                        .asString()
-                ;
-    }
-
     public String listaEdicaoAtualSemAutenticacao() {
         Auth.usuarioAluno();
         return
@@ -76,17 +62,17 @@ public class EdicaoClient {
                 ;
     }
 
-    public Response criarEdicao(EdicaoModel edicao) {
+    public Response cadastrarEdicao(EdicaoModel model) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
+
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(edicao)
+                        .spec(EdicaoSpecs.edicaoReqSpec())
+                        .body(model)
                 .when()
-                        .post(EDICAO_CRIAR_EDICAO)
-                ;
+                        .post(EDICAO_CRIAR_EDICAO);
     }
 
     public Response criarEdicaoComNumEdicaoSemAutenticacao(Integer numeroEdicao) {
@@ -94,7 +80,6 @@ public class EdicaoClient {
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(NUMERO_EDICAO, numeroEdicao)
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
@@ -117,7 +102,6 @@ public class EdicaoClient {
 
         return given()
                 .spec(EdicaoSpecs.edicaoReqSpec())
-                .header(AUTHORIZATION, AuthClient.getToken())
                 .pathParam(ID_EDICAO, idEdicao)
                 .when()
                 .delete(EDICAO_DELETE_FISICO_ID_EDICAO);
