@@ -37,17 +37,4 @@ public class AuthClient {
         setToken(response);
     }
 
-    public void loginComOutroUsuario(LoginModel loginModel) {
-        String response =
-                given()
-                    .spec(AuthSpecs.authReqSpec())
-                    .body(loginModel)
-                .when()
-                    .post(LOGIN_ENDPOINT)
-                .then()
-                    .extract()
-                    .asString();
-
-        setToken(response);
-    }
 }
