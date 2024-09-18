@@ -1,6 +1,7 @@
 package factory.prova;
 
 import client.edicao.EdicaoClient;
+import factory.edicao.EdicaoDataFactory;
 import models.edicao.EdicaoModel;
 import models.prova.ProvaCriacaoModel;
 import models.prova.ProvaEditarModel;
@@ -70,7 +71,10 @@ public class ProvaDataFactory {
         prova.setTituloProva(faker.book().title());
         prova.setEnunciadoProva(faker.lorem().sentence());
         // Define a edição da prova
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
         prova.setIdEdicao(edicaoCriada.getIdEdicao());
         // Gera uma lista de linguagens e define como as linguagens da prova
         List<Integer> linguagens = gerarListaDeLinguagens();

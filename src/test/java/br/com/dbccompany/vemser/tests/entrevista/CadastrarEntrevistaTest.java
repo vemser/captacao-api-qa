@@ -31,8 +31,6 @@ class CadastrarEntrevistaTest  {
 
         EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
-        System.out.println(entrevistaCriada);
-
         entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)

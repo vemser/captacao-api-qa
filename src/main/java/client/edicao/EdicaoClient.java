@@ -44,10 +44,9 @@ public class EdicaoClient {
                 ;
     }
 
-    public EdicaoModel criarEdicao() {
+    public EdicaoModel criarEdicao(EdicaoModel edicao) {
         Auth.usuarioGestaoDePessoas();
 
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())

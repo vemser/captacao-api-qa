@@ -6,6 +6,7 @@ import client.formulario.FormularioClient;
 import client.linguagem.LinguagemClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
+import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
@@ -50,7 +51,9 @@ class BuscarCandidatoPorCpfTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
@@ -118,7 +121,9 @@ class BuscarCandidatoPorCpfTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());

@@ -19,10 +19,8 @@ class DeletarEdicaoTest {
     void testDeletarEdicaoComSucesso() {
         EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada)
-                .then()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+        EdicaoModel edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada);
+
 
         Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
 
@@ -37,10 +35,7 @@ class DeletarEdicaoTest {
 
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao)
-                .then()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
 
         edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()

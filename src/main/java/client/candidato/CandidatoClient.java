@@ -135,7 +135,9 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), LINGUAGEM_TESTE);
 
@@ -171,7 +173,9 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
@@ -205,7 +209,10 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);
