@@ -6,11 +6,8 @@ import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import models.edicao.EdicaoResponse;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
 
 @DisplayName("Endpoint de remoção de edição")
 class DeletarEdicaoTest {
@@ -24,7 +21,6 @@ class DeletarEdicaoTest {
 
         EdicaoResponse edicaoResponse = edicaoClient.cadastrarEdicao(edicaoCadastrada)
                 .then()
-                .log().all()
                 .statusCode(201)
                 .extract().as(EdicaoResponse.class);
 
@@ -38,18 +34,16 @@ class DeletarEdicaoTest {
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
     void testDeletarEdicaoSemAutenticacao() {
-        // Cadastrar uma edição válida para obter seu ID
+
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
         EdicaoResponse edicaoCadastrada = edicaoClient.cadastrarEdicao(cadastrarEdicao)
                 .then()
-                .log().all()
                 .statusCode(201)
                 .extract().as(EdicaoResponse.class);
 
         edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }
