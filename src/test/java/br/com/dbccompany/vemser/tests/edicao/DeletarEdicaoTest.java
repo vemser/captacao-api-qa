@@ -35,7 +35,7 @@ class DeletarEdicaoTest {
 
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
-        EdicaoModel egit dicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
 
         edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
