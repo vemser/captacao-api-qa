@@ -9,6 +9,5 @@ import lombok.*;
 @ToString
 public class LinguagemModel {
 
-    private Integer idLinguagem;
     private String nome;
 }

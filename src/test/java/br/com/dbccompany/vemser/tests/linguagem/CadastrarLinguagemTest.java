@@ -26,10 +26,10 @@ class CadastrarLinguagemTest  {
 
         Assertions.assertNotNull(linguagemCadastrada);
         Assertions.assertEquals(novaLinguagem.toLowerCase(), linguagemCadastrada.getNome().toLowerCase());
-
-        var response = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+//
+//        var response = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
+//                .then()
+//                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test

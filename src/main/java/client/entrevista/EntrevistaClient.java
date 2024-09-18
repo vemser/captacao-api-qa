@@ -24,6 +24,7 @@ public class EntrevistaClient {
     public static final String MES = "mes";
     public static final String ANO = "ano";
     public static final String LEGENDA = "legenda";
+    public static final String TOKEN_QUERY = "token";
 
     public Response cadastrarEntrevista(EntrevistaCriacaoModel entrevista) {
         Auth.usuarioGestaoDePessoas();
@@ -33,6 +34,7 @@ public class EntrevistaClient {
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(entrevista)
+                        .queryParam(TOKEN_QUERY, AuthClient.getToken())
                 .when()
                         .post(ENTREVISTA_MARCAR_ENTREVISTA)
                 ;
@@ -142,7 +144,6 @@ public class EntrevistaClient {
 
         return
                 given()
-						.log().all()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                 .when()
                         .get(ENTREVISTA)

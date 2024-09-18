@@ -44,10 +44,6 @@ class ListarLinguagemTest  {
             }
         }
 
-        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
         Assertions.assertTrue(linguagemCadastradaEstaListada);
     }
 

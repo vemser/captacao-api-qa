@@ -37,9 +37,8 @@ class AtualizarEntrevistaTest  {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -82,9 +81,8 @@ class AtualizarEntrevistaTest  {
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -94,7 +92,7 @@ class AtualizarEntrevistaTest  {
 
         EntrevistaCriacaoModel entrevistaComNovosDados = EntrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
 
-        var entrevistaAtualizada = entrevistaClient.atualizarEntrevistaSemAutenticacao(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
+        entrevistaClient.atualizarEntrevistaSemAutenticacao(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 

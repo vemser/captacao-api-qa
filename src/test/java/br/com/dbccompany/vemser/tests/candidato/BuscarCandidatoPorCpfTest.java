@@ -88,7 +88,6 @@ class BuscarCandidatoPorCpfTest{
 
         candidatoCadastrado.getLinguagens().forEach(linguagemCadastrada ->
                 candidatoBuscado.getLinguagens().forEach(linguagemBuscada -> {
-                    Assertions.assertEquals(linguagemCadastrada.getIdLinguagem(), linguagemBuscada.getIdLinguagem());
                     Assertions.assertEquals(linguagemCadastrada.getNome(), linguagemBuscada.getNome());
                 })
         );

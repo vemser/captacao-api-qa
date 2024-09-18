@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
 import client.edicao.EdicaoClient;
+import factory.edicao.EdicaoDataFactory;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -33,8 +34,8 @@ class ListarUltimaEdicaoTest {
 
         Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
         Integer idNovaEdicao = idUltimaEdicao + 4;
-
-        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(edicao)
                 .then()
                 .log().all()
                     .statusCode(HttpStatus.SC_CREATED)

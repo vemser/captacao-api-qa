@@ -22,7 +22,7 @@ class DeletarEdicaoTest {
     void testDeletarEdicaoComSucesso() {
         EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoResponse = edicaoClient.cadastrarEdicao(edicaoCadastrada)
+        EdicaoResponse edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada)
                 .then()
                 .log().all()
                 .statusCode(201)
@@ -41,7 +41,7 @@ class DeletarEdicaoTest {
         // Cadastrar uma edição válida para obter seu ID
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoCadastrada = edicaoClient.cadastrarEdicao(cadastrarEdicao)
+        EdicaoResponse edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao)
                 .then()
                 .log().all()
                 .statusCode(201)

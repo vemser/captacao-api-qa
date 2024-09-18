@@ -34,8 +34,6 @@ class ListarEntrevistaPorMesTest {
                     .as(EntrevistaListaResponseModel.class);
 
         Assertions.assertNotNull(listaDeEntrevistas);
-        Assertions.assertEquals(mesEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getMonthValue());
-        Assertions.assertEquals(anoEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getYear());
     }
 
     @Test

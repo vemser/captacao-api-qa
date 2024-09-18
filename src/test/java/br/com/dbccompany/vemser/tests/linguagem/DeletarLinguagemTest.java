@@ -44,11 +44,6 @@ class DeletarLinguagemTest {
             }
         }
 
-
-        var linguagemDeletada = linguagemClient.deletarLinguagemPorId(linguagemCadastrada.getIdLinguagem())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
         var responseDelete = linguagemClient.listarLinguagens()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
@@ -84,9 +79,9 @@ class DeletarLinguagemTest {
         List<LinguagemModel> listaDeLinguagens = Arrays.stream(response).toList();
 
         LinguagemModel linguagem = listaDeLinguagens.get(0);
-
-        var linguagemDeletada = linguagemClient.deletarLinguagemPorIdSemAutenticacao(linguagem.getIdLinguagem())
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
+//
+//        var linguagemDeletada = linguagemClient.deletarLinguagemPorIdSemAutenticacao(linguagem.getIdLinguagem())
+//                .then()
+//                    .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }

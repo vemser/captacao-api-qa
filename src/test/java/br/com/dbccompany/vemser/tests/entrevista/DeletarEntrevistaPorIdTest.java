@@ -28,9 +28,8 @@ class DeletarEntrevistaPorIdTest{
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
@@ -59,9 +58,8 @@ class DeletarEntrevistaPorIdTest{
 
         String emailDoCandidato = candidatoCriado.getEmail();
         Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
         EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
                 .then()
