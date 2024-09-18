@@ -1,12 +1,14 @@
 package client.auth;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import models.login.LoginModel;
 import specs.auth.AuthSpecs;
 
 import static io.restassured.RestAssured.given;
 
+@NoArgsConstructor
 public class AuthClient {
 
     private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
@@ -32,9 +34,7 @@ public class AuthClient {
                 .then()
                     .extract()
                     .asString();
-
         setToken(response);
-
         return response;
     }
 

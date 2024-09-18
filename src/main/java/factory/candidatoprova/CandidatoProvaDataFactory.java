@@ -7,6 +7,7 @@ import client.linguagem.LinguagemClient;
 import client.prova.ProvaClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
+import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import factory.prova.ProvaDataFactory;
 import models.candidato.CandidatoCriacaoModel;
@@ -54,7 +55,9 @@ public class CandidatoProvaDataFactory {
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());

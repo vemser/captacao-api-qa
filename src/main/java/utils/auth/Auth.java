@@ -26,16 +26,16 @@ public class Auth {
         loginModel.setUsername(Manipulation.getProp().getProperty("ALUNO_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("ALUNO_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+        authClient.logar(loginModel);
     }
 
-    public static LoginModel usuarioGestaoDePessoas() {
+    public static void usuarioGestaoDePessoas() {
         LoginModel loginModel = new LoginModel();
 
         loginModel.setUsername(Manipulation.getProp().getProperty("GP_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("GP_PSW"));
 
-       return loginModel;
+        authClient.logar(loginModel);
     }
 
     public static void usuarioColaborador() {
@@ -44,7 +44,7 @@ public class Auth {
         loginModel.setUsername(Manipulation.getProp().getProperty("COLABORADOR_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("COLABORADOR_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+        authClient.logar(loginModel);
     }
 
     public static void usuarioInstrutor() {
@@ -53,7 +53,7 @@ public class Auth {
         loginModel.setUsername(Manipulation.getProp().getProperty("INSTRUTOR_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("INSTRUTOR_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+        authClient.logar(loginModel);
     }
 
     public static void usuarioGestor() {
@@ -62,7 +62,7 @@ public class Auth {
         loginModel.setUsername(Manipulation.getProp().getProperty("GESTOR_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("GESTOR_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+        authClient.logar(loginModel);
     }
 
     public static void usuarioInvalido() {
@@ -71,6 +71,6 @@ public class Auth {
         loginModel.setUsername(Manipulation.getProp().getProperty("INVALIDO_LOGIN"));
         loginModel.setPassword(Manipulation.getProp().getProperty("INVALIDO_PSW"));
 
-        authClient.loginComOutroUsuario(loginModel);
+        authClient.logar(loginModel);
     }
 }

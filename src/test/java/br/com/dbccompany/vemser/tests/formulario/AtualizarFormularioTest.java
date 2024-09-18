@@ -22,7 +22,7 @@ class AtualizarFormularioTest{
     private static final FormularioClient formularioClient = new FormularioClient();
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar atualizar formulário com sucesso")
+    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar formulário com sucesso")
     void testAtualizarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

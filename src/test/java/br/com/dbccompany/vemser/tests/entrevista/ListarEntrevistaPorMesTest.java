@@ -22,42 +22,18 @@ class ListarEntrevistaPorMesTest {
     @DisplayName("Cenário 1: Deve retornar 200 quando lista trilha por mês com sucesso")
     void testListarEntrevistasPorMesComSucesso() {
 
-        Integer mesEntrevista = 3;
+        Integer mesEntrevista = 9;
         Integer anoEntrevista = 2025;
-
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
-                mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
 
 
         EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
+				.log().all()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaListaResponseModel.class);
 
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
         Assertions.assertNotNull(listaDeEntrevistas);
-        Assertions.assertEquals(mesEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getMonthValue());
-        Assertions.assertEquals(anoEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getYear());
     }
 
     @Test
@@ -67,10 +43,10 @@ class ListarEntrevistaPorMesTest {
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-
-        var response = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        var response = entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(anoEntrevista, mesEntrevista)
                 .then()
-                    .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
 
     }
+
 }

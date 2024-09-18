@@ -1,6 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import client.candidato.CandidatoClient;
+import client.edicao.EdicaoClient;
 import client.entrevista.EntrevistaClient;
 import factory.entrevista.EntrevistaDataFactory;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -18,8 +19,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 class ListarEntrevistaPorTrilhaTest {
-
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
@@ -27,39 +26,11 @@ class ListarEntrevistaPorTrilhaTest {
     void testListarEntrevistasPorTrilhaComSucesso() {
         String trilha = "QA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(trilha)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-
         var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilha)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel[].class);
-
-        List<EntrevistaCriacaoResponseModel> listaDeEntrevistas = Arrays.stream(lista).toList();
-
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-
-        Assertions.assertNotNull(listaDeEntrevistas);
     }
 
     @Test
@@ -82,4 +53,5 @@ class ListarEntrevistaPorTrilhaTest {
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }
+
 }

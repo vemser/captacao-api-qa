@@ -1,1 +1,0 @@
-{"uuid":"10d25f63-79a7-4406-8747-faf66281705f","name":"Cenário 3: Deve retornar 400 quando tenta cadastrar questão objetiva excedendo 100 caracteres no título","children":["2a4d3d3e-d5f9-47bf-9386-955aaaabcb1d"],"befores":[],"afters":[],"links":[],"start":1726510087247,"stop":1726510087962}

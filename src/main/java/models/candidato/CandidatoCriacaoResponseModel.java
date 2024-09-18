@@ -1,5 +1,6 @@
 package models.candidato;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -23,7 +24,7 @@ public class CandidatoCriacaoResponseModel {
     private String cpf;
     private String estado;
     private String cidade;
-    private Double nota;
+    private String statusCandidato;
     private String pcd;
     private String observacoes;
     private Double notaProva;

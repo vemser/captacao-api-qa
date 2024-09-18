@@ -1,6 +1,7 @@
 package client.edicao;
 
 import client.auth.AuthClient;
+import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
@@ -30,20 +31,6 @@ public class EdicaoClient {
                 ;
     }
 
-    public String listaEdicaoAtual() {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                .when()
-                        .get(EDICAO_EDICAO_ATUAL)
-                        .thenReturn()
-                        .asString()
-                ;
-    }
-
     public String listaEdicaoAtualSemAutenticacao() {
         Auth.usuarioAluno();
         return
@@ -57,13 +44,14 @@ public class EdicaoClient {
                 ;
     }
 
-    public EdicaoModel criarEdicao() {
+    public EdicaoModel criarEdicao(EdicaoModel edicao) {
         Auth.usuarioGestaoDePessoas();
-        System.out.println(AuthClient.getToken());
+
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(edicao)
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()
@@ -78,6 +66,7 @@ public class EdicaoClient {
 
         return
                 given()
+
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(EdicaoSpecs.edicaoReqSpec())
                         .body(model)
@@ -85,25 +74,11 @@ public class EdicaoClient {
                         .post(EDICAO_CRIAR_EDICAO);
     }
 
-    public Response criarEdicaoComNumEdicao(Integer numeroEdicao) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(NUMERO_EDICAO, numeroEdicao)
-                .when()
-                        .post(EDICAO_CRIAR_EDICAO)
-                ;
-    }
-
     public Response criarEdicaoComNumEdicaoSemAutenticacao(Integer numeroEdicao) {
         Auth.usuarioAluno();
         return
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(NUMERO_EDICAO, numeroEdicao)
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
@@ -126,7 +101,6 @@ public class EdicaoClient {
 
         return given()
                 .spec(EdicaoSpecs.edicaoReqSpec())
-                .header(AUTHORIZATION, AuthClient.getToken())
                 .pathParam(ID_EDICAO, idEdicao)
                 .when()
                 .delete(EDICAO_DELETE_FISICO_ID_EDICAO);

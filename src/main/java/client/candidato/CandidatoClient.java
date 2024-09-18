@@ -7,6 +7,7 @@ import client.formulario.FormularioClient;
 import client.linguagem.LinguagemClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
+import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
@@ -45,6 +46,8 @@ public class CandidatoClient {
     public static final String TAMANHO = "tamanho";
     public static final String EMAIL = "email";
     public static final String ID_CANDIDATO = "idCandidato";
+    public static final String LINGUAGEM_TESTE = "Java";
+
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
@@ -123,14 +126,8 @@ public class CandidatoClient {
         Auth.usuarioGestaoDePessoas();
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+        listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -138,10 +135,11 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), LINGUAGEM_TESTE);
 
         Response response =
                 given()
@@ -150,6 +148,7 @@ public class CandidatoClient {
                         .body(candidatoCriado)
                         .when()
                         .post(CANDIDATO);
+
 
         return response;
     }
@@ -174,7 +173,9 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
@@ -208,7 +209,10 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
         LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);

@@ -19,6 +19,7 @@ public class FormularioDataFactory {
     private static final Random random = new Random();
     private static final List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
     private static final List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
+    private static final String TURNO_INVALIDO = "TARDE";
 
     public static FormularioCriacaoModel formularioValido(List<String> trilhas) {
 
@@ -32,6 +33,46 @@ public class FormularioDataFactory {
 
         FormularioCriacaoModel formulario = novoFormulario();
         formulario.setMatriculadoBoolean(false);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioTurnoInvalido(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setTurno(TURNO_INVALIDO);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioSemestreNegativo(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setSemestreAtual(-1);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioQntSemestresNegativo(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setQtdSemestres(-1);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioInstituicaoNula(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setInstituicao(null);
 
         formulario.setTrilhas(trilhas);
 

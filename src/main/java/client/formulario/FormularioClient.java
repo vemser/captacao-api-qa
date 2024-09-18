@@ -4,6 +4,7 @@ import client.auth.AuthClient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
+import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -24,7 +25,7 @@ public class FormularioClient {
     public static final String FORMULARIO_UPLOAD_PRINT_CONFIG_PC_ID_FORMULARIO = "/formulario/upload-print-config-pc/{idFormulario}";
     public static final String FORMULARIO_ATUALIZAR_FORMULARIO_ID_FORMULARIO = "/formulario/atualizar-formulario/{idFormulario}";
     public static final String FORMULARIO_DELETE_FISICO_ID_FORMULARIO = "/formulario/delete-fisico/{idFormulario}";
-    public static final String TAMANHO = "tamanho";
+    public static final String SORT = "sort";
     public static final String ORDER = "order";
     public static final String ID_FORMULARIO = "idFormulario";
     public static final String FILE = "file";
@@ -33,12 +34,10 @@ public class FormularioClient {
 
     public Response listarTodosOsFormularios() {
         Auth.usuarioGestaoDePessoas();
-
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("pagina", 1)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;
@@ -53,8 +52,8 @@ public class FormularioClient {
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam(TAMANHO, numDeFormulario)
                         .queryParam(ORDER, ordemDecrescente)
+                        .queryParam(SORT, ID_FORMULARIO)
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;
@@ -83,17 +82,18 @@ public class FormularioClient {
         return
                 given()
                         .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, authClient.logar(Auth.usuarioGestaoDePessoas()))
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(formulario)
                 .when()
                         .post(FORMULARIO_CADASTRO)
                 .then()
+                        .log().all()
                         .extract()
                         .as(FormularioCriacaoResponseModel.class)
                 ;
     }
 
-    public JSONFailureResponseWithoutArrayModel criarFormularioNaoMatriculado(FormularioCriacaoModel formulario) {
+    public JSONFailureResponseWithoutArrayModel criarFormularioDadoInvalido(FormularioCriacaoModel formulario) {
         Auth.usuarioGestaoDePessoas();
 
         return
@@ -109,6 +109,22 @@ public class FormularioClient {
                 ;
     }
 
+    public JSONFailureResponseWithArrayModel criarFormularioInstituicaoNula(FormularioCriacaoModel formulario) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(formulario)
+                .when()
+                        .post(FORMULARIO_CADASTRO)
+                .then()
+                        .extract()
+                        .as(JSONFailureResponseWithArrayModel.class)
+                ;
+    }
+
     public void incluiCurriculoEmFormularioComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
@@ -118,7 +134,7 @@ public class FormularioClient {
         given()
                 .spec(FormularioSpecs.formularioReqSpec())
                 .contentType("multipart/form-data")
-                .header(AUTHORIZATION, AuthClient.logar(Auth.usuarioGestaoDePessoas()))
+                .header(AUTHORIZATION, AuthClient.getToken())
                 .pathParam(ID_FORMULARIO, idFormulario)
                 .multiPart(FILE, file)
             .when()
