@@ -47,4 +47,14 @@ public class UsuarioClient extends UsuarioSpecs {
                 .when()
                         .get(USUARIO + CONTAS_INATIVAS);
     }
+
+    public Response deletarGestor(String token, String id){
+        return  given()
+                    .spec(super.usuarioSetUp())
+                    .contentType(ContentType.JSON)
+                    .header(AUTHORIZATION, token)
+                    .pathParam("idGestor", id)
+                .when()
+                    .delete(USUARIO + "/{idGestor}");
+    }
 }

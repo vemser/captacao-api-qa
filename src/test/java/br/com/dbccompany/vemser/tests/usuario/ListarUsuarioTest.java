@@ -3,8 +3,8 @@ package br.com.dbccompany.vemser.tests.usuario;
 import client.auth.AuthClient;
 import client.usuario.UsuarioClient;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import utils.auth.Auth;
 
@@ -60,7 +60,7 @@ public class ListarUsuarioTest {
     @Test
     @DisplayName("Cenrário 4: Tentar listar gestor com id nulo")
     public void testTentarListarGestorComIdNulo(){
-        usuarioClient.listarGestorPorId(token, "")
+        usuarioClient.listarGestorPorId(token, StringUtils.EMPTY)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
