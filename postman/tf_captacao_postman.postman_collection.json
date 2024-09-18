@@ -7403,10 +7403,259 @@
 					"name": "PUT",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "Atualizar config pc id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
-								"header": []
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Imagens/Capturas de tela/Captura de tela 2024-09-15 211201.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-print-config-pc/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-print-config-pc",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar curriculo por id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Documentos/Documento1 química Lavagem a Seco.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-curriculo/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-curriculo",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar curriculo por id valido Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Marqu/OneDrive/Documentos/Documento1 química Lavagem a Seco.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/upload-comp-matricula/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"upload-comp-matricula",
+										"55"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar formulario com id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem do server\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Erro ao buscar o formulário.\")\r",
+											"}); "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"Analise e Desenvolvimento de Software\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"PUC\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Não possuo\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": \"TDAH\",\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 4,\r\n  \"semestreAtual\": 2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"Intel i7-4790K, 16Gb, 240Gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/atualizar-formulario/-10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"atualizar-formulario",
+										"-10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar formulario com sucesso Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"Analise e Desenvolvimento de Software\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"PUC\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Não possuo\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": \"TDAH\",\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 4,\r\n  \"semestreAtual\": 2,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"Intel i7-4790K, 16Gb, 240Gb SSD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/formulario/atualizar-formulario/55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"formulario",
+										"atualizar-formulario",
+										"55"
+									]
+								}
 							},
 							"response": []
 						}
@@ -8241,6 +8490,143 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Editar nota de corte valor negativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=-100",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "-100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar nota de corte valor acima de 100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=10000000000",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "10000000000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar nota de corte com valor entre 0 a 100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/edicao/update-nota-corte?nota=55",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"edicao",
+										"update-nota-corte"
+									],
+									"query": [
+										{
+											"key": "nota",
+											"value": "55"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -8436,6 +8822,313 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "entrevista-controller",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas entrevistas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevista por trilha",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/entrevista/por-trilha?trilha=QA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"por-trilha"
+									],
+									"query": [
+										{
+											"key": "trilha",
+											"value": "QA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevista por trilha inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/entrevista/por-trilha?trilha=SCRUM",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"por-trilha"
+									],
+									"query": [
+										{
+											"key": "trilha",
+											"value": "SCRUM"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar entrevistas por mes e ano",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/listar-por-mes?pagina=0&tamanho=20&mes=10&ano=2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"listar-por-mes"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "20"
+										},
+										{
+											"key": "mes",
+											"value": "10"
+										},
+										{
+											"key": "ano",
+											"value": "2023"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "exportar lista de entrevistados xls",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/export-xlsx",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"export-xlsx"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar entrevista por email do candidato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/entrevista/buscar-entrevista-email-candidato/email@mail.com",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"entrevista",
+										"buscar-entrevista-email-candidato",
+										"email@mail.com"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": []
+				},
+				{
+					"name": "PUT",
+					"item": []
+				},
+				{
+					"name": "DELETE",
+					"item": []
 				}
 			]
 		}
