@@ -28,7 +28,10 @@ public class EdicaoDataFactory {
     private static EdicaoModel criandoIdNovaEdicao(){
         EdicaoModel edicao = new EdicaoModel();
         edicao.setIdEdicao(faker.random().nextInt(100, 100000));
+		edicao.setNome(faker.lorem().word());
+		edicao.setNotaCorte(faker.random().nextInt(0, 100));
 
         return edicao;
     }
+
 }

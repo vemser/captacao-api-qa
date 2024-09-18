@@ -16,9 +16,10 @@ class CadastrarEdicaoTest {
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar edição com sucesso")
     void testCadastrarEdicaoComSucesso() {
-        Integer idNovaEdicao = EdicaoDataFactory.idNovaEdicao().getIdEdicao();
 
-        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicaoComNumEdicao(idNovaEdicao)
+		EdicaoModel edicao = EdicaoDataFactory.idNovaEdicao();
+
+        EdicaoModel edicaoCadastrada = edicaoClient.cadastrarEdicao(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
