@@ -5909,7 +5909,7 @@
 			]
 		},
 		{
-			"name": "usuario-controller",
+			"name": "Usuario",
 			"item": [
 				{
 					"name": "GET",
@@ -6473,7 +6473,7 @@
 			]
 		},
 		{
-			"name": "formulario-controller",
+			"name": "Formulario",
 			"item": [
 				{
 					"name": "GET",
@@ -7770,7 +7770,7 @@
 			]
 		},
 		{
-			"name": "trilha-controller",
+			"name": "Trilha",
 			"item": [
 				{
 					"name": "POST",
@@ -8167,7 +8167,7 @@
 			]
 		},
 		{
-			"name": "edicao-controller",
+			"name": "Edicao",
 			"item": [
 				{
 					"name": "GET",
@@ -8631,7 +8631,7 @@
 			]
 		},
 		{
-			"name": "relatorios-controller",
+			"name": "Relatorios",
 			"item": [
 				{
 					"name": "GET",
@@ -8826,7 +8826,7 @@
 			]
 		},
 		{
-			"name": "entrevista-controller",
+			"name": "Entrevista",
 			"item": [
 				{
 					"name": "GET",
@@ -9129,6 +9129,420 @@
 				{
 					"name": "DELETE",
 					"item": []
+				}
+			]
+		},
+		{
+			"name": "Avaliacao",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas avaliacoes de aprovados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar todas avaliacoes com filtros ou retornar lista de avaliacoes aprovados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/filtro-avaliacao?pagina=1&tamanho=10&email=&edicao=VEMSER01&trilha=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"filtro-avaliacao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "1"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "email",
+											"value": ""
+										},
+										{
+											"key": "edicao",
+											"value": "VEMSER01"
+										},
+										{
+											"key": "trilha",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "adicionar uma avaliacao a um candidato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao?token={{token_user_gestor}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token_user_gestor}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "editar uma avliacao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": {{idInscricao}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editar uma avliacao inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": {{idInscricao}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/{{avaliacaoInex}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"{{avaliacaoInex}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editar uma avaliacao para inscricao inex",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Inscrição não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": -10000000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao/update/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar uma avaliacao por id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem de erro\", function () {\r",
+											"     let jsonData = pm.response.json()\r",
+											"     pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/-10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"-10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletar uma avaliacao por id valido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem de erro\", function () {\r",
+											"     let jsonData = pm.response.json()\r",
+											"     pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/avaliacao/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
