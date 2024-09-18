@@ -56,4 +56,21 @@ public class ListarUsuarioTest {
 
 
     }
+
+    @Test
+    @DisplayName("Cenrário 4: Tentar listar gestor com id nulo")
+    public void testTentarListarGestorComIdNulo(){
+        usuarioClient.listarGestorPorId(token, "")
+                .then()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST);
+    }
+
+    @Test
+    @DisplayName("Cenário 5: Tentar listar gestor com id negativo")
+    public void testTentarListarGestorComIdNegativo(){
+        usuarioClient.listarGestorPorId(token, "-1")
+                .then()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body("message", equalTo("Usuario não encontrado!"));
+    }
 }
