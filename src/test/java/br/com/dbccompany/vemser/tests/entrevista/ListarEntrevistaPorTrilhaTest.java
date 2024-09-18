@@ -1,34 +1,38 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
 import client.entrevista.EntrevistaClient;
-import factory.entrevista.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 class ListarEntrevistaPorTrilhaTest {
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS = "schemas/entrevista/listar_entrevistas.json";
+    public static final String TRILHA_VALIDA = "QA";
+    public static final String TRILHA_NAO_EXISTENTE = "-*/-*/-*/-*/-*/";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando lista entrevistas de trilhas existentes")
+    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por trilha")
+    public void testValidarContratoListarEntrevistasPorTrilha() {
+
+        entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
+                .then()
+                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
+        ;
+    }
+
+    @Test
+    @DisplayName("Cenário 2: Deve retornar 200 quando lista entrevistas de trilhas existentes")
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaComSucesso() {
-        String trilha = "QA";
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilha)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -36,24 +40,22 @@ class ListarEntrevistaPorTrilhaTest {
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
+    @DisplayName("Cenário 3: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaNaoExistente() {
-        String trilhaNaoExistente = "-*/-*/-*/-*/-*/";
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilhaNaoExistente)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_NAO_EXISTENTE)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(equalTo("[]"));
     }
 
     @Test
-    @DisplayName("Cenário 3: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
+    @DisplayName("Cenário 4: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaSemAutenticacao() {
-        String trilha = "QA";
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(trilha)
+        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(TRILHA_VALIDA)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

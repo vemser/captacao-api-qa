@@ -59,6 +59,21 @@ public class FormularioClient {
                 ;
     }
 
+
+    public Response criarFormularioContrato(FormularioCriacaoModel formulario) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(formulario)
+                .when()
+                        .post(FORMULARIO_CADASTRO);
+
+    }
+
+
     public FormularioCriacaoResponseModel criarFormulario(String nomeDeTrilhaExistente) {
         Auth.usuarioGestaoDePessoas();
 
@@ -174,6 +189,19 @@ public class FormularioClient {
                         .multiPart(FILE, file)
                 .when()
                         .put(FORMULARIO_UPLOAD_PRINT_CONFIG_PC_ID_FORMULARIO);
+    }
+
+    public Response atualizaFormularioContrato(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_FORMULARIO, idFormulario)
+                        .body(formularioAtualizado)
+                .when()
+                        .put(FORMULARIO_ATUALIZAR_FORMULARIO_ID_FORMULARIO);
     }
 
     public FormularioCriacaoResponseModel atualizaFormulario(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {

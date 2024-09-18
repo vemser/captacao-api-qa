@@ -19,10 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint de cadastro de formulário")
 class CadastrarFormularioTest{
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
+    private static final String PATH_SCHEMA_POST_FORMULARIO = "schemas/formulario/post_formulario.json";
+    private static final String TRILHA_VALIDA = "FRONTEND";
 
     private static final Map<Object, Object> listaBooleana = Map.of(
             true, "T",
@@ -31,20 +35,28 @@ class CadastrarFormularioTest{
             "F", false
     );
 
+    @Test
+    @DisplayName("Cenário 1: Validação de contrato de criar formulario")
+    public void testValidarContratoCriacaoFormulario() {
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+
+        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        formularioClient.criarFormularioContrato(formulario)
+                .then()
+                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_POST_FORMULARIO))
+        ;
+    }
 
     @Test
-    @DisplayName("Cenário 1: Cadastrar formulário com sucesso")
+    @DisplayName("Cenário 2: Cadastrar formulário com sucesso")
     void testCadastrarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(TrilhaModel[].class))
-                    .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -73,7 +85,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 2: Tentar cadastrar formulário sem estar matriculado em um curso")
+    @DisplayName("Cenário 3: Tentar cadastrar formulário sem estar matriculado em um curso")
     void testTentarCadastrarFormularioNaoMatriculado() {
         String MSG_ERRO = "Precisa estar matriculado!";
 
@@ -96,7 +108,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 3: Tentar cadastrar formulário sem curso no periodo noturno")
+    @DisplayName("Cenário 4: Tentar cadastrar formulário sem curso no periodo noturno")
     void testTentarCadastrarFormularioTurnoDiferenteDeNoite() {
         String MSG_ERRO = "Precisa estar matriculado em um curso do turno da noite!";
 
@@ -119,7 +131,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 4: Tentar cadastrar formulário em trilha inválida")
+    @DisplayName("Cenário 5: Tentar cadastrar formulário em trilha inválida")
     void testTentarCadastrarFormularioTrilhaInvalida() {
         String MSG_ERRO = "Trilha não encontrada!";
 
@@ -136,7 +148,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 5: Tentar cadastrar formulário com campo semestre atual negativo")
+    @DisplayName("Cenário 6: Tentar cadastrar formulário com campo semestre atual negativo")
     void testTentarCadastrarFormularioSemestreAtualNegativo() {
         String MSG_ERRO = "Semestre atual inválido!";
 
@@ -159,7 +171,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 6: Tentar cadastrar formulário com campo quantidade de semestres negativo")
+    @DisplayName("Cenário 7: Tentar cadastrar formulário com campo quantidade de semestres negativo")
     void testTentarCadastrarFormularioQntSemestresNegativo() {
         String MSG_ERRO = "Quantidade de semestres inválida!";
 
@@ -182,7 +194,7 @@ class CadastrarFormularioTest{
     }
 
     @Test
-    @DisplayName("Cenário 7: Tentar cadastrar formulário com campo instituição nulo")
+    @DisplayName("Cenário 8: Tentar cadastrar formulário com campo instituição nulo")
     void testTentarCadastrarFormularioInstituicaoNula() {
         String MSG_ERRO = "instituicao: O campo Instituição não deve ser vazio ou nulo.";
 

@@ -47,7 +47,7 @@ class DeletarEntrevistaPorIdTest{
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao deletar entrevista por id sem autenticação")
+    @DisplayName("Cenário 2: Deve retornar 403 ao tentar deletar entrevista por id sem autenticação")
     void testDeletarEntrevistaPorIdSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()

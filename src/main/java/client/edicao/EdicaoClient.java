@@ -12,6 +12,7 @@ import utils.auth.Auth;
 import static io.restassured.RestAssured.given;
 
 public class EdicaoClient {
+
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String EDICAO_LISTAR_TODAS = "/edicao/listar-todas";
 	public static final String EDICAO_EDICAO_ATUAL = "/edicao/edicao-atual";

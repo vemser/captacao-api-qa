@@ -5,6 +5,7 @@ import factory.trilha.TrilhaDataFactory;
 import io.restassured.response.Response;
 import models.trilha.TrilhaModel;
 import models.trilha.TrilhaResponse;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -12,12 +13,37 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint de cadastro de trilhas")
 class TrilhaFuncionalTest {
     TrilhaClient trilhaClient = new TrilhaClient();
+    private static final String PATH_SCHEMA_CADASTRAR_TRILHA = "schemas/trilha/post_trilha.json";
+    private static final String PATH_SCHEMA_LISTAR_TRILHAS = "schemas/trilha/listar_trilhas.json";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 201 quando cadastra trilha com sucesso")
+    @DisplayName("Cenário 1: Validação de contrato de cadastrar trilha")
+    public void testValidarContratoCadastrarTrilha() {
+        TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
+
+        trilhaClient.cadastrarTrilha(trilha)
+            .then()
+                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_CADASTRAR_TRILHA))
+        ;
+    }
+
+    @Test
+    @DisplayName("Cenário 2: Validação de contrato de listar trilhas")
+    public void testValidarContratoListarTrilhas() {
+
+        trilhaClient.listarTodasAsTrilhas()
+            .then()
+                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_TRILHAS))
+        ;
+    }
+
+    @Test
+    @DisplayName("Cenário 3: Deve retornar 201 quando cadastra trilha com sucesso")
     @Tag("Regression")
     void testCadastroDeTrilhaComSucesso(){
         TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
@@ -37,7 +63,7 @@ class TrilhaFuncionalTest {
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 200 quando lista as trilhas com sucesso")
+    @DisplayName("Cenário 4: Deve retornar 200 quando lista as trilhas com sucesso")
     @Tag("Regression")
     void testListarTrilhasComSucesso(){
         List<TrilhaModel> trilhas = trilhaClient.listarTodasAsTrilhas()
@@ -51,7 +77,7 @@ class TrilhaFuncionalTest {
     }
 
     @Test
-    @DisplayName("Cenário 3: Deve retornar 204 quando deleta trilha com sucesso")
+    @DisplayName("Cenário 5: Deve retornar 204 quando deleta trilha com sucesso")
     @Tag("Regression")
     void testDeletarTrilhaComSucesso() {
         TrilhaModel trilha = TrilhaDataFactory.trilhaValida();

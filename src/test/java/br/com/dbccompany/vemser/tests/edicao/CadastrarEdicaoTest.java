@@ -2,7 +2,9 @@ package br.com.dbccompany.vemser.tests.edicao;
 
 import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
+import factory.trilha.TrilhaDataFactory;
 import models.edicao.EdicaoModel;
+import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +14,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 @DisplayName("Endpoint de cadastro de edição")
 class CadastrarEdicaoTest {
+
 
 	private static final EdicaoClient edicaoClient = new EdicaoClient();
 
