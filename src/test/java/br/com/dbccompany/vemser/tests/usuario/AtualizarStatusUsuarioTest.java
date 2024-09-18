@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
-
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,15 +16,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AtualizarStatusUsuarioTest {
 
     private final UsuarioClient usuarioClient = new UsuarioClient();
-    private String token;
+
     @BeforeEach
     public void setUp(){
-        token = AuthClient.logar(Auth.usuarioGestaoDePessoas());
+        Auth.usuarioGestaoDePessoas();
     }
     @Test
     @DisplayName("Cenário 1: Deve atualizar status para desativo do gestor por id")
     public void testDeveAtualizarStatusDesativoGestorPorId(){
-        Response response = usuarioClient.desativarContaGestor(token, "3");
+        Response response = usuarioClient.desativarContaGestor(AuthClient.getToken(), "3");
 
         assertAll(
                 () -> assertEquals("3", response.path("idGestor").toString()),
@@ -37,7 +36,7 @@ public class AtualizarStatusUsuarioTest {
     @Test
     @DisplayName("Cenário 2: Tentar atualizar status para desativo do gestor com id nulo")
     public void testTentarAtualizarStatusDesativoGestorPorIdNulo(){
-        usuarioClient.deletarGestor(token, StringUtils.EMPTY)
+        usuarioClient.deletarGestor(AuthClient.getToken(), StringUtils.EMPTY)
                 .then()
                     .statusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
     }
@@ -45,7 +44,7 @@ public class AtualizarStatusUsuarioTest {
     @Test
     @DisplayName("Cenário 3: Tentar atualizar status para desativo do gestor com id negativo")
     public void testTentarAtualizarStatusDesativoGestorPorIdNegativo(){
-        usuarioClient.deletarGestor(token, "-1")
+        usuarioClient.deletarGestor(AuthClient.getToken(), "-1")
                 .then()
                     .body("message", equalTo("Usuario não encontrado!"))
                     .statusCode(HttpStatus.SC_BAD_REQUEST);
@@ -62,7 +61,7 @@ public class AtualizarStatusUsuarioTest {
     @Test
     @DisplayName("Cenário 5: Validar schema desativar gestor")
     public void testValidarSchemaDesativarGestor(){
-        usuarioClient.desativarContaGestor(token, "3")
+        usuarioClient.desativarContaGestor(AuthClient.getToken(), "3")
                 .then()
                     .body(matchesJsonSchemaInClasspath("usuario/Desativar_conta_gestor.json"))
                     .statusCode(HttpStatus.SC_OK);

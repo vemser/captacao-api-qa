@@ -21,8 +21,7 @@ public class AuthClient {
     @Setter
     private static String tokenInvalido;
 
-    public AuthClient() {
-    }
+
 
     public static String logar(LoginModel loginModel) {
         String response =
