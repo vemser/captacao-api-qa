@@ -37,5 +37,10 @@ public class FormularioModel {
     private String orientacao;
     private String disponibilidade;
     private List<TrilhaModel> trilhas;
-    private String importancia;
+    private Integer imagemConfigPc;
+    private String Importancia;
+    private Integer qtdSemestres;
+    private Integer semestreAtual;
+    private String tipoGraduacao;
+    private String descConfigPc;
 }

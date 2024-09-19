@@ -15,14 +15,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint de atualização do formulário")
 class AtualizarFormularioTest{
 
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
+    private static final String PATH_SCHEMA_PUT_FORMULARIO = "schemas/formulario/put_formulario.json";
+    private static final String TRILHA_VALIDA = "FRONTEND";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar formulário com sucesso")
+    @DisplayName("Cenário 1: Validação de contrato de atualizar formulario")
+    public void testValidarContratoAtualizarFormulario() {
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+
+        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+
+        FormularioCriacaoModel formularioInstituicaoAtualizada = FormularioDataFactory.formularioComInstituicaoAtualizada(formulario);
+
+        formularioClient.atualizaFormularioContrato(
+                formularioCriado.getIdFormulario(),
+                formularioInstituicaoAtualizada
+        )
+                .then()
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_PUT_FORMULARIO))
+                ;
+
+    }
+
+    @Test
+    @DisplayName("Cenário 2: Deve retornar 200 ao atualizar formulário com sucesso")
     void testAtualizarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

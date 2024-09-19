@@ -14,7 +14,7 @@ public class InicialSpecs {
     private static final String BASE_URI = "https://captacao-back-hml.onrender.com/";
     //private static final String BASE_URI = "http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back";
 
-    private InicialSpecs() {
+    public InicialSpecs() {
 
     }
 

@@ -10,6 +10,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ class AtualizarConfigPcFormularioTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao adicionar imagem com configuração do pc com sucesso")
+    @Tag("Regression")
     void testEnviarInfoConfigPcComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -47,6 +49,7 @@ class AtualizarConfigPcFormularioTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 ao adicionar imagem com configuração do pc em formulário não existente")
+    @Tag("Regression")
     void testEnviarInfoConfigPcParaFormularioNaoExistente() {
 
         Integer idFormularioNaoExistente = 90000;
