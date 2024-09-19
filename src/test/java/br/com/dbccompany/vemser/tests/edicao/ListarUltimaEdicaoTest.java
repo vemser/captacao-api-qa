@@ -24,6 +24,7 @@ class ListarUltimaEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de listar edicoes")
+	@Tag("Contract")
 	public void testValidarContratoListarEdicoes() {
 
 		edicaoClient.listarTodasAsEdicoes()

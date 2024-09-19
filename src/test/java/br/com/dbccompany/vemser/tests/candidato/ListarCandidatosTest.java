@@ -6,6 +6,7 @@ import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de listagem de candidatos")
@@ -54,6 +55,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 quando é passado qtd negativa de candidatos")
+    @Tag("Regression")
     void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
@@ -70,6 +72,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando é passado qtd de candidatos como string")
+    @Tag("Regression")
     void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 

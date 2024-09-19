@@ -16,9 +16,9 @@ class ListarFormulariosTest{
     private static final String PATH_SCHEMA_LISTAR_FORMULARIOS = "schemas/formulario/listar_formularios.json";
     FormularioClient formularioClient = new FormularioClient();
 
-    @Tag("Regression")
     @Test
     @DisplayName("Cenário 1: Validar contrato listar formulários ordenados")
+    @Tag("Regression")
     void testListarFormulariosComSucesso() {
         JSONListaFormularioResponse listaFormularioResponse = formularioClient.listarTodosOsFormularios()
                 .then()

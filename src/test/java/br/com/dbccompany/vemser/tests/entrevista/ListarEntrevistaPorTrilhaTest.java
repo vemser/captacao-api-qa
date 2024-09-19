@@ -19,6 +19,7 @@ class ListarEntrevistaPorTrilhaTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por trilha")
+    @Tag("Contract")
     public void testValidarContratoListarEntrevistasPorTrilha() {
 
         entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)

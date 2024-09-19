@@ -23,6 +23,7 @@ class TrilhaFuncionalTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de cadastrar trilha")
+    @Tag("Regression")
     public void testValidarContratoCadastrarTrilha() {
         TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 
@@ -34,6 +35,7 @@ class TrilhaFuncionalTest {
 
     @Test
     @DisplayName("Cenário 2: Validação de contrato de listar trilhas")
+    @Tag("Contract")
     public void testValidarContratoListarTrilhas() {
 
         trilhaClient.listarTodasAsTrilhas()

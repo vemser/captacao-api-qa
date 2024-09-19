@@ -3,6 +3,7 @@ package br.com.dbccompany.vemser.tests.edicao;
 import client.edicao.EdicaoClient;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -15,6 +16,7 @@ public class ListarTodasEdicoesTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de listar todas as edições")
+	@Tag("Contract")
 	public void testValidarContraroListarTodasEdicoes() {
 
 		edicaoClient.listarTodasAsEdicoes()
@@ -36,6 +38,7 @@ public class ListarTodasEdicoesTest {
 
 	@Test
 	@DisplayName("Cenário 3: Deve retornar 403 ao listar todas as edições sem autenticação")
+	@Tag("Regression")
 	public void testListarTodasEdicoesSemAutenticacao() {
 
 		edicaoClient.listarTodasAsEdicoesSemAutenticacao()

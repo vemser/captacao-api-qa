@@ -8,6 +8,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -48,6 +49,7 @@ class CadastrarEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 3: Deve retornar 403 ao cadastrar edição sem autenticação")
+	@Tag("Regression")
 	void testCadastrarEdicaoSemAutenticacao() {
 		edicaoClient.criarEdicaoComNumEdicaoSemAutenticacao(1)
 				.then()

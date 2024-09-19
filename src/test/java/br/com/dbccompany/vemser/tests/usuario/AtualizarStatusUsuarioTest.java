@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -23,6 +24,7 @@ public class AtualizarStatusUsuarioTest {
     }
     @Test
     @DisplayName("Cenário 1: Deve atualizar status para desativo do gestor por id")
+    @Tag("Regression")
     public void testDeveAtualizarStatusDesativoGestorPorId(){
         Response response = usuarioClient.desativarContaGestor(AuthClient.getToken(), "3");
 
@@ -35,6 +37,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 2: Tentar atualizar status para desativo do gestor com id nulo")
+    @Tag("Regression")
     public void testTentarAtualizarStatusDesativoGestorPorIdNulo(){
         usuarioClient.deletarGestor(AuthClient.getToken(), StringUtils.EMPTY)
                 .then()
@@ -52,6 +55,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 4: Tentar atualizar status para desativo do gestor com token inválido")
+    @Tag("Regression")
     public void testTentarAtualizarStatusDesativoGestorTokenInvalido(){
         usuarioClient.deletarGestor(StringUtils.EMPTY, "3")
                 .then()

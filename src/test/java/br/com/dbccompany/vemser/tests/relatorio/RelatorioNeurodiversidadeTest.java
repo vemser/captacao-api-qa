@@ -21,6 +21,7 @@ class RelatorioNeurodiversidadeTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por neurodiversidade")
+    @Tag("Regression")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
         relatorioClient.listarCandidatosNeurodiversidade()
                 .then()
