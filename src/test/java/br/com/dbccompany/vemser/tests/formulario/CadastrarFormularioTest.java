@@ -11,6 +11,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.config.Tools;
 
@@ -37,6 +38,7 @@ class CadastrarFormularioTest{
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de criar formulario")
+    @Tag("Contract")
     public void testValidarContratoCriacaoFormulario() {
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
 
@@ -52,6 +54,7 @@ class CadastrarFormularioTest{
 
     @Test
     @DisplayName("Cenário 2: Cadastrar formulário com sucesso")
+    @Tag("Regression")
     void testCadastrarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

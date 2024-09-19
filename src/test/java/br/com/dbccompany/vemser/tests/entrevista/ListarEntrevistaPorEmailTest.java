@@ -19,6 +19,7 @@ class ListarEntrevistaPorEmailTest {
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de listar entrevistas por email")
+	@Tag("Contract")
 	public void testValidarContratoListarEntrevistasPorEmail() {
 
 		entrevistaClient.listarTodasAsEntrevistasPorEmail("email@mail.com")

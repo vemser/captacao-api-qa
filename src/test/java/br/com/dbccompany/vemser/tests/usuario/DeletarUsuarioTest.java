@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,6 +22,7 @@ public class DeletarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 1: tentar deletar gestor com id nulo")
+    @Tag("Regression")
     public void testTentarDeletarGestorComIdNulo(){
         usuarioClient.deletarGestor(AuthClient.getToken(), StringUtils.EMPTY)
                 .then()
@@ -38,6 +40,7 @@ public class DeletarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 3: tentar deletar gestor com token inválido")
+    @Tag("Regression")
     public void testTentarDeletarGestorComTokenInvalido(){
         usuarioClient.deletarGestor(StringUtils.EMPTY, "1")
                 .then()

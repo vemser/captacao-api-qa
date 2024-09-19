@@ -59,7 +59,7 @@ class ListarCandidatosTest {
         candidatoClient.listarTodosOsCandidatos(0, 20)
         .then()
             .statusCode(HttpStatus.SC_OK)
-            .body(matchesJsonSchemaInClasspath("schemas/candidato/ListarCandidato.json"));
+            .body(matchesJsonSchemaInClasspath("schemas/ListarCandidato.json"));
     }
 
     @Test

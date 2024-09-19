@@ -21,6 +21,7 @@ class RelatorioEdicaoTest  {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por edição")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEdicao() {
         relatorioClient.listarCandidatosEdicao()
                 .then()

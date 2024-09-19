@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de remoção de edição")
@@ -15,6 +16,7 @@ class DeletarEdicaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
+    @Tag("Regression")
     void testDeletarEdicaoComSucesso() {
         EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 

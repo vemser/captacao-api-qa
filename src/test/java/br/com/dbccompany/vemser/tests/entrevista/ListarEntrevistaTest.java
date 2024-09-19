@@ -17,6 +17,7 @@ class ListarEntrevistaTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar entrevistas")
+    @Tag("Contract")
     public void testValidarContratoListarEntrevistas() {
 
         entrevistaClient.listarTodasAsEntrevistas()
