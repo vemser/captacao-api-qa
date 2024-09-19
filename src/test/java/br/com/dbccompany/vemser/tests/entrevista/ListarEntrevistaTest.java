@@ -26,6 +26,7 @@ class ListarEntrevistaTest {
         ;
     }
 
+    @Test
     @DisplayName("Cenário 2: Deve retornar 200 quando lista as entrevistas cadastradas com sucesso")
     @Tag("Regression")
     void testListarEntrevistasCadastradasComSucesso() {
@@ -39,12 +40,12 @@ class ListarEntrevistaTest {
         Assertions.assertNotNull(listaDeEntrevistas);
     }
 
-  
+    @Test
     @DisplayName("Cenário 3: Deve retornar 403 quando lista as entrevistas sem estar autenticado")
     @Tag("Regression")
     void testListarEntrevistasSemAutenticacao() {
 
-        var listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasSemAutenticacao()
+        entrevistaClient.listarTodasAsEntrevistasSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 

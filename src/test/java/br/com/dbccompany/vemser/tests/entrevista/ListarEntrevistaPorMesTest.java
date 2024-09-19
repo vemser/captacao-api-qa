@@ -31,7 +31,7 @@ class ListarEntrevistaPorMesTest {
         ;
     }
 
-
+    @Test
     @DisplayName("Cenário 2: Deve retornar 200 quando lista trilha por mês com sucesso")
     @Tag("Regression")
     void testListarEntrevistasPorMesComSucesso() {
@@ -51,7 +51,6 @@ class ListarEntrevistaPorMesTest {
     }
 
     @Test
-
     @DisplayName("Cenário 3: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
     @Tag("Regression")
     void testListarEntrevistasPorMesSemEstarAutenticado() {
@@ -59,7 +58,7 @@ class ListarEntrevistaPorMesTest {
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-        var response = entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(anoEntrevista, mesEntrevista)
+        entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

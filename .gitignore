@@ -94,3 +94,4 @@ nb-configuration.xml
 .idea
 application-config.yml
 application-config.properties
+allure-results

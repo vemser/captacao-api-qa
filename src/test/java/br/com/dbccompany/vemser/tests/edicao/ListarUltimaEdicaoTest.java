@@ -78,9 +78,9 @@ class ListarUltimaEdicaoTest {
 		Assertions.assertEquals(edicaoCadastrada.getNome().toLowerCase(), ultimaEdicao.getNome().toLowerCase(), "O nome da última edição não corresponde ao nome da edição cadastrada.");
 	}
 
-
+	@Test
     @DisplayName("Cenário 3: Deve retornar 403 ao listar a última edição sem autenticação")
-	  @Tag("Regression")
+  	@Tag("Regression")
     void testListarUltimaEdicaoSemAutenticacao() {
 
         String ultimaEdicao = edicaoClient.listaEdicaoAtualSemAutenticacao();

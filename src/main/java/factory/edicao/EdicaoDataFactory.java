@@ -17,6 +17,7 @@ public class EdicaoDataFactory {
         EdicaoModel edicao = new EdicaoModel();
         edicao.setIdEdicao(faker.random().nextInt(100, 100000));
         edicao.setNome("VEMSER_"+faker.random().nextInt(100, 100000));
+        edicao.setNotaCorte(faker.random().nextInt(0, 100));
 
     		edicao.setNotaCorte(faker.random().nextInt(0, 100));
 
@@ -27,6 +28,22 @@ public class EdicaoDataFactory {
 
         EdicaoModel edicao = new EdicaoModel();
 		edicao.setNotaCorte(faker.random().nextInt(0, 100));
+
+        return edicao;
+    }
+
+	public static EdicaoModel notaDeCorteAcimaDeCem() {
+
+        EdicaoModel edicao = new EdicaoModel();
+		edicao.setNotaCorte(faker.random().nextInt(101, 100000));
+
+        return edicao;
+    }
+
+	public static EdicaoModel notaDeCorteNegativa() {
+
+        EdicaoModel edicao = new EdicaoModel();
+		edicao.setNotaCorte(faker.random().nextInt(-100000, 1));
 
         return edicao;
     }
