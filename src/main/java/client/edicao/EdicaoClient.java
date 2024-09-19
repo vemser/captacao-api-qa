@@ -1,6 +1,7 @@
 package client.edicao;
 
 import client.auth.AuthClient;
+import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
@@ -64,6 +65,7 @@ public class EdicaoClient {
                 given()
                         .spec(EdicaoSpecs.edicaoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(EdicaoDataFactory.edicaoValida())
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()

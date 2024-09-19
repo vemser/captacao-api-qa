@@ -467,7 +467,6 @@ public class CandidatoDataFactory {
 
     public static CandidatoCriacaoModel candidatoComEdicaoNaoExistente(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
         EdicaoModel edicaoNaoExistente = EdicaoDataFactory.edicaoValida();
-
         CandidatoCriacaoModel candidato = novoCandidato();
         candidato.setEdicao(edicao);
         candidato.setFormulario(idFormulario);

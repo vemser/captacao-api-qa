@@ -85,6 +85,7 @@ public class CandidatoClient {
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .contentType("application/json")
                         .body(candidato)
                 .when()
                         .post(CANDIDATO)

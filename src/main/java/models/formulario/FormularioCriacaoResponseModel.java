@@ -1,5 +1,6 @@
 package models.formulario;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import groovy.lang.GString;
 import lombok.*;
 import models.trilha.TrilhaModel;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FormularioCriacaoResponseModel {
 
     private Integer idFormulario;
