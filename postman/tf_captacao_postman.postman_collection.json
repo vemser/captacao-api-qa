@@ -6756,7 +6756,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/formulario/recuperar-curriculo?idFormulario=0",
+									"raw": "{{base_url}}/formulario/recuperar-curriculo?idFormulario=55",
 									"host": [
 										"{{base_url}}"
 									],
@@ -6767,7 +6767,7 @@
 									"query": [
 										{
 											"key": "idFormulario",
-											"value": "0"
+											"value": "55"
 										}
 									]
 								}
@@ -7482,7 +7482,7 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/Marqu/OneDrive/Documentos/Documento1 química Lavagem a Seco.pdf"
+											"src": "/C:/Users/Marqu/Downloads/Documento sem título.pdf"
 										}
 									]
 								},
@@ -7498,7 +7498,113 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Atualizar curriculo por id valido",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{token_user_instrutor}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "/C:/Users/Marqu/Downloads/Documento sem título.pdf"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{base_url}}/formulario/upload-curriculo/55",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"formulario",
+												"upload-curriculo",
+												"55"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 18 Sep 2024 18:20:31 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "0"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "CF-Ray",
+											"value": "8c5359a0e8126b21-GRU"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Accept-Encoding"
+										},
+										{
+											"key": "pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "rndr-id",
+											"value": "959db231-f1fd-4b10"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-render-origin-server",
+											"value": "Render"
+										},
+										{
+											"key": "x-xss-protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
 						},
 						{
 							"name": "Atualizar curriculo por id valido Copy",
@@ -8030,14 +8136,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/trilha/deletar/18",
+									"raw": "{{base_url}}/trilha/deletar/28",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"trilha",
 										"deletar",
-										"18"
+										"28"
 									]
 								}
 							},
@@ -8330,14 +8436,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/edicao/delete-fisico/10",
+									"raw": "{{base_url}}/edicao/delete-fisico/241",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"edicao",
 										"delete-fisico",
-										"10"
+										"241"
 									]
 								}
 							},
@@ -8355,8 +8461,13 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 201\", function () {\r",
-											"    pm.response.to.have.status(201);\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.test(jsonData.errors).to.eql(\"nome: O nome não pode ser nulo ou vazio\")\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -8375,7 +8486,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"idEdicao\" : 0,\r\n    \"nome\": \"\"\r\n}",
+									"raw": "{\r\n  \"idEdicao\": 0,\r\n  \"nome\": \"\",\r\n  \"notaCorte\": 100\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -9291,6 +9402,63 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "adicionar uma avaliacao a uma inscricao inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem server\", function () {\r",
+											"    var jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"ID_Inscrição inválido\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"aprovadoBoolean\": true,\r\n  \"idInscricao\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/avaliacao?token={{token_user_gestor}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"avaliacao"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token_user_gestor}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -9509,11 +9677,7 @@
 											"pm.test(\"Status code is 204\", function () {\r",
 											"    pm.response.to.have.status(204);\r",
 											"});\r",
-											"\r",
-											"pm.test(\"Validar mensagem de erro\", function () {\r",
-											"     let jsonData = pm.response.json()\r",
-											"     pm.expect(jsonData.message).to.eql(\"Avaliação não encontrada!\")\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -9537,6 +9701,589 @@
 									"path": [
 										"avaliacao",
 										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Inscricao",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas isncricoes ordenadas por idInscricao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/inscricao?sort=idInscricao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "idInscricao"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricao por id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/inscricao/find-by-idInscricao?id=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"find-by-idInscricao"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricao por id invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"validar mensagem e header\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"     pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');\r",
+											"     pm.expect(jsonData.message).to.equal(\"ID_Inscrição inválido\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/inscricao/find-by-idInscricao?id=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"find-by-idInscricao"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar uma inscricao com o id do candidato e id formulario",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Pre-prova",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "criar pre prova",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nomePreProva\": \"Dinâmica solo\",\r\n  \"sequencia\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "criar pre prova com nome vazio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nomePreProva\": \"\",\r\n  \"sequencia\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "criar pre prova com sequencia negativa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nomePreProva\": \"fawiuhfiaf\",\r\n  \"sequencia\": -1000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "edicao de pre prova",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPreProva\": 1,\r\n  \"idCandidato\": {{idCandidato}},\r\n  \"notaPreProva\": 10,\r\n  \"observacao\": \"Candidato muito bom\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editar nome pre prova e sequencia por id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_instrutor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nomePreProva\": \"Dinamica Jamaica\",\r\n  \"sequencia\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar pre provas edicao atual",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/preprovas/preprovas-edicao-atual",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"preprovas-edicao-atual"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar pre provas edicao por id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/preprovas/preprovas-edicao/1034",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"preprovas-edicao",
+										"1034"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar pre prova inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/200",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"200"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletar pre prova com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/preprovas/3",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"preprovas",
+										"3"
 									]
 								}
 							},
