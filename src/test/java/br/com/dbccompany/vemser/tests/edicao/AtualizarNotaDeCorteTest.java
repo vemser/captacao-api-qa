@@ -37,9 +37,9 @@ public class AtualizarNotaDeCorteTest {
 
 		Response response = edicaoClient.atualizarNotaDeCorte(edicao);
 
-		assertEquals(200, response.statusCode(), "A resposta não retornou 200 OK");
-
 		EdicaoModel responseBody = response.getBody().as(EdicaoModel.class);
+
+		assertEquals(200, response.statusCode(), "A resposta não retornou 200 OK");
 		assertEquals(edicao.getNotaCorte(), responseBody.getNotaCorte(), "A nota de corte não foi atualizada corretamente");
 	}
 
@@ -58,13 +58,25 @@ public class AtualizarNotaDeCorteTest {
 	@DisplayName("Cenário 4: Deve retornar 400 ao atualizar nota de corte com valor inválido")
 	public void testAtualizarNotaDeCorteInvalida() {
 
-		EdicaoModel edicao = EdicaoDataFactory.notaDeCorteInvalida();
+		EdicaoModel edicao = EdicaoDataFactory.notaDeCorteAcimaDeCem();
 
 		edicaoClient.atualizarNotaDeCorte(edicao)
 				.then()
 				.header("Content-Type", "application/json")
 				.statusCode(400)
 				.body("errors[0]", equalTo("notaCorte: A nota de corte deve ser no máximo 100"));
+	}
+
+	@Test
+	@DisplayName("Cenário 5: Deve retornar 400 ao tentar atualizar nota de corte com valor negativo")
+	public void testAtualizarNotaDeCorteNegativa() {
+
+		EdicaoModel edicao = EdicaoDataFactory.notaDeCorteNegativa();
+
+		edicaoClient.atualizarNotaDeCorte(edicao)
+				.then()
+				.statusCode(400)
+				.body("errors[0]", equalTo("notaCorte: A nota de corte deve ser no mínimo 0"));
 	}
 
 }

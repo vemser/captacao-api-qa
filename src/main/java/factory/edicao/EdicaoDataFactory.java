@@ -30,10 +30,18 @@ public class EdicaoDataFactory {
         return edicao;
     }
 
-	public static EdicaoModel notaDeCorteInvalida() {
+	public static EdicaoModel notaDeCorteAcimaDeCem() {
 
         EdicaoModel edicao = new EdicaoModel();
-		edicao.setNotaCorte(faker.random().nextInt(100, 99999999));
+		edicao.setNotaCorte(faker.random().nextInt(101, 100000));
+
+        return edicao;
+    }
+
+	public static EdicaoModel notaDeCorteNegativa() {
+
+        EdicaoModel edicao = new EdicaoModel();
+		edicao.setNotaCorte(faker.random().nextInt(-100000, 1));
 
         return edicao;
     }
