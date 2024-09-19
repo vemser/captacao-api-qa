@@ -4,7 +4,6 @@ import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
-import models.edicao.EdicaoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
