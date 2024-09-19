@@ -46,11 +46,21 @@ public class EdicaoClient {
 		return
 				given()
 						.spec(EdicaoSpecs.edicaoReqSpec())
-						.header(AUTHORIZATION, AuthClient.getToken())
 				.when()
 						.get(EDICAO_EDICAO_ATUAL)
 						.thenReturn()
 						.asString();
+	}
+
+	public Response listaEdicaoAtualAutenticacao() {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(EdicaoSpecs.edicaoReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+				.when()
+						.get(EDICAO_EDICAO_ATUAL);
 	}
 
 	public EdicaoModel criarEdicao(EdicaoModel edicao) {

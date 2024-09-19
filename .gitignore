@@ -51,6 +51,7 @@ out/
 *.ipr
 *.iws
 allure-results
+.allure/
 
 ##############################
 ## Eclipse
