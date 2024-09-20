@@ -57,7 +57,6 @@ public class AvaliacaoClient {
 
         return
                 given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()

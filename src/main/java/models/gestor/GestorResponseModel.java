@@ -8,12 +8,14 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true) // Add this annotation
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GestorResponseModel {
-    private Integer idGestor;
-    private String nome;
-    private String email;
-    private String cidade;
-    private String estado;
-    private String ativo;
+
+	private Integer idGestor;
+	private String nome;
+	private String email;
+	private String cidade;
+	private String estado;
+	private String ativo;
+	private String genero;
 }

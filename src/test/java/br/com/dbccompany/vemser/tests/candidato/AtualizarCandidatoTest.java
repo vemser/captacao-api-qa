@@ -55,7 +55,7 @@ class AtualizarCandidatoTest {
         EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+        LinguagemModel linguagemCriada = new LinguagemModel("Java");
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 
@@ -74,13 +74,13 @@ class AtualizarCandidatoTest {
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
-        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                         .then()
                                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
         edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
-        var deletarFormulario = formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario())
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario())
                         .then()
                                 .statusCode(HttpStatus.SC_NOT_FOUND);
 

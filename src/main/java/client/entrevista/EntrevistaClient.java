@@ -195,7 +195,6 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                 .when()
                         .delete(ENTREVISTA_ID_ENTREVISTA)
