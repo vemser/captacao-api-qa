@@ -60,7 +60,7 @@ class AtualizarAvaliacaoTest {
     }
     @AfterAll
     public static void setDown(){
-        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao());
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
 
         inscricaoClient.deletarInscricao(inscricaoCadastradaUm.getIdInscricao());
         inscricaoClient.deletarInscricao(inscricaoCadastradaDois.getIdInscricao());

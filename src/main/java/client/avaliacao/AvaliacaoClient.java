@@ -16,12 +16,8 @@ public class AvaliacaoClient {
     private static final String UPDATE_AVALIACAO = "/avaliacao/update/{idAvaliacao}";
     private static final String ID_AVALIACAO = "idAvaliacao";
 
-    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao, boolean isCondicaoTokenValido) {
-        String token = StringUtils.EMPTY;
-        if(isCondicaoTokenValido){
-            Auth.usuarioGestaoDePessoas();
-            token = AuthClient.getToken();
-        }
+    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
@@ -32,37 +28,12 @@ public class AvaliacaoClient {
                         .post(AVALIACAO);
     }
 
-    public Response cadastrarAvaliacaoSemAutenticacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
+    public Response deletarAvaliacao(Integer idAvaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .body(avaliacao)
-                .when()
-                        .post(AVALIACAO);
-    }
-
-    public Response deletarAvaliacao(Integer idAvaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                .when()
-                        .delete(AVALIACAO_POR_ID)
-                ;
-    }
-
-    public Response deletarAvaliacaoSemAutenticacao(Integer idAvaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()
                         .delete(AVALIACAO_POR_ID)
@@ -70,11 +41,7 @@ public class AvaliacaoClient {
     }
 
     public Response listarTodaAvaliacao(boolean isCondicaoInserirTokenValido) {
-        String token = StringUtils.EMPTY;
-        if(isCondicaoInserirTokenValido){
-            Auth.usuarioGestaoDePessoas();
-            token = AuthClient.getToken();
-        }
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
@@ -88,11 +55,7 @@ public class AvaliacaoClient {
     }
 
     public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
-        String token = StringUtils.EMPTY;
-        if(isCondicaoInserirTokenValido){
-            Auth.usuarioGestaoDePessoas();
-            token = AuthClient.getToken();
-        }
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
@@ -104,15 +67,12 @@ public class AvaliacaoClient {
                 ;
     }
 
-    public Response atualizarAvaliacaoSemAutenticacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                        .body(avaliacao)
-                .when()
-                        .put(UPDATE_AVALIACAO);
+    private String inserirToken(boolean isCondicaoInserirTokenValido){
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
+        return token;
     }
 }

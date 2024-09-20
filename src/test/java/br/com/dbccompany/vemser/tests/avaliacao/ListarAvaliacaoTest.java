@@ -54,7 +54,7 @@ class ListarAvaliacaoTest{
 
     @AfterAll
     public static void setDown(){
-        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao());
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
         edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
         formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
         candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());

@@ -54,8 +54,9 @@ class CadastrarAvaliacaoTest {
     }
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar avaliação com sucesso")
+    @DisplayName("Cenário 1: Deve cadastrar avaliação com sucesso")
     public void testCadastrarAvaliacaoComSucesso() {
+        avaliacao.setIdInscricao(inscricaoCadastrada.getIdInscricao());
         avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -65,7 +66,7 @@ class CadastrarAvaliacaoTest {
                 () -> assertNotNull(avaliacaoCadastrada.getIdAvaliacao()),
                 () -> assertEquals(avaliacaoCadastrada.getInscricao().getIdInscricao(), inscricaoCadastrada.getIdInscricao())
         );
-        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao());
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
     }
 
     @Test
@@ -84,18 +85,18 @@ class CadastrarAvaliacaoTest {
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .body("message", equalTo("ID_Inscrição inválido"));
-        avaliacao.setIdInscricao(inscricaoCadastrada.getIdInscricao());
     }
 
     @Test
     @DisplayName("Cenário 4: Validar schema cadastrar avaliação")
     public void testValidarSchemaCadastrarAvaliacao(){
+        avaliacao.setIdInscricao(inscricaoCadastrada.getIdInscricao());
         avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .body(matchesJsonSchemaInClasspath("schemas/avaliacao/Cadastrar_avaliacao.json"))
                     .extract()
                     .as(AvaliacaoModel.class);
-        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao());
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
     }
 }
