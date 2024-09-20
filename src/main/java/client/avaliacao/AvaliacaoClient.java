@@ -34,7 +34,7 @@ public class AvaliacaoClient {
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+//                        .header(AUTHORIZATION, AuthClient.getToken())
                         .body(avaliacao)
                 .when()
                         .post(AVALIACAO)

@@ -92,7 +92,6 @@ public class InscricaoClient {
         return
                 given()
                         .spec(InscricaoSpecs.authReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("id", idInscricao)
                 .when()
                         .get(INSCRICAO_FIND_BY_ID_INSCRICAO);

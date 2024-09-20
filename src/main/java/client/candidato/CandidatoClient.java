@@ -115,7 +115,6 @@ public class CandidatoClient {
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(novosDados)
                 .when()
