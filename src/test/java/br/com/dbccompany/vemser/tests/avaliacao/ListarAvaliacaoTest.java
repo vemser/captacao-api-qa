@@ -17,6 +17,7 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 import utils.auth.Auth;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 @DisplayName("Endpoint de listagem de avaliação")
@@ -78,5 +79,15 @@ class ListarAvaliacaoTest{
         avaliacaoClient.listarTodaAvaliacao(false)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
+    }
+
+    @Test
+    @DisplayName("Cenário 3: Validar schema listar toda avaliação")
+    public void testValidarSchemaListarTodaAvaliacao(){
+        avaliacaoClient.listarTodaAvaliacao(true)
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .body(matchesJsonSchemaInClasspath("schemas/avaliacao/Listar_toda_avaliacao.json"));
+
     }
 }
