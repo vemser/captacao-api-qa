@@ -6,17 +6,12 @@ import client.edicao.EdicaoClient;
 import client.formulario.FormularioClient;
 import client.inscricao.InscricaoClient;
 import factory.avaliacao.AvaliacaoDataFactory;
-import io.restassured.response.Response;
 import models.avaliacao.AvaliacaoCriacaoModel;
-import models.avaliacao.AvaliacaoListaResponseModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
-import utils.auth.Auth;
-
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
