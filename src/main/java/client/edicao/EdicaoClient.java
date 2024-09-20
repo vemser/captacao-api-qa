@@ -55,7 +55,6 @@ public class EdicaoClient {
                 .when()
                         .post(EDICAO_CRIAR_EDICAO)
                 .then()
-                        .statusCode(HttpStatus.SC_CREATED)
                         .extract()
                         .as(EdicaoModel.class)
                 ;

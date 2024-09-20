@@ -1,10 +1,10 @@
 package models.candidato;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.linguagem.LinguagemModel;
+import models.prova.PreProvasUsuarioResponseModel;
 
 import java.util.List;
 
@@ -38,6 +38,7 @@ public class CandidatoCriacaoResponseModel {
     private EdicaoModel edicao;
     private FormularioCriacaoResponseModel formulario;
     private Integer imagem;
+    private List<PreProvasUsuarioResponseModel> preProvasUsuario;
 }
 
 
