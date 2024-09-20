@@ -18,7 +18,7 @@ class ListarEntrevistaPorMesTest {
     private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS_POR_MES = "schemas/entrevista/listar_entrevistas_por_mes.json";
 
     @Test
-    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por trilha")
+    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por mês")
     @Tag("Regression")
     public void testValidarContratoListarEntrevistasPorMes() {
 

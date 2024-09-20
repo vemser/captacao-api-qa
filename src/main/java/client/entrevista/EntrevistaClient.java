@@ -80,9 +80,8 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .pathParam(EMAIL, emailDoCandidato)
                 .when()
-                        .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL)
+                        .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL + emailDoCandidato)
                 ;
     }
 
