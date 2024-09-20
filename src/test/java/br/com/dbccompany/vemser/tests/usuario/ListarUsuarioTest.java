@@ -106,7 +106,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarTodoGestor(){
         usuarioClient.listarGestores(AuthClient.getToken())
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Listar_todo_gestor.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_todo_gestor.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 
@@ -115,7 +115,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarGestorPorId(){
         usuarioClient.listarGestorPorId(AuthClient.getToken(), "1")
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Listar_gestor_por_id.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_gestor_por_id.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 
@@ -124,7 +124,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarTodoGestorInativo(){
         usuarioClient.listarTodoGestorInativo(AuthClient.getToken())
                 .then()
-                .body(matchesJsonSchemaInClasspath("usuario/Listar_todo_gestor_inativo.json"))
-                .statusCode(HttpStatus.SC_OK);
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_todo_gestor_inativo.json"))
+                    .statusCode(HttpStatus.SC_OK);
     }
 }

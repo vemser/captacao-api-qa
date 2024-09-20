@@ -67,7 +67,7 @@ public class AtualizarStatusUsuarioTest {
     public void testValidarSchemaDesativarGestor(){
         usuarioClient.desativarContaGestor(AuthClient.getToken(), "3")
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Desativar_conta_gestor.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Desativar_conta_gestor.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 }

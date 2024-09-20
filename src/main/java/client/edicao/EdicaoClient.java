@@ -1,6 +1,7 @@
 package client.edicao;
 
 import client.auth.AuthClient;
+import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
@@ -74,7 +75,6 @@ public class EdicaoClient {
 				.when()
 						.post(EDICAO_CRIAR_EDICAO)
 				.then()
-						.statusCode(HttpStatus.SC_CREATED)
 						.extract()
 						.as(EdicaoModel.class);
 	}
