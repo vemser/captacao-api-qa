@@ -51,6 +51,7 @@ out/
 *.ipr
 *.iws
 allure-results
+.allure/
 
 ##############################
 ## Eclipse
@@ -94,3 +95,4 @@ nb-configuration.xml
 .idea
 application-config.yml
 application-config.properties
+allure-results

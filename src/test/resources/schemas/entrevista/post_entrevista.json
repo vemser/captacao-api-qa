@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "candidatoEmail": {
+      "type": "string"
+    },
+    "dataEntrevista": {
+      "type": "string"
+    },
+    "observacoes": {
+      "type": "string"
+    },
+    "avaliado": {
+      "type": "string"
+    },
+    "idEntrevista": {
+      "type": "integer"
+    },
+    "candidatoDTO": {
+      "type": "object",
+      "properties": {
+        "idCandidato": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "dataNascimento": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "telefone": {
+          "type": "string"
+        },
+        "rg": {
+          "type": "string"
+        },
+        "cpf": {
+          "type": "string"
+        },
+        "estado": {
+          "type": "string"
+        },
+        "cidade": {
+          "type": "string"
+        },
+        "statusCandidato": {
+          "type": "string"
+        },
+        "pcd": {
+          "type": "string"
+        },
+        "observacoes": {
+          "type": "string"
+        },
+        "notaProva": {
+          "type": "integer"
+        },
+        "notaEntrevistaComportamental": {
+          "type": "integer"
+        },
+        "notaEntrevistaTecnica": {
+          "type": "integer"
+        },
+        "ativo": {
+          "type": "string"
+        },
+        "parecerComportamental": {
+          "type": "string"
+        },
+        "parecerTecnico": {
+          "type": "string"
+        },
+        "media": {
+          "type": "integer"
+        },
+        "linguagens": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          ]
+        },
+        "edicao": {
+          "type": "object",
+          "properties": {
+            "idEdicao": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "notaCorte": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "idEdicao",
+            "nome",
+            "notaCorte"
+          ]
+        },
+        "formulario": {
+          "type": "object",
+          "properties": {
+            "idFormulario": {
+              "type": "integer"
+            },
+            "matriculado": {
+              "type": "string"
+            },
+            "curso": {
+              "type": "string"
+            },
+            "turno": {
+              "type": "string"
+            },
+            "instituicao": {
+              "type": "string"
+            },
+            "github": {
+              "type": "string"
+            },
+            "linkedin": {
+              "type": "string"
+            },
+            "desafios": {
+              "type": "string"
+            },
+            "problema": {
+              "type": "string"
+            },
+            "reconhecimento": {
+              "type": "string"
+            },
+            "altruismo": {
+              "type": "string"
+            },
+            "resposta": {
+              "type": "string"
+            },
+            "curriculo": {
+              "type": "integer"
+            },
+            "lgpd": {
+              "type": "string"
+            },
+            "prova": {
+              "type": "string"
+            },
+            "ingles": {
+              "type": "string"
+            },
+            "espanhol": {
+              "type": "string"
+            },
+            "neurodiversidade": {
+              "type": "string"
+            },
+            "efetivacao": {
+              "type": "string"
+            },
+            "genero": {
+              "type": "string"
+            },
+            "orientacao": {
+              "type": "string"
+            },
+            "disponibilidade": {
+              "type": "string"
+            },
+            "trilhas": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string"
+                    },
+                    "idTrilha": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "nome",
+                    "idTrilha"
+                  ]
+                }
+              ]
+            },
+            "imagemConfigPc": {
+              "type": "integer"
+            },
+            "qtdSemestres": {
+              "type": "integer"
+            },
+            "semestreAtual": {
+              "type": "integer"
+            },
+            "tipoGraduacao": {
+              "type": "string"
+            },
+            "descConfigPc": {
+              "type": "string"
+            },
+            "importancia": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "idFormulario",
+            "matriculado",
+            "curso",
+            "turno",
+            "instituicao",
+            "github",
+            "linkedin",
+            "desafios",
+            "problema",
+            "reconhecimento",
+            "altruismo",
+            "resposta",
+            "curriculo",
+            "lgpd",
+            "prova",
+            "ingles",
+            "espanhol",
+            "neurodiversidade",
+            "efetivacao",
+            "genero",
+            "orientacao",
+            "disponibilidade",
+            "trilhas",
+            "imagemConfigPc",
+            "qtdSemestres",
+            "semestreAtual",
+            "tipoGraduacao",
+            "descConfigPc",
+            "importancia"
+          ]
+        },
+        "imagem": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "idCandidato",
+        "nome",
+        "dataNascimento",
+        "email",
+        "telefone",
+        "rg",
+        "cpf",
+        "estado",
+        "cidade",
+        "statusCandidato",
+        "pcd",
+        "observacoes",
+        "notaProva",
+        "notaEntrevistaComportamental",
+        "notaEntrevistaTecnica",
+        "ativo",
+        "parecerComportamental",
+        "parecerTecnico",
+        "media",
+        "linguagens",
+        "edicao",
+        "formulario",
+        "imagem"
+      ]
+    },
+    "gestorDTO": {
+      "type": "object",
+      "properties": {
+        "idGestor": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "cargosDto": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "idCargo": {
+                  "type": "integer"
+                },
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "idCargo",
+                "nome"
+              ]
+            }
+          ]
+        },
+        "ativo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idGestor",
+        "nome",
+        "email",
+        "cargosDto",
+        "ativo"
+      ]
+    },
+    "legenda": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidatoEmail",
+    "dataEntrevista",
+    "observacoes",
+    "avaliado",
+    "idEntrevista",
+    "candidatoDTO",
+    "gestorDTO",
+    "legenda"
+  ]
+}

@@ -12,7 +12,7 @@ public class EntrevistaClient {
 
     public static final String ENTREVISTA_MARCAR_ENTREVISTA = "/entrevista/marcar-entrevista";
     public static final String ENTREVISTA = "/entrevista";
-    public static final String ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL = "/entrevista/buscar-entrevista-email-candidato/{email}";
+    public static final String ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL = "/entrevista/buscar-entrevista-email-candidato/";
     public static final String ENTREVISTA_POR_TRILHA = "/entrevista/por-trilha";
     public static final String ENTREVISTA_LISTAR_POR_MES = "/entrevista/listar-por-mes";
     public static final String ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA = "/entrevista/atualizar-entrevista/{idEntrevista}";
@@ -70,9 +70,8 @@ public class EntrevistaClient {
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(EMAIL, emailDoCandidato)
                 .when()
-                        .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL)
+                        .get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL + emailDoCandidato)
                 ;
     }
 

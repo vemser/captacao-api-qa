@@ -8,16 +8,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 @DisplayName("Endpoint de listagem de formulários")
 class ListarFormulariosTest{
 
+    private static final String PATH_SCHEMA_LISTAR_FORMULARIOS = "schemas/formulario/listar_formularios.json";
     FormularioClient formularioClient = new FormularioClient();
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 e listar formulários ordenados")
+    @DisplayName("Cenário 1: Validar contrato listar formulários ordenados")
     @Tag("Regression")
     void testListarFormulariosComSucesso() {
-
         JSONListaFormularioResponse listaFormularioResponse = formularioClient.listarTodosOsFormularios()
                 .then()
                     .statusCode(HttpStatus.SC_OK)

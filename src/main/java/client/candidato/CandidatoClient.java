@@ -88,6 +88,7 @@ public class CandidatoClient {
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .contentType("application/json")
                         .body(candidato)
                 .when()
                         .post(CANDIDATO)
@@ -114,7 +115,6 @@ public class CandidatoClient {
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(novosDados)
                 .when()

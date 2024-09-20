@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "idDisponibilidade": {
+          "type": "integer"
+        },
+        "candidatoEntity": {
+          "type": ["object", "null"],
+          "properties": {
+            "idCandidato": {
+              "type": "integer"
+            },
+            "idEdicao": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "dataNascimento": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "telefone": {
+              "type": "string"
+            },
+            "rg": {
+              "type": "string"
+            },
+            "cpf": {
+              "type": "string"
+            },
+            "estado": {
+              "type": "string"
+            },
+            "cidade": {
+              "type": "string"
+            },
+            "pcd": {
+              "type": "string"
+            },
+            "observacoes": {
+              "type": "string"
+            },
+            "notaProva": {
+              "type": "number"
+            },
+            "notaEntrevistaComportamental": {
+              "type": "number"
+            },
+            "notaEntrevistaTecnica": {
+              "type": "number"
+            },
+            "ativo": {
+              "type": "string"
+            },
+            "parecerComportamental": {
+              "type": "string"
+            },
+            "parecerTecnico": {
+              "type": "string"
+            },
+            "media": {
+              "type": "number"
+            },
+            "audDtCriacao": {
+              "type": "string"
+            },
+            "statusCandidato": {
+              "type": "string"
+            },
+            "preProvasUsuarioEntities": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "idPreProvaUsuario": {
+                      "type": "integer"
+                    },
+                    "notaPreProva": {
+                      "type": "number"
+                    },
+                    "observacao": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "idPreProvaUsuario",
+                    "notaPreProva",
+                    "observacao"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "idCandidato",
+            "idEdicao",
+            "nome",
+            "dataNascimento",
+            "email",
+            "telefone",
+            "rg",
+            "cpf",
+            "estado",
+            "cidade",
+            "pcd",
+            "observacoes",
+            "notaProva",
+            "notaEntrevistaComportamental",
+            "notaEntrevistaTecnica",
+            "ativo",
+            "parecerComportamental",
+            "parecerTecnico",
+            "media",
+            "audDtCriacao",
+            "statusCandidato",
+            "preProvasUsuarioEntities"
+          ]
+        },
+        "gestorEntity": {
+          "type": "object",
+          "properties": {
+            "idGestor": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "cidade": {
+              "type": "string"
+            },
+            "estado": {
+              "type": "string"
+            },
+            "ativo": {
+              "type": "string"
+            },
+            "genero": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "idGestor",
+            "nome",
+            "email",
+            "cidade",
+            "estado",
+            "ativo",
+            "genero"
+          ]
+        },
+        "dataEntrevista": {
+          "type": "string"
+        },
+        "horaInicio": {
+          "type": "string",
+          "format": "time"
+        },
+        "horaFim": {
+          "type": "string",
+          "format": "time"
+        },
+        "marcado": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "idDisponibilidade",
+        "candidatoEntity",
+        "gestorEntity",
+        "dataEntrevista",
+        "horaInicio",
+        "horaFim",
+        "marcado"
+      ]
+    }
+  ]
+}
