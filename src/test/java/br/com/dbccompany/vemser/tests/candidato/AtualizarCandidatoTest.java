@@ -9,6 +9,7 @@ import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
+import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
@@ -35,10 +36,10 @@ class AtualizarCandidatoTest {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
                 .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
@@ -47,34 +48,33 @@ class AtualizarCandidatoTest {
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-        .then()
-            .statusCode(HttpStatus.SC_CREATED)
-            .extract()
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract()
                 .as(CandidatoModel.class);
 
         CandidatoCriacaoModel candidatoCriadoComNovoNome = CandidatoDataFactory.candidatoComNovoNome(candidatoCriado);
 
         CandidatoCriacaoResponseModel candidatoAtualizado = candidatoClient.atualizarCandidato(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoNome)
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
                 .as(CandidatoCriacaoResponseModel.class);
 
         candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
-        .then()
-            .statusCode(HttpStatus.SC_NO_CONTENT);
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
 
         edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
         formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario())
-        .then()
-            .statusCode(HttpStatus.SC_NO_CONTENT);
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertNotNull(candidatoAtualizado);
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoAtualizado.getIdCandidato());
@@ -87,23 +87,18 @@ class AtualizarCandidatoTest {
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
-                            .statusCode(HttpStatus.SC_OK)
-                            .extract()
-                            .as(TrilhaModel[].class))
-                            .toList();
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormulario(listaDeNomeDeTrilhas.get(0));
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
         CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
@@ -117,11 +112,11 @@ class AtualizarCandidatoTest {
 
         var candidatoAtualizado = candidatoClient.atualizarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoEmail)
                 .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
+                .statusCode(HttpStatus.SC_FORBIDDEN);
 
 
         var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
