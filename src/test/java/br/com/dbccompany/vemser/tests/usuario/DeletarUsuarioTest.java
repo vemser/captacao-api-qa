@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
+
 import static org.hamcrest.Matchers.equalTo;
 
 public class DeletarUsuarioTest {

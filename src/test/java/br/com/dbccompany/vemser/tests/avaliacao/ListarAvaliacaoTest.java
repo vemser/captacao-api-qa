@@ -87,6 +87,5 @@ class ListarAvaliacaoTest{
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(matchesJsonSchemaInClasspath("schemas/avaliacao/Listar_toda_avaliacao.json"));
-
     }
 }

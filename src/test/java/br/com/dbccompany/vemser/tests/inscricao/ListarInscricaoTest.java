@@ -41,7 +41,7 @@ class ListarInscricaoTest {
 
         InscricaoModel inscricaoListada = listaInscricoes.getElementos().get(0);
 
-        var deletarInscricao = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 

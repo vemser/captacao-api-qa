@@ -3,7 +3,6 @@ package br.com.dbccompany.vemser.tests.disponibilidade;
 import client.disponibilidade.DisponibilidadeClient;
 import client.usuario.UsuarioClient;
 import factory.disponibilidade.DisponibilidadeDataFactory;
-import io.restassured.http.ContentType;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.disponibilidade.DisponibilidadeModel;

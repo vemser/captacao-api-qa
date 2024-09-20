@@ -171,6 +171,7 @@ public class FormularioClient {
 
     public Response incluiCurriculoEmFormularioSemValidacao(Integer idFormulario) {
         Auth.usuarioAluno();
+
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
         File file = new File(filePath);
 
