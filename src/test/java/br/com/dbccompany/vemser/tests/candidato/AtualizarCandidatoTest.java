@@ -5,6 +5,7 @@ import client.edicao.EdicaoClient;
 import client.formulario.FormularioClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
+import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
@@ -48,7 +49,9 @@ class AtualizarCandidatoTest {
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -97,7 +100,9 @@ class AtualizarCandidatoTest {
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormulario(listaDeNomeDeTrilhas.get(0));
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 

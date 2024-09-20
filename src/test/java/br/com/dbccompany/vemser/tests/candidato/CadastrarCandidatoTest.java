@@ -54,7 +54,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -104,7 +106,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -140,7 +144,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComNomeNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -173,7 +179,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComNomeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -206,7 +214,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataNascimentoNoFuturo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -238,7 +248,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComMenosDeDezesseisAnos(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -270,7 +282,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+		EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoNula(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -302,7 +316,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -336,7 +352,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -369,7 +387,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -402,7 +422,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailSemDominio(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -435,7 +457,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailInvalido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -494,7 +518,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -527,7 +553,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComTelefoneNulo(edicaoCriada, formularioCriado.getIdFormulario(),"java");
 
@@ -559,7 +587,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComTelefoneEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -592,7 +622,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -624,7 +656,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -656,7 +690,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComRgMaiorQueTrinta(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -688,7 +724,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -720,7 +758,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -752,7 +792,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfInvalido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -809,7 +851,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEstadoNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -841,7 +885,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEstadoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -873,7 +919,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCidadeNula(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -905,7 +953,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCidadeEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -937,7 +987,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComPcdNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -969,7 +1021,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComPcdEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -1001,7 +1055,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComAtivoNulo(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -1034,7 +1090,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComAtivoEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
@@ -1067,7 +1125,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComListaNulaDeLinguagem(edicaoCriada, formularioCriado.getIdFormulario(), null);
 
@@ -1100,7 +1160,9 @@ class CadastrarCandidatoTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComListaDeLinguagemEmBranco(edicaoCriada, formularioCriado.getIdFormulario(), "");
 
@@ -1189,7 +1251,9 @@ class CadastrarCandidatoTest{
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComIdFormularioNulo(edicaoCriada, null, "java");
 
@@ -1220,7 +1284,9 @@ class CadastrarCandidatoTest{
 
         Integer idFormularioNaoCadastrado = FormularioDataFactory.idFormularioNaoCadastrado();
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
+		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComIdFormularioNaoCadastrado(edicaoCriada, idFormularioNaoCadastrado, "java");
 
