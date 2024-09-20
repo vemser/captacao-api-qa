@@ -58,7 +58,7 @@ public class CandidatoProvaDataFactory {
         EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
         EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+        LinguagemModel linguagemCriada = new LinguagemModel("Java");
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
 

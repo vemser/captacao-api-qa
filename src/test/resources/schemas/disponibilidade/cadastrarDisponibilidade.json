@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "idDisponibilidade": {
+      "type": "integer"
+    },
+    "candidatoEntity": {
+      "type": "null"
+    },
+    "gestorEntity": {
+      "type": "object",
+      "properties": {
+        "idGestor": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "cidade": {
+          "type": "string"
+        },
+        "estado": {
+          "type": "string"
+        },
+        "ativo": {
+          "type": "string"
+        },
+        "genero": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idGestor",
+        "nome",
+        "email",
+        "cidade",
+        "estado",
+        "ativo",
+        "genero"
+      ]
+    },
+    "dataEntrevista": {
+      "type": "string"
+    },
+    "horaInicio": {
+      "type": "string"
+    },
+    "horaFim": {
+      "type": "string"
+    },
+    "marcado": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "idDisponibilidade",
+    "candidatoEntity",
+    "gestorEntity",
+    "dataEntrevista",
+    "horaInicio",
+    "horaFim",
+    "marcado"
+  ]
+}

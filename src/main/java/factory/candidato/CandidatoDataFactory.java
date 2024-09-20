@@ -1,9 +1,11 @@
 package factory.candidato;
 
+import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.edicao.EdicaoModel;
+import models.edicao.EdicaoResponse;
 import net.datafaker.Faker;
 import utils.auth.Email;
 
@@ -13,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import static factory.edicao.EdicaoDataFactory.EdicaoCadastrada;
 import static utils.config.Tools.removerCaracteresEspeciais;
 
 public class CandidatoDataFactory {
@@ -187,8 +190,13 @@ public class CandidatoDataFactory {
     public static CandidatoCriacaoModel candidatoComEmailJaCadastrado() {
         CandidatoCriacaoModel candidato = novoCandidato();
 
-        candidato.setEmail("igor.henriques@live.com");
+        Integer idEdicao = EdicaoCadastrada().getIdEdicao();
+        String nomeEdicao = EdicaoCadastrada().getNome();
+        Integer notaCorte = EdicaoCadastrada().getNotaCorte();
+        EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao, notaCorte);
 
+        candidato.setEmail("igor.henriques@live.com");
+        candidato.setEdicao(edicao);
         return candidato;
     }
 
@@ -532,7 +540,7 @@ public class CandidatoDataFactory {
 		Integer notaCorte = faker.random().nextInt(0,100);
         EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao, notaCorte);
 
-        Integer idFormulario = 1;
+        Integer idFormulario = 2;
 
         CandidatoCriacaoModel candidato = new CandidatoCriacaoModel();
         candidato.setNome(removerCaracteresEspeciais(faker.name().fullName()));

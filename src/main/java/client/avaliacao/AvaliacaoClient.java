@@ -3,6 +3,7 @@ package client.avaliacao;
 import client.auth.AuthClient;
 import io.restassured.response.Response;
 import models.avaliacao.AvaliacaoCriacaoModel;
+import org.apache.commons.lang3.StringUtils;
 import specs.avaliacao.AvaliacaoSpecs;
 import utils.auth.Auth;
 
@@ -15,105 +16,50 @@ public class AvaliacaoClient {
     private static final String UPDATE_AVALIACAO = "/avaliacao/update/{idAvaliacao}";
     private static final String ID_AVALIACAO = "idAvaliacao";
 
-    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
+    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
+                        .queryParam("token", token)
                         .body(avaliacao)
                 .when()
-                        .post(AVALIACAO)
-                ;
+                        .post(AVALIACAO);
     }
 
-    public Response cadastrarAvaliacaoSemAutenticacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
+    public Response deletarAvaliacao(Integer idAvaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(avaliacao)
-                .when()
-                        .post(AVALIACAO)
-                ;
-    }
-
-    public Response deletarAvaliacao(Integer idAvaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()
                         .delete(AVALIACAO_POR_ID)
                 ;
     }
 
-    public Response deletarAvaliacaoSemAutenticacao(Integer idAvaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                .when()
-                        .delete(AVALIACAO_POR_ID)
-                ;
-    }
-
-    public Response listarUltimaAvaliacao() {
-        Auth.usuarioGestaoDePessoas();
-
-        Integer pagina = 0;
-        Integer tamanho = 1;
-        Integer order = 1;
-
+    public Response listarTodaAvaliacao(boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("pagina", pagina)
-                        .queryParam("tamanho", tamanho)
+                        .header(AUTHORIZATION, token)
+                        .queryParam("pagina", 0)
+                        .queryParam("tamanho", 1)
                         .queryParam("sort", ID_AVALIACAO)
-                        .queryParam("order", order)
+                        .queryParam("order", 0)
                 .when()
-                        .get(AVALIACAO)
-                ;
+                        .get(AVALIACAO);
     }
 
-    public Response listarUltimaAvaliacaoSemAutenticacao() {
-        Auth.usuarioAluno();
-
-        Integer pagina = 0;
-        Integer tamanho = 1;
-        Integer order = 1;
-
+    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("pagina", pagina)
-                        .queryParam("tamanho", tamanho)
-                        .queryParam("sort", ID_AVALIACAO)
-                        .queryParam("order", order)
-                .when()
-                        .get(AVALIACAO)
-                ;
-    }
-
-    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                         .body(avaliacao)
                 .when()
@@ -121,17 +67,12 @@ public class AvaliacaoClient {
                 ;
     }
 
-    public Response atualizarAvaliacaoSemAutenticacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                        .body(avaliacao)
-                .when()
-                        .put(UPDATE_AVALIACAO)
-                ;
+    private String inserirToken(boolean isCondicaoInserirTokenValido){
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
+        return token;
     }
 }

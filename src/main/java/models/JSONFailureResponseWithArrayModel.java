@@ -2,6 +2,7 @@ package models;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,4 +16,5 @@ public class JSONFailureResponseWithArrayModel {
     private Integer status;
     private String message;
     private List<String> errors;
+
 }

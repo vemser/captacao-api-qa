@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,7 +68,7 @@ public class AtualizarStatusUsuarioTest {
     public void testValidarSchemaDesativarGestor(){
         usuarioClient.desativarContaGestor(AuthClient.getToken(), "3")
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Desativar_conta_gestor.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Desativar_conta_gestor.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 }

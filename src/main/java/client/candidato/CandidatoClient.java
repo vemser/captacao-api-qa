@@ -33,7 +33,6 @@ public class CandidatoClient {
 
     public static final String CANDIDATO = "/candidato";
     public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
-    public static final String LINGUAGEM = "/linguagem";
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
     public static final String CANDIDATO_ULTIMA_EDICAO = "/candidato/ultima-edicao";
     public static final String CANDIDATO_NOTA_PROVA_ID_CANDIDATO = "/candidato/nota-prova/{idCandidato}";
@@ -115,7 +114,6 @@ public class CandidatoClient {
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(novosDados)
                 .when()

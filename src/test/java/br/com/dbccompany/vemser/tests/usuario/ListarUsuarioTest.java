@@ -5,8 +5,12 @@ import client.usuario.UsuarioClient;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.auth.Auth;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -106,7 +110,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarTodoGestor(){
         usuarioClient.listarGestores(AuthClient.getToken())
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Listar_todo_gestor.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_todo_gestor.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 
@@ -115,7 +119,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarGestorPorId(){
         usuarioClient.listarGestorPorId(AuthClient.getToken(), "1")
                 .then()
-                    .body(matchesJsonSchemaInClasspath("usuario/Listar_gestor_por_id.json"))
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_gestor_por_id.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
 
@@ -124,7 +128,7 @@ public class ListarUsuarioTest {
     public void testValidarSchemaListarTodoGestorInativo(){
         usuarioClient.listarTodoGestorInativo(AuthClient.getToken())
                 .then()
-                .body(matchesJsonSchemaInClasspath("usuario/Listar_todo_gestor_inativo.json"))
-                .statusCode(HttpStatus.SC_OK);
+                    .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_todo_gestor_inativo.json"))
+                    .statusCode(HttpStatus.SC_OK);
     }
 }

@@ -2,22 +2,47 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "totalElementos": {
+    "idAvaliacao": {
       "type": "integer"
     },
-    "quantidadePaginas": {
-      "type": "integer"
+    "avaliador": {
+      "type": "object",
+      "properties": {
+        "idGestor": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "cargosDto": {
+          "type": "array",
+          "items": {}
+        },
+        "ativo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idGestor",
+        "nome",
+        "email",
+        "cargosDto",
+        "ativo"
+      ]
     },
-    "pagina": {
-      "type": "integer"
+    "aprovado": {
+      "type": "string"
     },
-    "tamanho": {
-      "type": "integer"
-    },
-    "elementos": {
-      "type": "array",
-      "items": [
-        {
+    "inscricao": {
+      "type": "object",
+      "properties": {
+        "idInscricao": {
+          "type": "integer"
+        },
+        "candidato": {
           "type": "object",
           "properties": {
             "idCandidato": {
@@ -54,44 +79,32 @@
               "type": "string"
             },
             "observacoes": {
-              "type": ["string", "null"]
+              "type": "null"
             },
             "notaProva": {
-              "type":  ["number", "null"]
+              "type": ["integer", "number"]
             },
             "notaEntrevistaComportamental": {
-              "type":  ["number", "null"]
+              "type": ["integer", "number"]
             },
             "notaEntrevistaTecnica": {
-              "type":  ["number", "null"]
+              "type": ["integer", "number"]
             },
             "ativo": {
               "type": "string"
             },
             "parecerComportamental": {
-              "type": ["string", "null"]
+              "type": "null"
             },
             "parecerTecnico": {
-              "type": ["string", "null"]
+              "type": "null"
             },
             "media": {
-              "type": ["integer", "null"]
+              "type": "null"
             },
             "linguagens": {
               "type": "array",
-              "items": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "nome": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "nome"
-                  ]
-                }
-              ]
+              "items": {}
             },
             "edicao": {
               "type": "object",
@@ -103,7 +116,7 @@
                   "type": "string"
                 },
                 "notaCorte": {
-                  "type":  ["number", "null"]
+                  "type": ["integer", "number"]
                 }
               },
               "required": [
@@ -152,7 +165,7 @@
                   "type": "string"
                 },
                 "curriculo": {
-                  "type": ["integer", "null"]
+                  "type": "null"
                 },
                 "lgpd": {
                   "type": "string"
@@ -183,38 +196,22 @@
                 },
                 "trilhas": {
                   "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "nome": {
-                          "type": "string"
-                        },
-                        "idTrilha": {
-                          "type": "integer"
-                        }
-                      },
-                      "required": [
-                        "nome",
-                        "idTrilha"
-                      ]
-                    }
-                  ]
+                  "items": {}
                 },
                 "imagemConfigPc": {
-                  "type": ["integer", "null"]
+                  "type": "null"
                 },
                 "qtdSemestres": {
-                  "type": ["string", "null"]
+                  "type": "null"
                 },
                 "semestreAtual": {
-                  "type": ["string", "null"]
+                  "type": "null"
                 },
                 "tipoGraduacao": {
-                  "type": ["string", "null"]
+                  "type": "null"
                 },
                 "descConfigPc": {
-                  "type": ["string", "null"]
+                  "type": "null"
                 },
                 "importancia": {
                   "type": "string"
@@ -253,7 +250,11 @@
               ]
             },
             "imagem": {
-              "type": ["integer", "null"]
+              "type": "null"
+            },
+            "preProvasUsuario": {
+              "type": "array",
+              "items": {}
             }
           },
           "required": [
@@ -279,17 +280,29 @@
             "linguagens",
             "edicao",
             "formulario",
-            "imagem"
+            "imagem",
+            "preProvasUsuario"
           ]
+        },
+        "dataInscricao": {
+          "type": "string"
+        },
+        "avaliado": {
+          "type": "string"
         }
+      },
+      "required": [
+        "idInscricao",
+        "candidato",
+        "dataInscricao",
+        "avaliado"
       ]
     }
   },
   "required": [
-    "totalElementos",
-    "quantidadePaginas",
-    "pagina",
-    "tamanho",
-    "elementos"
+    "idAvaliacao",
+    "avaliador",
+    "aprovado",
+    "inscricao"
   ]
 }
