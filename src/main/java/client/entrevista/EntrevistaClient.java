@@ -35,7 +35,6 @@ public class EntrevistaClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(entrevista)
                         .queryParam(TOKEN_QUERY, AuthClient.getToken())
-                        .log().all()
                 .when()
                         .post(ENTREVISTA_MARCAR_ENTREVISTA)
                 ;

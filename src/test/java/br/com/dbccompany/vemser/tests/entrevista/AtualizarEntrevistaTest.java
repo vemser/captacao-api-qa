@@ -1,18 +1,14 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.candidato.CandidatoClient;
 import client.entrevista.EntrevistaClient;
 import factory.entrevista.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
-import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
+
 
 @DisplayName("Endpoint de atualização de entrevista")
 class AtualizarEntrevistaTest  {
