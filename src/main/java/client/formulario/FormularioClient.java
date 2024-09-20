@@ -30,8 +30,6 @@ public class FormularioClient {
     public static final String ID_FORMULARIO = "idFormulario";
     public static final String FILE = "file";
 
-    private AuthClient authClient = new AuthClient();
-
     public Response listarTodosOsFormularios() {
         Auth.usuarioGestaoDePessoas();
         return
@@ -43,7 +41,7 @@ public class FormularioClient {
                 ;
     }
 
-    public Response listarNumDeFormulariosOrdemDecrescente(Integer numDeFormulario) {
+    public Response listarNumDeFormulariosOrdemDecrescente() {
         Auth.usuarioGestaoDePessoas();
 
         Integer ordemDecrescente = 1;
@@ -102,7 +100,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO)
                 .then()
-                        .log().all()
                         .extract()
                         .as(FormularioCriacaoResponseModel.class)
                 ;
@@ -140,6 +137,22 @@ public class FormularioClient {
                 ;
     }
 
+    public JSONFailureResponseWithArrayModel criarFormularioRespostaVazia(FormularioCriacaoModel formulario) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(formulario)
+                .when()
+                        .post(FORMULARIO_CADASTRO)
+                .then()
+                        .extract()
+                        .as(JSONFailureResponseWithArrayModel.class)
+                ;
+    }
+
     public void incluiCurriculoEmFormularioComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
@@ -156,7 +169,6 @@ public class FormularioClient {
                 .put(FORMULARIO_UPLOAD_CURRICULO_ID_FORMULARIO);
     }
 
-
     public Response incluiCurriculoEmFormularioSemValidacao(Integer idFormulario) {
         Auth.usuarioAluno();
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
@@ -172,7 +184,6 @@ public class FormularioClient {
                 .when()
                         .put(FORMULARIO_UPLOAD_CURRICULO_ID_FORMULARIO);
     }
-
 
     public Response incluiConfigPcEmFormularioSemValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
