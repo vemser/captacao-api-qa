@@ -22,7 +22,6 @@ public class DisponibilidadeClient {
                         .spec(EdicaoSpecs.edicaoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(disponibilidade)
-                        .log().all()
                 .when()
                         .post(CRIAR_DISPONIBILIDADE);
     }
