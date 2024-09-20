@@ -5,6 +5,7 @@ import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.linguagem.LinguagemModel;
+import models.prova.PreProvaUsuarioModel;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ import java.util.List;
 @Setter
 @ToString
 public class CandidatoCriacaoResponseModel {
-
     private Integer idCandidato;
     private String nome;
     private String dataNascimento;
@@ -38,6 +38,7 @@ public class CandidatoCriacaoResponseModel {
     private EdicaoModel edicao;
     private FormularioCriacaoResponseModel formulario;
     private Integer imagem;
+    private List<PreProvaUsuarioModel> preProvasUsuario;
 }
 
 

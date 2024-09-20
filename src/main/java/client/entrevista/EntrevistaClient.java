@@ -35,6 +35,7 @@ public class EntrevistaClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(entrevista)
                         .queryParam(TOKEN_QUERY, AuthClient.getToken())
+                        .log().all()
                 .when()
                         .post(ENTREVISTA_MARCAR_ENTREVISTA)
                 ;
@@ -170,7 +171,7 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+//                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                         .queryParam(LEGENDA, status)
                         .body(dadosAtualizados)
@@ -193,11 +194,9 @@ public class EntrevistaClient {
     }
 
     public Response deletarEntrevistaPorIdSemAutenticacao(Integer idEntrevista) {
-        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                 .when()
                         .delete(ENTREVISTA_ID_ENTREVISTA)

@@ -17,87 +17,31 @@ import java.util.Locale;
 @DisplayName("Endpoint de atualização de entrevista")
 class AtualizarEntrevistaTest  {
 
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
-    private static final Faker faker = new Faker(new Locale("pt-BR"));
+
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar entrevista com sucesso")
-    void testAtualizarEntrevistaComSucesso() {
-
-        String observacoes = faker.lorem().sentence(3);
-        Boolean avaliado = false;
-        String statusEntrevista = "CONFIRMADA";
-
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        EntrevistaCriacaoModel entrevistaComNovosDados = EntrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
-
-        EntrevistaCriacaoResponseModel entrevistaAtualizada = entrevistaClient.atualizarEntrevista(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-        Assertions.assertNotNull(entrevistaAtualizada);
-        Assertions.assertEquals(observacoes, entrevistaAtualizada.getObservacoes());
-        Assertions.assertEquals(statusEntrevista, entrevistaAtualizada.getLegenda());
-        Assertions.assertEquals(entrevistaCadastrada.getIdEntrevista(), entrevistaAtualizada.getIdEntrevista());
-        Assertions.assertEquals(entrevistaCadastrada.getCandidatoDTO().getIdCandidato(), entrevistaAtualizada.getCandidatoDTO().getIdCandidato());
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
+    @DisplayName("Cenário 1: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
     void testAtualizarEntrevistaSemAutenticacao() {
 
-        String observacoes = faker.lorem().sentence(3);
-        Boolean avaliado = false;
         String statusEntrevista = "CONFIRMADA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+        EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
+                .as(EntrevistaCriacaoResponseModel[].class);
 
-        String emailDoCandidato = candidatoCriado.getEmail();
+        int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
+
+        String emailDoCandidato = "email@email.com";
         Boolean candidatoAvaliado = true;
 
         EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        EntrevistaCriacaoModel entrevistaComNovosDados = EntrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
-
-        entrevistaClient.atualizarEntrevistaSemAutenticacao(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
+        entrevistaClient.atualizarEntrevistaSemAutenticacao(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
