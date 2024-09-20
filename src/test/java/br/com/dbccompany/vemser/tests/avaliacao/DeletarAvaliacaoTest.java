@@ -39,7 +39,7 @@ class DeletarAvaliacaoTest{
         Boolean aprovado = true;
         AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
@@ -74,7 +74,7 @@ class DeletarAvaliacaoTest{
         boolean aprovado = true;
         AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), aprovado);
 
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()

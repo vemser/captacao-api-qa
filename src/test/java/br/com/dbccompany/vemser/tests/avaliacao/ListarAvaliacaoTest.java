@@ -41,14 +41,13 @@ class ListarAvaliacaoTest{
                     .as(CandidatoCriacaoResponseModel.class);
         inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
         avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
-
-        avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao)
+        avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(AvaliacaoModel.class);
     }
@@ -64,7 +63,7 @@ class ListarAvaliacaoTest{
     @Test
     @DisplayName("Cenário 1: Deve listar toda avaliação com sucesso")
     @Tag("Regression")
-    void testListarTodaAvaliacaoComSucesso() {
+    public void testListarTodaAvaliacaoComSucesso() {
         avaliacaoClient.listarTodaAvaliacao(true)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
@@ -75,7 +74,7 @@ class ListarAvaliacaoTest{
     @Test
     @DisplayName("Cenário 2: Tentar listar toda avaliação sem autenticação")
     @Tag("Regression")
-    void testTentarListarTodaAvaliacaoSemAutenticacao() {
+    public void testTentarListarTodaAvaliacaoSemAutenticacao() {
         avaliacaoClient.listarTodaAvaliacao(false)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);

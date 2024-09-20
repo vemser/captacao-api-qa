@@ -16,13 +16,17 @@ public class AvaliacaoClient {
     private static final String UPDATE_AVALIACAO = "/avaliacao/update/{idAvaliacao}";
     private static final String ID_AVALIACAO = "idAvaliacao";
 
-    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
+    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao, boolean isCondicaoTokenValido) {
+        String token = StringUtils.EMPTY;
+        if(isCondicaoTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("token", AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
+                        .queryParam("token", token)
                         .body(avaliacao)
                 .when()
                         .post(AVALIACAO);
@@ -65,9 +69,9 @@ public class AvaliacaoClient {
                 ;
     }
 
-    public Response listarTodaAvaliacao(boolean condicaoInserirTokenValido) {
+    public Response listarTodaAvaliacao(boolean isCondicaoInserirTokenValido) {
         String token = StringUtils.EMPTY;
-        if(condicaoInserirTokenValido){
+        if(isCondicaoInserirTokenValido){
             Auth.usuarioGestaoDePessoas();
             token = AuthClient.getToken();
         }
