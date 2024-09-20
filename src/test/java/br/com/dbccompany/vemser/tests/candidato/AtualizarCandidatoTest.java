@@ -97,7 +97,9 @@ class AtualizarCandidatoTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormulario(listaDeNomeDeTrilhas.get(0));
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
