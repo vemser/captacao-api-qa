@@ -100,7 +100,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO)
                 .then()
-                        .log().all()
                         .extract()
                         .as(FormularioCriacaoResponseModel.class)
                 ;
@@ -117,7 +116,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO)
                 .then()
-                        .log().all()
                         .extract()
                         .as(JSONFailureResponseWithoutArrayModel.class)
                 ;
