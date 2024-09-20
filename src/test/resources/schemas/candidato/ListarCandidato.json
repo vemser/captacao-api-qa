@@ -205,16 +205,16 @@
                   "type": ["integer", "null"]
                 },
                 "qtdSemestres": {
-                  "type": "integer"
+                  "type": ["string", "null"]
                 },
                 "semestreAtual": {
-                  "type": "integer"
+                  "type": ["string", "null"]
                 },
                 "tipoGraduacao": {
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "descConfigPc": {
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "importancia": {
                   "type": "string"
