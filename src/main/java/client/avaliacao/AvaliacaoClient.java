@@ -87,13 +87,16 @@ public class AvaliacaoClient {
                         .get(AVALIACAO);
     }
 
-    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
+    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                         .body(avaliacao)
                 .when()
