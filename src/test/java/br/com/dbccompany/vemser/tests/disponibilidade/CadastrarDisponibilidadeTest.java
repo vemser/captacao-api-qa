@@ -46,7 +46,6 @@ public class CadastrarDisponibilidadeTest {
         DisponibilidadeResponseModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
-                    .log().all()
                     .extract()
                     .as(DisponibilidadeResponseModel.class);
 
