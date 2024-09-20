@@ -86,6 +86,7 @@ public class CandidatoClient {
 
         return
                 given()
+                        .log().all()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType("application/json")
