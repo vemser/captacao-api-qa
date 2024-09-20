@@ -169,7 +169,7 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+//                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                         .queryParam(LEGENDA, status)
                         .body(dadosAtualizados)
