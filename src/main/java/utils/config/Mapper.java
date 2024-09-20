@@ -23,7 +23,7 @@ public class Mapper {
         candidatoCriacao.setAtivo(candidatoResponse.getAtivo());
 
         List<String> listaDeLinguagens = new ArrayList<>();
-        candidatoResponse.getLinguagens().stream().forEach(linguagemModel -> listaDeLinguagens.add(linguagemModel.getNome()));
+        candidatoResponse.getLinguagens().stream().forEach(linguagemModel -> listaDeLinguagens.add("Java"));
         candidatoCriacao.setLinguagens(listaDeLinguagens);
 
         candidatoCriacao.setEdicao(candidatoResponse.getEdicao());
