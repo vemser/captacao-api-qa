@@ -16,60 +16,32 @@ public class AvaliacaoClient {
     private static final String UPDATE_AVALIACAO = "/avaliacao/update/{idAvaliacao}";
     private static final String ID_AVALIACAO = "idAvaliacao";
 
-    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
+    public Response cadastrarAvaliacao(AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("token", AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
+                        .queryParam("token", token)
                         .body(avaliacao)
                 .when()
                         .post(AVALIACAO);
     }
 
-    public Response cadastrarAvaliacaoSemAutenticacao(AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
+    public Response deletarAvaliacao(Integer idAvaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .body(avaliacao)
-                .when()
-                        .post(AVALIACAO);
-    }
-
-    public Response deletarAvaliacao(Integer idAvaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()
                         .delete(AVALIACAO_POR_ID)
                 ;
     }
 
-    public Response deletarAvaliacaoSemAutenticacao(Integer idAvaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                .when()
-                        .delete(AVALIACAO_POR_ID)
-                ;
-    }
-
-    public Response listarTodaAvaliacao(boolean condicaoInserirTokenValido) {
-        String token = StringUtils.EMPTY;
-        if(condicaoInserirTokenValido){
-            Auth.usuarioGestaoDePessoas();
-            token = AuthClient.getToken();
-        }
+    public Response listarTodaAvaliacao(boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
@@ -82,13 +54,12 @@ public class AvaliacaoClient {
                         .get(AVALIACAO);
     }
 
-    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioGestaoDePessoas();
-
+    public Response atualizarAvaliacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao, boolean isCondicaoInserirTokenValido) {
+        String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
                         .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                         .body(avaliacao)
                 .when()
@@ -96,15 +67,12 @@ public class AvaliacaoClient {
                 ;
     }
 
-    public Response atualizarAvaliacaoSemAutenticacao(Integer idAvaliacao, AvaliacaoCriacaoModel avaliacao) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(AvaliacaoSpecs.avaliacaoReqSpec())
-                        .pathParam(ID_AVALIACAO, idAvaliacao)
-                        .body(avaliacao)
-                .when()
-                        .put(UPDATE_AVALIACAO);
+    private String inserirToken(boolean isCondicaoInserirTokenValido){
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
+        return token;
     }
 }
