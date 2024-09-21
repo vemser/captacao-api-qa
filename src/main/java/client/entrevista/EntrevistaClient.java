@@ -191,7 +191,6 @@ public class EntrevistaClient {
     }
 
     public Response deletarEntrevistaPorIdSemAutenticacao(Integer idEntrevista) {
-        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
