@@ -9986,7 +9986,11 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"pm.test(\"Validar mensagem de erro\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.errors).to.eql([ 'sequencia: must be greater than 0' ] )\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -10004,7 +10008,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"nomePreProva\": \"fawiuhfiaf\",\r\n  \"sequencia\": -1000\r\n}",
+									"raw": "{\r\n  \"nomePreProva\": \"fawiuhfiaf\",\r\n  \"sequencia\": -1000000000\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -10284,6 +10288,813 @@
 									"path": [
 										"preprovas",
 										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Inscricao",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas inscricoes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricao por id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/find-by-idInscricao?id=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"find-by-idInscricao"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricao por id invalida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"ID_Inscrição inválido\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/find-by-idInscricao?id=-1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"find-by-idInscricao"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricao por id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"ID_Inscrição inválido\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/find-by-idInscricao?id=20000",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"find-by-idInscricao"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricoes por filtro de pagina e tamanho",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/filtro-inscricao?pagina=0&tamanho=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"filtro-inscricao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricoes por filtro de email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/filtro-inscricao?pagina=0&tamanho=10&email=valentina.bittencourt%40gmail.com",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"filtro-inscricao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "email",
+											"value": "valentina.bittencourt%40gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricoes por filtro de edicao",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/filtro-inscricao?pagina=0&tamanho=10&edicao=VEMSER_28913",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"filtro-inscricao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "edicao",
+											"value": "VEMSER_28913"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar inscricoes por filtro de trilha",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/filtro-inscricao?pagina=0&tamanho=10&trilha=QA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"filtro-inscricao"
+									],
+									"query": [
+										{
+											"key": "pagina",
+											"value": "0"
+										},
+										{
+											"key": "tamanho",
+											"value": "10"
+										},
+										{
+											"key": "trilha",
+											"value": "QA"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Criar umas inscricao para um candidato",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/cadastro?idCandidato=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"cadastro"
+									],
+									"query": [
+										{
+											"key": "idCandidato",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar umas inscricao para um candidato inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Candidato não encontrado.\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/cadastro?idCandidato=0",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"cadastro"
+									],
+									"query": [
+										{
+											"key": "idCandidato",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar umas inscricao para um candidato com inscricao ativa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"Inscrição já realizada\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/cadastro?idCandidato=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"cadastro"
+									],
+									"query": [
+										{
+											"key": "idCandidato",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar inscricao com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/201",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletar inscricao ja deletada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validar mensagem\", function () {\r",
+											"    let jsonData = pm.response.json()\r",
+											"    pm.expect(jsonData.message).to.eql(\"ID_Inscrição inválido\")\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/inscricao/200",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"200"
 									]
 								}
 							},
