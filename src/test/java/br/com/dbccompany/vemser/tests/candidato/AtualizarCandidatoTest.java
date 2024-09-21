@@ -117,13 +117,15 @@ class AtualizarCandidatoTest {
 
         CandidatoCriacaoModel candidatoCriadoComNovoEmail = CandidatoDataFactory.candidatoComNovoEmail(candidatoCriado);
 
-        var candidatoAtualizado = candidatoClient.atualizarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoEmail)
+        candidatoClient.atualizarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoEmail)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
 
 
-        var deletarCandidato = candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
+
+		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
     }
 }
