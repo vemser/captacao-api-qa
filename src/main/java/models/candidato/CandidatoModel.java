@@ -5,6 +5,7 @@ import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.linguagem.LinguagemModel;
+import models.preprova.PreprovaUsuarioResponseModel;
 
 import java.util.List;
 
@@ -44,5 +45,5 @@ public class CandidatoModel {
     public EdicaoModel edicao;
     public FormularioCriacaoResponseModel formulario;
     public Object imagem;
-    public List<String> preProvasUsuario;
+    public List<PreprovaUsuarioResponseModel> preProvasUsuario;
 }

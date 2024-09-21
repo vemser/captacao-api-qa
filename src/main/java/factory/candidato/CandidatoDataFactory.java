@@ -433,7 +433,7 @@ public class CandidatoDataFactory {
     }
 
     public static CandidatoCriacaoModel candidatoComListaDeLinguagemEmBranco(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemEmBranco = "";
+        String linguagemEmBranco = " ";
         List<String> listaLinguagemEmBranco = Collections.singletonList(linguagemEmBranco);
 
         CandidatoCriacaoModel candidato = novoCandidato();
