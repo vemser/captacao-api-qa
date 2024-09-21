@@ -9,6 +9,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ class AtualizarFormularioTest{
     private static final String TRILHA_VALIDA = "FRONTEND";
 
     @Test
+    @Tag("Regression")
     @DisplayName("Cenário 1: Validação de contrato de atualizar formulario")
     public void testValidarContratoAtualizarFormulario() {
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -49,6 +51,7 @@ class AtualizarFormularioTest{
     }
 
     @Test
+    @Tag("Regression")
     @DisplayName("Cenário 2: Deve retornar 200 ao atualizar formulário com sucesso")
     void testAtualizarFormularioComSucesso() {
 
@@ -105,5 +108,30 @@ class AtualizarFormularioTest{
 
         Assertions.assertEquals(formularioCriado.getImagemConfigPc(), formularioAtualizado.getImagemConfigPc());
         Assertions.assertEquals(formularioCriado.getImportancia(), formularioAtualizado.getImportancia());
+    }
+
+    @Test
+    @DisplayName("Cenário 3: Deve retornar 200 ao realizar upload de comprovante de matricula com sucesso")
+    void testUploadComprovanteMatriculaComSucesso() {
+
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
+
+        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+
+        formularioClient.incluiComprovanteMatriculaComValidacao(formularioCriado.getIdFormulario())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .log().all()
+        ;
     }
 }
