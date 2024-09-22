@@ -1,8 +1,10 @@
 package factory.candidato;
 
+import client.candidato.CandidatoClient;
 import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
+import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
 import models.edicao.EdicaoModel;
 import models.edicao.EdicaoResponse;
@@ -22,6 +24,8 @@ public class CandidatoDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+	private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     public static CandidatoCriacaoModel candidatoCriacaoValido(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
 
@@ -559,4 +563,12 @@ public class CandidatoDataFactory {
 
         return candidato;
     }
+
+	public static Response buscarTodosCandidatos() {
+		return candidatoClient.listarTodosOsCandidatos(0, 1)
+				.then()
+				.extract()
+				.response();
+	}
+
 }
