@@ -30,8 +30,8 @@ class DeletarAvaliacaoTest{
     private static InscricaoModel inscricaoCadastrada;
     private static AvaliacaoCriacaoModel avaliacao;
     private static AvaliacaoModel avaliacaoCadastrada;
-    @BeforeAll
-    public static void setUp(){
+
+    private static void setUp(){
         candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -50,8 +50,7 @@ class DeletarAvaliacaoTest{
                     .as(AvaliacaoModel.class);
     }
 
-    @AfterAll
-    public static void setDown(){
+    private static void setDown(){
         edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
         formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
         candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
@@ -60,25 +59,50 @@ class DeletarAvaliacaoTest{
     @Test
     @DisplayName("Cenário 1: Deve deletar avaliação com sucesso")
     public void testDeveDeletarAvaliacaoComSucesso() {
+
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(CandidatoCriacaoResponseModel.class);
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(InscricaoModel.class);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(AvaliacaoModel.class);
+
         avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true)
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
+        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
     }
 
     @Test
     @DisplayName("Cenário 2: Tentar deletar avaliação sem autenticação")
     public void testTentarDeletarAvaliacaoSemAutenticacao() {
+        setUp();
         avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), false)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
+        setDown();
     }
 
     @Test
     @DisplayName("Cenário 3: Tentar deletar avaliação com id de avaliação negativo")
     public void testTentarDeletarAvaliacaoIdAvaliacaoNegativo(){
+        setUp();
         avaliacaoClient.deletarAvaliacao(-1, true)
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .body("message", equalTo("Avaliação não encontrada!"));
+        setDown();
     }
 }
