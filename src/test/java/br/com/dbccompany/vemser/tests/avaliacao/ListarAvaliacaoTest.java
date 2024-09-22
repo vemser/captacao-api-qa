@@ -17,44 +17,11 @@ import static org.hamcrest.Matchers.*;
 
 @DisplayName("Endpoint de listagem de avaliação")
 class ListarAvaliacaoTest{
-
     private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final InscricaoClient inscricaoClient = new InscricaoClient();
     private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final FormularioClient formularioClient = new FormularioClient();
-    private static CandidatoCriacaoResponseModel candidatoCadastrado;
-    private static InscricaoModel inscricaoCadastrada;
-    private static AvaliacaoCriacaoModel avaliacao;
-    private static AvaliacaoModel avaliacaoCadastrada;
-
-    private static void setUp(){
-        candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-        inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-        avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
-        avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(AvaliacaoModel.class);
-    }
-
-
-    private static void setDown(){
-        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
-        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
-        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
-        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
-    }
-
     @Test
     @DisplayName("Cenário 1: Deve listar toda avaliação com sucesso")
     @Tag("Regression")
@@ -90,21 +57,57 @@ class ListarAvaliacaoTest{
     @DisplayName("Cenário 2: Tentar listar toda avaliação sem autenticação")
     @Tag("Regression")
     public void testTentarListarTodaAvaliacaoSemAutenticacao() {
-        setUp();
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(CandidatoCriacaoResponseModel.class);
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(InscricaoModel.class);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(AvaliacaoModel.class);
         avaliacaoClient.listarTodaAvaliacao(false)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-        setDown();
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
+        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
     }
 
     @Test
     @DisplayName("Cenário 3: Validar schema listar toda avaliação")
     public void testValidarSchemaListarTodaAvaliacao(){
-        setUp();
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(CandidatoCriacaoResponseModel.class);
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(InscricaoModel.class);
+        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
+        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(AvaliacaoModel.class);
         avaliacaoClient.listarTodaAvaliacao(true)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(matchesJsonSchemaInClasspath("schemas/avaliacao/Listar_toda_avaliacao.json"));
-        setDown();
+        avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true);
+        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
     }
 }
