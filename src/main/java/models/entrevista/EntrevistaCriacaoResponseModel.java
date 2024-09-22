@@ -2,10 +2,7 @@ package models.entrevista;
 
 import lombok.*;
 import models.candidato.CandidatoCriacaoResponseModel;
-import models.formulario.FormularioCriacaoResponseModel;
 import models.gestor.GestorModel;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor

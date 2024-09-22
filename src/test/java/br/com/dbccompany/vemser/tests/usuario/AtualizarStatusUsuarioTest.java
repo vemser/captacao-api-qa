@@ -15,6 +15,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Endpoint de atualizar status usuário")
 public class AtualizarStatusUsuarioTest {
 
     private final UsuarioClient usuarioClient = new UsuarioClient();

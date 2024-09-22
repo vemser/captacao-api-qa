@@ -15,29 +15,6 @@ public class EntrevistaDataFactory {
         return novaEntrevistaCriacao(emailDoCandidato, avaliado);
     }
 
-    public static EntrevistaCriacaoModel entrevistaValidaComDataEspecifica(Integer anoEntrevista, Integer mesEntrevista, String emailDoCandidato, Boolean avaliado) {
-
-        String candidatoAvaliado = avaliado ? "T" : "F";
-
-        EntrevistaCriacaoModel entrevista = new EntrevistaCriacaoModel();
-        entrevista.setCandidatoEmail(emailDoCandidato);
-        entrevista.setDataEntrevista("2025-09-18T09:48:30.519Z");
-        entrevista.setObservacoes(faker.lorem().sentence(4));
-        entrevista.setAvaliado(candidatoAvaliado);
-
-        return entrevista;
-    }
-
-    public static EntrevistaCriacaoModel entrevistaCriacaoValidaComDadosAtualizados(EntrevistaCriacaoModel entrevista, String observacoes, Boolean avaliado) {
-
-        String candidatoAvaliado = avaliado ? "T" : "F";
-
-        entrevista.setObservacoes(observacoes);
-        entrevista.setAvaliado(candidatoAvaliado);
-
-        return entrevista;
-    }
-
     private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado) {
 
         String candidatoAvaliado = avaliado ? "T" : "F";

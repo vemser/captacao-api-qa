@@ -1,13 +1,11 @@
 package factory.candidato;
 
 import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
 import models.edicao.EdicaoModel;
-import models.edicao.EdicaoResponse;
 import net.datafaker.Faker;
 import utils.auth.Email;
 
@@ -123,18 +121,6 @@ public class CandidatoDataFactory {
         candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
 
         candidato.setDataNascimento(dataNascimentoInvalida);
-
-        return candidato;
-    }
-
-    public static CandidatoCriacaoModel candidatoCriacaoValidoComEmailEspecifico(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem, String email) {
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setEmail(email);
 
         return candidato;
     }
@@ -308,8 +294,6 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-
-
     public static CandidatoCriacaoModel candidatoComCpfJaCadastrado() {
         CandidatoCriacaoModel candidato = novoCandidato();
 
@@ -446,20 +430,6 @@ public class CandidatoDataFactory {
         candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
 
         candidato.setLinguagens(listaLinguagemEmBranco);
-
-        return candidato;
-    }
-
-    public static CandidatoCriacaoModel candidatoComListaDeLinguagemNaoCadastrada(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemNaoCadastrada = "linguagemNaoCadastrada";
-        List<String> listaLinguagemNaoCadastrada = Collections.singletonList(linguagemNaoCadastrada);
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setLinguagens(listaLinguagemNaoCadastrada);
 
         return candidato;
     }

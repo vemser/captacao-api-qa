@@ -3,7 +3,6 @@ package client.disponibilidade;
 import client.auth.AuthClient;
 import io.restassured.response.Response;
 import models.disponibilidade.DisponibilidadeModel;
-import specs.edicao.EdicaoSpecs;
 import specs.entrevista.DisponibilidadeSpecs;
 import utils.auth.Auth;
 

@@ -1,6 +1,5 @@
 package models.candidato;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
@@ -15,6 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 public class CandidatoCriacaoResponseModel {
+
     private Integer idCandidato;
     private String nome;
     private String dataNascimento;

@@ -12,6 +12,7 @@ import utils.auth.Auth;
 
 import static org.hamcrest.Matchers.equalTo;
 
+@DisplayName("Endpoint de deletar usuário")
 public class DeletarUsuarioTest {
 
     private UsuarioClient usuarioClient = new UsuarioClient();

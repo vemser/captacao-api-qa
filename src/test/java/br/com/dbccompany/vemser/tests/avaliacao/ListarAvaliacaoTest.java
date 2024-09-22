@@ -11,9 +11,12 @@ import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.notNullValue;
 
 @DisplayName("Endpoint de listagem de avaliação")
 class ListarAvaliacaoTest{

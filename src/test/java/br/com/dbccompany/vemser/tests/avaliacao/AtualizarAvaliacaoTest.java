@@ -11,7 +11,9 @@ import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 

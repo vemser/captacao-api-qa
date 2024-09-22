@@ -11,8 +11,6 @@ import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

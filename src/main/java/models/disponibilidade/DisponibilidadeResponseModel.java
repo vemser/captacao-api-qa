@@ -3,7 +3,6 @@ package models.disponibilidade;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import models.candidato.CandidatoModel;
-import models.gestor.GestorModel;
 import models.gestor.GestorResponseModel;
 
 @NoArgsConstructor

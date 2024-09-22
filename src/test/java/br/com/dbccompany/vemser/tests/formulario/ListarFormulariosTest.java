@@ -2,9 +2,6 @@ package br.com.dbccompany.vemser.tests.formulario;
 
 import client.formulario.FormularioClient;
 import factory.formulario.FormularioDataFactory;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;

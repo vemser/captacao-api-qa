@@ -3,7 +3,6 @@ package client.healthcheck;
 import client.auth.AuthClient;
 import io.restassured.response.Response;
 import specs.healthcheck.HealthcheckSpecs;
-import specs.linguagem.LinguagemSpecs;
 import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Endpoint de healthcheck")
 public class HealthcheckTest {
 
     private static HealthcheckClient healthcheckClient = new HealthcheckClient();

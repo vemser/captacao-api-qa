@@ -2,7 +2,6 @@ package client.formulario;
 
 import client.auth.AuthClient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
@@ -93,24 +92,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO);
 
-    }
-
-
-    public FormularioCriacaoResponseModel criarFormulario(String nomeDeTrilhaExistente) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(FormularioDataFactory.formularioValidoComTrilhaExistente(nomeDeTrilhaExistente))
-                .when()
-                        .post(FORMULARIO_CADASTRO)
-                .then()
-                        .statusCode(HttpStatus.SC_CREATED)
-                        .extract()
-                        .as(FormularioCriacaoResponseModel.class)
-                ;
     }
 
     public FormularioCriacaoResponseModel criarFormularioComFormularioEntity(FormularioCriacaoModel formulario) {

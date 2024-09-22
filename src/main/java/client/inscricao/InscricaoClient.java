@@ -8,6 +8,7 @@ import utils.auth.Auth;
 import static io.restassured.RestAssured.given;
 
 public class InscricaoClient {
+
     public static final String AUTHORIZATION = "Authorization";
     public static final String ID_CANDIDATO = "idCandidato";
     public static final String ID_INSCRICAO = "idInscricao";

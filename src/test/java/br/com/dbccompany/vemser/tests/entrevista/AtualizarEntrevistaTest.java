@@ -8,8 +8,6 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
-
 @DisplayName("Endpoint de atualização de entrevista")
 class AtualizarEntrevistaTest  {
 

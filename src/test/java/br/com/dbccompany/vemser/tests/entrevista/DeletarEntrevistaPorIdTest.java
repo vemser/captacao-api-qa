@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-
 @DisplayName("Endpoint de remoção de entrevista")
 class DeletarEntrevistaPorIdTest{
 

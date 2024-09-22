@@ -2,16 +2,12 @@ package br.com.dbccompany.vemser.tests.edicao;
 
 import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
-import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Optional;
 
 @DisplayName("Endpoint de remoção de edição")
 class DeletarEdicaoTest {

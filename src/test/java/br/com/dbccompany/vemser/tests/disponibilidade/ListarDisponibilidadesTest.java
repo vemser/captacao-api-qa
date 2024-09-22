@@ -10,6 +10,7 @@ import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+@DisplayName("Endpoint de listar disponibilidades")
 public class ListarDisponibilidadesTest {
 
     private final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();

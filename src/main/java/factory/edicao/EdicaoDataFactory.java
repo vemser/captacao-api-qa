@@ -2,7 +2,6 @@ package factory.edicao;
 
 import client.edicao.EdicaoClient;
 import models.edicao.EdicaoModel;
-import models.edicao.EdicaoResponse;
 import net.datafaker.Faker;
 
 import java.util.List;
