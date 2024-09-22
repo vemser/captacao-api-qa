@@ -76,7 +76,7 @@ public class FormularioDataFactory {
                     .get(0)
                     .getIdFormulario();
 
-        return idUltimoFormulario + 100;
+        return idUltimoFormulario + 10000;
     }
 
     private static FormularioCriacaoModel novoFormulario() {
