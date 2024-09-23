@@ -16,113 +16,115 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @DisplayName("Endpoint de cadastrar disponibilidade")
 public class CadastrarDisponibilidadeTest {
 
-    private final UsuarioClient usuarioClient = new UsuarioClient();
-    private final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
-    public Integer idGestor = 1;
+	private final UsuarioClient usuarioClient = new UsuarioClient();
+	private final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
+	public Integer idGestor = 1;
 
-    @BeforeEach
-    void setUp() {
-        Auth.usuarioGestaoDePessoas();
-    }
+	@BeforeEach
+	void setUp() {
+		Auth.usuarioGestaoDePessoas();
+	}
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 1: Validar contrato criar disponibilidade com sucesso")
-    public void testValidarContratoCriarDisponibilidade() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 1: Validar contrato criar disponibilidade com sucesso")
+	public void testValidarContratoCriarDisponibilidade() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
 
-        disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-            .then()
-                .body(matchesJsonSchemaInClasspath("schemas/disponibilidade/cadastrarDisponibilidade.json"));
-    }
+		disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/cadastrarDisponibilidade.json"));
+	}
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 2: Validar criar disponibilidade com sucesso")
-    public void testCriarDisponibilidadeComSucesso() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 2: Validar criar disponibilidade com sucesso")
+	public void testCriarDisponibilidadeComSucesso() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
 
-        DisponibilidadeResponseModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(DisponibilidadeResponseModel.class);
+		DisponibilidadeResponseModel[] responseArray = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_CREATED)
+				.extract()
+				.as(DisponibilidadeResponseModel[].class);
 
-        Assertions.assertNotNull(response.getIdDisponibilidade());
-        Assertions.assertEquals(disponibilidade.getDataEntrevista(), response.getDataEntrevista());
-        Assertions.assertEquals(disponibilidade.getHoraInicio(), response.getHoraInicio());
-        Assertions.assertEquals(disponibilidade.getHoraFim(), response.getHoraFim());
-    }
+		DisponibilidadeResponseModel response = responseArray[0];
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 3: Tentar criar disponibilidade com Id de gestor não existente")
-    public void testTentarCriarDisponibilidadeComIdGestorNaoExistente() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeIdGestorInexistente();
+		Assertions.assertNotNull(response.getIdDisponibilidade());
+		Assertions.assertEquals(disponibilidade.getDataEntrevista(), response.getDataEntrevista());
+		Assertions.assertEquals(disponibilidade.getHoraInicio(), response.getHoraInicio());
+		Assertions.assertEquals(disponibilidade.getHoraFim(), response.getHoraFim());
+	}
 
-        JSONFailureResponseWithoutArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithoutArrayModel.class);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 3: Tentar criar disponibilidade com Id de gestor não existente")
+	public void testTentarCriarDisponibilidadeComIdGestorNaoExistente() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeIdGestorInexistente();
 
-        Assertions.assertEquals("Usuario não encontrado!", response.getMessage());
-    }
+		JSONFailureResponseWithoutArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_BAD_REQUEST)
+				.extract()
+				.as(JSONFailureResponseWithoutArrayModel.class);
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 4: Tentar criar disponibilidade para data no passado")
-    public void testTentarCriarDisponibilidadeParaDataNoPassado() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeDataPassado(idGestor);
+		Assertions.assertEquals("Usuario não encontrado!", response.getMessage());
+	}
 
-        JSONFailureResponseWithArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 4: Tentar criar disponibilidade para data no passado")
+	public void testTentarCriarDisponibilidadeParaDataNoPassado() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeDataPassado(idGestor);
 
-        Assertions.assertEquals("dataEntrevista: Entrevista precisa ser no presente ou futuro.", response.getErrors().get(0));
-    }
+		JSONFailureResponseWithArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_BAD_REQUEST)
+				.extract()
+				.as(JSONFailureResponseWithArrayModel.class);
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 5: Tentar criar disponibilidade para data e horário já marcado")
-    public void testTentarCriarDisponibilidadeParaHorarioJaAgendado() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
+		Assertions.assertEquals("dataEntrevista: Entrevista precisa ser no presente ou futuro.", response.getErrors().get(0));
+	}
 
-        disponibilidadeClient.cadastrarDisponibilidade(disponibilidade);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 5: Tentar criar disponibilidade para data e horário já marcado")
+	public void testTentarCriarDisponibilidadeParaHorarioJaAgendado() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
 
-        JSONFailureResponseWithoutArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST)
-                    .extract()
-                    .as(JSONFailureResponseWithoutArrayModel.class);
+		disponibilidadeClient.cadastrarDisponibilidade(disponibilidade);
 
-        Assertions.assertEquals("Já existe uma disponibilidade cadastrada nesse horário.", response.getMessage());
-    }
+		JSONFailureResponseWithoutArrayModel response = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_BAD_REQUEST)
+				.extract()
+				.as(JSONFailureResponseWithoutArrayModel.class);
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 6: Tentar criar disponibilidade para data invalida")
-    public void testTentarCriarDisponibilidadeParaDataInvalida() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeDataInvalida(idGestor);
+		Assertions.assertTrue(response.getMessage().contains("Já existe uma disponibilidade cadastrada no horário"));
+	}
 
-        disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST);
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 6: Tentar criar disponibilidade para data invalida")
+	public void testTentarCriarDisponibilidadeParaDataInvalida() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeDataInvalida(idGestor);
 
-    }
+		disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_BAD_REQUEST);
 
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 7: Tentar criar disponibilidade para horarios invalidos")
-    public void testTentarCriarDisponibilidadeParaHorariosInvalidos() {
-        DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeHorariosInvalidos(idGestor);
+	}
 
-        disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST);
-    }
+	@Test
+	@Tag("Regression")
+	@DisplayName("Cenário 7: Tentar criar disponibilidade para horarios invalidos")
+	public void testTentarCriarDisponibilidadeParaHorariosInvalidos() {
+		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeHorariosInvalidos(idGestor);
+
+		disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
+				.then()
+				.statusCode(HttpStatus.SC_BAD_REQUEST);
+	}
 
 
 }
