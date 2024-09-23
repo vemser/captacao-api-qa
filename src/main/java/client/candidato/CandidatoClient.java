@@ -4,6 +4,8 @@ package client.candidato;
 import client.auth.AuthClient;
 import client.edicao.EdicaoClient;
 import client.formulario.FormularioClient;
+import client.linguagem.LinguagemClient;
+import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
@@ -12,10 +14,14 @@ import models.candidato.CandidatoCriacaoModel;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
+import models.linguagem.LinguagemModel;
+import models.trilha.TrilhaModel;
+import org.apache.http.HttpStatus;
 import specs.candidato.CandidatoSpecs;
 import utils.auth.Auth;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -25,6 +31,7 @@ public class CandidatoClient {
     public static final String CANDIDATO = "/candidato";
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
+    public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String TAMANHO = "tamanho";
@@ -33,6 +40,8 @@ public class CandidatoClient {
 
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final LinguagemClient linguagemClient = new LinguagemClient();
 
     public Response listarTodosOsCandidatos(Integer pagina, Integer tamanho) {
         Auth.usuarioGestaoDePessoas();
@@ -170,43 +179,6 @@ public class CandidatoClient {
                 ;
     }
 
-    public Response criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(String emailCandidato) {
-        Auth.usuarioGestaoDePessoas();
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
-
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(candidatoCriado)
-                .when()
-                        .post(CANDIDATO)
-                ;
-    }
-
     public Response buscarCandidatoPorEmail(String email) {
         Auth.usuarioGestaoDePessoas();
 
@@ -229,75 +201,6 @@ public class CandidatoClient {
                         .queryParam("email", email)
                 .when()
                         .get(CANDIDATO_FINDBYEMAILS)
-                ;
-    }
-
-    public Response atualizarNotaCandidato(Integer idCandidato, NotaModel nota) {
-        Auth.usuarioInstrutor();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(nota)
-                .when()
-                        .put(CANDIDATO_NOTA_PROVA_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerTecnico(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerTecnico)
-                .when()
-                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerTecnicoSemAutenticacao(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-        Auth.usuarioAluno();
-        return
-                given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerTecnico)
-                .when()
-                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerComportamental(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerComportamental)
-                .when()
-                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerComportamentalSemAutenticacao(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerComportamental)
-                .when()
-                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
                 ;
     }
 
