@@ -16,7 +16,6 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @DisplayName("Endpoint de cadastrar disponibilidade")
 public class CadastrarDisponibilidadeTest {
 
-	private final UsuarioClient usuarioClient = new UsuarioClient();
 	private final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
 	public Integer idGestor = 1;
 

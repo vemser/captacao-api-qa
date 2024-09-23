@@ -68,6 +68,7 @@ public class DisponibilidadeDataFactory {
         disponibilidade.setHoraInicio(horaInicio);
         disponibilidade.setHoraFim(horaFim);
         disponibilidade.setMarcado(false);
+		disponibilidade.setTrilha("QA");
 
         return disponibilidade;
     }
