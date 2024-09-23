@@ -226,28 +226,28 @@ public class CandidatoClient {
                 ;
     }
 
-    public Response buscarCandidatoPorCpf(String cpf) {
+    public Response buscarCandidatoPorEmail(String email) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("cpf", cpf)
+                        .queryParam("email", email)
                 .when()
-                        .get(CANDIDATO_ULTIMA_EDICAO)
+                        .get(CANDIDATO_FINDBYEMAILS)
                 ;
     }
 
-    public Response buscarCandidatoPorCpfSemAutenticacao(String cpf) {
+    public Response buscarCandidatoPorEmailSemAutenticacao(String email) {
         Auth.usuarioAluno();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .queryParam("cpf", cpf)
+                        .queryParam("email", email)
                 .when()
-                        .get(CANDIDATO_ULTIMA_EDICAO)
+                        .get(CANDIDATO_FINDBYEMAILS)
                 ;
     }
 
