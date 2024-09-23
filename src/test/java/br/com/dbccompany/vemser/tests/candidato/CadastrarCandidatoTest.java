@@ -11,6 +11,7 @@ import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import models.JSONFailureResponseWithArrayModel;
 import models.candidato.CandidatoCriacaoModel;
+import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoModel;
@@ -495,31 +496,26 @@ class CadastrarCandidatoTest{
             || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: must be a well-formed email address"));
     }
 
-//    @Test
-//    @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
-//    void testCadastrarCandidatoComEmailJaCadastrado() {
-//
-//        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-//        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-//        .then()
-//            .statusCode(HttpStatus.SC_OK)
-//            .extract()
-//                .as(TrilhaModel[].class))
-//                .toList();
-//
-//        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-//
-//        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado();
-//
-//        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-//        .then()
-//            .statusCode(HttpStatus.SC_BAD_REQUEST)
-//            .extract()
-//                .as(JSONFailureResponseWithArrayModel.class);
-//
-//        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-//        Assertions.assertEquals(erroCadastroCandidato.getMessage(), "Candidato com este e-mail já cadastrado para essa edição.");
-//    }
+    @Test
+    @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
+    void testCadastrarCandidatoComEmailJaCadastrado() {
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(CandidatoCriacaoResponseModel.class);
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado(candidatoCadastrado);
+        JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+            .then()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
+        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
+        Assertions.assertEquals(erroCadastroCandidato.getMessage(), "Candidato com este e-mail já cadastrado para essa edição.");
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
+        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
+    }
 
     @Test
     @DisplayName("Cenário 14: Deve retornar 400 quando tenta cadastrar candidato com e-mail em branco")

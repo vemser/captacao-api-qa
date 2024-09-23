@@ -5,6 +5,7 @@ import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
+import models.candidato.CandidatoCriacaoResponseModel;
 import models.edicao.EdicaoModel;
 import net.datafaker.Faker;
 import utils.auth.Email;
@@ -177,16 +178,11 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado() {
+    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado(CandidatoCriacaoResponseModel candidatoCriacaoResponseModel) {
         CandidatoCriacaoModel candidato = novoCandidato();
-
-        Integer idEdicao = EdicaoCadastrada().getIdEdicao();
-        String nomeEdicao = EdicaoCadastrada().getNome();
-        Integer notaCorte = EdicaoCadastrada().getNotaCorte();
-        EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao, notaCorte);
-
-        candidato.setEmail("igor.henriques@live.com");
-        candidato.setEdicao(edicao);
+        candidato.setEmail(candidatoCriacaoResponseModel.getEmail());
+        candidato.setEdicao(candidatoCriacaoResponseModel.getEdicao());
+        candidato.setFormulario(candidatoCriacaoResponseModel.getFormulario().getIdFormulario());
         return candidato;
     }
 
