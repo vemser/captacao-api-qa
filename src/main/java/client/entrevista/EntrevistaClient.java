@@ -17,6 +17,7 @@ public class EntrevistaClient {
     public static final String ENTREVISTA_LISTAR_POR_MES = "/entrevista/listar-por-mes";
     public static final String ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA = "/entrevista/atualizar-entrevista/{idEntrevista}";
     public static final String ENTREVISTA_ID_ENTREVISTA = "/entrevista/{idEntrevista}";
+    public static final String ENTREVISTA_EMAIL_ENTREVISTA = "/entrevista/deletar-entrevista-email-candidato/{email}";
     private static final String AUTHORIZATION = "Authorization";
     public static final String ID_ENTREVISTA1 = "idEntrevista";
     public static final String EMAIL = "email";
@@ -25,20 +26,6 @@ public class EntrevistaClient {
     public static final String ANO = "ano";
     public static final String LEGENDA = "legenda";
     public static final String TOKEN_QUERY = "token";
-
-    public Response cadastrarEntrevista(EntrevistaCriacaoModel entrevista) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(entrevista)
-                        .queryParam(TOKEN_QUERY, AuthClient.getToken())
-                .when()
-                        .post(ENTREVISTA_MARCAR_ENTREVISTA)
-                ;
-    }
 
     public Response cadastrarEntrevistaSemAutenticacao(EntrevistaCriacaoModel entrevista) {
         Auth.usuarioAluno();
@@ -153,25 +140,11 @@ public class EntrevistaClient {
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
-//                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                         .queryParam(LEGENDA, status)
                         .body(dadosAtualizados)
                 .when()
                         .put(ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA)
-                ;
-    }
-
-    public Response deletarEntrevistaPorId(Integer idEntrevista) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_ENTREVISTA1, idEntrevista)
-                .when()
-                        .delete(ENTREVISTA_ID_ENTREVISTA)
                 ;
     }
 
@@ -182,6 +155,16 @@ public class EntrevistaClient {
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
                 .when()
                         .delete(ENTREVISTA_ID_ENTREVISTA)
+                ;
+    }
+
+    public Response deletarEntrevistaPorEmailSemAutenticacao(String email) {
+        return
+                given()
+                        .spec(EntrevistaSpecs.entrevistaReqSpec())
+                        .pathParam(EMAIL, email)
+                .when()
+                        .delete(ENTREVISTA_EMAIL_ENTREVISTA)
                 ;
     }
 }
