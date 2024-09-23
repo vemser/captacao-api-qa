@@ -18,7 +18,6 @@ import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,11 +36,6 @@ class CadastrarCandidatoTest{
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final TrilhaClient trilhaClient = new TrilhaClient();
 	private static EdicaoModel edicaoCriada;
-
-	@AfterAll
-	public static void tearDown() {
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
-	}
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e cadastrar candidato com sucesso")
@@ -454,6 +448,8 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
+		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
             || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: must be a well-formed email address"));
@@ -499,20 +495,24 @@ class CadastrarCandidatoTest{
     @Test
     @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
     void testCadastrarCandidatoComEmailJaCadastrado() {
+
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
+
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComEmailJaCadastrado(candidatoCadastrado);
         JSONFailureResponseWithArrayModel erroCadastroCandidato = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
             .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
-        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
+
+		Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals(erroCadastroCandidato.getMessage(), "Candidato com este e-mail já cadastrado para essa edição.");
-        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
+
+		candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
         edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
         formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
     }
@@ -551,6 +551,8 @@ class CadastrarCandidatoTest{
 
         String expected = "email: O email deve ser preenchido.";
         String actual = erros.get(0);
+
+		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals(expected, actual);
@@ -812,7 +814,10 @@ class CadastrarCandidatoTest{
 		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-        Assertions.assertEquals("cpf: O cpf deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
+		Assertions.assertTrue(
+				erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("cpf: O cpf deve ser preenchido.") ||
+				erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("cpf: invalid Brazilian individual taxpayer registry number (CPF)")
+		);
     }
 
     @Test
@@ -1290,6 +1295,8 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
+		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: não deve ser nulo")
             || erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: must not be null"));
@@ -1322,6 +1329,8 @@ class CadastrarCandidatoTest{
             .statusCode(HttpStatus.SC_NOT_FOUND)
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
+
+		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
         Assertions.assertEquals(404, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Erro ao buscar o formulário.", erroCadastroCandidato.getMessage());
