@@ -9,7 +9,7 @@
       "type": "string"
     },
     "observacoes": {
-      "type": ["string", "null"]
+      "type": "string"
     },
     "avaliado": {
       "type": "string"
@@ -54,44 +54,40 @@
           "type": "string"
         },
         "observacoes": {
-          "type": ["string", "null"]
+          "type": ["null", "string"]
         },
         "notaProva": {
-          "type": ["number", "null"]
+          "type": "number"
         },
         "notaEntrevistaComportamental": {
-          "type": ["number", "null"]
+          "type": "number"
         },
         "notaEntrevistaTecnica": {
-          "type": ["number", "null"]
+          "type": "number"
         },
         "ativo": {
           "type": "string"
         },
         "parecerComportamental": {
-          "type": ["string", "null"]
+          "type": ["null", "string"]
         },
         "parecerTecnico": {
-          "type": ["string", "null"]
+          "type": ["null", "string"]
         },
         "media": {
-          "type": ["number", "null"]
+          "type": ["null", "number"]
         },
         "linguagens": {
           "type": "array",
-          "items": [
-            {
-              "type": "object",
-              "properties": {
-                "nome": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "nome"
-              ]
-            }
-          ]
+          "items": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string"
+              }
+            },
+            "required": ["nome"]
+          }
         },
         "edicao": {
           "type": "object",
@@ -103,14 +99,10 @@
               "type": "string"
             },
             "notaCorte": {
-              "type": ["number", "null"]
+              "type": "number"
             }
           },
-          "required": [
-            "idEdicao",
-            "nome",
-            "notaCorte"
-          ]
+          "required": ["idEdicao", "nome", "notaCorte"]
         },
         "formulario": {
           "type": "object",
@@ -152,7 +144,7 @@
               "type": "string"
             },
             "curriculo": {
-              "type": ["integer", "null"]
+              "type": "integer"
             },
             "lgpd": {
               "type": "string"
@@ -183,38 +175,33 @@
             },
             "trilhas": {
               "type": "array",
-              "items": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "nome": {
-                      "type": "string"
-                    },
-                    "idTrilha": {
-                      "type": "integer"
-                    }
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
                   },
-                  "required": [
-                    "nome",
-                    "idTrilha"
-                  ]
-                }
-              ]
+                  "idTrilha": {
+                    "type": "integer"
+                  }
+                },
+                "required": ["nome", "idTrilha"]
+              }
             },
             "imagemConfigPc": {
-              "type": ["integer", "null"]
+              "type": ["null", "string"]
             },
             "qtdSemestres": {
-              "type": "integer"
+              "type": ["null", "integer"]
             },
             "semestreAtual": {
-              "type": "integer"
+              "type": ["null", "integer"]
             },
             "tipoGraduacao": {
-              "type": "string"
+              "type": ["null", "string"]
             },
             "descConfigPc": {
-              "type": "string"
+              "type": ["null", "string"]
             },
             "importancia": {
               "type": "string"
@@ -253,7 +240,11 @@
           ]
         },
         "imagem": {
-          "type": ["integer", "null"]
+          "type": ["null", "string"]
+        },
+        "preProvasUsuario": {
+          "type": "array",
+          "items": {}
         }
       },
       "required": [
@@ -279,7 +270,8 @@
         "linguagens",
         "edicao",
         "formulario",
-        "imagem"
+        "imagem",
+        "preProvasUsuario"
       ]
     },
     "gestorDTO": {
@@ -295,36 +287,14 @@
           "type": "string"
         },
         "cargosDto": {
-          "type": ["array", "null"],
-          "items": {
-            "type": "object",
-            "properties": {
-              "idCargo": {
-                "type": "integer"
-              },
-              "nome": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "idCargo",
-              "nome"
-            ]
-          }
+          "type": ["null", "string"]
         },
         "ativo": {
           "type": "string"
         }
       },
-      "required": [
-        "idGestor",
-        "nome",
-        "email",
-        "cargosDto",
-        "ativo"
-      ]
-    }
-  ,
+      "required": ["idGestor", "nome", "email", "cargosDto", "ativo"]
+    },
     "legenda": {
       "type": "string"
     }

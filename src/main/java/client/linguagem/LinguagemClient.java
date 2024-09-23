@@ -93,7 +93,6 @@ public class LinguagemClient {
 
         Response response =
                 given()
-						.log().all()
                         .spec(LinguagemSpecs.linguagemReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()

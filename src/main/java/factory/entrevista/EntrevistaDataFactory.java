@@ -1,5 +1,7 @@
 package factory.entrevista;
 
+import client.entrevista.EntrevistaClient;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import net.datafaker.Faker;
 
@@ -10,6 +12,8 @@ public class EntrevistaDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final Random random = new Random();
+
+	private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado) {
         return novaEntrevistaCriacao(emailDoCandidato, avaliado);
@@ -36,4 +40,12 @@ public class EntrevistaDataFactory {
 
         return entrevista;
     }
+
+	public static Response buscarTodasEntrevistas() {
+		return
+				entrevistaClient.listarTodasAsEntrevistas()
+					.then()
+					.extract()
+					.response();
+	}
 }

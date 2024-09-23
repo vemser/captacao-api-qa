@@ -2,6 +2,7 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import client.entrevista.EntrevistaClient;
 import factory.entrevista.EntrevistaDataFactory;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -11,9 +12,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Endpoint de marcação de entrevista")
 class CadastrarEntrevistaTest  {
 
-
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
-
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 403 ao cadastrar entrevista sem autenticação")
@@ -22,9 +21,12 @@ class CadastrarEntrevistaTest  {
 		
         Boolean candidatoAvaliado = true;
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida("email@mail.com", candidatoAvaliado);
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoDTO.email");
 
-        var entrevistaCadastrada = entrevistaClient.cadastrarEntrevistaSemAutenticacao(entrevistaCriada)
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
+
+        entrevistaClient.cadastrarEntrevistaSemAutenticacao(entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

@@ -22,7 +22,7 @@ class ListarEntrevistaTest {
 
         entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
+					.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
         ;
     }
 
@@ -48,7 +48,6 @@ class ListarEntrevistaTest {
         entrevistaClient.listarTodasAsEntrevistasSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-
     }
 
 }
