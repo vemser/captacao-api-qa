@@ -134,6 +134,173 @@ public class CandidatoClient {
         return response;
     }
 
+    public Response criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(String nomeDaTrilha) {
+        Auth.usuarioGestaoDePessoas();
+
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
+
+        listaDeNomeDeTrilhas.add(listaDeTrilhas.stream().filter(trilha -> trilha.getNome().equals(nomeDaTrilha)).toList().get(0).getNome());
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(candidatoCriado)
+                .when()
+                        .post(CANDIDATO)
+                ;
+    }
+
+    public Response criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(String emailCandidato) {
+        Auth.usuarioGestaoDePessoas();
+
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
+
+        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
+        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .body(candidatoCriado)
+                .when()
+                        .post(CANDIDATO)
+                ;
+    }
+
+    public Response buscarCandidatoPorEmail(String email) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("email", email)
+                .when()
+                        .get(CANDIDATO_FINDBYEMAILS)
+                ;
+    }
+
+    public Response buscarCandidatoPorEmailSemAutenticacao(String email) {
+        Auth.usuarioAluno();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .queryParam("email", email)
+                .when()
+                        .get(CANDIDATO_FINDBYEMAILS)
+                ;
+    }
+
+    public Response atualizarNotaCandidato(Integer idCandidato, NotaModel nota) {
+        Auth.usuarioInstrutor();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(nota)
+                .when()
+                        .put(CANDIDATO_NOTA_PROVA_ID_CANDIDATO)
+                ;
+    }
+
+    public Response atualizarParecerTecnico(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(parecerTecnico)
+                .when()
+                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
+                ;
+    }
+
+    public Response atualizarParecerTecnicoSemAutenticacao(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(parecerTecnico)
+                .when()
+                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
+                ;
+    }
+
+    public Response atualizarParecerComportamental(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(parecerComportamental)
+                .when()
+                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
+                ;
+    }
+
+    public Response atualizarParecerComportamentalSemAutenticacao(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
+        Auth.usuarioAluno();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(parecerComportamental)
+                .when()
+                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
+                ;
+    }
+
     public Response deletarCandidato(Integer idCandidato) {
         Auth.usuarioGestaoDePessoas();
 

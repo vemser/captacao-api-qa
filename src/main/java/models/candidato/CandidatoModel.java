@@ -45,5 +45,6 @@ public class CandidatoModel {
     public EdicaoModel edicao;
     public FormularioCriacaoResponseModel formulario;
     public Object imagem;
+    public String message;
     public List<PreprovaUsuarioResponseModel> preProvasUsuario;
 }

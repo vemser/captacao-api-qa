@@ -75,10 +75,6 @@ class AtualizarCandidatoTest {
 
         edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
-        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
-
         Assertions.assertNotNull(candidatoAtualizado);
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoAtualizado.getIdCandidato());
     }
