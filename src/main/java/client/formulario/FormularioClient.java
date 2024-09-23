@@ -2,7 +2,6 @@ package client.formulario;
 
 import client.auth.AuthClient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;
@@ -23,8 +22,10 @@ public class FormularioClient {
     public static final String FORMULARIO_CADASTRO = "/formulario/cadastro";
     public static final String FORMULARIO_UPLOAD_CURRICULO_ID_FORMULARIO = "/formulario/upload-curriculo/{idFormulario}";
     public static final String FORMULARIO_UPLOAD_PRINT_CONFIG_PC_ID_FORMULARIO = "/formulario/upload-print-config-pc/{idFormulario}";
+    public static final String FORMULARIO_UPLOAD_COMP_MATRICULA = "/formulario/upload-comp-matricula/{idFormulario}";
     public static final String FORMULARIO_ATUALIZAR_FORMULARIO_ID_FORMULARIO = "/formulario/atualizar-formulario/{idFormulario}";
     public static final String FORMULARIO_DELETE_FISICO_ID_FORMULARIO = "/formulario/delete-fisico/{idFormulario}";
+    public static final String FORMULARIO_BUSCAR_COMP_MATRICULA = "/formulario/recuperar-comp-matricula";
     public static final String SORT = "sort";
     public static final String ORDER = "order";
     public static final String ID_FORMULARIO = "idFormulario";
@@ -38,6 +39,28 @@ public class FormularioClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(FORMULARIO_LISTAR)
+                ;
+    }
+
+    public Response listarFormulariosSemAutenticacao() {
+
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                .when()
+                        .get(FORMULARIO_LISTAR)
+                ;
+    }
+
+    public Response recuperarCompMatricula(Integer idFormulario) {
+        Auth.usuarioGestaoDePessoas();
+        return
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .queryParam(ID_FORMULARIO, idFormulario)
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                .when()
+                        .get(FORMULARIO_BUSCAR_COMP_MATRICULA)
                 ;
     }
 
@@ -69,24 +92,6 @@ public class FormularioClient {
                 .when()
                         .post(FORMULARIO_CADASTRO);
 
-    }
-
-
-    public FormularioCriacaoResponseModel criarFormulario(String nomeDeTrilhaExistente) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(FormularioSpecs.formularioReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(FormularioDataFactory.formularioValidoComTrilhaExistente(nomeDeTrilhaExistente))
-                .when()
-                        .post(FORMULARIO_CADASTRO)
-                .then()
-                        .statusCode(HttpStatus.SC_CREATED)
-                        .extract()
-                        .as(FormularioCriacaoResponseModel.class)
-                ;
     }
 
     public FormularioCriacaoResponseModel criarFormularioComFormularioEntity(FormularioCriacaoModel formulario) {
@@ -201,6 +206,23 @@ public class FormularioClient {
                         .multiPart(FILE, file)
                 .when()
                         .put(FORMULARIO_UPLOAD_PRINT_CONFIG_PC_ID_FORMULARIO);
+    }
+
+    public Response incluiComprovanteMatriculaComValidacao(Integer idFormulario) {
+        Auth.usuarioGestaoDePessoas();
+
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\comprov_matricula_teste.pdf";
+        File file = new File(filePath);
+
+        return
+            given()
+                    .spec(FormularioSpecs.formularioReqSpec())
+                    .contentType("multipart/form-data")
+                    .header(AUTHORIZATION, AuthClient.getToken())
+                    .pathParam(ID_FORMULARIO, idFormulario)
+                    .multiPart(FILE, file)
+            .when()
+                    .put(FORMULARIO_UPLOAD_COMP_MATRICULA);
     }
 
     public Response atualizaFormularioContrato(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {

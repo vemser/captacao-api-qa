@@ -65,14 +65,6 @@ public class FormularioDataFactory {
         return formulario;
     }
 
-    public static FormularioCriacaoModel formularioValidoComTrilhaExistente(String nomeDeTrilhaExistente) {
-
-        FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(List.of(nomeDeTrilhaExistente));
-
-        return formulario;
-    }
-
     public static Integer idFormularioNaoCadastrado() {
 
         Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente()
@@ -84,7 +76,7 @@ public class FormularioDataFactory {
                     .get(0)
                     .getIdFormulario();
 
-        return idUltimoFormulario + 100;
+        return idUltimoFormulario + 10000;
     }
 
     private static FormularioCriacaoModel novoFormulario() {

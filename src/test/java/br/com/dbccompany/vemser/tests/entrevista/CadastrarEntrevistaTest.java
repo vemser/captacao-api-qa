@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Endpoint de marcação de entrevista")
 class CadastrarEntrevistaTest  {
 
+
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 403 ao cadastrar entrevista sem autenticação")

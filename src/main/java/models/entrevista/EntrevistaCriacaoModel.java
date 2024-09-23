@@ -2,8 +2,6 @@ package models.entrevista;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,6 +9,7 @@ import java.time.LocalDateTime;
 @ToString
 public class EntrevistaCriacaoModel {
 
+    public Integer idEntrevista;
     private String candidatoEmail;
     private String dataEntrevista;
     private String observacoes;

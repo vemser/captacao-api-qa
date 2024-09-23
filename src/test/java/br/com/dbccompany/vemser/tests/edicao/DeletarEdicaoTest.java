@@ -41,5 +41,8 @@ class DeletarEdicaoTest {
         edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
+
+		edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
     }
+
 }

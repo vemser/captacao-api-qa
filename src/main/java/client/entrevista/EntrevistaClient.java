@@ -148,21 +148,6 @@ public class EntrevistaClient {
                 ;
     }
 
-    public Response atualizarEntrevista(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(EntrevistaSpecs.entrevistaReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_ENTREVISTA1, idEntrevista)
-                        .queryParam(LEGENDA, status)
-                        .body(dadosAtualizados)
-                .when()
-                        .put(ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA)
-                ;
-    }
-
     public Response atualizarEntrevistaSemAutenticacao(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
         Auth.usuarioAluno();
         return
@@ -191,7 +176,6 @@ public class EntrevistaClient {
     }
 
     public Response deletarEntrevistaPorIdSemAutenticacao(Integer idEntrevista) {
-        Auth.usuarioAluno();
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())

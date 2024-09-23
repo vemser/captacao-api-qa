@@ -1,10 +1,8 @@
 package client.edicao;
 
 import client.auth.AuthClient;
-import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
-import org.apache.http.HttpStatus;
 import specs.edicao.EdicaoSpecs;
 import utils.auth.Auth;
 

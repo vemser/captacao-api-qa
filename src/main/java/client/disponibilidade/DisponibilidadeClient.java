@@ -3,7 +3,7 @@ package client.disponibilidade;
 import client.auth.AuthClient;
 import io.restassured.response.Response;
 import models.disponibilidade.DisponibilidadeModel;
-import specs.edicao.EdicaoSpecs;
+import specs.entrevista.DisponibilidadeSpecs;
 import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
@@ -19,7 +19,7 @@ public class DisponibilidadeClient {
 
         return
                 given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
+                        .spec(DisponibilidadeSpecs.disponibilidadeReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .body(disponibilidade)
                 .when()
@@ -31,7 +31,7 @@ public class DisponibilidadeClient {
 
         return
                 given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
+                        .spec(DisponibilidadeSpecs.disponibilidadeReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
@@ -42,7 +42,7 @@ public class DisponibilidadeClient {
 
         return
                 given()
-                        .spec(EdicaoSpecs.edicaoReqSpec())
+                        .spec(DisponibilidadeSpecs.disponibilidadeReqSpec())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
     }

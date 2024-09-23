@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Endpoint de listar usuário")
 public class ListarUsuarioTest {
 
     private final UsuarioClient usuarioClient = new UsuarioClient();

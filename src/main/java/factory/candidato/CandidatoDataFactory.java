@@ -1,11 +1,12 @@
 package factory.candidato;
 
-import client.edicao.EdicaoClient;
+import client.candidato.CandidatoClient;
 import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
+import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
+import models.candidato.CandidatoCriacaoResponseModel;
 import models.edicao.EdicaoModel;
-import models.edicao.EdicaoResponse;
 import net.datafaker.Faker;
 import utils.auth.Email;
 
@@ -22,6 +23,8 @@ public class CandidatoDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+	private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     public static CandidatoCriacaoModel candidatoCriacaoValido(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
 
@@ -123,18 +126,6 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoCriacaoValidoComEmailEspecifico(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem, String email) {
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setEmail(email);
-
-        return candidato;
-    }
-
     public static CandidatoCriacaoModel candidatoComEmailNulo(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
         String emailNulo = null;
 
@@ -187,16 +178,11 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado() {
+    public static CandidatoCriacaoModel candidatoComEmailJaCadastrado(CandidatoCriacaoResponseModel candidatoCriacaoResponseModel) {
         CandidatoCriacaoModel candidato = novoCandidato();
-
-        Integer idEdicao = EdicaoCadastrada().getIdEdicao();
-        String nomeEdicao = EdicaoCadastrada().getNome();
-        Integer notaCorte = EdicaoCadastrada().getNotaCorte();
-        EdicaoModel edicao = new EdicaoModel(idEdicao, nomeEdicao, notaCorte);
-
-        candidato.setEmail("igor.henriques@live.com");
-        candidato.setEdicao(edicao);
+        candidato.setEmail(candidatoCriacaoResponseModel.getEmail());
+        candidato.setEdicao(candidatoCriacaoResponseModel.getEdicao());
+        candidato.setFormulario(candidatoCriacaoResponseModel.getFormulario().getIdFormulario());
         return candidato;
     }
 
@@ -303,8 +289,6 @@ public class CandidatoDataFactory {
 
         return candidato;
     }
-
-
 
     public static CandidatoCriacaoModel candidatoComCpfJaCadastrado() {
         CandidatoCriacaoModel candidato = novoCandidato();
@@ -433,7 +417,7 @@ public class CandidatoDataFactory {
     }
 
     public static CandidatoCriacaoModel candidatoComListaDeLinguagemEmBranco(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemEmBranco = "";
+        String linguagemEmBranco = " ";
         List<String> listaLinguagemEmBranco = Collections.singletonList(linguagemEmBranco);
 
         CandidatoCriacaoModel candidato = novoCandidato();
@@ -442,20 +426,6 @@ public class CandidatoDataFactory {
         candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
 
         candidato.setLinguagens(listaLinguagemEmBranco);
-
-        return candidato;
-    }
-
-    public static CandidatoCriacaoModel candidatoComListaDeLinguagemNaoCadastrada(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemNaoCadastrada = "linguagemNaoCadastrada";
-        List<String> listaLinguagemNaoCadastrada = Collections.singletonList(linguagemNaoCadastrada);
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setLinguagens(listaLinguagemNaoCadastrada);
 
         return candidato;
     }
@@ -559,4 +529,12 @@ public class CandidatoDataFactory {
 
         return candidato;
     }
+
+	public static Response buscarTodosCandidatos() {
+		return candidatoClient.listarTodosOsCandidatos(0, 1)
+				.then()
+				.extract()
+				.response();
+	}
+
 }

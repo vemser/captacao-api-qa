@@ -3,7 +3,6 @@ package models.candidato;
 import lombok.*;
 import models.edicao.EdicaoModel;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor

@@ -11,11 +11,12 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DisponibilidadeModel {
 
-    private Integer idCandidato;
-    private Integer idGestor;
-    private String dataEntrevista;
-    private String horaInicio;
-    private String horaFim;
-    private boolean marcado;
+	private Integer idCandidato;
+	private Integer idGestor;
+	private String dataEntrevista;
+	private String horaInicio;
+	private String horaFim;
+	private boolean marcado;
+	private String trilha;
 
 }
