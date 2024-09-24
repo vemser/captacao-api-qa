@@ -46,7 +46,7 @@ public class FiltroInscricaoTest {
     }
 
     @Test
-    @DisplayName("Cenário 1: deve filtrar inscrição com sucesso")
+    @DisplayName("Cenário 1: Deve filtrar inscrição com sucesso")
     public void testDeveFiltrarInscricaoComSucesso(){
         InscricaoListaResponseModel filtroInscricao = inscricaoClient.filtrarInscricao("0",
                 "10",
@@ -62,4 +62,16 @@ public class FiltroInscricaoTest {
         assertEquals(filtroInscricao.getElementos().get(0).getIdInscricao(), inscricaoCadastrada.getIdInscricao());
     }
 
+    @Test
+    @DisplayName("Cenário 2: Tentar filtrar inscrição sem token")
+    public void testTentarFiltrarInscricaoSemToken(){
+        inscricaoClient.filtrarInscricao("0",
+                        "10",
+                        inscricaoCadastrada.getCandidato().getEmail(),
+                        candidatoCadastrado.getEdicao().getNome(),
+                        candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),
+                        false)
+                .then()
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
+    }
 }
