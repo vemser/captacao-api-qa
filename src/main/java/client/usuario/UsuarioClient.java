@@ -18,54 +18,53 @@ public class UsuarioClient extends UsuarioSpecs {
     private static final String ME = "/me";
     private static final String AUTHORIZATION = "Authorization";
 
-    public Response listarGestores(String token){
+    public Response listarGestores(boolean isCondicaoInserirTokenValido){
         return
                 given()
                         .spec(super.usuarioSetUp())
                         .contentType(ContentType.JSON)
-                        .header(AUTHORIZATION, token)
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
                         .get(USUARIO)
                 ;
     }
 
-    public Response listarGestorPorId(String token, String id){
+    public Response listarGestorPorId(String id, boolean isCondicaoInserirTokenValido){
         return
                 given()
                         .spec(super.usuarioSetUp())
                         .contentType(ContentType.JSON)
-                        .header(AUTHORIZATION, token)
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                         .queryParam("idGestor", id)
                 .when()
                         .get(USUARIO + ID_GESTOR);
 
     }
 
-    public Response listarTodoGestorInativo(String token){
+    public Response listarTodoGestorInativo(boolean isCondicaoInserirTokenValido){
         return
                 given()
                         .spec(super.usuarioSetUp())
                         .contentType(ContentType.JSON)
-                        .header(AUTHORIZATION, token)
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
                         .get(USUARIO + CONTAS_INATIVAS);
     }
 
-    public Response listarDadosMe(boolean isCondicaoInserirToken){
-        Response response =
+    public Response listarDadosMe(boolean isCondicaoInserirTokenValido){
+        return
                 given()
                         .spec(super.usuarioSetUp())
-                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirToken))
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
                         .get(USUARIO + ME);
-        return response;
     }
 
-    public Response desativarContaGestor(String token, String id){
+    public Response desativarContaGestor(String id, boolean isCondicaoInserirTokenValido){
         return given()
                     .spec(super.usuarioSetUp())
                     .contentType(ContentType.JSON)
-                    .header(AUTHORIZATION, token)
+                    .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                     .pathParam("idGestor", id)
                 .when()
                     .put(USUARIO + DESATIVAR_CONTA + "/{idGestor}");
