@@ -29,17 +29,26 @@ import static io.restassured.RestAssured.given;
 public class CandidatoClient {
 
     public static final String CANDIDATO = "/candidato";
+    public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
+    public static final String CANDIDATO_ULTIMA_EDICAO = "/candidato/ultima-edicao";
+    public static final String CANDIDATO_NOTA_PROVA_ID_CANDIDATO = "/candidato/nota-prova/{idCandidato}";
+    public static final String CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO = "/candidato/nota-parecer-tecnico/{idCandidato}";
+    public static final String CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO = "/candidato/nota-comportamental/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
+    public static final String CANDIDATO_DELETE_ID_CANDIDATO = "/candidato/{idCandidato}";
+    public static final String CANDIDATO_ATRIBUIR_NOTAS_EM_LOTE = "/candidato/atribuir-notas-em-lote";
     public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
 	public static final String CANDIDATO_ETAPA_NEXT = "/status/next/{idCandidato}";
 	public static final String CANDIDATO_ETAPA_PREVIUS = "/status/previus/{idCandidato}";
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String TAMANHO = "tamanho";
+    public static final String EMAIL = "email";
     public static final String ID_CANDIDATO = "idCandidato";
     public static final String LINGUAGEM_TESTE = "Java";
 
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final TrilhaClient trilhaClient = new TrilhaClient();
@@ -206,6 +215,20 @@ public class CandidatoClient {
                 ;
     }
 
+    public Response atualizarNotaCandidato(Integer idCandidato, NotaModel nota) {
+        Auth.usuarioInstrutor();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .body(nota)
+                .when()
+                        .put(CANDIDATO_NOTA_PROVA_ID_CANDIDATO)
+                ;
+    }
+
     public Response deletarCandidato(Integer idCandidato) {
         Auth.usuarioGestaoDePessoas();
 
@@ -215,6 +238,30 @@ public class CandidatoClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO);
+
+    }
+
+    public Response deletarCandidatoSemAutenticacao(Integer idCandidato) {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                .when()
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO)
+                ;
+    }
+
+    public Response deleteFisicoCandidato(Integer idCandidato) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
                         .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
 
     }
@@ -244,4 +291,14 @@ public class CandidatoClient {
 	}
 
 
+    public Response deleteFisicoCandidatoSemAutenticacao(Integer idCandidato) {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
+                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO)
+                ;
+    }
 }

@@ -8,5 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 public class CandidatoResponseModel extends CandidatoModel{
+
     private String mensagem;
 }
