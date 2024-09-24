@@ -11,4 +11,5 @@ public class TrilhaModel {
 
     private Integer idTrilha;
     private String nome;
+	private String link;
 }
