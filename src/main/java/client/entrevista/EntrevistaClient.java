@@ -12,7 +12,7 @@ public class EntrevistaClient {
 
     public static final String ENTREVISTA_MARCAR_ENTREVISTA = "/entrevista/marcar-entrevista";
     public static final String ENTREVISTA = "/entrevista";
-    public static final String ENTREVISTA_POR_ID = "/entrevista/atualizar-observacao-entrevista/{idEntrevista}";
+    public static final String OBSERVACAO_ENTREVISTA_POR_ID = "/entrevista/atualizar-observacao-entrevista/{idEntrevista}";
     public static final String ENTREVISTAS_GESTOR = "/entrevista/entrevistas/gestor";
     public static final String ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL = "/entrevista/buscar-entrevista-email-candidato/";
     public static final String ENTREVISTA_POR_TRILHA = "/entrevista/por-trilha";
@@ -138,9 +138,25 @@ public class EntrevistaClient {
                 ;
     }
 
+	public Response atualizarEntrevista(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
+		Auth.usuarioAluno();
+
+		return
+				given()
+						.spec(EntrevistaSpecs.entrevistaReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_ENTREVISTA1, idEntrevista)
+						.queryParam(LEGENDA, status)
+						.body(dadosAtualizados)
+				.when()
+						.put(ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA)
+				;
+	}
+
     public Response atualizarEntrevistaSemAutenticacao(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
         Auth.usuarioAluno();
-        return
+
+		return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                         .pathParam(ID_ENTREVISTA1, idEntrevista)
@@ -194,7 +210,7 @@ public class EntrevistaClient {
 				;
 	}
 
-	public Response atualizarEntrevistaPorId(Integer idEntrevista, String observacao) {
+	public Response atualizarObservacaoEntrevistaPorId(Integer idEntrevista, String observacao) {
 		Auth.usuarioGestaoDePessoas();
 
 		return
@@ -204,11 +220,11 @@ public class EntrevistaClient {
 						.pathParam(ID_ENTREVISTA, idEntrevista)
 						.queryParam(OBSERVACAO, observacao)
 				.when()
-						.put(ENTREVISTA_POR_ID)
+						.put(OBSERVACAO_ENTREVISTA_POR_ID)
 				;
 	}
 
-	public Response atualizarEntrevistaPorIdSemAutenticacao(Integer idEntrevista, String observacao) {
+	public Response atualizarObservacaoEntrevistaPorIdSemAutenticacao(Integer idEntrevista, String observacao) {
 		Auth.usuarioGestaoDePessoas();
 
 		return
@@ -217,7 +233,7 @@ public class EntrevistaClient {
 						.pathParam(ID_ENTREVISTA, idEntrevista)
 						.queryParam(OBSERVACAO, observacao)
 				.when()
-						.put(ENTREVISTA_POR_ID)
+						.put(OBSERVACAO_ENTREVISTA_POR_ID)
 				;
 	}
 }
