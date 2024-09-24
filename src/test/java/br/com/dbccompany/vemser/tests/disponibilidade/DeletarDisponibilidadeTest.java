@@ -5,7 +5,10 @@ import factory.disponibilidade.DisponibilidadeDataFactory;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
