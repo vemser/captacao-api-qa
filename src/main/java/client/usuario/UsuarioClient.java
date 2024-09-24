@@ -71,11 +71,11 @@ public class UsuarioClient extends UsuarioSpecs {
 
     }
 
-    public Response deletarGestor(String token, String id){
+    public Response deletarGestor(String id, boolean isCondicaoInserirTokenValido){
         return  given()
                     .spec(super.usuarioSetUp())
                     .contentType(ContentType.JSON)
-                    .header(AUTHORIZATION, token)
+                    .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                     .pathParam("idGestor", id)
                 .when()
                     .delete(USUARIO + "/{idGestor}");
