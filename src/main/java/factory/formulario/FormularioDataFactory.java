@@ -17,8 +17,6 @@ public class FormularioDataFactory {
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final Random random = new Random();
-    private static final List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
-    private static final List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
 
     public static FormularioCriacaoModel formularioValido(List<String> trilhas) {
 
@@ -28,25 +26,46 @@ public class FormularioDataFactory {
         return formulario;
     }
 
-    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+    public static FormularioCriacaoModel formularioNaoMatriculado(List<String> trilhas) {
 
-        formulario.setInstituicao(faker.lorem().sentence(3));
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setMatriculadoBoolean(false);
+
+        formulario.setTrilhas(trilhas);
 
         return formulario;
     }
 
-
-    public static FormularioCriacaoModel formularioValidoComTrilhaExistente(String nomeDeTrilhaExistente) {
+    public static FormularioCriacaoModel formularioInstituicaoNula(List<String> trilhas) {
 
         FormularioCriacaoModel formulario = novoFormulario();
-        formulario.setTrilhas(List.of("QA"));
+        formulario.setInstituicao(null);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioRespostaVazia(List<String> trilhas) {
+
+        FormularioCriacaoModel formulario = novoFormulario();
+        formulario.setResposta(null);
+
+        formulario.setTrilhas(trilhas);
+
+        return formulario;
+    }
+
+    public static FormularioCriacaoModel formularioComInstituicaoAtualizada(FormularioCriacaoModel formulario) {
+
+        formulario.setInstituicao(faker.university().name());
 
         return formulario;
     }
 
     public static Integer idFormularioNaoCadastrado() {
 
-        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente(1)
+        Integer idUltimoFormulario = formularioClient.listarNumDeFormulariosOrdemDecrescente()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -55,9 +74,8 @@ public class FormularioDataFactory {
                     .get(0)
                     .getIdFormulario();
 
-        return idUltimoFormulario + 100;
+        return idUltimoFormulario + 10000;
     }
-
 
     private static FormularioCriacaoModel novoFormulario() {
         String linkedinUrl = "https://www.linkedin.com";
@@ -65,8 +83,8 @@ public class FormularioDataFactory {
 
         FormularioCriacaoModel formulario = new FormularioCriacaoModel();
         formulario.setMatriculadoBoolean(true);
-        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.lorem().sentence()));
-        formulario.setTurno(turnosValidos.get(random.nextInt(turnosValidos.size())));
+        formulario.setCurso(Tools.removerCaracteresEspeciais(faker.educator().course()));
+        formulario.setTurno("NOITE");
         formulario.setInstituicao(Tools.removerCaracteresEspeciais(faker.university().name()));
         formulario.setGithub(githubUrl);
         formulario.setLinkedin(linkedinUrl);
@@ -80,10 +98,9 @@ public class FormularioDataFactory {
         formulario.setIngles(faker.lorem().word());
         formulario.setEspanhol(faker.lorem().word());
         formulario.setNeurodiversidade(faker.lorem().word());
-        formulario.setEtnia(etniasValidas.get(random.nextInt(etniasValidas.size())));
         formulario.setEfetivacaoBoolean(random.nextBoolean());
         formulario.setDisponibilidadeBoolean(random.nextBoolean());
-        formulario.setGenero(faker.demographic().sex());
+        formulario.setGenero("F");
         formulario.setOrientacao(faker.demographic().sex());
         formulario.setImportancia(faker.lorem().word());
 

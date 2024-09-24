@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "elementos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "formulario": {
+            "type": "object",
+            "properties": {
+              "qtdSemestres": {
+                "type": ["integer", "null", "string"]
+              },
+              "semestreAtual": {
+                "type": ["integer", "null", "string"]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

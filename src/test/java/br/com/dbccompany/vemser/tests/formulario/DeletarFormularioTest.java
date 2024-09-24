@@ -10,6 +10,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,15 +25,16 @@ class DeletarFormularioTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar um formulário com sucesso")
+    @Tag("Regression")
     void testDeletarFormularioComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -40,7 +42,7 @@ class DeletarFormularioTest {
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        var response = formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
+        formularioClient.deletarFormulario(formularioCriado.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 

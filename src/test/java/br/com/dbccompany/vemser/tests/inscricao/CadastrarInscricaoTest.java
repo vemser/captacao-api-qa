@@ -7,6 +7,7 @@ import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de cadastro de inscrição")
@@ -17,6 +18,7 @@ class CadastrarInscricaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 201 ao cadastrar inscrição com sucesso")
+    @Tag("Regression")
     void testCadastrarInscricaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -44,6 +46,7 @@ class CadastrarInscricaoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 200 ao cadastrar inscrição sem autenticação")
+    @Tag("Regression")
     void testCadastrarInscricaoSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()

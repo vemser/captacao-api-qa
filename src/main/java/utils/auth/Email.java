@@ -1,6 +1,7 @@
 package utils.auth;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Email {
 

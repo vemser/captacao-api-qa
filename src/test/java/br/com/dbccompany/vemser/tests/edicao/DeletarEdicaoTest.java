@@ -4,13 +4,10 @@ import client.edicao.EdicaoClient;
 import factory.edicao.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
-import models.edicao.EdicaoResponse;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
 
 @DisplayName("Endpoint de remoção de edição")
 class DeletarEdicaoTest {
@@ -19,14 +16,12 @@ class DeletarEdicaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
+    @Tag("Regression")
     void testDeletarEdicaoComSucesso() {
         EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoResponse = edicaoClient.cadastrarEdicao(edicaoCadastrada)
-                .then()
-                .log().all()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+        EdicaoModel edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada);
+
 
         Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
 
@@ -37,19 +32,18 @@ class DeletarEdicaoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
+    @Tag("Regression")
     void testDeletarEdicaoSemAutenticacao() {
-        // Cadastrar uma edição válida para obter seu ID
+
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
 
-        EdicaoResponse edicaoCadastrada = edicaoClient.cadastrarEdicao(cadastrarEdicao)
-                .then()
-                .log().all()
-                .statusCode(201)
-                .extract().as(EdicaoResponse.class);
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
 
         edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
+
+		edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
     }
+
 }

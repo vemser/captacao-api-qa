@@ -15,4 +15,5 @@ public class JSONFailureResponseWithArrayModel {
     private Integer status;
     private String message;
     private List<String> errors;
+
 }

@@ -1,15 +1,17 @@
 package client.auth;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import models.login.LoginModel;
 import specs.auth.AuthSpecs;
 
 import static io.restassured.RestAssured.given;
 
+@NoArgsConstructor
 public class AuthClient {
 
-    private static final String LOGIN_ENDPOINT = "http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/usuario/login";
+    private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
 
     @Getter
     @Setter
@@ -19,8 +21,7 @@ public class AuthClient {
     @Setter
     private static String tokenInvalido;
 
-    public AuthClient() {
-    }
+
 
     public void logar(LoginModel loginModel) {
         String response =
@@ -36,17 +37,4 @@ public class AuthClient {
         setToken(response);
     }
 
-    public void loginComOutroUsuario(LoginModel loginModel) {
-        String response =
-                given()
-                        .spec(AuthSpecs.authReqSpec())
-                        .body(loginModel)
-                    .when()
-                        .post(LOGIN_ENDPOINT)
-                    .then()
-                        .extract()
-                        .asString();
-
-        setToken(response);
-    }
 }

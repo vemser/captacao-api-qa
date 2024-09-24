@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "idGestor": {
+      "type": "integer"
+    },
+    "nome": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "cargosDto": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "idCargo": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "idCargo",
+            "nome"
+          ]
+        }
+      ]
+    },
+    "ativo": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "idGestor",
+    "nome",
+    "email",
+    "cargosDto",
+    "ativo"
+  ]
+}

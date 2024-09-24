@@ -7,23 +7,17 @@ import client.formulario.FormularioClient;
 import client.linguagem.LinguagemClient;
 import client.trilha.TrilhaClient;
 import factory.candidato.CandidatoDataFactory;
+import factory.edicao.EdicaoDataFactory;
 import factory.formulario.FormularioDataFactory;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
-import models.linguagem.LinguagemModel;
-import models.nota.NotaModel;
-import models.parecerComportamental.ParecerComportamentalModel;
-import models.parecerTecnico.ParecerTecnicoModel;
-import models.trilha.TrilhaModel;
-import org.apache.http.HttpStatus;
 import specs.candidato.CandidatoSpecs;
 import utils.auth.Auth;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -32,19 +26,18 @@ public class CandidatoClient {
 
     public static final String CANDIDATO = "/candidato";
     public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
-    public static final String LINGUAGEM = "/linguagem";
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
-    public static final String CANDIDATO_ULTIMA_EDICAO = "/candidato/ultima-edicao";
     public static final String CANDIDATO_NOTA_PROVA_ID_CANDIDATO = "/candidato/nota-prova/{idCandidato}";
-    public static final String CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO = "/candidato/nota-parecer-tecnico/{idCandidato}";
-    public static final String CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO = "/candidato/nota-comportamental/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
-    public static final String CANDIDATO_ATRIBUIR_NOTAS_EM_LOTE = "/candidato/atribuir-notas-em-lote";
+    public static final String CANDIDATO_DELETE_ID_CANDIDATO = "/candidato/{idCandidato}";
+	public static final String CANDIDATO_ETAPA_NEXT = "/status/next/{idCandidato}";
+	public static final String CANDIDATO_ETAPA_PREVIUS = "/status/previus/{idCandidato}";
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String TAMANHO = "tamanho";
-    public static final String EMAIL = "email";
     public static final String ID_CANDIDATO = "idCandidato";
+    public static final String LINGUAGEM_TESTE = "Java";
+
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
@@ -85,6 +78,7 @@ public class CandidatoClient {
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .contentType("application/json")
                         .body(candidato)
                 .when()
                         .post(CANDIDATO)
@@ -111,7 +105,6 @@ public class CandidatoClient {
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .body(novosDados)
                 .when()
@@ -123,14 +116,8 @@ public class CandidatoClient {
         Auth.usuarioGestaoDePessoas();
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+        listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -138,10 +125,11 @@ public class CandidatoClient {
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
 
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
+        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
+
+        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), LINGUAGEM_TESTE);
 
         Response response =
                 given()
@@ -151,169 +139,32 @@ public class CandidatoClient {
                         .when()
                         .post(CANDIDATO);
 
+
         return response;
     }
 
-
-    public Response criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(String nomeDaTrilha) {
-        Auth.usuarioGestaoDePessoas();
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.stream().filter(trilha -> trilha.getNome().equals(nomeDaTrilha)).toList().get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome());
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(candidatoCriado)
-                .when()
-                        .post(CANDIDATO)
-                ;
-    }
-
-    public Response criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(String emailCandidato) {
-        Auth.usuarioGestaoDePessoas();
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao();
-        LinguagemModel linguagemCriada = linguagemClient.retornarPrimeiraLinguagemCadastrada();
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValidoComEmailEspecifico(edicaoCriada, formularioCriado.getIdFormulario(), linguagemCriada.getNome(), emailCandidato);
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .body(candidatoCriado)
-                .when()
-                        .post(CANDIDATO)
-                ;
-    }
-
-    public Response buscarCandidatoPorCpf(String cpf) {
+    public Response buscarCandidatoPorEmail(String email) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .queryParam("cpf", cpf)
+                        .queryParam("email", email)
                 .when()
-                        .get(CANDIDATO_ULTIMA_EDICAO)
+                        .get(CANDIDATO_FINDBYEMAILS)
                 ;
     }
 
-    public Response buscarCandidatoPorCpfSemAutenticacao(String cpf) {
+    public Response buscarCandidatoPorEmailSemAutenticacao(String email) {
         Auth.usuarioAluno();
 
         return
                 given()
                         .spec(CandidatoSpecs.candidatoReqSpec())
-                        .queryParam("cpf", cpf)
+                        .queryParam("email", email)
                 .when()
-                        .get(CANDIDATO_ULTIMA_EDICAO)
-                ;
-    }
-
-    public Response atualizarNotaCandidato(Integer idCandidato, NotaModel nota) {
-        Auth.usuarioInstrutor();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(nota)
-                .when()
-                        .put(CANDIDATO_NOTA_PROVA_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerTecnico(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerTecnico)
-                .when()
-                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerTecnicoSemAutenticacao(Integer idCandidato, ParecerTecnicoModel parecerTecnico) {
-        Auth.usuarioAluno();
-        return
-                given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerTecnico)
-                .when()
-                        .put(CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerComportamental(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.usuarioGestaoDePessoas();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerComportamental)
-                .when()
-                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
-                ;
-    }
-
-    public Response atualizarParecerComportamentalSemAutenticacao(Integer idCandidato, ParecerComportamentalModel parecerComportamental) {
-        Auth.usuarioAluno();
-
-        return
-                given()
-                        .spec(CandidatoSpecs.candidatoReqSpec())
-                        .header(AUTHORIZATION, AuthClient.getToken())
-                        .pathParam(ID_CANDIDATO, idCandidato)
-                        .body(parecerComportamental)
-                .when()
-                        .put(CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO)
+                        .get(CANDIDATO_FINDBYEMAILS)
                 ;
     }
 
@@ -326,7 +177,7 @@ public class CandidatoClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
-                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO);
 
     }
 
@@ -334,12 +185,58 @@ public class CandidatoClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
-                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO)
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO)
                 ;
     }
 
+    public Response deleteFisicoCandidato(Integer idCandidato) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
+                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
+
+    }
+
+	public Response avancarCandidatoEtapa(Integer idCandidato) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(CandidatoSpecs.candidatoReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_CANDIDATO, idCandidato)
+				.when()
+							.post(CANDIDATO_ETAPA_NEXT);
+	}
+
+	public Response retrocederEtapaCandidato(Integer idCandidato) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(CandidatoSpecs.candidatoReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_CANDIDATO, idCandidato)
+				.when()
+						.post(CANDIDATO_ETAPA_PREVIUS);
+	}
+
+    public Response deleteFisicoCandidatoSemAutenticacao(Integer idCandidato) {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
+                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO)
+                ;
+    }
 }

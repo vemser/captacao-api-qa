@@ -1,0 +1,200 @@
+{
+  "totalElementos": 2,
+  "quantidadePaginas": 1,
+  "pagina": 0,
+  "tamanho": 20,
+  "elementos": [
+    {
+      "candidatoEmail": "analivia.damaia@gmail.com",
+      "dataEntrevista": "2025-09-18T01:00:17.953",
+      "observacoes": "teste",
+      "avaliado": "T",
+      "idEntrevista": 2,
+      "candidatoDTO": {
+        "idCandidato": 17,
+        "nome": "Sirineu Banheira",
+        "dataNascimento": "1978-02-28",
+        "email": "analivia.damaia@gmail.com",
+        "telefone": "(31) 93230-2318",
+        "rg": "459408569",
+        "cpf": "801.736.011-89",
+        "estado": "AC",
+        "cidade": "Carnaíba",
+        "statusCandidato": "PENDENTE",
+        "pcd": "Não possui",
+        "observacoes": null,
+        "notaProva": 0.0,
+        "notaEntrevistaComportamental": 0.0,
+        "notaEntrevistaTecnica": 0.0,
+        "ativo": "T",
+        "parecerComportamental": null,
+        "parecerTecnico": null,
+        "media": null,
+        "linguagens": [
+          {
+            "nome": "JAVA"
+          }
+        ],
+        "edicao": {
+          "idEdicao": 69,
+          "nome": "VEMSER_25073",
+          "notaCorte": 60.0
+        },
+        "formulario": {
+          "idFormulario": 239,
+          "matriculado": "T",
+          "curso": "Bachelor of Psychology",
+          "turno": "MANHA",
+          "instituicao": "Centro Tecnológico Metodista do Tocantins do Sudeste",
+          "github": "https://www.github.com",
+          "linkedin": "https://www.linkedin.com",
+          "desafios": "T",
+          "problema": "F",
+          "reconhecimento": "F",
+          "altruismo": "T",
+          "resposta": "quam",
+          "curriculo": null,
+          "lgpd": "T",
+          "prova": "T",
+          "ingles": "id",
+          "espanhol": "accusamus",
+          "neurodiversidade": "consectetur",
+          "efetivacao": "T",
+          "genero": "Female",
+          "orientacao": "Female",
+          "disponibilidade": "F",
+          "trilhas": [
+            {
+              "nome": "FRONTEND",
+              "idTrilha": 1
+            }
+          ],
+          "imagemConfigPc": null,
+          "qtdSemestres": 0,
+          "semestreAtual": 1,
+          "tipoGraduacao": "Graduation",
+          "descConfigPc": "Description of PC configuration",
+          "importancia": "fuga"
+        },
+        "imagem": null
+      },
+      "gestorDTO": {
+        "idGestor": 4,
+        "nome": "rafael isidro",
+        "email": "rafael.isidro",
+        "cargosDto": [
+          {
+            "idCargo": 2,
+            "nome": "ROLE_INSTRUTOR"
+          },
+          {
+            "idCargo": 3,
+            "nome": "ROLE_GESTAO_DE_PESSOAS"
+          },
+          {
+            "idCargo": 4,
+            "nome": "ROLE_ADMIN"
+          }
+        ],
+        "ativo": "T"
+      },
+      "legenda": "PENDENTE"
+    },
+    {
+      "candidatoEmail": "gubio.moniz@bol.com.br",
+      "dataEntrevista": "2025-09-18T09:48:30.519",
+      "observacoes": "Ea consequatur reiciendis maiores sint mollitia voluptate architecto.",
+      "avaliado": "T",
+      "idEntrevista": 3,
+      "candidatoDTO": {
+        "idCandidato": 23,
+        "nome": "Helena Marcondes",
+        "dataNascimento": "2003-04-19",
+        "email": "gubio.moniz@bol.com.br",
+        "telefone": "(77) 95884-3271",
+        "rg": "307456714",
+        "cpf": "158.776.623-09",
+        "estado": "BA",
+        "cidade": "Malhada",
+        "statusCandidato": "PENDENTE",
+        "pcd": "Não possui",
+        "observacoes": null,
+        "notaProva": 0.0,
+        "notaEntrevistaComportamental": 0.0,
+        "notaEntrevistaTecnica": 0.0,
+        "ativo": "T",
+        "parecerComportamental": null,
+        "parecerTecnico": null,
+        "media": null,
+        "linguagens": [
+          {
+            "nome": "JAVA"
+          }
+        ],
+        "edicao": {
+          "idEdicao": 91,
+          "nome": "VEMSER_69397",
+          "notaCorte": 60.0
+        },
+        "formulario": {
+          "idFormulario": 245,
+          "matriculado": "T",
+          "curso": "Master of Business",
+          "turno": "MANHA",
+          "instituicao": "Universidade da Bandeira",
+          "github": "https://www.github.com",
+          "linkedin": "https://www.linkedin.com",
+          "desafios": "F",
+          "problema": "T",
+          "reconhecimento": "T",
+          "altruismo": "T",
+          "resposta": "ut",
+          "curriculo": null,
+          "lgpd": "F",
+          "prova": "F",
+          "ingles": "quia",
+          "espanhol": "quod",
+          "neurodiversidade": "consequatur",
+          "efetivacao": "F",
+          "genero": "Male",
+          "orientacao": "Female",
+          "disponibilidade": "F",
+          "trilhas": [
+            {
+              "nome": "FRONTEND",
+              "idTrilha": 1
+            }
+          ],
+          "imagemConfigPc": null,
+          "qtdSemestres": 0,
+          "semestreAtual": 1,
+          "tipoGraduacao": "Graduation",
+          "descConfigPc": "Description of PC configuration",
+          "importancia": "sed"
+        },
+        "imagem": null
+      },
+      "gestorDTO": {
+        "idGestor": 4,
+        "nome": "rafael isidro",
+        "email": "rafael.isidro",
+        "cargosDto": [
+          {
+            "idCargo": 2,
+            "nome": "ROLE_INSTRUTOR"
+          },
+          {
+            "idCargo": 3,
+            "nome": "ROLE_GESTAO_DE_PESSOAS"
+          },
+          {
+            "idCargo": 4,
+            "nome": "ROLE_ADMIN"
+          }
+        ],
+        "ativo": "T"
+      },
+      "legenda": "PENDENTE"
+    }
+  ]
+}

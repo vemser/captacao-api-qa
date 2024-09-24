@@ -1,85 +1,65 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.candidato.CandidatoClient;
 import client.entrevista.EntrevistaClient;
-import factory.entrevista.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 class ListarEntrevistaPorTrilhaTest {
 
-    private static final CandidatoClient candidatoClient = new CandidatoClient();
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS = "schemas/entrevista/listar_entrevistas.json";
+    public static final String TRILHA_VALIDA = "QA";
+    public static final String TRILHA_NAO_EXISTENTE = "-*/-*/-*/-*/-*/";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando lista entrevistas de trilhas existentes")
+    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por trilha")
+    @Tag("Contract")
+    public void testValidarContratoListarEntrevistasPorTrilha() {
+
+        entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
+                .then()
+                	.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
+        ;
+    }
+
+    @Test
+    @DisplayName("Cenário 2: Deve retornar 200 quando lista entrevistas de trilhas existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaComSucesso() {
-        String trilha = "QA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoClient.criarECadastrarCandidatoComCandidatoEntityETrilhaEspecifica(trilha)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaClient.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilha)
+        entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel[].class);
-
-        List<EntrevistaCriacaoResponseModel> listaDeEntrevistas = Arrays.stream(lista).toList();
-
-        var deletarEntrevista = entrevistaClient.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-
-        Assertions.assertNotNull(listaDeEntrevistas);
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
+    @DisplayName("Cenário 3: Deve retornar 404 quando lista entrevistas de trilhas não existentes")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaNaoExistente() {
-        String trilhaNaoExistente = "-*/-*/-*/-*/-*/";
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(trilhaNaoExistente)
+       entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_NAO_EXISTENTE)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(equalTo("[]"));
     }
 
     @Test
-    @DisplayName("Cenário 3: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
+    @DisplayName("Cenário 4: Deve retornar 403 quando lista entrevistas de trilhas sem autenticação")
+    @Tag("Regression")
     void testListarEntrevistasPorTrilhaSemAutenticacao() {
-        String trilha = "QA";
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(trilha)
+        entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(TRILHA_VALIDA)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }
+
 }

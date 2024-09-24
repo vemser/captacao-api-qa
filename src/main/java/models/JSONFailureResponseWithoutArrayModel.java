@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @NoArgsConstructor
@@ -7,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JSONFailureResponseWithoutArrayModel {
 
     private String timestamp;

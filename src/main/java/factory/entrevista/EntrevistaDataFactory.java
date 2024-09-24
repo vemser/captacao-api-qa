@@ -1,9 +1,10 @@
 package factory.entrevista;
 
+import client.entrevista.EntrevistaClient;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import net.datafaker.Faker;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Random;
 
@@ -12,67 +13,47 @@ public class EntrevistaDataFactory {
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final Random random = new Random();
 
-    public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
-        return novaEntrevistaCriacao(emailDoCandidato, avaliado, idTrilha);
+	private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+
+    public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado) {
+        return novaEntrevistaCriacao(emailDoCandidato, avaliado);
     }
 
-    public static EntrevistaCriacaoModel entrevistaValidaComDataEspecifica(Integer anoEntrevista, Integer mesEntrevista, String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
-
-        int horaAleatoria = random.nextInt(18);
-        int minutoAleatorio = random.nextInt(60);
-        int segundoAleatorio = random.nextInt(60);
-
-        int diasNoFuturo = random.nextInt(1000);
-
-        int diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
-
-        LocalDateTime dataEntrevista = LocalDateTime.of(anoEntrevista, mesEntrevista, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
+    private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado) {
 
         String candidatoAvaliado = avaliado ? "T" : "F";
+
+        int randomDay = random.nextInt(28);
+        int randomMonth = random.nextInt(12);
+        int randomYear = random.nextInt(2025, 2040);
+
+
+        String randomDayStr = randomDay < 10 ? "0" + randomDay : String.valueOf(randomDay);
+        String randomMonthStr = randomMonth < 10 ? "0" + randomMonth : String.valueOf(randomMonth);
+        String randomYearStr = randomYear < 10 ? "0" + randomYear : String.valueOf(randomYear);
 
         EntrevistaCriacaoModel entrevista = new EntrevistaCriacaoModel();
         entrevista.setCandidatoEmail(emailDoCandidato);
-        entrevista.setDataEntrevista(dataEntrevista);
+        entrevista.setDataEntrevista(randomYearStr + "-" + randomMonthStr + "-" + randomDayStr + "T09:48:30.519Z");
         entrevista.setObservacoes(faker.lorem().sentence(4));
         entrevista.setAvaliado(candidatoAvaliado);
-        entrevista.setIdTrilha(idTrilha);
 
         return entrevista;
     }
 
-    public static EntrevistaCriacaoModel entrevistaCriacaoValidaComDadosAtualizados(EntrevistaCriacaoModel entrevista, String observacoes, Boolean avaliado) {
+	public static Response buscarTodasEntrevistas() {
+		return
+				entrevistaClient.listarTodasAsEntrevistas()
+					.then()
+					.extract()
+					.response();
+	}
 
-        String candidatoAvaliado = avaliado ? "T" : "F";
+	public static String gerarObservacao() {
+		return faker.lorem().sentence(4);
+	}
 
-        entrevista.setObservacoes(observacoes);
-        entrevista.setAvaliado(candidatoAvaliado);
-
-        return entrevista;
-    }
-
-    private static EntrevistaCriacaoModel novaEntrevistaCriacao(String emailDoCandidato, Boolean avaliado, Integer idTrilha) {
-
-        int horaAleatoria = random.nextInt(18);
-        int minutoAleatorio = random.nextInt(60);
-        int segundoAleatorio = random.nextInt(60);
-
-        int diasNoFuturo = random.nextInt(1000);
-
-        int diaFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getDayOfMonth();
-        int mesFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getMonthValue();
-        int anoFuturo = LocalDateTime.now().plusDays(diasNoFuturo).getYear();
-
-        LocalDateTime dataEntrevista = LocalDateTime.of(anoFuturo, mesFuturo, diaFuturo, horaAleatoria, minutoAleatorio, segundoAleatorio, 602000000);
-
-        String candidatoAvaliado = avaliado ? "T" : "F";
-
-        EntrevistaCriacaoModel entrevista = new EntrevistaCriacaoModel();
-        entrevista.setCandidatoEmail(emailDoCandidato);
-        entrevista.setDataEntrevista(dataEntrevista);
-        entrevista.setObservacoes(faker.lorem().sentence(4));
-        entrevista.setAvaliado(candidatoAvaliado);
-        entrevista.setIdTrilha(idTrilha);
-
-        return entrevista;
-    }
+	public static Integer idEntrevistaEnexistente() {
+		return faker.number().numberBetween(5000, 10000);
+	}
 }
