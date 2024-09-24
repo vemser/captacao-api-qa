@@ -22,6 +22,6 @@ class DeletarEntrevistaPorIdTest{
 
         entrevistaClient.deletarEntrevistaPorIdSemAutenticacao(idEntrevista)
                 .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN)
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
    }
 }

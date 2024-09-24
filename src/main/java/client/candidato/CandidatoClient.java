@@ -32,6 +32,8 @@ public class CandidatoClient {
     public static final String CANDIDATO_ID_CANDIDATO = "/candidato/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
     public static final String CANDIDATO_FINDBYEMAILS = "/candidato/findbyemails";
+	public static final String CANDIDATO_ETAPA_NEXT = "/status/next/{idCandidato}";
+	public static final String CANDIDATO_ETAPA_PREVIUS = "/status/previus/{idCandidato}";
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String TAMANHO = "tamanho";
@@ -216,5 +218,30 @@ public class CandidatoClient {
                         .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
 
     }
+
+	public Response avancarCandidatoEtapa(Integer idCandidato) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(CandidatoSpecs.candidatoReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_CANDIDATO, idCandidato)
+				.when()
+							.post(CANDIDATO_ETAPA_NEXT);
+	}
+
+	public Response retrocederEtapaCandidato(Integer idCandidato) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(CandidatoSpecs.candidatoReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_CANDIDATO, idCandidato)
+				.when()
+						.post(CANDIDATO_ETAPA_PREVIUS);
+	}
+
 
 }

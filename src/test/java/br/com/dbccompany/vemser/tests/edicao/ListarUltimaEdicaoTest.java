@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 class ListarUltimaEdicaoTest {
 
     private static EdicaoClient edicaoClient = new EdicaoClient();
-	private static final String PATH_SCHEMA_LISTAR_EDICOES = "schemas/edicao/listar_edicoes.json";
 
 	@Test
 	@DisplayName("Cenário 1: Deve retornar 200 ao listar a última edição com sucesso")
