@@ -45,14 +45,50 @@ Antes de rodar o projeto, certifique-se de que os seguintes itens estão instala
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/Carlos-Academico"><img src="https://avatars.githubusercontent.com/Carlos-Academico" width="100px;" alt="Carlos Henrique"/><br /><sub><b>Carlos Henrique</b></sub></a></td>
-    <td align="center"><a href="https://github.com/luizgpolido"><img src="https://avatars.githubusercontent.com/luizgpolido" width="100px;" alt="Luiz Polido"/><br /><sub><b>Luiz Polido</b></sub></a></td>
-    <td align="center"><a href="https://github.com/rafael-isidro"><img src="https://avatars.githubusercontent.com/rafael-isidro" width="100px;" alt="Rafael Isidro"/><br /><sub><b>Rafael Isidro</b></sub></a></td>
-    <td align="center"><a href="https://github.com/thalesxbrasileiro"><img src="https://avatars.githubusercontent.com/thalesxbrasileiro" width="100px;" alt="Thales Brasileiro"/><br /><sub><b>Thales Brasileiro</b></sub></a></td>
-    <td align="center"><a href="https://github.com/thalessalla"><img src="https://avatars.githubusercontent.com/thalessalla" width="100px;" alt="Thales Salla"/><br /><sub><b>Thales Salla</b></sub></a></td>
-    <td align="center"><a href="https://github.com/Wagner-Dev-Souza"><img src="https://avatars.githubusercontent.com/Wagner-Dev-Souza" width="100px;" alt="Wagner Souza"/><br /><sub><b>Wagner Souza</b></sub></a></td>
-    <td align="center"><a href="https://github.com/MarxWesley"><img src="https://avatars.githubusercontent.com/MarxWesley" width="100px;" alt="Wesley Marques"/><br /><sub><b>Wesley Marques</b></sub></a></td>
+    <td align="center">
+      <a href="https://github.com/Carlos-Academico" target="_blank">
+        <img src="https://avatars.githubusercontent.com/Carlos-Academico" width="100px;" alt="Carlos Henrique"/>
+        <br /><sub><b>Carlos Henrique</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/luizgpolido" target="_blank">
+        <img src="https://avatars.githubusercontent.com/luizgpolido" width="100px;" alt="Luiz Polido"/>
+        <br /><sub><b>Luiz Polido</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rafael-isidro" target="_blank">
+        <img src="https://avatars.githubusercontent.com/rafael-isidro" width="100px;" alt="Rafael Isidro"/>
+        <br /><sub><b>Rafael Isidro</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/thalesxbrasileiro" target="_blank">
+        <img src="https://avatars.githubusercontent.com/thalesxbrasileiro" width="100px;" alt="Thales Brasileiro"/>
+        <br /><sub><b>Thales Brasileiro</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/thalessalla" target="_blank">
+        <img src="https://avatars.githubusercontent.com/thalessalla" width="100px;" alt="Thales Salla"/>
+        <br /><sub><b>Thales Salla</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Wagner-Dev-Souza" target="_blank">
+        <img src="https://avatars.githubusercontent.com/Wagner-Dev-Souza" width="100px;" alt="Wagner Souza"/>
+        <br /><sub><b>Wagner Souza</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/MarxWesley" target="_blank">
+        <img src="https://avatars.githubusercontent.com/MarxWesley" width="100px;" alt="Wesley Marques"/>
+        <br /><sub><b>Wesley Marques</b></sub>
+      </a>
+    </td>
   </tr>
 </table>
+
 
 
