@@ -1,92 +1,49 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.edicao.EdicaoClient;
+import factory.edicao.EdicaoDataFactory;
+import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.EdicaoService;
-
-import java.util.*;
 
 @DisplayName("Endpoint de remoção de edição")
-public class DeletarEdicaoTest extends BaseTest {
+class DeletarEdicaoTest {
 
-    private static EdicaoService edicaoService = new EdicaoService();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
-    public void testDeletarEdicaoComSucesso() {
+    @Tag("Regression")
+    void testDeletarEdicaoComSucesso() {
+        EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
 
-        var response = edicaoService.listarTodasAsEdicoes()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EdicaoModel[].class);
+        EdicaoModel edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada);
 
-        List<EdicaoModel> listaDeEdicoes = Arrays.stream(response).toList();
 
-        List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
+        Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
 
-        Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
-            public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return edicao2.idEdicao.compareTo(edicao1.idEdicao);
-            }
-        });
+        Response response = edicaoClient.deletarEdicao(idEdicao);
 
-        Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 4;
-
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EdicaoModel.class);
-
-        var deletarEdicao = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
-        var confirmaDelecaoEdicao = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
-                .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND);
+        response.then().statusCode(204);
     }
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 403 ao deletar edição sem autenticação")
-    public void testDeletarEdicaoSemAutenticacao() {
+    @DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
+    @Tag("Regression")
+    void testDeletarEdicaoSemAutenticacao() {
 
-        var response = edicaoService.listarTodasAsEdicoes()
+        EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
+
+        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
+
+        edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
                 .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EdicaoModel[].class);
+                .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        List<EdicaoModel> listaDeEdicoes = Arrays.stream(response).toList();
-
-        List<EdicaoModel> listaDeEdicoesOrdenada = new ArrayList<>(listaDeEdicoes);
-
-        Collections.sort(listaDeEdicoesOrdenada, new Comparator<EdicaoModel>() {
-            public int compare(EdicaoModel edicao1, EdicaoModel edicao2) {
-                return edicao2.idEdicao.compareTo(edicao1.idEdicao);
-            }
-        });
-
-        Integer idUltimaEdicao = listaDeEdicoesOrdenada.get(0).getIdEdicao();
-        Integer idNovaEdicao = idUltimaEdicao + 4;
-
-        EdicaoModel edicaoCadastrada = edicaoService.criarEdicaoComNumEdicao(idNovaEdicao)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EdicaoModel.class);
-
-        var deletarEdicaoSemAutenticar = edicaoService.deletarEdicaoComResponseSemAutenticacao(edicaoCadastrada.getIdEdicao())
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarEdicaoComSucesso = edicaoService.deletarEdicaoComResponse(edicaoCadastrada.getIdEdicao())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
+		edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
     }
+
 }

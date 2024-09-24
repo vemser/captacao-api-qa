@@ -1,52 +1,50 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.TrilhaDataFactory;
-import models.trilha.TrilhaApenasNomeModel;
+import client.trilha.TrilhaClient;
+import factory.trilha.TrilhaDataFactory;
+import io.restassured.response.Response;
 import models.trilha.TrilhaModel;
-import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
+import models.trilha.TrilhaResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.TrilhaService;
 
-@DisplayName("Endpoint de cadastro de trilhas")
-public class CadastrarTrilhaTest extends BaseTest {
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-    private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
-    private static TrilhaService trilhaService = new TrilhaService();
+@DisplayName("Endpoint de cadastrar trilhas")
+public class CadastrarTrilhaTest {
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 201 quando cadastra trilha com sucesso")
-    public void testCadastrarTrilhaComSucesso() {
-        String nomeTrilha = "TRILHA_TESTE";
+	TrilhaClient trilhaClient = new TrilhaClient();
+	private static final String PATH_SCHEMA_CADASTRAR_TRILHA = "schemas/trilha/post_trilha.json";
 
-        TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
+	@Test
+	@DisplayName("Cenário 1: Validação de contrato de cadastrar trilha")
+	@Tag("Regression")
+	public void testValidarContratoCadastrarTrilha() {
+		TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 
-        TrilhaModel trilhaCadastrada = trilhaService.criarTrilhaPassandoNome(trilha)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(TrilhaModel.class);
+		trilhaClient.cadastrarTrilha(trilha)
+				.then()
+				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_CADASTRAR_TRILHA));
+	}
 
-        var deletarTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 201 quando cadastra trilha com sucesso")
+	@Tag("Regression")
+	void testCadastroDeTrilhaComSucesso(){
 
+		TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 
-        Assertions.assertNotNull(trilhaCadastrada);
-        Assertions.assertEquals(trilha.getNome(), trilhaCadastrada.getNome());
-    }
+		TrilhaResponse trilhaResponse = trilhaClient.cadastrarTrilha(trilha)
+				.then()
+				.statusCode(200)
+				.extract().as(TrilhaResponse.class);
 
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando cadastra trilha sem autenticação")
-    public void testCadastrarTrilhaSemAutenticacao() {
-        String nomeTrilha = "TRILHA_TESTE";
+		Integer idTrilha = Integer.parseInt(String.valueOf(trilhaResponse.getIdTrilha()));
 
-        TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
+		Response response = trilhaClient.deletarTrilhaPorId(idTrilha);
 
-        var trilhaCadastrada = trilhaService.criarTrilhaPassandoNomeSemAutenticacao(trilha)
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
+		response.then().statusCode(204);
+	}
+
 }

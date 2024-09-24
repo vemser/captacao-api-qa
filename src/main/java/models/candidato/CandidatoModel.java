@@ -1,9 +1,11 @@
 package models.candidato;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import models.edicao.EdicaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.linguagem.LinguagemModel;
+import models.preprova.PreprovaUsuarioResponseModel;
 
 import java.util.List;
 
@@ -12,8 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CandidatoModel {
 
+    public Integer totalElementos;
+    public Integer quantidadePaginas;
+    public Integer pagina;
+    public Integer tamanho;
+    public List<CandidatoCriacaoResponseModel> elementos;
     public Integer idCandidato;
     public String nome;
     public String dataNascimento;
@@ -23,18 +31,20 @@ public class CandidatoModel {
     public String cpf;
     public String estado;
     public String cidade;
-    private Double nota;
+    public String StatusCandidato;
     public String pcd;
     public Object observacoes;
-    public Double notaProva;
-    public Double notaEntrevistaComportamental;
-    public Double notaEntrevistaTecnica;
+    public Integer notaProva;
+    public Integer notaEntrevistaComportamental;
+    public Integer notaEntrevistaTecnica;
     public String ativo;
     public String parecerComportamental;
     public String parecerTecnico;
-    public Double media;
+    public Integer media;
     public List<LinguagemModel> linguagens;
     public EdicaoModel edicao;
     public FormularioCriacaoResponseModel formulario;
     public Object imagem;
+    public String message;
+    public List<PreprovaUsuarioResponseModel> preProvasUsuario;
 }

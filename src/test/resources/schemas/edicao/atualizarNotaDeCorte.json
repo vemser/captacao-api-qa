@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "idEdicao": {
+      "type": "integer"
+    },
+    "nome": {
+      "type": "string"
+    },
+    "notaCorte": {
+      "type": ["integer", "number"]
+    },
+    "preProvasEntities": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "required": [
+    "idEdicao",
+    "nome",
+    "notaCorte",
+    "preProvasEntities"
+  ]
+}

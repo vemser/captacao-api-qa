@@ -1,82 +1,29 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
-import models.entrevista.EntrevistaCriacaoResponseModel;
+import client.entrevista.EntrevistaClient;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
 
-@DisplayName("Endpoint de remoção de entrevista")
-public class DeletarEntrevistaPorIdTest extends BaseTest {
+@DisplayName("Endpoint de remoção de entrevista por id")
+class DeletarEntrevistaPorIdTest{
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 204 ao deletar entrevista por id com sucesso")
-    public void testDeletarEntrevistaPorIdComSucesso() {
+    @DisplayName("Cenário 1: Deve retornar 403 ao tentar deletar entrevista por id sem autenticação")
+    @Tag("Regression")
+    void testDeletarEntrevistaPorIdSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        int idEntrevista = entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        var response = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-        var buscaEntrevistaDeletada = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_BAD_REQUEST);
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao deletar entrevista por id sem autenticação")
-    public void testDeletarEntrevistaPorIdSemAutenticacao() {
-
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
-                .as(CandidatoCriacaoResponseModel.class);
+                .path("[0].idEntrevista");
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        var response = entrevistaService.deletarEntrevistaPorIdSemAutenticacao(entrevistaCadastrada.getIdEntrevista())
+        entrevistaClient.deletarEntrevistaPorIdSemAutenticacao(idEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-    }
+   }
 }

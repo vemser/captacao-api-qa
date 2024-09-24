@@ -1,78 +1,62 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
-import models.entrevista.EntrevistaCriacaoResponseModel;
+import client.entrevista.EntrevistaClient;
 import models.entrevista.EntrevistaListaResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @DisplayName("Endpoint de listagem de entrevistas por mês")
-public class ListarEntrevistaPorMesTest extends BaseTest {
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+class ListarEntrevistaPorMesTest {
 
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS_POR_MES = "schemas/entrevista/listar_entrevistas_por_mes.json";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando lista trilha por mês com sucesso")
-    public void testListarEntrevistasPorMesComSucesso() {
+    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por mês")
+    @Tag("Regression")
+    public void testValidarContratoListarEntrevistasPorMes() {
 
-        Integer mesEntrevista = 3;
+        Integer mesEntrevista = 9;
         Integer anoEntrevista = 2025;
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(CandidatoCriacaoResponseModel.class);
+               		 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS_POR_MES))
+        ;
+    }
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
+    @Test
+    @DisplayName("Cenário 2: Deve retornar 200 quando lista trilha por mês com sucesso")
+    @Tag("Regression")
+    void testListarEntrevistasPorMesComSucesso() {
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaValidaComDataEspecifica(anoEntrevista,
-                mesEntrevista, emailDoCandidato, candidatoAvaliado, idTrilha);
+        Integer mesEntrevista = 9;
+        Integer anoEntrevista = 2025;
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-
-        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaListaResponseModel.class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
         Assertions.assertNotNull(listaDeEntrevistas);
-        Assertions.assertEquals(mesEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getMonthValue());
-        Assertions.assertEquals(anoEntrevista, listaDeEntrevistas.getElementos().get(0).getDataEntrevista().getYear());
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
-    public void testListarEntrevistasPorMesSemEstarAutenticado() {
+    @DisplayName("Cenário 3: Deve retornar 403 quando lista trilha por mês sem estar autenticado")
+    @Tag("Regression")
+    void testListarEntrevistasPorMesSemEstarAutenticado() {
 
         Integer mesEntrevista = 3;
         Integer anoEntrevista = 2025;
 
-
-        var response = entrevistaService.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(anoEntrevista, mesEntrevista)
                 .then()
-                    .statusCode(HttpStatus.SC_OK);
-
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }

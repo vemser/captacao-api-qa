@@ -1,73 +1,65 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoResponseModel;
-import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
-import utils.Email;
+import utils.auth.Email;
 
-import java.util.Locale;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @DisplayName("Endpoint de listagem de entrevistas por email")
-public class ListarEntrevistaPorEmailTest extends BaseTest {
+class ListarEntrevistaPorEmailTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
-    private static Faker faker = new Faker(new Locale("pt-BR"));
+  private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+	private static final String PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL = "schemas/entrevista/listar_entrevista_por_email.json";
 
+	@Test
+	@DisplayName("Cenário 1: Validação de contrato de listar entrevistas por email")
+	@Tag("Contract")
+	public void testValidarContratoListarEntrevistasPorEmail() {
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao buscar entrevista por email do candidato com sucesso")
-    public void testListaEntrevistaPorEmailComSucesso() {
-        String email = Email.getEmail();
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoEmail");
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntityEEmailEspecifico(email)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
+				.then()
+				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL))
+		;
+	}
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 200 ao buscar entrevista por email do candidato com sucesso")
+	@Tag("Regression")
+	void testListaEntrevistaPorEmailComSucesso() {
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoEmail");
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
+		System.out.println(emailEntrevista);
+		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
+				.then()
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.as(EntrevistaCriacaoResponseModel.class);
 
-        EntrevistaCriacaoResponseModel entrevista = entrevistaService.listarTodasAsEntrevistasPorEmail(emailDoCandidato)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
+		Assertions.assertNotNull(entrevista);
+		Assertions.assertEquals(emailEntrevista, entrevista.getCandidatoEmail());
+	}
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
+	@Test
+  	@DisplayName("Cenário 3: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
+	@Tag("Regression")
+    void testListaEntrevistaPorEmailSemAutenticacao() {
 
-        Assertions.assertNotNull(entrevista);
-        Assertions.assertEquals(emailDoCandidato, entrevista.getCandidatoEmail());
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
-    public void testListaEntrevistaPorEmailSemAutenticacao() {
         String emailDoCandidato = Email.getEmail();
 
-        var response = entrevistaService.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
+        entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

@@ -1,5 +1,6 @@
 package models.formulario;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import models.trilha.TrilhaModel;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FormularioModel {
 
     private Integer idFormulario;
@@ -30,7 +32,6 @@ public class FormularioModel {
     private String ingles;
     private String espanhol;
     private String neurodiversidade;
-    private String etnia;
     private String efetivacao;
     private String genero;
     private String orientacao;
@@ -38,4 +39,8 @@ public class FormularioModel {
     private List<TrilhaModel> trilhas;
     private Integer imagemConfigPc;
     private String Importancia;
+    private Integer qtdSemestres;
+    private Integer semestreAtual;
+    private String tipoGraduacao;
+    private String descConfigPc;
 }

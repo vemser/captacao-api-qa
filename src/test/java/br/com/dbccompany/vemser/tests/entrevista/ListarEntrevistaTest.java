@@ -1,89 +1,53 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Epic;
-import models.candidato.CandidatoCriacaoResponseModel;
-import models.entrevista.EntrevistaCriacaoModel;
+import client.entrevista.EntrevistaClient;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @DisplayName("Endpoint de listagem de entrevistas")
-public class ListarEntrevistaTest extends BaseTest {
-
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
+class ListarEntrevistaTest {
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+    private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS = "schemas/entrevista/listar_entrevistas.json";
 
     @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando lista as entrevistas cadastradas com sucesso")
-    public void testListarEntrevistasCadastradasComSucesso() {
+    @DisplayName("Cenário 1: Validação de contrato de listar entrevistas")
+    @Tag("Contract")
+    public void testValidarContratoListarEntrevistas() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+					.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
+        ;
+    }
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
+    @Test
+    @DisplayName("Cenário 2: Deve retornar 200 quando lista as entrevistas cadastradas com sucesso")
+    @Tag("Regression")
+    void testListarEntrevistasCadastradasComSucesso() {
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        var listaDeEntrevistas = entrevistaService.listarTodasAsEntrevistas()
+        var listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(EntrevistaCriacaoResponseModel[].class);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
         Assertions.assertNotNull(listaDeEntrevistas);
     }
 
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando lista as entrevistas sem estar autenticado")
-    public void testListarEntrevistasSemAutenticacao() {
+    @DisplayName("Cenário 3: Deve retornar 403 quando lista as entrevistas sem estar autenticado")
+    @Tag("Regression")
+    void testListarEntrevistasSemAutenticacao() {
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
-
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
-
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-
-        var listaDeEntrevistas = entrevistaService.listarTodasAsEntrevistasSemAutenticacao()
+        entrevistaClient.listarTodasAsEntrevistasSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
+
 }

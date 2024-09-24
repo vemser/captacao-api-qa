@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "idDisponibilidade": {
+          "type": "integer"
+        },
+        "candidatoEntity": {
+          "type": ["object", "null"],
+          "properties": {
+            "idCandidato": {
+              "type": "integer"
+            },
+            "idEdicao": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "dataNascimento": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "telefone": {
+              "type": "string"
+            },
+            "rg": {
+              "type": "string"
+            },
+            "cpf": {
+              "type": "string"
+            },
+            "estado": {
+              "type": "string"
+            },
+            "cidade": {
+              "type": "string"
+            },
+            "pcd": {
+              "type": "string"
+            },
+            "observacoes": {
+              "type": "null"
+            },
+            "notaProva": {
+              "type": "integer"
+            },
+            "notaEntrevistaComportamental": {
+              "type": "integer"
+            },
+            "notaEntrevistaTecnica": {
+              "type": "integer"
+            },
+            "ativo": {
+              "type": "string"
+            },
+            "parecerComportamental": {
+              "type": "null"
+            },
+            "parecerTecnico": {
+              "type": "null"
+            },
+            "media": {
+              "type": "null"
+            },
+            "audDtCriacao": {
+              "type": "string"
+            },
+            "statusCandidato": {
+              "type": "string"
+            },
+            "preProvasUsuarioEntities": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "idCandidato",
+            "idEdicao",
+            "nome",
+            "dataNascimento",
+            "email",
+            "telefone",
+            "rg",
+            "cpf",
+            "estado",
+            "cidade",
+            "pcd",
+            "observacoes",
+            "notaProva",
+            "notaEntrevistaComportamental",
+            "notaEntrevistaTecnica",
+            "ativo",
+            "parecerComportamental",
+            "parecerTecnico",
+            "media",
+            "audDtCriacao",
+            "statusCandidato",
+            "preProvasUsuarioEntities"
+          ]
+        },
+        "gestorEntity": {
+          "type": "object",
+          "properties": {
+            "idGestor": {
+              "type": "integer"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "cidade": {
+              "type": "string"
+            },
+            "estado": {
+              "type": "string"
+            },
+            "ativo": {
+              "type": "string"
+            },
+            "genero": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "idGestor",
+            "nome",
+            "email",
+            "cidade",
+            "estado",
+            "ativo",
+            "genero"
+          ]
+        },
+        "dataEntrevista": {
+          "type": "string"
+        },
+        "horaInicio": {
+          "type": "string"
+        },
+        "horaFim": {
+          "type": "string"
+        },
+        "marcado": {
+          "type": "boolean"
+        },
+        "trilha": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idDisponibilidade",
+        "candidatoEntity",
+        "gestorEntity",
+        "dataEntrevista",
+        "horaInicio",
+        "horaFim",
+        "marcado",
+        "trilha"
+      ]
+    }
+  ]
+}

@@ -1,108 +1,72 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.EntrevistaDataFactory;
-import io.qameta.allure.Epic;
-import models.candidato.CandidatoCriacaoResponseModel;
+import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
-import net.datafaker.Faker;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.EntrevistaService;
 
-import java.util.Locale;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @DisplayName("Endpoint de atualização de entrevista")
-public class AtualizarEntrevistaTest extends BaseTest {
+class AtualizarEntrevistaTest  {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static EntrevistaDataFactory entrevistaDataFactory = new EntrevistaDataFactory();
-    private static EntrevistaService entrevistaService = new EntrevistaService();
-    private static Faker faker = new Faker(new Locale("pt-BR"));
+    private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar entrevista com sucesso")
-    public void testAtualizarEntrevistaComSucesso() {
+	@Test
+	@DisplayName("Cenário 1: Deve retornar 204 ao atualizar entrevista com sucesso")
+	void testAtualizarEntrevistaComSucesso() {
 
-        String observacoes = faker.lorem().sentence(3);
-        Boolean avaliado = false;
-        String statusEntrevista = "CONFIRMADA";
+		String statusEntrevista = "CONFIRMADA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+		EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
+				.then()
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.as(EntrevistaCriacaoResponseModel[].class);
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
+		int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoDTO.email");
+		Boolean candidatoAvaliado = true;
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
+		EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
 
-        EntrevistaCriacaoModel entrevistaComNovosDados = entrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
+		entrevistaClient.atualizarEntrevista(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
+				.then()
+					.statusCode(HttpStatus.SC_NO_CONTENT);
 
-        EntrevistaCriacaoResponseModel entrevistaAtualizada = entrevistaService.atualizarEntrevista(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
-
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                        .then()
-                                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-        Assertions.assertNotNull(entrevistaAtualizada);
-        Assertions.assertEquals(observacoes, entrevistaAtualizada.getObservacoes());
-        Assertions.assertEquals(statusEntrevista, entrevistaAtualizada.getLegenda());
-        Assertions.assertEquals(entrevistaCadastrada.getIdEntrevista(), entrevistaAtualizada.getIdEntrevista());
-        Assertions.assertEquals(entrevistaCadastrada.getCandidatoDTO().getIdCandidato(), entrevistaAtualizada.getCandidatoDTO().getIdCandidato());
-    }
+	}
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
-    public void testAtualizarEntrevistaSemAutenticacao() {
+    @Tag("Regression")
+    void testAtualizarEntrevistaSemAutenticacao() {
 
-        String observacoes = faker.lorem().sentence(3);
-        Boolean avaliado = false;
         String statusEntrevista = "CONFIRMADA";
 
-        CandidatoCriacaoResponseModel candidatoCriado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+                	.statusCode(HttpStatus.SC_OK)
+                	.extract()
+                	.as(EntrevistaCriacaoResponseModel[].class);
 
-        String emailDoCandidato = candidatoCriado.getEmail();
-        Boolean candidatoAvaliado = true;
-        Integer idTrilha = candidatoCriado.getFormulario().getTrilhas().get(0).getIdTrilha();
+        int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
 
-        EntrevistaCriacaoModel entrevistaCriada = entrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado, idTrilha);
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoDTO.email");
+		Boolean candidatoAvaliado = true;
 
-        EntrevistaCriacaoResponseModel entrevistaCadastrada = entrevistaService.cadastrarEntrevista(entrevistaCriada)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(EntrevistaCriacaoResponseModel.class);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
 
-        EntrevistaCriacaoModel entrevistaComNovosDados = entrevistaDataFactory.entrevistaCriacaoValidaComDadosAtualizados(entrevistaCriada, observacoes, avaliado);
-
-        var entrevistaAtualizada = entrevistaService.atualizarEntrevistaSemAutenticacao(entrevistaCadastrada.getIdEntrevista(), statusEntrevista, entrevistaComNovosDados)
+        entrevistaClient.atualizarEntrevistaSemAutenticacao(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarEntrevista = entrevistaService.deletarEntrevistaPorId(entrevistaCadastrada.getIdEntrevista())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

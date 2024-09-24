@@ -1,40 +1,41 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
+import client.candidato.CandidatoClient;
+import client.inscricao.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoListaResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.CandidatoService;
-import service.InscricaoService;
 
 @DisplayName("Endpoint de listagem de inscrições")
-public class ListarInscricaoTest extends BaseTest {
+class ListarInscricaoTest {
 
-    private static CandidatoService candidatoService = new CandidatoService();
-    private static InscricaoService inscricaoService = new InscricaoService();
+    private static final CandidatoClient candidatoClient = new CandidatoClient();
+    private static final InscricaoClient inscricaoClient = new InscricaoClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista inscrições com sucesso")
-    public void testListarInscricoesComSucesso() {
+    @Tag("Functional")
+    void testListarInscricoesComSucesso() {
 
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoService.criarECadastrarCandidatoComCandidatoEntity()
+        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(CandidatoCriacaoResponseModel.class);
 
 
-        InscricaoModel inscricaoCadastrada = inscricaoService.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
                 .then()
                     .statusCode(HttpStatus.SC_CREATED)
                     .extract()
                     .as(InscricaoModel.class);
 
-        InscricaoListaResponseModel listaInscricoes = inscricaoService.listaUltimaInscricao()
+        InscricaoListaResponseModel listaInscricoes = inscricaoClient.listaUltimaInscricao()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -42,7 +43,7 @@ public class ListarInscricaoTest extends BaseTest {
 
         InscricaoModel inscricaoListada = listaInscricoes.getElementos().get(0);
 
-        var deletarInscricao = inscricaoService.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
 

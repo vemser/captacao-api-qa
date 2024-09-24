@@ -1,66 +1,53 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.FormularioDataFactory;
+import client.formulario.FormularioClient;
+import factory.formulario.FormularioDataFactory;
 import models.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
-import models.formulario.JSONListaFormularioResponse;
-import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.FormularioService;
-import service.TrilhaService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @DisplayName("Endpoint de atualização de currículo do candidato")
-public class AtualizarCurriculoFormularioTest extends BaseTest {
+class AtualizarCurriculoFormularioTest{
 
-    private static FormularioService formularioService = new FormularioService();
-    private static FormularioDataFactory formularioDataFactory = new FormularioDataFactory();
-    private static TrilhaService trilhaService = new TrilhaService();
+    private static final FormularioClient formularioClient = new FormularioClient();
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao enviar currículo com sucesso")
-    public void testEnviarCurriculoComSucesso() {
+    @Tag("Regression")
+    void testEnviarCurriculoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaService.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+        listaDeNomeDeTrilhas.add("QA");
 
-        FormularioCriacaoModel formulario = formularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
-        FormularioCriacaoResponseModel formularioCriado = formularioService.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
-        formularioService.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario())
+                .then()
+                    .statusCode(HttpStatus.SC_OK);
+
+        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+
     }
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 404 ao enviar currículo para formulário não existente")
-    public void testEnviarCurriculoParaFormularioNaoExistente() {
+    @Tag("Regression")
+    void testEnviarCurriculoParaFormularioNaoExistente() {
 
-        Integer idUltimoFormulario = formularioService.listarNumDeFormulariosOrdemDecrescente(1)
-                        .then()
-                                .extract()
-                                .as(JSONListaFormularioResponse.class)
-                                .getElementos()
-                                .get(0)
-                                .getIdFormulario();
+        Integer idFormularioNaoExistente = 900000;
 
-        Integer idFormularioNaoExistente = idUltimoFormulario + 1000;
-
-        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioService.incluiCurriculoEmFormularioSemValidacao(idFormularioNaoExistente)
+        JSONFailureResponseWithoutArrayModel erroEnvioCurriculo = formularioClient.incluiCurriculoEmFormularioSemValidacao(idFormularioNaoExistente)
                 .then()
                     .statusCode(HttpStatus.SC_NOT_FOUND)
                     .extract()

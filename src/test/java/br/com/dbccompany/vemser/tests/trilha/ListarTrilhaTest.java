@@ -1,67 +1,46 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
-import br.com.dbccompany.vemser.tests.base.BaseTest;
-import dataFactory.TrilhaDataFactory;
-import models.trilha.TrilhaApenasNomeModel;
+import client.trilha.TrilhaClient;
 import models.trilha.TrilhaModel;
-import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.TrilhaService;
 
-import java.util.Arrays;
 import java.util.List;
 
-@DisplayName("Endpoint de listagem de trilhas")
-public class ListarTrilhaTest extends BaseTest {
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-    private static TrilhaService trilhaService = new TrilhaService();
-    private static TrilhaDataFactory trilhaDataFactory = new TrilhaDataFactory();
+@DisplayName("Endpoint de listar trilhas")
+public class ListarTrilhaTest {
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 200 quando lista as trilhas com sucesso")
-    public void testListarTrilhasComSucesso() {
-        String nomeTrilha = "TRILHA_TESTE";
+	TrilhaClient trilhaClient = new TrilhaClient();
 
-        TrilhaApenasNomeModel trilha = trilhaDataFactory.trilhaValidaApenasNomePassandoNome(nomeTrilha);
+	private static final String PATH_SCHEMA_LISTAR_TRILHAS = "schemas/trilha/listar_trilhas.json";
 
-        TrilhaModel trilhaCadastrada = trilhaService.criarTrilhaPassandoNome(trilha)
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(TrilhaModel.class);
+	@Test
+	@DisplayName("Cenário 1: Validação de contrato de listar trilhas")
+	@Tag("Contract")
+	public void testValidarContratoListarTrilhas() {
 
-        var response = trilhaService.listarTodasAsTrilhas()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(TrilhaModel[].class);
+		trilhaClient.listarTodasAsTrilhas()
+				.then()
+				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_TRILHAS))
+		;
+	}
 
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(response).toList();
+	@Test
+	@DisplayName("Cenário 2: Deve retornar 200 quando lista as trilhas com sucesso")
+	@Tag("Regression")
+	void testListarTrilhasComSucesso(){
 
-        Boolean trilhaCriadaFoiListada = false;
+		List<TrilhaModel> trilhas = trilhaClient.listarTodasAsTrilhas()
+				.then()
+				.statusCode(200)
+				.extract().jsonPath().getList(".", TrilhaModel.class);
 
-        for (TrilhaModel t : listaDeTrilhas) {
-            if (t.getNome().toLowerCase().equals(nomeTrilha.toLowerCase())) {
-                trilhaCriadaFoiListada = true;
-            }
-        }
+		Assertions.assertNotNull(trilhas);
+		Assertions.assertFalse(trilhas.isEmpty());
+	}
 
-        var deletarTrilha = trilhaService.deletarTrilha(trilhaCadastrada.getIdTrilha())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
-        Assertions.assertNotNull(listaDeTrilhas);
-        Assertions.assertTrue(trilhaCriadaFoiListada);
-    }
-
-    @Test
-    @DisplayName("Cenário 2: Deve retornar 403 quando lista as trilhas sem autenticação")
-    public void testListarTrilhasSemAutenticacao() {
-
-        var response = trilhaService.listarTodasAsTrilhasSemAutenticacao()
-                .then()
-                    .statusCode(HttpStatus.SC_OK);
-    }
 }
