@@ -2,6 +2,7 @@ package client.inscricao;
 
 import client.auth.AuthClient;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import specs.inscricao.InscricaoSpecs;
 import utils.auth.Auth;
 
@@ -16,6 +17,7 @@ public class InscricaoClient {
     public static final String INSCRICAO_ID_INSCRICAO = "/inscricao/{idInscricao}";
     public static final String INSCRICAO = "/inscricao";
     public static final String INSCRICAO_FIND_BY_ID_INSCRICAO = "/inscricao/find-by-idInscricao";
+    public static final String INSCRICAO_FILTRAR = "inscricao/filtro-inscricao";
 
     public Response cadastrarInscricao(Integer idCandidato) {
         Auth.usuarioGestaoDePessoas();
@@ -96,5 +98,30 @@ public class InscricaoClient {
                         .queryParam("id", idInscricao)
                 .when()
                         .get(INSCRICAO_FIND_BY_ID_INSCRICAO);
+    }
+
+    public Response filtrarInscricao(String pagina, String tamanho, String email, String edicao, String trilha, boolean isCondicaoTokenValido){
+        String token = inserirToken(isCondicaoTokenValido);
+        Response response =
+                given()
+                        .spec(InscricaoSpecs.authReqSpec())
+                        .header(AUTHORIZATION, token)
+                        .queryParam("pagina", pagina)
+                        .queryParam("tamanho", tamanho)
+                        .queryParam("email", email)
+                        .queryParam("edicao", edicao)
+                        .queryParam("trilha", trilha)
+                .when()
+                        .get(INSCRICAO_FILTRAR);
+        return response;
+    }
+
+    private String inserirToken(boolean isCondicaoInserirTokenValido){
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
+        return token;
     }
 }
