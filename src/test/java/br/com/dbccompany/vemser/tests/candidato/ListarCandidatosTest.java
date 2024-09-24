@@ -6,6 +6,7 @@ import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -17,6 +18,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e lista contendo 20 elementos com sucesso")
+    @Tag("Regression")
     void testListarTodosOsCandidatos() {
 
         Integer tamanho = 20;
@@ -54,6 +56,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de listagem de candidatos no sistema")
+    @Tag("Regression")
     void testValidarContratoListarCandidatos() {
 
         candidatoClient.listarTodosOsCandidatos(0, 20)
@@ -64,6 +67,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 200 e body deve conter 10 candidatos")
+    @Tag("Regression")
     void testListarDezCandidatos() {
 
         Integer tamanhoPadraoLista = 10;
@@ -82,6 +86,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando é passado quantidade negativa de candidatos")
+    @Tag("Regression")
     void testListarCandidatosComTamanhoInvalido() {
         Integer numDeCandidatos = -5;
 
@@ -98,6 +103,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 5: Deve retornar 400 quando é passado quantidade de candidatos como string")
+    @Tag("Regression")
     void testListarCandidatosComTamanhoString() {
         String numDeCandidatos = "abc";
 

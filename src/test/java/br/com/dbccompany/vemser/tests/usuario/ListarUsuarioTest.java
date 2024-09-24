@@ -7,6 +7,7 @@ import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,8 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ListarUsuarioTest {
     private final UsuarioClient usuarioClient = new UsuarioClient();
     private final Faker faker = new Faker();
+
     @Test
     @DisplayName("Cenário 1: Deve listar todos os gestores")
+    @Tag("Regression")
     public void testDeveListarTodosGestores(){
         UsuarioListarResponseModel listarTodoUsuario = usuarioClient.listarGestores(true)
                 .then()
@@ -35,6 +38,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 2: Deve listar gestor por id")
+    @Tag("Regression")
     public void testDeveListarGestorPorId(){
         UsuarioModel usuarioEncontrado = usuarioClient.listarGestorPorId( "1", true)
                 .then()
@@ -51,6 +55,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 3: Deve listar todas as contas inativas")
+    @Tag("Regression")
     public void testDeveListarTodaContaInativa(){
         usuarioClient.desativarContaGestor("3", true);
         List<UsuarioModel> listaTodoUsuarioInativo = usuarioClient.listarTodoGestorInativo(true)
@@ -64,6 +69,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 4: Deve listar os dados do usuário logado")
+    @Tag("Functional")
     public void testDeveListarDadosUsuarioLogado(){
         UsuarioModel usuarioLogado = usuarioClient.listarDadosMe(true)
                 .then()
@@ -80,6 +86,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenrário 5: Tentar listar gestor com id nulo")
+    @Tag("Regression")
     public void testTentarListarGestorComIdNulo(){
         usuarioClient.listarGestorPorId(StringUtils.EMPTY, true)
                 .then()
@@ -88,6 +95,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 6: Tentar listar gestor com id negativo")
+    @Tag("Regression")
     public void testTentarListarGestorComIdNegativo(){
         usuarioClient.listarGestorPorId( String.valueOf(faker.number().numberBetween(-100, -1)), true)
                 .then()
@@ -97,6 +105,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 7: Tentar listar todo gestor com token inválido")
+    @Tag("Regression")
     public void testTentarListarTodoGestorComTokenInvalido(){
         usuarioClient.listarGestores(false)
                 .then()
@@ -105,6 +114,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 8: Tentar listar gestor por id com token inválido")
+    @Tag("Regression")
     public void testTentarListarGestorPorIdComTokenInvalido(){
         usuarioClient.listarGestorPorId( "1", false)
                 .then()
@@ -113,6 +123,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 9: Tentar listar contas inativas com token inválido")
+    @Tag("Regression")
     public void testTentarListarContaInativaComTokenInvalido(){
         usuarioClient.listarTodoGestorInativo(false)
                 .then()
@@ -121,6 +132,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 10: Validar schema listar todo gestor")
+    @Tag("Regression")
     public void testValidarSchemaListarTodoGestor(){
         usuarioClient.listarGestores(true)
                 .then()
@@ -130,6 +142,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 11: Validar schema listar gestor por id")
+    @Tag("Regression")
     public void testValidarSchemaListarGestorPorId(){
         usuarioClient.listarGestorPorId( "1", true)
                 .then()
@@ -139,6 +152,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 12: Validar schema listar todo gestor inativo")
+    @Tag("Regression")
     public void testValidarSchemaListarTodoGestorInativo(){
         usuarioClient.listarTodoGestorInativo(true)
                 .then()
@@ -148,6 +162,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 13: Tentar listar os dados do usuário logado sem token")
+    @Tag("Regression")
     public void testTentarListarDadosUsuarioLogadoSemToken(){
         usuarioClient.listarDadosMe(false)
                 .then()

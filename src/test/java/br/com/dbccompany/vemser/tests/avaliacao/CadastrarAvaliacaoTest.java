@@ -12,6 +12,7 @@ import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -29,6 +30,7 @@ class CadastrarAvaliacaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve cadastrar avaliação com sucesso")
+    @Tag("Functional")
     public void testCadastrarAvaliacaoComSucesso() {
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -59,6 +61,7 @@ class CadastrarAvaliacaoTest {
 
     @Test
     @DisplayName("Cenário 2: Tentar cadastrar avaliação sem autenticação")
+    @Tag("Regression")
     public void testTentarCadastrarAvaliacaoSemAutenticacao() {
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -82,6 +85,7 @@ class CadastrarAvaliacaoTest {
 
     @Test
     @DisplayName("Cenário 3: Tentar cadastrar avaliação com id de inscrição negativo")
+    @Tag("Regression")
     public void testTentarCadastrarAvaliacaoComIdInscricaoNegativo(){
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -100,6 +104,7 @@ class CadastrarAvaliacaoTest {
 
     @Test
     @DisplayName("Cenário 4: Validar schema cadastrar avaliação")
+    @Tag("Functional")
     public void testValidarSchemaCadastrarAvaliacao(){
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()

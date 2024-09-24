@@ -112,6 +112,7 @@ class AtualizarFormularioTest{
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 200 ao realizar upload de comprovante de matricula com sucesso")
+    @Tag("Regression")
     void testUploadComprovanteMatriculaComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

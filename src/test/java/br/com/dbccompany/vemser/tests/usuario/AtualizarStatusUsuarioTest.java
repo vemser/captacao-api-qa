@@ -45,6 +45,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 3: Tentar atualizar status para desativo do gestor com id negativo")
+    @Tag("Regression")
     public void testTentarAtualizarStatusDesativoGestorPorIdNegativo(){
         usuarioClient.desativarContaGestor(String.valueOf(faker.number().numberBetween(-100, -1)), true)
                 .then()
@@ -63,6 +64,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 5: Validar schema desativar gestor")
+    @Tag("Regression")
     public void testValidarSchemaDesativarGestor(){
         usuarioClient.desativarContaGestor( "3", true)
                 .then()

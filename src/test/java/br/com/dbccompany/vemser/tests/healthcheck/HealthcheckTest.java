@@ -12,11 +12,11 @@ public class HealthcheckTest {
 
     @Test
     @DisplayName("Cenário 1: Healthcheck API")
-    @Tag("Regression")
+    @Tag("Health-Check")
     public void testValidarHealthcheck() {
 
         healthcheckClient.healthcheck()
-                .then()
+            .then()
                 .statusCode(200);
         ;
     }

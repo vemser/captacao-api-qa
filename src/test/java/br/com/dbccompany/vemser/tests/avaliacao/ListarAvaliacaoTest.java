@@ -87,6 +87,7 @@ class ListarAvaliacaoTest{
 
     @Test
     @DisplayName("Cenário 3: Validar schema listar toda avaliação")
+    @Tag("Regression")
     public void testValidarSchemaListarTodaAvaliacao(){
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()

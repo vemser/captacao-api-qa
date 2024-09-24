@@ -32,6 +32,7 @@ class DeletarEdicaoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar edição sem autenticação")
+    @Tag("Regression")
     void testDeletarEdicaoSemAutenticacao() {
 
         EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();

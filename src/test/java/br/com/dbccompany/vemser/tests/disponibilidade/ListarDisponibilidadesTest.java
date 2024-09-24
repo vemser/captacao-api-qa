@@ -66,6 +66,7 @@ public class ListarDisponibilidadesTest {
 
 	@Test
 	@DisplayName("Cenário 3: Deve listar toda disponibilidade por data com sucesso")
+	@Tag("Functional")
 	public void testDeveListarTodaDisponibilidadePorDataComSucesso(){
 		disponibilidadeClient.listarPorData(disponibilidadeCadastrada.get(0).getDataEntrevista(), true)
 				.then()
@@ -84,6 +85,7 @@ public class ListarDisponibilidadesTest {
 
 	@Test
 	@DisplayName("Cenário 5: Tentar listar toda disponibilidade por data sem token")
+	@Tag("Regression")
 	public void testTentarListarTodaDispoonibilidadePorDataSemToken(){
 		disponibilidadeClient.listarPorData(disponibilidadeCadastrada.get(0).getDataEntrevista(), false)
 				.then()

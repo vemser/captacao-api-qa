@@ -12,6 +12,7 @@ import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -23,8 +24,10 @@ class DeletarAvaliacaoTest{
     private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final FormularioClient formularioClient = new FormularioClient();
+
     @Test
     @DisplayName("Cenário 1: Deve deletar avaliação com sucesso")
+    @Tag("Functional")
     public void testDeveDeletarAvaliacaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -54,6 +57,7 @@ class DeletarAvaliacaoTest{
 
     @Test
     @DisplayName("Cenário 2: Tentar deletar avaliação sem autenticação")
+    @Tag("Functional")
     public void testTentarDeletarAvaliacaoSemAutenticacao() {
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
                 .then()
@@ -82,6 +86,7 @@ class DeletarAvaliacaoTest{
 
     @Test
     @DisplayName("Cenário 3: Tentar deletar avaliação com id de avaliação negativo")
+    @Tag("Regression")
     public void testTentarDeletarAvaliacaoIdAvaliacaoNegativo(){
         avaliacaoClient.deletarAvaliacao(-1, true)
                 .then()

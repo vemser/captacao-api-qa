@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -19,6 +20,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de atualizar nota de corte")
+	@Tag("Regression")
 	public void testContratoAtualizarNotaDeCorte() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
@@ -31,6 +33,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 2: Deve retornar 200 ao atualizar nota de corte com sucesso")
+	@Tag("Regression")
 	public void testAtualizarNotaDeCorteComSucesso() {
 
 		EdicaoModel edicao = EdicaoDataFactory.notaDeCorte();
@@ -45,6 +48,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 3: Deve retornar 200 ao atualizar nota de corte com sucesso")
+	@Tag("Regression")
 	public void testAtualizarNotaDeCorteSemAutenticacao() {
 
 		EdicaoModel edicao = EdicaoDataFactory.notaDeCorte();
@@ -56,6 +60,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 4: Deve retornar 400 ao atualizar nota de corte com valor inválido")
+	@Tag("Regression")
 	public void testAtualizarNotaDeCorteInvalida() {
 
 		EdicaoModel edicao = EdicaoDataFactory.notaDeCorteAcimaDeCem();
@@ -69,6 +74,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 5: Deve retornar 400 ao tentar atualizar nota de corte com valor negativo")
+	@Tag("Regression")
 	public void testAtualizarNotaDeCorteNegativa() {
 
 		EdicaoModel edicao = EdicaoDataFactory.notaDeCorteNegativa();

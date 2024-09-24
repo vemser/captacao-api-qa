@@ -20,6 +20,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 e cadastrar candidato com sucesso")
+    @Tag("Regression")
     void testCadastrarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -91,6 +93,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de cadastro de candidatos no sistema")
+    @Tag("Regression")
     void testValidarContratoCadastrarCandidatos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -129,6 +132,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 quando tenta cadastrar candidato com nome nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoSemNome() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -165,6 +169,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando tenta cadastrar candidato com nome em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComNomeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -202,6 +207,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 5: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento no futuro")
+    @Tag("Regression")
     void testCadastrarCandidatoComDataNascimentoNoFuturo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -238,6 +244,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 6: Deve retornar 400 quando tenta cadastrar candidato com menos de 16 anos")
+    @Tag("Regression")
     void testCadastrarCandidatoComMenosDeDezesseisAnos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -274,6 +281,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 7: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento nula")
+    @Tag("Regression")
     void testCadastrarCandidatoComDataDeNascimentoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -310,6 +318,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 8: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComDataDeNascimentoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -346,6 +355,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 9: Deve retornar 400 quando tenta cadastrar candidato com data de nascimento inválida")
+    @Tag("Regression")
     void testCadastrarCandidatoComDataDeNascimentoInvalida() {
         RestAssured.defaultParser = Parser.JSON;
 
@@ -420,6 +430,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 11: Deve retornar 400 quando tenta cadastrar candidato com e-mail sem domínio")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailSemDominio() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -457,6 +468,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 12: Deve retornar 400 quando tenta cadastrar candidato com e-mail inválido")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -494,6 +506,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 13: Deve retornar 400 quando tenta cadastrar candidato com e-mail já cadastrado na mesma edição")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailJaCadastrado() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
@@ -519,6 +532,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 14: Deve retornar 400 quando tenta cadastrar candidato com e-mail em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -561,6 +575,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 15: Deve retornar 400 quando tenta cadastrar candidato com telefone nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComTelefoneNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -597,6 +612,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 16: Deve retornar 400 quando tenta cadastrar candidato com telefone em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComTelefoneEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -634,6 +650,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 17: Deve retornar 400 quando tenta cadastrar candidato com rg nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComRgNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -670,6 +687,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 18: Deve retornar 400 quando tenta cadastrar candidato com rg em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComRgEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -711,6 +729,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 19: Deve retornar 400 quando tenta cadastrar candidato com rg com mais de 13 caracteres")
+    @Tag("Regression")
     void testCadastrarCandidatoComRgMaiorQueTrintaCaracteres() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -747,6 +766,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 20: Deve retornar 400 quando tenta cadastrar candidato com cpf nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComCpfNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -783,6 +803,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 21: Deve retornar 400 quando tenta cadastrar candidato com cpf em branco")
+    @Tag("Functional")
     void testCadastrarCandidatoComCpfEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -823,6 +844,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 22: Deve retornar 400 quando tenta cadastrar candidato com cpf inválido")
+    @Tag("Regression")
     void testCadastrarCandidatoComCpfInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -859,6 +881,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 23: Deve retornar 400 quando tenta cadastrar candidato com cpf já cadastrado")
+    @Tag("Functional")
     void testCadastrarCandidatoComCpfJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -884,6 +907,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 24: Deve retornar 400 quando tenta cadastrar candidato com estado nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComEstadoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -920,6 +944,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 25: Deve retornar 400 quando tenta cadastrar candidato com estado em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComEstadoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -956,6 +981,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 26: Deve retornar 400 quando tenta cadastrar candidato com cidade nula")
+    @Tag("Regression")
     void testCadastrarCandidatoComCidadeNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -992,6 +1018,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 27: Deve retornar 400 quando tenta cadastrar candidato com cidade em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComCidadeEmBranco() {
 
 		List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1029,8 +1056,9 @@ class CadastrarCandidatoTest{
 						));
 	}
 
-		@Test
+    @Test
     @DisplayName("Cenário 28: Deve retornar 400 quando tenta cadastrar candidato com pcd nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComPcdNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1067,6 +1095,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 29: Deve retornar 400 quando tenta cadastrar candidato com pcd em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComPcdEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1103,6 +1132,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 30: Deve retornar 400 quando tenta cadastrar candidato com ativo nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComAtivoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1139,6 +1169,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 31: Deve retornar 400 quando tenta cadastrar candidato com ativo em branco")
+    @Tag("Regression")
     void testCadastrarCandidatoComAtivoEmBranco() {
         RestAssured.defaultParser = Parser.JSON;
 
@@ -1176,6 +1207,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 32: Deve retornar 400 quando tenta cadastrar candidato com lista nula de linguagem")
+    @Tag("Regression")
     void testCadastrarCandidatoComListaNulaDeLinguagem() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1211,6 +1243,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 33: Deve retornar 400 quando tenta cadastrar candidato com edicão nula")
+    @Tag("Regression")
     void testCadastrarCandidatoComEdicaoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1241,6 +1274,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 34: Deve retornar 400 quando tenta cadastrar candidato com edicão não existente")
+    @Tag("Regression")
     void testCadastrarCandidatoComEdicaoNaoExistente() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1272,6 +1306,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 35: Deve retornar 400 quando tenta cadastrar candidato com id formulário nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComIdFormularioNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -1305,6 +1340,7 @@ class CadastrarCandidatoTest{
 
     @Test
     @DisplayName("Cenário 36: Deve retornar 404 quando tenta cadastrar candidato com id formulário não cadastrado")
+    @Tag("Regression")
     void testCadastrarCandidatoComIdFormularioNaoCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

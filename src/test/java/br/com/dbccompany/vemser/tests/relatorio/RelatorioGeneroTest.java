@@ -21,6 +21,7 @@ class RelatorioGeneroTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por genero")
+    @Tag("Functional")
     public void testValidarContratoListarRelatoriosPorGenero() {
         relatorioClient.listarCandidatosGenero()
                 .then()

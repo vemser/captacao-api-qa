@@ -21,6 +21,7 @@ class RelatorioEstadoTest  {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por estado")
+    @Tag("Regression")
     public void testValidarContratoListarRelatoriosPorEstado() {
         relatorioClient.listarCandidatosEstado()
                 .then()

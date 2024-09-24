@@ -8,6 +8,7 @@ import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de listagem de inscrições")
@@ -18,6 +19,7 @@ class ListarInscricaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando lista inscrições com sucesso")
+    @Tag("Functional")
     void testListarInscricoesComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()

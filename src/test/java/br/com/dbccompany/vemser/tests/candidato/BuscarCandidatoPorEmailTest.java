@@ -16,6 +16,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando busca candidato por email com sucesso")
+    @Tag("Regression")
     void testBuscarCandidatoPorEmailComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -95,6 +97,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de busca de candidatos por email no sistema")
+    @Tag("Regression")
     void testValidarContratoBuscarCandidatoPorEmail() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -137,6 +140,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 403 quando busca candidato por email sem autenticação")
+    @Tag("Regression")
     void testBuscarCandidatoPorEmailSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -176,6 +180,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando busca candidato com email inválido")
+    @Tag("Regression")
     void testBuscarCandidatoPorEmailInvalido() {
 
         String emailInvalido = "invalido@email.com";
@@ -191,6 +196,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 4: Deve retornar 400 quando busca candidato com email vazio")
+    @Tag("Regression")
     void testBuscarCandidatoPorEmailVazio() {
 
         String emailVazio = "";

@@ -14,6 +14,7 @@ class ListarUltimaEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve retornar 200 ao listar a última edição com sucesso")
+	@Tag("Regression")
 	void testListarUltimaEdicaoComSucesso() {
 
 		edicaoClient.listaEdicaoAtualAutenticacao()

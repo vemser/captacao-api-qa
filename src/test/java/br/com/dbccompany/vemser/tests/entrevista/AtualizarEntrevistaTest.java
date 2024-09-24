@@ -7,6 +7,7 @@ import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Endpoint de atualização de entrevista")
@@ -16,6 +17,7 @@ class AtualizarEntrevistaTest  {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
+    @Tag("Regression")
     void testAtualizarEntrevistaSemAutenticacao() {
 
         String statusEntrevista = "CONFIRMADA";

@@ -19,6 +19,7 @@ class CadastrarEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de cadastrar edição")
+	@Tag("Regression")
 	public void testValidarContraroCadastrarEdicao() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
@@ -31,6 +32,7 @@ class CadastrarEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 2: Deve retornar 201 ao cadastrar edição com sucesso")
+	@Tag("Regression")
 	void testCadastrarEdicaoComSucesso() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();

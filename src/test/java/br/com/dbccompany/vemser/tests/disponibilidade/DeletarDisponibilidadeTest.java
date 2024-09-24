@@ -27,6 +27,7 @@ public class DeletarDisponibilidadeTest {
 
     @Test
     @DisplayName("Cenário 1: Deve deletar disponibilidade com sucesso")
+    @Tag("Functional")
     public void testDeveDeletarDisponibilidadeComSucesso(){
         disponibilidadeClient.deletarDisponibilidade(String.valueOf(disponibilidadeCadastrada.get(0).getIdDisponibilidade()), true)
                 .then()
@@ -35,6 +36,7 @@ public class DeletarDisponibilidadeTest {
 
     @Test
     @DisplayName("Cenário 2: Tentar deletar disponibilidade sem token")
+    @Tag("Functional")
     public void testTentarDeletarDisponibilidadeSemToken(){
         disponibilidadeClient.deletarDisponibilidade(String.valueOf(disponibilidadeCadastrada.get(0).getIdDisponibilidade()), false)
                 .then()

@@ -16,6 +16,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ class DeletarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar candidato com sucesso")
+    @Tag("Functional")
     void testDeletarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -67,6 +69,7 @@ class DeletarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar candidato sem autenticação")
+    @Tag("Regression")
     void testDeletarCandidatoSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -107,6 +110,7 @@ class DeletarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 ao deletar candidato com id invalido")
+    @Tag("Regression")
     void testDeletarCandidatoComIDInvalido() {
 
         candidatoClient.deletarCandidato(0)

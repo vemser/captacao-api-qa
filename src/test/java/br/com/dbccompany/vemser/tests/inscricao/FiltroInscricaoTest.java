@@ -8,10 +8,8 @@ import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoListaResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,6 +45,7 @@ public class FiltroInscricaoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve filtrar inscrição com sucesso")
+    @Tag("Regression")
     public void testDeveFiltrarInscricaoComSucesso(){
         InscricaoListaResponseModel filtroInscricao = inscricaoClient.filtrarInscricao("0",
                 "10",
@@ -64,6 +63,7 @@ public class FiltroInscricaoTest {
 
     @Test
     @DisplayName("Cenário 2: Tentar filtrar inscrição sem token")
+    @Tag("Regression")
     public void testTentarFiltrarInscricaoSemToken(){
         inscricaoClient.filtrarInscricao("0",
                         "10",

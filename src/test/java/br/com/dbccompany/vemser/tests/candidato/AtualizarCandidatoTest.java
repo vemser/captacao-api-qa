@@ -17,6 +17,7 @@ import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ class AtualizarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 ao atualizar candidato com sucesso")
+    @Tag("Regression")
     void testAtualizarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
@@ -81,6 +83,7 @@ class AtualizarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao atualizar candidato sem autenticação")
+    @Tag("Functional")
     void testAtualizarCandidatoSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
