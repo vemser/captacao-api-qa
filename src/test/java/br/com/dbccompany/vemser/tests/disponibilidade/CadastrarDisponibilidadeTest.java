@@ -1,7 +1,6 @@
 package br.com.dbccompany.vemser.tests.disponibilidade;
 
 import client.disponibilidade.DisponibilidadeClient;
-import client.usuario.UsuarioClient;
 import factory.disponibilidade.DisponibilidadeDataFactory;
 import models.JSONFailureResponseWithArrayModel;
 import models.JSONFailureResponseWithoutArrayModel;

@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listagem de entrevistas por trilha")
 class ListarEntrevistaPorTrilhaTest {
+
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
     private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS = "schemas/entrevista/listar_entrevistas.json";
     public static final String TRILHA_VALIDA = "QA";
@@ -24,7 +25,7 @@ class ListarEntrevistaPorTrilhaTest {
 
         entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
                 .then()
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
+                	.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
         ;
     }
 
@@ -33,7 +34,7 @@ class ListarEntrevistaPorTrilhaTest {
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaComSucesso() {
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
+        entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_VALIDA)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -45,7 +46,7 @@ class ListarEntrevistaPorTrilhaTest {
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaNaoExistente() {
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_NAO_EXISTENTE)
+       entrevistaClient.listarTodasAsEntrevistasPorTrilha(TRILHA_NAO_EXISTENTE)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(equalTo("[]"));
@@ -56,7 +57,7 @@ class ListarEntrevistaPorTrilhaTest {
     @Tag("Regression")
     void testListarEntrevistasPorTrilhaSemAutenticacao() {
 
-        var lista = entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(TRILHA_VALIDA)
+        entrevistaClient.listarTodasAsEntrevistasPorTrilhaSemAutenticacao(TRILHA_VALIDA)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
     }

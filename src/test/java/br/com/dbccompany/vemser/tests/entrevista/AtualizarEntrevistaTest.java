@@ -2,6 +2,7 @@ package br.com.dbccompany.vemser.tests.entrevista;
 
 import client.entrevista.EntrevistaClient;
 import factory.entrevista.EntrevistaDataFactory;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
@@ -13,7 +14,6 @@ class AtualizarEntrevistaTest  {
 
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
-
     @Test
     @DisplayName("Cenário 1: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
     void testAtualizarEntrevistaSemAutenticacao() {
@@ -22,16 +22,17 @@ class AtualizarEntrevistaTest  {
 
         EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(EntrevistaCriacaoResponseModel[].class);
+                	.statusCode(HttpStatus.SC_OK)
+                	.extract()
+                	.as(EntrevistaCriacaoResponseModel[].class);
 
         int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
 
-        String emailDoCandidato = "email@email.com";
-        Boolean candidatoAvaliado = true;
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoDTO.email");
+		Boolean candidatoAvaliado = true;
 
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailDoCandidato, candidatoAvaliado);
+        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
 
         entrevistaClient.atualizarEntrevistaSemAutenticacao(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
                 .then()

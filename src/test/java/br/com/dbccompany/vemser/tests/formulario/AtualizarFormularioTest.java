@@ -131,7 +131,6 @@ class AtualizarFormularioTest{
         formularioClient.incluiComprovanteMatriculaComValidacao(formularioCriado.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .log().all()
         ;
     }
 }

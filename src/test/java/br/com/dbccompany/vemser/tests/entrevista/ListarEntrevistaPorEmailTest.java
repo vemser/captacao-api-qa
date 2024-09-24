@@ -1,6 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
 import client.entrevista.EntrevistaClient;
+import factory.entrevista.EntrevistaDataFactory;
+import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +24,10 @@ class ListarEntrevistaPorEmailTest {
 	@Tag("Contract")
 	public void testValidarContratoListarEntrevistasPorEmail() {
 
-		entrevistaClient.listarTodasAsEntrevistasPorEmail("email@mail.com")
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoEmail");
+
+		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
 				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL))
 		;
@@ -33,20 +38,25 @@ class ListarEntrevistaPorEmailTest {
 	@Tag("Regression")
 	void testListaEntrevistaPorEmailComSucesso() {
 
-		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail("email@mail.com")
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String emailEntrevista = response.path("[0].candidatoEmail");
+
+		System.out.println(emailEntrevista);
+		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
-				.statusCode(HttpStatus.SC_OK)
-				.extract()
-				.as(EntrevistaCriacaoResponseModel.class);
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.as(EntrevistaCriacaoResponseModel.class);
 
 		Assertions.assertNotNull(entrevista);
-		Assertions.assertEquals("email@mail.com", entrevista.getCandidatoEmail());
+		Assertions.assertEquals(emailEntrevista, entrevista.getCandidatoEmail());
 	}
 
 	@Test
   	@DisplayName("Cenário 3: Deve retornar 403 ao buscar entrevista por email do candidato sem autenticação")
 	@Tag("Regression")
     void testListaEntrevistaPorEmailSemAutenticacao() {
+
         String emailDoCandidato = Email.getEmail();
 
         entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)

@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static factory.edicao.EdicaoDataFactory.EdicaoCadastrada;
 import static utils.config.Tools.removerCaracteresEspeciais;
 
 public class CandidatoDataFactory {
