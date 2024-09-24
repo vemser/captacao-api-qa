@@ -48,4 +48,12 @@ public class EntrevistaDataFactory {
 					.extract()
 					.response();
 	}
+
+	public static String gerarObservacao() {
+		return faker.lorem().sentence(4);
+	}
+
+	public static Integer idEntrevistaEnexistente() {
+		return faker.number().numberBetween(5000, 10000);
+	}
 }
