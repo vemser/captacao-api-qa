@@ -814,6 +814,7 @@ class CadastrarCandidatoTest{
 		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
+        Assertions.assertEquals("cpf: invalid Brazilian individual taxpayer registry number (CPF)", erroCadastroCandidato.getErrors().get(0));
 		Assertions.assertTrue(
 				erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("cpf: O cpf deve ser preenchido.") ||
 				erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("cpf: invalid Brazilian individual taxpayer registry number (CPF)")
