@@ -3,6 +3,7 @@ package br.com.dbccompany.vemser.tests.usuario;
 import client.auth.AuthClient;
 import client.usuario.UsuarioClient;
 import io.restassured.response.Response;
+import models.usuario.UsuarioModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,7 @@ import utils.auth.Auth;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Endpoint de listar usuário")
 public class ListarUsuarioTest {
@@ -61,7 +61,23 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenrário 4: Tentar listar gestor com id nulo")
+    @DisplayName("Cenário 4: Deve listar os dados do usuário logado")
+    public void testDeveListarDadosUsuarioLogado(){
+        UsuarioModel usuarioLogado = usuarioClient.listarDadosMe(true)
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(UsuarioModel.class);
+        assertAll(
+                () -> assertNotNull(usuarioLogado),
+                () -> assertNotNull(usuarioLogado.getCargosDto()),
+                () -> assertNotNull(usuarioLogado.getEmail()),
+                () -> assertNotNull(usuarioLogado.getIdGestor())
+        );
+    }
+
+    @Test
+    @DisplayName("Cenrário 5: Tentar listar gestor com id nulo")
     @Tag("Regression")
     public void testTentarListarGestorComIdNulo(){
         usuarioClient.listarGestorPorId(AuthClient.getToken(), StringUtils.EMPTY)
@@ -70,7 +86,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 5: Tentar listar gestor com id negativo")
+    @DisplayName("Cenário 6: Tentar listar gestor com id negativo")
     @Tag("Regression")
     public void testTentarListarGestorComIdNegativo(){
         usuarioClient.listarGestorPorId(AuthClient.getToken(), "-1")
@@ -80,7 +96,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 6: Tentar listar todo gestor com token inválido")
+    @DisplayName("Cenário 7: Tentar listar todo gestor com token inválido")
     @Tag("Regression")
     public void testTentarListarTodoGestorComTokenInvalido(){
         usuarioClient.listarGestores(StringUtils.EMPTY)
@@ -89,7 +105,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 7: Tentar listar gestor com token inválido")
+    @DisplayName("Cenário 8: Tentar listar gestor com token inválido")
     @Tag("Regression")
     public void testTentarListarGestorComTokenInvalido(){
         usuarioClient.listarGestorPorId(StringUtils.EMPTY, "1")
@@ -98,7 +114,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 8: Tentar listar contas inativas com token inválido")
+    @DisplayName("Cenário 9: Tentar listar contas inativas com token inválido")
     @Tag("Regression")
     public void testTentarListarContaInativaComTokenInvalido(){
         usuarioClient.listarTodoGestorInativo(StringUtils.EMPTY)
@@ -107,7 +123,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 9: Validar schema listar todo gestor")
+    @DisplayName("Cenário 10: Validar schema listar todo gestor")
     public void testValidarSchemaListarTodoGestor(){
         usuarioClient.listarGestores(AuthClient.getToken())
                 .then()
@@ -116,7 +132,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 10: Validar schema listar gestor por id")
+    @DisplayName("Cenário 11: Validar schema listar gestor por id")
     public void testValidarSchemaListarGestorPorId(){
         usuarioClient.listarGestorPorId(AuthClient.getToken(), "1")
                 .then()
@@ -125,7 +141,7 @@ public class ListarUsuarioTest {
     }
 
     @Test
-    @DisplayName("Cenário 10: Validar schema listar todo gestor inativo")
+    @DisplayName("Cenário 12: Validar schema listar todo gestor inativo")
     public void testValidarSchemaListarTodoGestorInativo(){
         usuarioClient.listarTodoGestorInativo(AuthClient.getToken())
                 .then()
