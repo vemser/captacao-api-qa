@@ -17,8 +17,6 @@ public class FormularioDataFactory {
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final Random random = new Random();
-    private static final List<String> turnosValidos = Arrays.asList("MANHA", "TARDE", "NOITE");
-    private static final List<String> etniasValidas = Arrays.asList("AMARELO", "BRANCO", "INDIGENA", "PARDO", "PRETO", "NAO_DECLARADO");
 
     public static FormularioCriacaoModel formularioValido(List<String> trilhas) {
 
@@ -86,7 +84,7 @@ public class FormularioDataFactory {
         FormularioCriacaoModel formulario = new FormularioCriacaoModel();
         formulario.setMatriculadoBoolean(true);
         formulario.setCurso(Tools.removerCaracteresEspeciais(faker.educator().course()));
-        formulario.setTurno(turnosValidos.get(random.nextInt(turnosValidos.size())));
+        formulario.setTurno("NOITE");
         formulario.setInstituicao(Tools.removerCaracteresEspeciais(faker.university().name()));
         formulario.setGithub(githubUrl);
         formulario.setLinkedin(linkedinUrl);
@@ -100,10 +98,9 @@ public class FormularioDataFactory {
         formulario.setIngles(faker.lorem().word());
         formulario.setEspanhol(faker.lorem().word());
         formulario.setNeurodiversidade(faker.lorem().word());
-        formulario.setEtnia(etniasValidas.get(random.nextInt(etniasValidas.size())));
         formulario.setEfetivacaoBoolean(random.nextBoolean());
         formulario.setDisponibilidadeBoolean(random.nextBoolean());
-        formulario.setGenero(faker.demographic().sex());
+        formulario.setGenero("F");
         formulario.setOrientacao(faker.demographic().sex());
         formulario.setImportancia(faker.lorem().word());
 
