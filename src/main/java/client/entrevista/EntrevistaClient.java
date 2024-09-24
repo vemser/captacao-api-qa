@@ -12,6 +12,7 @@ public class EntrevistaClient {
 
     public static final String ENTREVISTA_MARCAR_ENTREVISTA = "/entrevista/marcar-entrevista";
     public static final String ENTREVISTA = "/entrevista";
+    public static final String ENTREVISTA_POR_ID = "/entrevista/atualizar-observacao-entrevista/{idEntrevista}";
     public static final String ENTREVISTAS_GESTOR = "/entrevista/entrevistas/gestor";
     public static final String ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL = "/entrevista/buscar-entrevista-email-candidato/";
     public static final String ENTREVISTA_POR_TRILHA = "/entrevista/por-trilha";
@@ -25,8 +26,9 @@ public class EntrevistaClient {
     public static final String TRILHA = "trilha";
     public static final String MES = "mes";
     public static final String ANO = "ano";
+    public static final String ID_ENTREVISTA = "idEntrevista";
+    public static final String OBSERVACAO = "observacao";
     public static final String LEGENDA = "legenda";
-    public static final String TOKEN_QUERY = "token";
 
     public Response cadastrarEntrevistaSemAutenticacao(EntrevistaCriacaoModel entrevista) {
         Auth.usuarioAluno();
@@ -120,7 +122,7 @@ public class EntrevistaClient {
 						.spec(EntrevistaSpecs.entrevistaReqSpec())
 						.queryParam(MES, mesEntrevista)
 						.queryParam(ANO, anoEntrevista)
-						.when()
+				.when()
 						.get(ENTREVISTA_LISTAR_POR_MES)
 				;
 	}
@@ -189,6 +191,33 @@ public class EntrevistaClient {
 						.spec(EntrevistaSpecs.entrevistaReqSpec())
 				.when()
 						.get(ENTREVISTAS_GESTOR)
+				;
+	}
+
+	public Response atualizarEntrevistaPorId(Integer idEntrevista, String observacao) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(EntrevistaSpecs.entrevistaReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+						.pathParam(ID_ENTREVISTA, idEntrevista)
+						.queryParam(OBSERVACAO, observacao)
+				.when()
+						.put(ENTREVISTA_POR_ID)
+				;
+	}
+
+	public Response atualizarEntrevistaPorIdSemAutenticacao(Integer idEntrevista, String observacao) {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(EntrevistaSpecs.entrevistaReqSpec())
+						.pathParam(ID_ENTREVISTA, idEntrevista)
+						.queryParam(OBSERVACAO, observacao)
+				.when()
+						.put(ENTREVISTA_POR_ID)
 				;
 	}
 }
