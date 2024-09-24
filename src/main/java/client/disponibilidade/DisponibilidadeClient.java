@@ -15,6 +15,7 @@ public class DisponibilidadeClient {
     public static final String CRIAR_DISPONIBILIDADE = "/disponibilidade/criar-disponibilidade";
     public static final String LISTAR_TODAS_DISPONIBILIDADES = "/disponibilidade/todas-disponibilidades";
     public static final String DELETE_DISPONIBILIDADE = "/disponibilidade/delete";
+    public static final String LISTAR_DISPONIBILIDADES_DATA = "/disponibilidade/disponibilidades";
 
     public Response cadastrarDisponibilidade(DisponibilidadeModel disponibilidade) {
         Auth.usuarioGestaoDePessoas();
@@ -58,6 +59,17 @@ public class DisponibilidadeClient {
                     .pathParam("idDisponibilidade", id)
                 .when()
                     .delete(DELETE_DISPONIBILIDADE + "/{idDisponibilidade}");
+    }
+
+    public Response listarPorData(String data, boolean isCondicaoInserirTokenValido){
+        Response response =
+                given()
+                        .spec(DisponibilidadeSpecs.disponibilidadeReqSpec())
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
+                        .pathParam("data", data)
+                .when()
+                        .get(LISTAR_DISPONIBILIDADES_DATA + "/{data}");
+        return response;
     }
     private String inserirToken(boolean isCondicaoInserirTokenValido){
         String token = StringUtils.EMPTY;
