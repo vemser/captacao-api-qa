@@ -1,8 +1,11 @@
 package client.usuario;
 
+import client.auth.AuthClient;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import specs.usuario.UsuarioSpecs;
+import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
 
@@ -12,6 +15,7 @@ public class UsuarioClient extends UsuarioSpecs {
     private static final String ID_GESTOR = "/id-gestor";
     private static final String CONTAS_INATIVAS = "/contas-inativas";
     private static final String DESATIVAR_CONTA = "/desativacao-conta";
+    private static final String ME = "/me";
     private static final String AUTHORIZATION = "Authorization";
 
     public Response listarGestores(String token){
@@ -47,6 +51,16 @@ public class UsuarioClient extends UsuarioSpecs {
                         .get(USUARIO + CONTAS_INATIVAS);
     }
 
+    public Response listarDadosMe(boolean isCondicaoInserirToken){
+        Response response =
+                given()
+                        .spec(super.usuarioSetUp())
+                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirToken))
+                .when()
+                        .get(USUARIO + ME);
+        return response;
+    }
+
     public Response desativarContaGestor(String token, String id){
         return given()
                     .spec(super.usuarioSetUp())
@@ -66,5 +80,14 @@ public class UsuarioClient extends UsuarioSpecs {
                     .pathParam("idGestor", id)
                 .when()
                     .delete(USUARIO + "/{idGestor}");
+    }
+
+    private String inserirToken(boolean isCondicaoInserirTokenValido){
+        String token = StringUtils.EMPTY;
+        if(isCondicaoInserirTokenValido){
+            Auth.usuarioGestaoDePessoas();
+            token = AuthClient.getToken();
+        }
+        return token;
     }
 }
