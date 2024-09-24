@@ -12,6 +12,7 @@ public class EntrevistaClient {
 
     public static final String ENTREVISTA_MARCAR_ENTREVISTA = "/entrevista/marcar-entrevista";
     public static final String ENTREVISTA = "/entrevista";
+    public static final String ENTREVISTAS_GESTOR = "/entrevista/entrevistas/gestor";
     public static final String ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL = "/entrevista/buscar-entrevista-email-candidato/";
     public static final String ENTREVISTA_POR_TRILHA = "/entrevista/por-trilha";
     public static final String ENTREVISTA_LISTAR_POR_MES = "/entrevista/listar-por-mes";
@@ -167,4 +168,27 @@ public class EntrevistaClient {
                         .delete(ENTREVISTA_EMAIL_ENTREVISTA)
                 ;
     }
+
+	public Response listarEntrevistasGestor() {
+		Auth.usuarioGestaoDePessoas();
+
+		return
+				given()
+						.spec(EntrevistaSpecs.entrevistaReqSpec())
+						.header(AUTHORIZATION, AuthClient.getToken())
+				.when()
+						.get(ENTREVISTAS_GESTOR)
+				;
+	}
+
+	public Response listarEntrevistasGestorComTokenInvalido() {
+		Auth.usuarioInvalido();
+
+		return
+				given()
+						.spec(EntrevistaSpecs.entrevistaReqSpec())
+				.when()
+						.get(ENTREVISTAS_GESTOR)
+				;
+	}
 }
