@@ -1,5 +1,6 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
+import client.edicao.EdicaoClient;
 import client.relatorio.RelatorioClient;
 import models.relatorio.RelatorioNeurodiversidadeModel;
 import org.apache.http.HttpStatus;
@@ -17,13 +18,19 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 class RelatorioNeurodiversidadeTest {
 
     private static final RelatorioClient relatorioClient = new RelatorioClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_NEURODIVERSIDADE = "schemas/relatorio/listar_relatorios_neurodiversidade.json";
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por neurodiversidade")
     @Tag("Regression")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
-        relatorioClient.listarCandidatosNeurodiversidade()
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        relatorioClient.listarCandidatosNeurodiversidade(edicao)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_NEURODIVERSIDADE))
@@ -35,7 +42,11 @@ class RelatorioNeurodiversidadeTest {
     @Tag("Regression")
     void testListarRelatorioNeurodiversidadeComSucesso() {
 
-        var response = relatorioClient.listarCandidatosNeurodiversidade()
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        var response = relatorioClient.listarCandidatosNeurodiversidade(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()

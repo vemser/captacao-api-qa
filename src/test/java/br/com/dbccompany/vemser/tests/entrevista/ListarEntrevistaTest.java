@@ -1,5 +1,6 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
+import client.edicao.EdicaoClient;
 import client.entrevista.EntrevistaClient;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
@@ -14,13 +15,18 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 class ListarEntrevistaTest {
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
     private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS = "schemas/entrevista/listar_entrevistas.json";
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar entrevistas")
     @Tag("Contract")
     public void testValidarContratoListarEntrevistas() {
 
-        entrevistaClient.listarTodasAsEntrevistas()
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        entrevistaClient.listarTodasAsEntrevistas(edicao)
                 .then()
 					.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS))
         ;
@@ -31,7 +37,11 @@ class ListarEntrevistaTest {
     @Tag("Regression")
     void testListarEntrevistasCadastradasComSucesso() {
 
-        var listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas()
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        var listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()

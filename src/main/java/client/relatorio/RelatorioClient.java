@@ -16,37 +16,40 @@ public class RelatorioClient {
     public static final String RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ESTADO = "/relatorios/quantidade-de-pessoas-inscritas-por-estado";
     public static final String RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO = "/relatorios/quantidade-de-pessoas-inscritas-por-edicao";
 
-    public Response listarCandidatosPcd() {
+    public Response listarCandidatosPcd(String nomeEdicao) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("nomeEdicao", nomeEdicao)
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_PCD)
                 ;
     }
 
-    public Response listarCandidatosNeurodiversidade() {
+    public Response listarCandidatosNeurodiversidade(String nomeEdicao) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("nomeEdicao", nomeEdicao)
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_NEURODIVERSIDADE)
                 ;
     }
 
-    public Response listarCandidatosGenero() {
+    public Response listarCandidatosGenero(String nomeEdicao) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("nomeEdicao", nomeEdicao)
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_GENERO)
                 ;
@@ -63,13 +66,14 @@ public class RelatorioClient {
                 ;
     }
 
-    public Response listarCandidatosEstado() {
+    public Response listarCandidatosEstado(String nomeEdicao) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("nomeEdicao", nomeEdicao)
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ESTADO)
                 ;
@@ -88,13 +92,14 @@ public class RelatorioClient {
         return response;
     }
 
-    public Response listarCandidatosEdicao() {
+    public Response listarCandidatosEdicao(String nomeEdicao) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(RelatorioSpecs.relatorioReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+                        .queryParam("nomeEdicao", nomeEdicao)
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO)
                 ;

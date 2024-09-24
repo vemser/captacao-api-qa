@@ -1,6 +1,9 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
+import client.edicao.EdicaoClient;
 import client.relatorio.RelatorioClient;
+import models.edicao.EdicaoModel;
+import models.edicao.EdicaoResponse;
 import models.relatorio.RelatorioEstadoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -18,12 +21,16 @@ class RelatorioEstadoTest  {
 
     private static final RelatorioClient relatorioClient = new RelatorioClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_ESTADO = "schemas/relatorio/listar_relatorios_estado.json";
-
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por estado")
     @Tag("Regression")
     public void testValidarContratoListarRelatoriosPorEstado() {
-        relatorioClient.listarCandidatosEstado()
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        relatorioClient.listarCandidatosEstado(edicao)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_ESTADO))
@@ -34,12 +41,16 @@ class RelatorioEstadoTest  {
     @DisplayName("Cenário 2: Deve retornar 200 ao listar com sucesso relatório de candidatos por estado")
     @Tag("Regression")
     void testListarRelatorioEstadoComSucesso() {
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
 
-        var response = relatorioClient.listarCandidatosEstado()
+        RelatorioEstadoModel[] response = relatorioClient.listarCandidatosEstado(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
-                    .as(RelatorioEstadoModel[].class);
+                    .as(RelatorioEstadoModel[].class)
+                ;
 
         List<RelatorioEstadoModel> listaRelatorioEstado = Arrays.stream(response).toList();
 

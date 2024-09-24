@@ -1,5 +1,6 @@
 package factory.entrevista;
 
+import client.edicao.EdicaoClient;
 import client.entrevista.EntrevistaClient;
 import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
@@ -12,7 +13,7 @@ public class EntrevistaDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final Random random = new Random();
-
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
 	private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 
     public static EntrevistaCriacaoModel entrevistaCriacaoValida(String emailDoCandidato, Boolean avaliado) {
@@ -42,8 +43,13 @@ public class EntrevistaDataFactory {
     }
 
 	public static Response buscarTodasEntrevistas() {
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
 		return
-				entrevistaClient.listarTodasAsEntrevistas()
+				entrevistaClient.listarTodasAsEntrevistas(edicao)
 					.then()
 					.extract()
 					.response();
