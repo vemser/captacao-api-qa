@@ -1,6 +1,8 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
+import client.edicao.EdicaoClient;
 import client.relatorio.RelatorioClient;
+import io.restassured.response.Response;
 import models.relatorio.RelatorioEdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -17,13 +19,19 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 class RelatorioEdicaoTest  {
 
     private static final RelatorioClient relatorioClient = new RelatorioClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_EDICAO = "schemas/relatorio/listar_relatorios_edicao.json";
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por edição")
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEdicao() {
-        relatorioClient.listarCandidatosEdicao()
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        relatorioClient.listarCandidatosEdicao(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_EDICAO))
@@ -34,7 +42,12 @@ class RelatorioEdicaoTest  {
     @DisplayName("Cenário 2: Deve retornar 200 ao listar com sucesso relatório de candidato por edição")
     @Tag("Regression")
     void testListarRelatorioEdicaoComSucesso() {
-        var response = relatorioClient.listarCandidatosEdicao()
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        RelatorioEdicaoModel[] response = relatorioClient.listarCandidatosEdicao(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()

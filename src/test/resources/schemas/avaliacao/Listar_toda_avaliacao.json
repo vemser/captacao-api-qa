@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "totalElementos": {
@@ -16,14 +16,329 @@
     },
     "elementos": {
       "type": "array",
-      "items": {}
+      "items": {
+        "type": "object",
+        "properties": {
+          "idAvaliacao": {
+            "type": "integer"
+          },
+          "avaliador": {
+            "type": "object",
+            "properties": {
+              "idGestor": {
+                "type": "integer"
+              },
+              "nome": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "cargosDto": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "idCargo": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["idCargo", "nome"]
+                }
+              },
+              "ativo": {
+                "type": "string",
+                "enum": ["T", "F"]
+              }
+            },
+            "required": ["idGestor", "nome", "email", "cargosDto", "ativo"]
+          },
+          "aprovado": {
+            "type": "string",
+            "enum": ["T", "F"]
+          },
+          "inscricao": {
+            "type": "object",
+            "properties": {
+              "idInscricao": {
+                "type": "integer"
+              },
+              "candidato": {
+                "type": "object",
+                "properties": {
+                  "idCandidato": {
+                    "type": "integer"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "dataNascimento": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "telefone": {
+                    "type": "string"
+                  },
+                  "rg": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "estado": {
+                    "type": "string"
+                  },
+                  "cidade": {
+                    "type": "string"
+                  },
+                  "statusCandidato": {
+                    "type": "string"
+                  },
+                  "pcd": {
+                    "type": "string"
+                  },
+                  "observacoes": {
+                    "type": ["string", "null"]
+                  },
+                  "notaProva": {
+                    "type": "number"
+                  },
+                  "notaEntrevistaComportamental": {
+                    "type": "number"
+                  },
+                  "notaEntrevistaTecnica": {
+                    "type": "number"
+                  },
+                  "ativo": {
+                    "type": "string",
+                    "enum": ["T", "F"]
+                  },
+                  "parecerComportamental": {
+                    "type": "string"
+                  },
+                  "parecerTecnico": {
+                    "type": "string"
+                  },
+                  "media": {
+                    "type": "number"
+                  },
+                  "linguagens": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nome": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["nome"]
+                    }
+                  },
+                  "edicao": {
+                    "type": "object",
+                    "properties": {
+                      "idEdicao": {
+                        "type": "integer"
+                      },
+                      "nome": {
+                        "type": "string"
+                      },
+                      "notaCorte": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["idEdicao", "nome", "notaCorte"]
+                  },
+                  "formulario": {
+                    "type": "object",
+                    "properties": {
+                      "idFormulario": {
+                        "type": "integer"
+                      },
+                      "matriculado": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "curso": {
+                        "type": "string"
+                      },
+                      "turno": {
+                        "type": "string"
+                      },
+                      "instituicao": {
+                        "type": "string"
+                      },
+                      "github": {
+                        "type": "string"
+                      },
+                      "linkedin": {
+                        "type": "string"
+                      },
+                      "desafios": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "problema": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "reconhecimento": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "altruismo": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "resposta": {
+                        "type": ["string", "null"]
+                      },
+                      "curriculo": {
+                        "type": "integer"
+                      },
+                      "lgpd": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "prova": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "ingles": {
+                        "type": "string"
+                      },
+                      "espanhol": {
+                        "type": "string"
+                      },
+                      "neurodiversidade": {
+                        "type": "string"
+                      },
+                      "efetivacao": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "genero": {
+                        "type": "string"
+                      },
+                      "orientacao": {
+                        "type": ["string", "null"]
+                      },
+                      "disponibilidade": {
+                        "type": "string",
+                        "enum": ["T", "F"]
+                      },
+                      "trilhas": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "nome": {
+                              "type": "string"
+                            },
+                            "idTrilha": {
+                              "type": "integer"
+                            },
+                            "link": {
+                              "type": ["string", "null"]
+                            }
+                          },
+                          "required": ["nome", "idTrilha", "link"]
+                        }
+                      },
+                      "imagemConfigPc": {
+                        "type": "integer"
+                      },
+                      "qtdSemestres": {
+                        "type": "integer"
+                      },
+                      "semestreAtual": {
+                        "type": "integer"
+                      },
+                      "tipoGraduacao": {
+                        "type": "string"
+                      },
+                      "descConfigPc": {
+                        "type": "string"
+                      },
+                      "importancia": {
+                        "type": ["string", "null"]
+                      }
+                    },
+                    "required": [
+                      "idFormulario",
+                      "matriculado",
+                      "curso",
+                      "turno",
+                      "instituicao",
+                      "github",
+                      "linkedin",
+                      "desafios",
+                      "problema",
+                      "reconhecimento",
+                      "altruismo",
+                      "resposta",
+                      "curriculo",
+                      "lgpd",
+                      "prova",
+                      "ingles",
+                      "espanhol",
+                      "neurodiversidade",
+                      "efetivacao",
+                      "genero",
+                      "orientacao",
+                      "disponibilidade",
+                      "trilhas",
+                      "imagemConfigPc",
+                      "qtdSemestres",
+                      "semestreAtual",
+                      "tipoGraduacao",
+                      "descConfigPc",
+                      "importancia"
+                    ]
+                  },
+                  "imagem": {
+                    "type": ["number", "null"]
+                  },
+                  "preProvasUsuario": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "idPreProva": {
+                          "type": "integer"
+                        },
+                        "idCandidato": {
+                          "type": "integer"
+                        },
+                        "notaPreProva": {
+                          "type": "number"
+                        },
+                        "observacao": {
+                          "type": ["string", "null"]
+                        },
+                        "acao": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["idPreProva", "idCandidato", "notaPreProva", "observacao", "acao"]
+                    }
+                  }
+                },
+                "required": ["idCandidato", "dataInscricao", "avaliado"]
+              }
+            },
+            "required": ["idInscricao", "candidato"]
+          }
+        },
+        "required": ["idAvaliacao", "avaliador", "aprovado", "inscricao"]
+      }
     }
   },
-  "required": [
-    "totalElementos",
-    "quantidadePaginas",
-    "pagina",
-    "tamanho",
-    "elementos"
-  ]
+  "required": ["totalElementos", "quantidadePaginas", "pagina", "tamanho", "elementos"]
 }

@@ -41,13 +41,14 @@ public class EntrevistaClient {
                 ;
     }
 
-    public Response listarTodasAsEntrevistas() {
+    public Response listarTodasAsEntrevistas(String nomeEntrevista) {
         Auth.usuarioGestaoDePessoas();
 
         return
                 given()
                         .spec(EntrevistaSpecs.entrevistaReqSpec())
                         .header(AUTHORIZATION, AuthClient.getToken())
+						.queryParam("nomeEntrevista", nomeEntrevista)
                 .when()
                         .get(ENTREVISTA)
                 ;

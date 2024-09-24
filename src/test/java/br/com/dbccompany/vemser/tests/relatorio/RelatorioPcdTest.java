@@ -1,5 +1,6 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
+import client.edicao.EdicaoClient;
 import client.relatorio.RelatorioClient;
 import models.relatorio.RelatorioPcdModel;
 import org.apache.http.HttpStatus;
@@ -17,13 +18,19 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 class RelatorioPcdTest {
 
     private static final RelatorioClient relatorioClient = new RelatorioClient();
+    private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_PCD = "schemas/relatorio/listar_relatorios_pcd.json";
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por pcd")
     @Tag("Regression")
     public void testValidarContratoListarRelatoriosPorPcd() {
-        relatorioClient.listarCandidatosPcd()
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        relatorioClient.listarCandidatosPcd(edicao)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_PCD))
@@ -35,7 +42,12 @@ class RelatorioPcdTest {
     @Tag("Regression")
     void testListarRelatorioPcdComSucesso() {
 
-        var response = relatorioClient.listarCandidatosPcd()
+
+        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+                .then()
+                .extract().asString();
+
+        var response = relatorioClient.listarCandidatosPcd(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
