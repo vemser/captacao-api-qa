@@ -132,5 +132,8 @@ class AtualizarFormularioTest{
                 .then()
                 .statusCode(HttpStatus.SC_OK)
         ;
+
+        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+
     }
 }

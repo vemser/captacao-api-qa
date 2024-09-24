@@ -11,7 +11,6 @@ import java.util.List;
 @ToString
 public class FormularioCriacaoModel {
 
-    private Integer idFormulario;
     private Boolean matriculadoBoolean;
     private String curso;
     private String turno;
@@ -28,7 +27,6 @@ public class FormularioCriacaoModel {
     private String ingles;
     private String espanhol;
     private String neurodiversidade;
-    private String etnia;
     private Boolean efetivacaoBoolean;
     private Boolean disponibilidadeBoolean;
     private String genero;

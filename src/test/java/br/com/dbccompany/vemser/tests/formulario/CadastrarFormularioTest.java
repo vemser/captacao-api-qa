@@ -65,6 +65,8 @@ class CadastrarFormularioTest{
 
         FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
 
+        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+
         Assertions.assertEquals(listaBooleana.get(formulario.getMatriculadoBoolean()), formularioCriado.getMatriculado());
         Assertions.assertEquals(formulario.getCurso(), formularioCriado.getCurso());
         Assertions.assertEquals(formulario.getTurno(), formularioCriado.getTurno());
