@@ -148,4 +148,12 @@ public class ListarUsuarioTest {
                     .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_todo_gestor_inativo.json"))
                     .statusCode(HttpStatus.SC_OK);
     }
+
+    @Test
+    @DisplayName("Cenário 13: Tentar listar os dados do usuário logado sem token")
+    public void testTentarListarDadosUsuarioLogadoSemToken(){
+        usuarioClient.listarDadosMe(false)
+                .then()
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
+    }
 }
