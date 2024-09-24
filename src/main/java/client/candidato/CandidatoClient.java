@@ -36,6 +36,7 @@ public class CandidatoClient {
     public static final String CANDIDATO_NOTA_PARECER_TECNICO_ID_CANDIDATO = "/candidato/nota-parecer-tecnico/{idCandidato}";
     public static final String CANDIDATO_NOTA_COMPORTAMENTAL_ID_CANDIDATO = "/candidato/nota-comportamental/{idCandidato}";
     public static final String CANDIDATO_DELETE_FISICO_ID_CANDIDATO = "/candidato/delete-fisico/{idCandidato}";
+    public static final String CANDIDATO_DELETE_ID_CANDIDATO = "/candidato/{idCandidato}";
     public static final String CANDIDATO_ATRIBUIR_NOTAS_EM_LOTE = "/candidato/atribuir-notas-em-lote";
 
     public static final String AUTHORIZATION = "Authorization";
@@ -197,7 +198,7 @@ public class CandidatoClient {
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
-                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO);
 
     }
 
@@ -205,10 +206,33 @@ public class CandidatoClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .header(AUTHORIZATION, AuthClient.getToken())
                         .spec(CandidatoSpecs.candidatoReqSpec())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
+                        .delete(CANDIDATO_DELETE_ID_CANDIDATO)
+                ;
+    }
+
+    public Response deleteFisicoCandidato(Integer idCandidato) {
+        Auth.usuarioGestaoDePessoas();
+
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
+                        .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO);
+
+    }
+
+    public Response deleteFisicoCandidatoSemAutenticacao(Integer idCandidato) {
+        Auth.usuarioAluno();
+        return
+                given()
+                        .spec(CandidatoSpecs.candidatoReqSpec())
+                        .pathParam(ID_CANDIDATO, idCandidato)
+                        .when()
                         .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO)
                 ;
     }

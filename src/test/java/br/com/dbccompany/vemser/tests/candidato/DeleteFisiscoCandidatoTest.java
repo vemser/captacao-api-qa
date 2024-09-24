@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@DisplayName("Endpoint de delete de candidato")
-class DeletarCandidatoTest {
+@DisplayName("Endpoint de delete fisico de candidato")
+public class DeleteFisiscoCandidatoTest {
 
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private final FormularioClient formularioClient = new FormularioClient();
@@ -32,7 +32,7 @@ class DeletarCandidatoTest {
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar candidato com sucesso")
-    void testDeletarCandidatoComSucesso() {
+    void testDeleteFisicoDeCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -60,14 +60,14 @@ class DeletarCandidatoTest {
             .extract()
                 .as(CandidatoModel.class);
 
-        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        candidatoClient.deleteFisicoCandidato(candidatoCadastrado.getIdCandidato())
         .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
     @DisplayName("Cenário 2: Deve retornar 403 ao deletar candidato sem autenticação")
-    void testDeletarCandidatoSemAutenticacao() {
+    void testDeleteFisicoDeCandidatoSemAutenticacao() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
@@ -96,24 +96,22 @@ class DeletarCandidatoTest {
             .extract()
                 .as(CandidatoModel.class);
 
-        candidatoClient.deletarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato())
+        candidatoClient.deleteFisicoCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato())
         .then()
             .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+        candidatoClient.deleteFisicoCandidato(candidatoCadastrado.getIdCandidato())
         .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
     @DisplayName("Cenário 3: Deve retornar 400 ao deletar candidato com id invalido")
-    void testDeletarCandidatoComIDInvalido() {
+    void testDeletarFisicoDeCandidatoComIDInvalido() {
 
-        candidatoClient.deletarCandidato(0)
+        candidatoClient.deleteFisicoCandidato(0)
         .then()
             .statusCode(HttpStatus.SC_BAD_REQUEST)
             .body("message", Matchers.equalTo("Candidato não encontrado."));
     }
 }
-
-
