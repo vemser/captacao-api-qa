@@ -27,6 +27,7 @@ public class ListarTodasEdicoesTest {
 
 	@Test
 	@DisplayName("Cenário 2: Deve retornar 200 ao listar todas as edições com sucesso")
+	@Tag("Regression")
 	public void testListarTodasEdicoesComSucesso() {
 
 		edicaoClient.listarTodasAsEdicoes()
