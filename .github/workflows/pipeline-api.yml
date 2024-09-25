@@ -178,6 +178,7 @@ jobs:
       
       - name: Build properties
         run: |
+	  mkdir -p src/test/resources
           mkdir -p src/main/resources
           echo "GP_LOGIN=${{ secrets.GP_LOGIN }}" >> src/main/resources/application-config.properties
           echo "GP_PSW=${{ secrets.GP_PSW }}" >> src/main/resources/application-config.properties
