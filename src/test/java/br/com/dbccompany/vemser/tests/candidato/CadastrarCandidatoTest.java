@@ -396,18 +396,13 @@ class CadastrarCandidatoTest{
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
-//        JSONFailureResponseWithoutArrayModel erroCadastroCandidato =
         candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
         .then()
             .statusCode(HttpStatus.SC_BAD_REQUEST);
-//            .extract()
-//                .as(JSONFailureResponseWithoutArrayModel.class);
 
-//        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-//        Assertions.assertEquals("Campo dataNascimento com valor inválido.", erroCadastroCandidato.getErrors());
-		        if (edicaoCriada != null) {
-            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
-        }
+            if (edicaoCriada != null) {
+                edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+            }
     }
 
     @Test

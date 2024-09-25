@@ -33,11 +33,8 @@ class ListarEntrevistaPorEmailTest {
 		Response response = entrevistaClient.listarTodasAsEntrevistas(edicao);
 		String emailEntrevista = response.path("[0].candidatoEmail");
 
-		System.out.println(emailEntrevista);
-
 		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
-				.log().all()
 				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL))
 		;
 	}
@@ -53,7 +50,6 @@ class ListarEntrevistaPorEmailTest {
 		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
 					.statusCode(HttpStatus.SC_OK)
-				.log().all()
 					.extract()
 					.as(EntrevistaCriacaoResponseModel.class);
 
