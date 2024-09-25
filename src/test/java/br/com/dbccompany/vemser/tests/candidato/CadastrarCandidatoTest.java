@@ -44,14 +44,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComSucesso() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -99,14 +92,7 @@ class CadastrarCandidatoTest{
     void testValidarContratoCadastrarCandidatos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -140,14 +126,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoSemNome() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -179,14 +158,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComNomeEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -219,14 +191,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComDataNascimentoNoFuturo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -258,14 +223,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComMenosDeDezesseisAnos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -297,14 +255,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComDataDeNascimentoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -336,14 +287,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComDataDeNascimentoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -377,14 +321,7 @@ class CadastrarCandidatoTest{
 
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -410,14 +347,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEmailNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -449,14 +379,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEmailSemDominio() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -489,14 +412,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEmailInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -600,14 +516,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComTelefoneNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -639,14 +548,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComTelefoneEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -679,14 +581,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComRgNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -718,14 +613,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComRgEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -762,14 +650,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComRgMaiorQueTrintaCaracteres() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -801,14 +682,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComCpfNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -840,14 +714,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComCpfEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -882,14 +749,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComCpfInvalido() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -921,14 +781,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComCpfJaCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComCpfJaCadastrado();
 
@@ -947,14 +800,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEstadoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -986,14 +832,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEstadoEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1025,14 +864,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComCidadeNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1050,7 +882,7 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		        if (edicaoCriada != null) {
+        if (edicaoCriada != null) {
             edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
         }
 
@@ -1106,14 +938,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComPcdNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1145,14 +970,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComPcdEmBranco() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1184,14 +1002,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComAtivoNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1224,14 +1035,7 @@ class CadastrarCandidatoTest{
         RestAssured.defaultParser = Parser.JSON;
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1263,14 +1067,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComListaNulaDeLinguagem() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1301,14 +1098,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEdicaoNula() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1332,14 +1122,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComEdicaoNaoExistente() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
 
@@ -1364,14 +1147,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComIdFormularioNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
 
@@ -1400,14 +1176,7 @@ class CadastrarCandidatoTest{
     void testCadastrarCandidatoComIdFormularioNaoCadastrado() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+listaDeNomeDeTrilhas.add("FRONTEND");
 
         Integer idFormularioNaoCadastrado = FormularioDataFactory.idFormularioNaoCadastrado();
 
