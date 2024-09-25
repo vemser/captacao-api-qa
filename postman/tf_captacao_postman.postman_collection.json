@@ -7189,7 +7189,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"ESUCRI\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 8,\r\n  \"semestreAtual\": 4,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
+									"raw": "{\r\n  \"matriculadoBoolean\": true,\r\n  \"curso\": \"SI\",\r\n  \"turno\": \"NOITE\",\r\n  \"instituicao\": \"UNESC\",\r\n  \"github\": \"https://github.com/link-github\",\r\n  \"linkedin\": \"https://linkedin.com/\",\r\n  \"desafiosBoolean\": true,\r\n  \"problemaBoolean\": true,\r\n  \"reconhecimentoBoolean\": true,\r\n  \"altruismoBoolean\": true,\r\n  \"resposta\": \"Outro\",\r\n  \"lgpdBoolean\": true,\r\n  \"provaBoolean\": true,\r\n  \"ingles\": \"Intermediario\",\r\n  \"espanhol\": \"Não possuo\",\r\n  \"neurodiversidade\": false,\r\n  \"efetivacaoBoolean\": true,\r\n  \"disponibilidadeBoolean\": true,\r\n  \"genero\": \"Homem Cis\",\r\n  \"orientacao\": \"Heterosexual\",\r\n  \"trilhas\": [\r\n    \"QA\"\r\n  ],\r\n  \"importancia\": \"importancia\",\r\n  \"qtdSemestres\": 8,\r\n  \"semestreAtual\": 4,\r\n  \"tipoGraduacao\": \"2\",\r\n  \"descConfigPc\": \"AMD Ryzen 5-5600G, 16Gb, 500gb SSD\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -9860,9 +9860,45 @@
 					"item": [
 						{
 							"name": "Criar uma inscricao com o id do candidato e id formulario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/inscricao/cadastro?idCandidato=2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"inscricao",
+										"cadastro"
+									],
+									"query": [
+										{
+											"key": "idCandidato",
+											"value": "2"
+										}
+									]
+								}
 							},
 							"response": []
 						}
@@ -11095,6 +11131,238 @@
 									"path": [
 										"inscricao",
 										"200"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Etapas",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listar todas etapas",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/etapas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar etapas ultima edicao",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/etapas/ultima-edicao",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas",
+										"ultima-edicao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar etapas ativas",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/etapas/ativas",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas",
+										"ativas"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "criar etapa valida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 0,\r\n  \"etapas\": \"INSCRICAO\",\r\n  \"dataInicio\": \"2024-09-25\",\r\n  \"dataFim\": \"2024-09-25\",\r\n  \"ativo\": true,\r\n  \"edicao\": {\r\n    \"idEdicao\": 0,\r\n    \"nome\": \"string\",\r\n    \"notaCorte\": 0\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/etapas/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar etapa valida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/etapas/22",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletar etapa ja deletada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_gestor}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/etapas/22",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"etapas",
+										"22"
 									]
 								}
 							},
