@@ -1,1 +1,0 @@
-# captacao-qa
