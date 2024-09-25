@@ -191,14 +191,14 @@ public class FormularioClient {
         File file = new File(filePath);
 
         return
-            given()
-                .spec(FormularioSpecs.formularioReqSpec())
-                .contentType("multipart/form-data")
-                .header(AUTHORIZATION, AuthClient.getToken())
-                .pathParam(ID_FORMULARIO, idFormulario)
-                .multiPart(FILE, file)
-            .when()
-                .put(FORMULARIO_UPLOAD_CURRICULO_ID_FORMULARIO);
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .contentType("multipart/form-data")
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_FORMULARIO, idFormulario)
+                        .multiPart(FILE, file)
+                .when()
+                        .put(FORMULARIO_UPLOAD_CURRICULO_ID_FORMULARIO);
     }
 
     public Response incluiCurriculoEmFormularioSemValidacao(Integer idFormulario) {
@@ -257,15 +257,15 @@ public class FormularioClient {
         File file = new File(filePath);
 
         return
-            given()
-                    .spec(FormularioSpecs.formularioReqSpec())
-                    .contentType("multipart/form-data")
-                    .header(AUTHORIZATION, AuthClient.getToken())
-                    .pathParam(ID_FORMULARIO, idFormulario)
-                    .multiPart(FILE, file)
-            .when()
-                    .put(FORMULARIO_UPLOAD_COMP_MATRICULA)
-                    ;
+                given()
+                        .spec(FormularioSpecs.formularioReqSpec())
+                        .contentType("multipart/form-data")
+                        .header(AUTHORIZATION, AuthClient.getToken())
+                        .pathParam(ID_FORMULARIO, idFormulario)
+                        .multiPart(FILE, file)
+                .when()
+                        .put(FORMULARIO_UPLOAD_COMP_MATRICULA)
+                ;
     }
 
     public Response atualizaFormularioContrato(Integer idFormulario, FormularioCriacaoModel formularioAtualizado) {
