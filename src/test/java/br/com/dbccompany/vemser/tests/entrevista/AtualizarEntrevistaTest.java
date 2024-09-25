@@ -16,8 +16,10 @@ class AtualizarEntrevistaTest  {
 
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 	private static final EdicaoClient edicaoClient = new EdicaoClient();
+
 	@Test
 	@DisplayName("Cenário 1: Deve retornar 204 ao atualizar entrevista com sucesso")
+	@Tag("Functional")
 	void testAtualizarEntrevistaComSucesso() {
 
 		String statusEntrevista = "CONFIRMADA";

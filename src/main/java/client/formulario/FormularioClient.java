@@ -187,7 +187,7 @@ public class FormularioClient {
     public Response incluiCurriculoEmFormularioComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
-        String filePath = "src/test/resources/curriculo_em_docx.docx";
+        String filePath = "src/test/resources/curriculo_em_pdf.pdf";
         File file = new File(filePath);
 
         return
