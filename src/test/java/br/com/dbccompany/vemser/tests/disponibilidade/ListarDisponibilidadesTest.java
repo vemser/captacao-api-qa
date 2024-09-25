@@ -10,7 +10,6 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Endpoint de listar disponibilidades")
 public class ListarDisponibilidadesTest {
