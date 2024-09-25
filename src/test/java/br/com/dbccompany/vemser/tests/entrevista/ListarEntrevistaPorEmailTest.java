@@ -1,5 +1,6 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
+import client.edicao.EdicaoClient;
 import client.entrevista.EntrevistaClient;
 import factory.entrevista.EntrevistaDataFactory;
 import io.restassured.response.Response;
@@ -18,13 +19,18 @@ class ListarEntrevistaPorEmailTest {
 
   private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 	private static final String PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL = "schemas/entrevista/listar_entrevista_por_email.json";
+	private static final EdicaoClient edicaoClient = new EdicaoClient();
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de listar entrevistas por email")
 	@Tag("Contract")
 	public void testValidarContratoListarEntrevistasPorEmail() {
 
-		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+				.then()
+				.extract().asString();
+
+		Response response = entrevistaClient.listarTodasAsEntrevistas(edicao);
 		String emailEntrevista = response.path("[0].candidatoEmail");
 
 		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
@@ -41,7 +47,6 @@ class ListarEntrevistaPorEmailTest {
 		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
 		String emailEntrevista = response.path("[0].candidatoEmail");
 
-		System.out.println(emailEntrevista);
 		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
 					.statusCode(HttpStatus.SC_OK)

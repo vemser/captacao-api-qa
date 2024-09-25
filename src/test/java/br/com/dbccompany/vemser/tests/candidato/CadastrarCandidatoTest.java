@@ -73,7 +73,9 @@ class CadastrarCandidatoTest{
         .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+                if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(candidatoCriado.getNome().toLowerCase(), candidatoCadastrado.getNome().toLowerCase());
         Assertions.assertEquals(candidatoCriado.getDataNascimento(), candidatoCadastrado.getDataNascimento());
@@ -127,7 +129,9 @@ class CadastrarCandidatoTest{
         .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+                if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
     }
 
     @Test
@@ -161,7 +165,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("nome: must not be null", erroCadastroCandidato.getErrors().get(0));
@@ -198,7 +204,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("nome: Campo nome não pode ser branco ou nulo.")
@@ -236,7 +244,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: A data não pode ser no futuro", erroCadastroCandidato.getErrors().get(0));
@@ -273,7 +283,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("O candidato deve ter no mínimo 16 anos.", erroCadastroCandidato.getMessage());
@@ -310,7 +322,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: must not be null", erroCadastroCandidato.getErrors().get(0));
@@ -347,7 +361,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("dataNascimento: must not be null", erroCadastroCandidato.getErrors().get(0));
@@ -380,16 +396,13 @@ class CadastrarCandidatoTest{
 
         CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoComDataDeNascimentoInvalida(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
-//        JSONFailureResponseWithoutArrayModel erroCadastroCandidato =
         candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
         .then()
             .statusCode(HttpStatus.SC_BAD_REQUEST);
-//            .extract()
-//                .as(JSONFailureResponseWithoutArrayModel.class);
 
-//        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
-//        Assertions.assertEquals("Campo dataNascimento com valor inválido.", erroCadastroCandidato.getErrors());
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+            if (edicaoCriada != null) {
+                edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+            }
     }
 
     @Test
@@ -422,7 +435,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: O email deve ser preenchido."));
@@ -459,7 +474,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
@@ -497,7 +514,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("email: deve ser um endereço de e-mail bem formado")
@@ -566,7 +585,9 @@ class CadastrarCandidatoTest{
         String expected = "email: O email deve ser preenchido.";
         String actual = erros.get(0);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals(expected, actual);
@@ -604,7 +625,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("telefone: O telefone deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -641,7 +664,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equals("telefone: O nome deve ter de 8 a 30 caracteres")
@@ -679,7 +704,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("rg: O rg deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -716,7 +743,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
 		Assertions.assertTrue(
@@ -758,7 +787,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("rg: O rg deve ter de 5 a 11 caracteres", erroCadastroCandidato.getErrors().get(0));
@@ -795,7 +826,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cpf: O cpf deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -832,7 +865,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+                    if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+                }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
 		Assertions.assertTrue(
@@ -872,7 +907,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cpf: invalid Brazilian individual taxpayer registry number (CPF)", erroCadastroCandidato.getErrors().get(0));
@@ -935,7 +972,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("estado: O estado deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -972,7 +1011,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("estado: O estado deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -1009,7 +1050,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("cidade: A cidade deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -1046,7 +1089,9 @@ class CadastrarCandidatoTest{
 				.extract()
 				.as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
 		Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
 		Assertions.assertTrue(
@@ -1086,7 +1131,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("pcd: O campo PCD deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -1123,7 +1170,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("pcd: O campo PCD deve ser preenchido.", erroCadastroCandidato.getErrors().get(0));
@@ -1160,7 +1209,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("ativo: O campo não pode ser nulo.", erroCadastroCandidato.getErrors().get(0));
@@ -1201,7 +1252,9 @@ class CadastrarCandidatoTest{
 
 //        Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
 //        Assertions.assertEquals("Campo ativo com valor inválido.", erroCadastroCandidato.getErrors());
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
     }
 
     @Test
@@ -1235,7 +1288,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
     }
@@ -1330,7 +1385,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(400, erroCadastroCandidato.getStatus());
         Assertions.assertTrue(erroCadastroCandidato.getErrors().get(0).equalsIgnoreCase("formulario: não deve ser nulo")
@@ -1366,7 +1423,9 @@ class CadastrarCandidatoTest{
             .extract()
                 .as(JSONFailureResponseWithArrayModel.class);
 
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+		        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
 
         Assertions.assertEquals(404, erroCadastroCandidato.getStatus());
         Assertions.assertEquals("Erro ao buscar o formulário.", erroCadastroCandidato.getMessage());

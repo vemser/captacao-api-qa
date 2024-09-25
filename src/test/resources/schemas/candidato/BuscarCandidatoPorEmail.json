@@ -174,11 +174,15 @@
                 },
                 "idTrilha": {
                   "type": "integer"
+                },
+                "link": {
+                  "type": ["string", "null"]
                 }
               },
               "required": [
                 "nome",
-                "idTrilha"
+                "idTrilha",
+                "link"
               ]
             }
           ]
