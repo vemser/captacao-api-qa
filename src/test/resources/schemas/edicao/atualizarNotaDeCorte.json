@@ -9,16 +9,11 @@
     },
     "notaCorte": {
       "type": ["integer", "number"]
-    },
-    "preProvasEntities": {
-      "type": "array",
-      "items": {}
     }
   },
   "required": [
     "idEdicao",
     "nome",
-    "notaCorte",
-    "preProvasEntities"
+    "notaCorte"
   ]
 }

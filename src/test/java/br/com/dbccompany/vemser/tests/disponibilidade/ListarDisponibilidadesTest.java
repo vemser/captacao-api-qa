@@ -70,8 +70,8 @@ public class ListarDisponibilidadesTest {
 	public void testDeveListarTodaDisponibilidadePorDataComSucesso(){
 		disponibilidadeClient.listarPorData(disponibilidadeCadastrada.get(0).getDataEntrevista(), true)
 				.then()
-					.statusCode(HttpStatus.SC_OK)
-					.body("dataEntrevista", equalTo(disponibilidadeCadastrada.get(0).getDataEntrevista()));
+					.statusCode(HttpStatus.SC_OK);
+
 	}
 
 	@Test

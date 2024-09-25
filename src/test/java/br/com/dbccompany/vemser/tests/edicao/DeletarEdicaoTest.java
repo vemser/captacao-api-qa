@@ -39,11 +39,10 @@ class DeletarEdicaoTest {
 
         EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
 
-        edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
-                .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+            edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
+                    .then()
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
 
-		edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
+        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
     }
-
 }
