@@ -187,7 +187,7 @@ public class FormularioClient {
     public Response incluiCurriculoEmFormularioComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
+        String filePath = "src/test/resources/curriculo_em_pdf.pdf";
         File file = new File(filePath);
 
         return
@@ -204,7 +204,7 @@ public class FormularioClient {
     public Response incluiCurriculoEmFormularioSemValidacao(Integer idFormulario) {
         Auth.usuarioAluno();
 
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\curriculo_em_pdf.pdf";
+        String filePath = "src/test/resources/curriculo_em_pdf.pdf";
         File file = new File(filePath);
 
         return
@@ -220,7 +220,7 @@ public class FormularioClient {
 
     public Response incluiConfigPcEmFormularioSemValidacao(Integer idFormulario) {
 
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\config_pc.png";
+        String filePath = "src/test/resources/config_pc.png";
         File file = new File(filePath);
 
         return
@@ -236,7 +236,7 @@ public class FormularioClient {
     public Response incluiConfigPcEmFormularioComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\config_pc.png";
+        String filePath = "src/test/resources/config_pc.png";
         File file = new File(filePath);
 
         return
@@ -253,7 +253,7 @@ public class FormularioClient {
     public Response incluiComprovanteMatriculaComValidacao(Integer idFormulario) {
         Auth.usuarioGestaoDePessoas();
 
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\comprov_matricula_teste.pdf";
+        String filePath = "src/test/resources/comprov_matricula_teste.pdf";
         File file = new File(filePath);
 
         return

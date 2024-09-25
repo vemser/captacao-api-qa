@@ -344,6 +344,7 @@ listaDeNomeDeTrilhas.add("FRONTEND");
 
     @Test
     @DisplayName("Cenário 10: Deve retornar 400 quando tenta cadastrar candidato com e-mail nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

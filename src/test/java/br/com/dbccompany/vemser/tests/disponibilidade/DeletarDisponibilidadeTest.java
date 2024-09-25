@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@DisplayName("Endpoint de deletar disponibilidade")
 public class DeletarDisponibilidadeTest {
     private static final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
     private static List<DisponibilidadeResponseModel> disponibilidadeCadastrada;

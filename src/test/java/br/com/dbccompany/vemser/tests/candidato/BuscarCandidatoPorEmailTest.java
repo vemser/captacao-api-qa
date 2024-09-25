@@ -195,7 +195,7 @@ class BuscarCandidatoPorEmailTest {
     }
 
     @Test
-    @DisplayName("Cenário 4: Deve retornar 400 quando busca candidato com email vazio")
+    @DisplayName("Cenário 5: Deve retornar 400 quando busca candidato com email vazio")
     @Tag("Regression")
     void testBuscarCandidatoPorEmailVazio() {
 

@@ -1,19 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<div align="center">
+  <img alt="VemSerDBC" src="https://img.shields.io/badge/Vem Ser 13-00599C?style=for-the-badge&logo=java&logoColor=white">
+  <img alt="DBC" src="https://img.shields.io/badge/DBC-00599C?style=for-the-badge&logo=java&logoColor=white">
+  <img alt="Java" src="https://img.shields.io/badge/Java-Ff0000?style=for-the-badge&logo=coffeescript&logoColor=white">
+  <img alt="rest-assured" src="https://img.shields.io/badge/rest--assured-512DA8?style=for-the-badge&logo=rest-assured&logoColor=white">
+</div>
 
-    <groupId>br.com.dbccompany</groupId>
-    <artifactId>back</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
-    <properties>
+# Vem Ser 13 - Capacitação + Provas ☕
+
+Repositório para alocar os testes automatizados de API com Rest-Assured que foram desenvolvidos durante o trabalho final da 13° edição do programa Vem Ser.
+
+## Documentação
+- [Plano de Testes](https://docs.google.com/document/d/1VYfTStATCmQv_4LrLfesFFRp3tFiYMGKj9X8MYQ-TIw)
+- [User Stories + Cenários de Testes](https://drive.google.com/file/d/1sUtOdkRkSD8SSjM0HYnmp3xVuOXup5Eh/view)
+- [Trello](https://trello.com/b/y0mKWbUq/captação-provas)
+
+## Links
+- [Captação + Provas](http://vemser-dbc.dbccompany.com.br:39000/vemser/vemser-front)
+- [API Swagger](http://vemser-dbc.dbccompany.com.br:39000/vemser/captacao-back-release/swagger-ui/index.html)
+- [API Swagger Login](http://vemser-dbc.dbccompany.com.br:39000/vemser/usuario-back/swagger-ui/index.html)
+- [API Swagger no Render](https://captacao-back-release.onrender.com/swagger-ui/index.html#/Questão/criarQuestaoPratica)
+- [API Swagger Login no Render](https://usuario-back.onrender.com/swagger-ui/index.html#/)
+
+
+## Pré-requisitos ⚙️
+
+- [Intellij Idea](https://www.jetbrains.com/idea/)
+- [JDK 17](https://www.oracle.com/java/technologies/downloads/)
+- [Rest-Assured](https://rest-assured.io)
+
+
+
+
+## Dependências Utilizadas 👀
+
+```pom.xml
+<properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.24</lombok.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <junit5.version>5.10.0</junit5.version>
         <junit-platform.version>1.5.2</junit-platform.version>
@@ -98,49 +125,20 @@
             <version>${jackson-datatype.version}</version>
         </dependency>
     </dependencies>
+```
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <argLine>
-                        -Dfile.encoding=UTF-8
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-                    <systemPropertyVariables>
-                        <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
-                        <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
-                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
-                        <junit.jupiter.execution.parallel.config.strategy>dynamic</junit.jupiter.execution.parallel.config.strategy>
-                    </systemPropertyVariables>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>${allure-maven.version}</version>
-                <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </build>
+# Sistema de Teste Automatizado
 
-</project>
+## Ferramentas e Tecnologias Utilizadas
+
+- **Rest-Assured**: Uma ferramenta para automação de testes de api.
+- **Intellij**
+
+
+## Colaboradores 🧑‍💻
+
+- [Adam Cardoso](https://github.com/adamcardoso)
+- [Aron Adams](https://github.com/AronAdamsRapetto)
+- [Débora Hickmann](https://github.com/Deboraaahickmann)
+- [Filipe Prata](https://github.com/FilipePrata)
+- [Luiz Fellipe](https://github.com/luizfdarb)
