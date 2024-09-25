@@ -2,7 +2,6 @@ package br.com.dbccompany.vemser.tests.relatorio;
 
 import client.edicao.EdicaoClient;
 import client.relatorio.RelatorioClient;
-import io.restassured.response.Response;
 import models.relatorio.RelatorioEdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
