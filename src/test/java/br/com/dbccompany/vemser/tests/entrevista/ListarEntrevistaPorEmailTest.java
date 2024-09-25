@@ -27,8 +27,11 @@ class ListarEntrevistaPorEmailTest {
 		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
 		String emailEntrevista = response.path("[0].candidatoEmail");
 
+		System.out.println(emailEntrevista);
+
 		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
 				.then()
+				.log().all()
 				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL))
 		;
 	}
