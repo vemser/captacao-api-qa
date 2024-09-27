@@ -32,7 +32,7 @@ public class CadastrarStatusCandidatoPreviusTest {
 	}
 
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato de criar status candidato previus")
 	public void testValidarContratoCadastrarStatusPrevius() {
 

@@ -23,7 +23,7 @@ class RelatorioPcdTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por pcd")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorPcd() {
 
         String edicao = edicaoClient.listaEdicaoAtualAutenticacao()

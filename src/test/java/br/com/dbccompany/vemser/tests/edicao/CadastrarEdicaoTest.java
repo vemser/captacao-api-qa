@@ -19,7 +19,7 @@ class CadastrarEdicaoTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de cadastrar edição")
-	@Tag("Regression")
+	@Tag("Contract")
 	public void testValidarContraroCadastrarEdicao() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();

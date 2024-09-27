@@ -18,7 +18,7 @@ class ListarEntrevistaPorMesTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por mês")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarEntrevistasPorMes() {
 
         Integer mesEntrevista = 9;

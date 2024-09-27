@@ -19,7 +19,7 @@ public class CadastrarTrilhaTest {
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de cadastrar trilha")
-	@Tag("Regression")
+	@Tag("Contract")
 	public void testValidarContratoCadastrarTrilha() {
 		TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 

@@ -97,7 +97,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de busca de candidatos por email no sistema")
-    @Tag("Regression")
+    @Tag("Contract")
     void testValidarContratoBuscarCandidatoPorEmail() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

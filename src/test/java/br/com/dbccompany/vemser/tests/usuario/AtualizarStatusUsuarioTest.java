@@ -64,7 +64,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 5: Validar schema desativar gestor")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarSchemaDesativarGestor(){
         usuarioClient.desativarContaGestor( "3", true)
                 .then()

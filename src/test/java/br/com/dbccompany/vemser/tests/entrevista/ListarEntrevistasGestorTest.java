@@ -15,7 +15,7 @@ public class ListarEntrevistasGestorTest {
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de listar entrevistas do gestor")
-	@Tag("regression")
+	@Tag("Contract")
 	public void testValidarContratoListarEntrevistasGestor() {
 
 		entrevistaClient.listarEntrevistasGestor()
@@ -25,7 +25,7 @@ public class ListarEntrevistasGestorTest {
 
 	@Test
 	@DisplayName("Cenário 2: Deve retorna 200 quando a lista de entrevistas do gestor aparecer com sucesso")
-	@Tag("regression")
+	@Tag("Regression")
 	public void testListarEntrevistasGestorComSucesso() {
 
 		entrevistaClient.listarEntrevistasGestor()
@@ -35,7 +35,7 @@ public class ListarEntrevistasGestorTest {
 
 	@Test
 	@DisplayName("Cenário 3: Deve retornar 403 quando tentar listar com token inválido")
-	@Tag("regression")
+	@Tag("Regression")
 	public void testListarEntrevistasGestorComTokenInvalido() {
 
 		entrevistaClient.listarEntrevistasGestorComTokenInvalido()

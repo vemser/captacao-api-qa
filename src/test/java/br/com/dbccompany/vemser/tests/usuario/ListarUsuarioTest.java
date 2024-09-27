@@ -132,7 +132,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 10: Validar schema listar todo gestor")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarSchemaListarTodoGestor(){
         usuarioClient.listarGestores(true)
                 .then()
@@ -142,7 +142,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 11: Validar schema listar gestor por id")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarSchemaListarGestorPorId(){
         usuarioClient.listarGestorPorId( "1", true)
                 .then()
@@ -152,7 +152,7 @@ public class ListarUsuarioTest {
 
     @Test
     @DisplayName("Cenário 12: Validar schema listar todo gestor inativo")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarSchemaListarTodoGestorInativo(){
         usuarioClient.listarTodoGestorInativo(true)
                 .then()
