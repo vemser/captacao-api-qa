@@ -3,7 +3,6 @@ package client;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.disponibilidade.DisponibilidadeModel;
-import org.apache.commons.lang3.StringUtils;
 import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
@@ -51,32 +50,50 @@ public class DisponibilidadeClient extends BaseClient {
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
     }
 
-    public Response deletarDisponibilidade(String id, boolean isCondicaoInserirTokenValido){
+    public Response deletarDisponibilidade(Integer id){
+        Auth.usuarioGestaoDePessoas();
+
         return
                 given()
                     .spec(super.setUp())
-                    .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
+                    .header(AUTHORIZATION, AuthClient.getToken())
                     .pathParam("idDisponibilidade", id)
                 .when()
                     .delete(DELETE_DISPONIBILIDADE + "/{idDisponibilidade}");
     }
 
-    public Response listarPorData(String data, boolean isCondicaoInserirTokenValido){
+    public Response deletarDisponibilidadeSemAutenticacao(Integer id){
+
+        return
+                given()
+                    .spec(super.setUp())
+                    .pathParam("idDisponibilidade", id)
+                .when()
+                    .delete(DELETE_DISPONIBILIDADE + "/{idDisponibilidade}");
+    }
+
+    public Response listarPorData(String data){
+        Auth.usuarioGestaoDePessoas();
+
         Response response =
                 given()
                         .spec(super.setUp())
-                        .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
+                        .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam("data", data)
                 .when()
                         .get(LISTAR_DISPONIBILIDADES_DATA + "/{data}");
         return response;
     }
-    private String inserirToken(boolean isCondicaoInserirTokenValido){
-        String token = StringUtils.EMPTY;
-        if(isCondicaoInserirTokenValido){
-            Auth.usuarioGestaoDePessoas();
-            token = AuthClient.getToken();
-        }
-        return token;
+
+    public Response listarPorDataSemAutenticacao(String data){
+        Auth.usuarioGestaoDePessoas();
+
+        Response response =
+                given()
+                        .spec(super.setUp())
+                        .pathParam("data", data)
+                .when()
+                        .get(LISTAR_DISPONIBILIDADES_DATA + "/{data}");
+        return response;
     }
 }
