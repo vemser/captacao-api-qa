@@ -67,4 +67,5 @@ public class EntrevistaDataFactory {
 		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
 		return response.path("[0].candidatoEmail");
 	}
+
 }

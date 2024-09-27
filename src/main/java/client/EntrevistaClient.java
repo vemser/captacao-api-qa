@@ -3,6 +3,7 @@ package client;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
+import org.apache.http.HttpStatus;
 import utils.auth.Auth;
 
 import static io.restassured.RestAssured.given;
@@ -52,6 +53,15 @@ public class EntrevistaClient extends BaseClient {
 				.when()
 						.get(ENTREVISTA)
 				;
+	}
+
+	public String getCandidatoEmail(String edicao) {
+
+		return listarTodasAsEntrevistas(edicao)
+				.then()
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.path("[0].candidatoEmail");
 	}
 
 	public Response listarTodasAsEntrevistasPorEmail(String emailDoCandidato) {
@@ -239,4 +249,14 @@ public class EntrevistaClient extends BaseClient {
 						.put(OBSERVACAO_ENTREVISTA_POR_ID)
 				;
 	}
+
+	public Integer getIdEntrevista(String edicao) {
+		return listarTodasAsEntrevistas(edicao)
+				.then()
+				.statusCode(HttpStatus.SC_OK)
+				.extract()
+				.path("[0].idEntrevista");
+	}
+
+
 }
