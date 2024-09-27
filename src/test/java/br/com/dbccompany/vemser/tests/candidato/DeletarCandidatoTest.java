@@ -1,12 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.candidato.CandidatoDataFactory;
-import factory.edicao.EdicaoDataFactory;
-import factory.formulario.FormularioDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.CandidatoDataFactory;
+import factory.EdicaoDataFactory;
+import factory.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;

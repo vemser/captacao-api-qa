@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
-import client.trilha.TrilhaClient;
+import client.TrilhaClient;
 import models.trilha.TrilhaModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

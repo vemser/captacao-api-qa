@@ -1,8 +1,8 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import client.formulario.FormularioClient;
-import factory.formulario.FormularioDataFactory;
-import models.JSONFailureResponseWithoutArrayModel;
+import client.FormularioClient;
+import factory.FormularioDataFactory;
+import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.formulario.JSONListaFormularioResponse;

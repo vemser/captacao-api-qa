@@ -1,8 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.edicao.EdicaoClient;
-import client.entrevista.EntrevistaClient;
-import factory.entrevista.EntrevistaDataFactory;
+import client.EdicaoClient;
+import client.EntrevistaClient;
+import factory.EntrevistaDataFactory;
 import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;

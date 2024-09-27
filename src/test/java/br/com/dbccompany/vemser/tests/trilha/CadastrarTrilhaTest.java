@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.trilha;
 
-import client.trilha.TrilhaClient;
-import factory.trilha.TrilhaDataFactory;
+import client.TrilhaClient;
+import factory.TrilhaDataFactory;
 import io.restassured.response.Response;
 import models.trilha.TrilhaModel;
 import models.trilha.TrilhaResponse;

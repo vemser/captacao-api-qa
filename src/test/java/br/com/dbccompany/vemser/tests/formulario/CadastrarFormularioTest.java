@@ -1,10 +1,10 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.formulario.FormularioDataFactory;
-import models.JSONFailureResponseWithArrayModel;
-import models.JSONFailureResponseWithoutArrayModel;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.FormularioDataFactory;
+import models.failure.JSONFailureResponseWithArrayModel;
+import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;

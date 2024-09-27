@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.edicao.EdicaoClient;
-import client.entrevista.EntrevistaClient;
+import client.EdicaoClient;
+import client.EntrevistaClient;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;

@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.disponibilidade;
 
-import client.disponibilidade.DisponibilidadeClient;
-import factory.disponibilidade.DisponibilidadeDataFactory;
+import client.DisponibilidadeClient;
+import factory.DisponibilidadeDataFactory;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
 import org.apache.http.HttpStatus;
