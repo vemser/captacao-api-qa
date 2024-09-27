@@ -27,7 +27,7 @@ class AtualizarFormularioTest{
     private static final String TRILHA_VALIDA = "FRONTEND";
 
     @Test
-    @Tag("Regression")
+    @Tag("Contract")
     @DisplayName("Cenário 1: Validação de contrato de atualizar formulario")
     public void testValidarContratoAtualizarFormulario() {
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

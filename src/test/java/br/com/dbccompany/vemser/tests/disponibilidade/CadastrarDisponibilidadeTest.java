@@ -24,7 +24,7 @@ public class CadastrarDisponibilidadeTest {
 	}
 
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato criar disponibilidade com sucesso")
 	public void testValidarContratoCriarDisponibilidade() {
 		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);

@@ -56,7 +56,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de listagem de candidatos no sistema")
-    @Tag("Regression")
+    @Tag("Contract")
     void testValidarContratoListarCandidatos() {
 
         candidatoClient.listarTodosOsCandidatos(0, 20)

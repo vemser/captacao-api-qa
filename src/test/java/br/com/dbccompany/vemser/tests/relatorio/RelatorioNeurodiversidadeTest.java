@@ -23,7 +23,7 @@ class RelatorioNeurodiversidadeTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por neurodiversidade")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
 
         String edicao = edicaoClient.listaEdicaoAtualAutenticacao()

@@ -22,7 +22,7 @@ class RelatorioEstadoTest  {
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por estado")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEstado() {
         String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
                 .then()

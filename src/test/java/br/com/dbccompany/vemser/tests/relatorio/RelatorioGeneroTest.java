@@ -23,7 +23,7 @@ class RelatorioGeneroTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por genero")
-    @Tag("Functional")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorGenero() {
 
         String edicao = edicaoClient.listaEdicaoAtualAutenticacao()

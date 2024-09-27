@@ -37,7 +37,7 @@ public class ListarDisponibilidadesTest {
 					.statusCode(HttpStatus.SC_NO_CONTENT);
 	}
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato listar disponibilidade com sucesso")
 	public void testValidarContratoListarDisponibilidade() {
 

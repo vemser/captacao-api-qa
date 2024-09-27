@@ -20,7 +20,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de atualizar nota de corte")
-	@Tag("Regression")
+	@Tag("Contract")
 	public void testContratoAtualizarNotaDeCorte() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
