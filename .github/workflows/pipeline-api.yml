@@ -1,0 +1,295 @@
+name: Relatorio de testes API Captacao
+
+on:  
+  schedule:
+    - cron: '50 11 * * *'
+    - cron: '50 16 * * *'
+    - cron: '50 20 * * *'
+  push:
+    branches:
+      - hml
+      
+
+env:
+  PIPELINE_NAME: ${{ github.workflow }}
+  RUN_NUMBER: ${{ github.run_number }}
+  ALLURE_RESULTS: allure-results
+  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+  REPORT_URL: ${{ secrets.REPORT_URL }}
+  TAG_HEALTH_CHECK: "Health-Check"
+  TAG_CONTRATO: "Contract"
+  TAG_FUNCIONAL: "Functional"
+  TAG_REGRESSION: "Regression"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      cache_key: ${{ steps.cache.outputs.cache_key }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache Maven
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+  test-HealthCheck:
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      health_status: ${{ steps.set_output.outputs.status }}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build properties
+        run: |
+          mkdir -p src/main/resources
+          echo "GP_LOGIN=${{ secrets.GP_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "GP_PSW=${{ secrets.GP_PSW }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_LOGIN=${{ secrets.ALUNO_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_PSW=${{ secrets.ALUNO_PSW }}" >> src/main/resources/application-config.properties
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Health-Check Tests
+        id: health_check
+        run: mvn test -Dgroups=${{ env.TAG_HEALTH_CHECK }} -Dallure.results.directory=${{ env.ALLURE_RESULTS }}
+        continue-on-error: true
+        
+      - name: Set output based on results
+        id: set_output
+        run: |
+          if [ "${{ steps.health_check.outcome }}" == "success" ]; then
+            echo "status=true" >> $GITHUB_OUTPUT
+          else
+            echo "status=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload Allure reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-health-check
+          path: ${{ env.ALLURE_RESULTS }}
+
+  test-Contrato:
+    needs: test-HealthCheck
+    if: ${{ needs.test-HealthCheck.outputs.health_status == 'true' }} 
+    runs-on: ubuntu-latest
+    outputs:
+      contract_status: ${{ steps.set_output.outputs.status }}
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build properties
+        run: |
+          mkdir -p src/main/resources
+          echo "GP_LOGIN=${{ secrets.GP_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "GP_PSW=${{ secrets.GP_PSW }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_LOGIN=${{ secrets.ALUNO_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_PSW=${{ secrets.ALUNO_PSW }}" >> src/main/resources/application-config.properties
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Contract Tests
+        id: contract_check
+        run: mvn test -Dgroups=${{ env.TAG_CONTRATO }} -Dallure.results.directory=${{ env.ALLURE_RESULTS }}
+        continue-on-error: true
+
+      - name: Set output based on results
+        id: set_output
+        run: |
+          if [ "${{ steps.contract_check.outcome }}" == "success" ]; then
+            echo "status=true" >> $GITHUB_OUTPUT
+          else
+            echo "status=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-contract
+          path: ${{ env.ALLURE_RESULTS }}
+
+  test-Funcional:
+    needs: test-Contrato
+    if: ${{ needs.test-Contrato.outputs.contract_status == 'true' }} 
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build properties
+        run: |
+          mkdir -p src/main/resources
+          echo "GP_LOGIN=${{ secrets.GP_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "GP_PSW=${{ secrets.GP_PSW }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_LOGIN=${{ secrets.ALUNO_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_PSW=${{ secrets.ALUNO_PSW }}" >> src/main/resources/application-config.properties
+          
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Functional Tests
+        run: mvn test -Dgroups=${{ env.TAG_FUNCIONAL }} -Dallure.results.directory=${{ env.ALLURE_RESULTS }}
+        continue-on-error: true
+        
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-functional
+          path: ${{ env.ALLURE_RESULTS }}
+
+  test-Regressao:
+    needs: test-Contrato
+    if: ${{ needs.test-Contrato.outputs.contract_status == 'true' }} 
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build properties
+        run: |
+          mkdir -p src/main/resources
+          echo "GP_LOGIN=${{ secrets.GP_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "GP_PSW=${{ secrets.GP_PSW }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_LOGIN=${{ secrets.ALUNO_LOGIN }}" >> src/main/resources/application-config.properties
+          echo "ALUNO_PSW=${{ secrets.ALUNO_PSW }}" >> src/main/resources/application-config.properties
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Regression Tests
+        run: mvn test -Dgroups=${{ env.TAG_REGRESSION }} -Dallure.results.directory=${{ env.ALLURE_RESULTS }}
+        continue-on-error: true
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-regression
+          path: ${{ env.ALLURE_RESULTS }}
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [test-HealthCheck, test-Contrato, test-Funcional, test-Regressao]
+    if: always() 
+    steps:
+
+      - name: Download Allure reports from Health-Check
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report-health-check
+          path: allure-reports/health-check
+
+      - name: Download Allure reports from Contract
+        if: ${{ needs.test-HealthCheck.outputs.health_status == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report-contract
+          path: allure-reports/contract
+
+      - name: Download Allure reports from Functional
+        if: ${{ needs.test-Contrato.outputs.contract_status == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report-functional
+          path: allure-reports/functional
+
+      - name: Download Allure reports from Regression
+        if: ${{ needs.test-Contrato.outputs.contract_status == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report-regression
+          path: allure-reports/regression
+
+      - name: Copy Allure Reports to allure-results
+        run: |
+          mkdir -p allure-results
+          if [ -d "allure-reports/health-check" ]; then cp -r allure-reports/health-check/* allure-results; fi
+          if [ -d "allure-reports/contract" ]; then cp -r allure-reports/contract/* allure-results; fi
+          if [ -d "allure-reports/functional" ]; then cp -r allure-reports/functional/* allure-results; fi
+          if [ -d "allure-reports/regression" ]; then cp -r allure-reports/regression/* allure-results; fi
+
+      - name: Load test report history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: allure-results
+
+      - name: Edit index.html to include GitHub Run ID
+        run: |
+          echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=${{secrets.REPORT_URL}}/${GITHUB_RUN_NUMBER}/index.html\">" | sudo tee allure-history/index.html > /dev/null
+          echo "<meta http-equiv=\"Pragma\" content=\"no-cache\"><meta http-equiv=\"Expires\" content=\"0\">" | sudo tee -a allure-history/index.html > /dev/null
+        if: always()
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+  python-test:
+    runs-on: ubuntu-latest
+    needs: report
+    if: always()
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: debug
+        run: echo "The report URL is $URL"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run Python script with webhook key
+        run: |
+          python scripts/allure-report.py
