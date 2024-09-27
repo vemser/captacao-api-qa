@@ -15,16 +15,15 @@ class ListarEntrevistaPorMesTest {
 
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
     private static final String PATH_SCHEMA_LISTAR_ENTREVISTAS_POR_MES = "schemas/entrevista/listar_entrevistas_por_mes.json";
+	private static final Integer MES_ENTREVISTA = 9;
+	private static final Integer ANO_ENTREVISTA = 2025;
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar entrevistas por mês")
     @Tag("Contract")
     public void testValidarContratoListarEntrevistasPorMes() {
 
-        Integer mesEntrevista = 9;
-        Integer anoEntrevista = 2025;
-
-        entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        entrevistaClient.listarTodasAsEntrevistasPorMes(ANO_ENTREVISTA, MES_ENTREVISTA)
                 .then()
                		 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTAS_POR_MES))
         ;
@@ -35,10 +34,7 @@ class ListarEntrevistaPorMesTest {
     @Tag("Regression")
     void testListarEntrevistasPorMesComSucesso() {
 
-        Integer mesEntrevista = 9;
-        Integer anoEntrevista = 2025;
-
-        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(anoEntrevista, mesEntrevista)
+        EntrevistaListaResponseModel listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistasPorMes(ANO_ENTREVISTA, MES_ENTREVISTA)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
@@ -52,10 +48,7 @@ class ListarEntrevistaPorMesTest {
     @Tag("Regression")
     void testListarEntrevistasPorMesSemEstarAutenticado() {
 
-        Integer mesEntrevista = 3;
-        Integer anoEntrevista = 2025;
-
-        entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(anoEntrevista, mesEntrevista)
+        entrevistaClient.listarTodasAsEntrevistasPorMesSemAutenticacao(ANO_ENTREVISTA, MES_ENTREVISTA)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }

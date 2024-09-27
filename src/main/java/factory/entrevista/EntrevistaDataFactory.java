@@ -62,4 +62,9 @@ public class EntrevistaDataFactory {
 	public static Integer idEntrevistaEnexistente() {
 		return faker.number().numberBetween(5000, 10000);
 	}
+
+	public static String getEmailCandidato() {
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		return response.path("[0].candidatoEmail");
+	}
 }
