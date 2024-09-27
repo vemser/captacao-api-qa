@@ -1,8 +1,8 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.formulario.FormularioDataFactory;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.FormularioDataFactory;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;

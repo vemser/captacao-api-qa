@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import client.candidato.CandidatoClient;
-import client.inscricao.InscricaoClient;
+import client.CandidatoClient;
+import client.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;

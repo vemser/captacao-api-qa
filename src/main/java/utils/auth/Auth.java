@@ -1,6 +1,6 @@
 package utils.auth;
 
-import client.auth.AuthClient;
+import client.AuthClient;
 import models.login.LoginModel;
 import utils.config.Manipulation;
 

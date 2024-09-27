@@ -1,11 +1,11 @@
 package br.com.dbccompany.vemser.tests.avaliacao;
 
-import client.avaliacao.AvaliacaoClient;
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.inscricao.InscricaoClient;
-import factory.avaliacao.AvaliacaoDataFactory;
+import client.AvaliacaoClient;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.InscricaoClient;
+import factory.AvaliacaoDataFactory;
 import models.avaliacao.AvaliacaoCriacaoModel;
 import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;

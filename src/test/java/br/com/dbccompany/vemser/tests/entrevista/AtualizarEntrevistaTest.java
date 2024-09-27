@@ -1,8 +1,8 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.edicao.EdicaoClient;
-import client.entrevista.EntrevistaClient;
-import factory.entrevista.EntrevistaDataFactory;
+import client.EdicaoClient;
+import client.EntrevistaClient;
+import factory.EntrevistaDataFactory;
 import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
@@ -16,8 +16,10 @@ class AtualizarEntrevistaTest  {
 
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 	private static final EdicaoClient edicaoClient = new EdicaoClient();
+
 	@Test
 	@DisplayName("Cenário 1: Deve retornar 204 ao atualizar entrevista com sucesso")
+	@Tag("Functional")
 	void testAtualizarEntrevistaComSucesso() {
 
 		String statusEntrevista = "CONFIRMADA";

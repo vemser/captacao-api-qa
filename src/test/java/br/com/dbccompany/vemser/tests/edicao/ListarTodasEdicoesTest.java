@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import client.edicao.EdicaoClient;
+import client.EdicaoClient;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -27,6 +27,7 @@ public class ListarTodasEdicoesTest {
 
 	@Test
 	@DisplayName("Cenário 2: Deve retornar 200 ao listar todas as edições com sucesso")
+	@Tag("Regression")
 	public void testListarTodasEdicoesComSucesso() {
 
 		edicaoClient.listarTodasAsEdicoes()

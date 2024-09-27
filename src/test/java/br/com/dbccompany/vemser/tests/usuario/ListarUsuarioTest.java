@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.usuario;
 
-import client.usuario.UsuarioClient;
+import client.UsuarioClient;
 import models.usuario.UsuarioListarResponseModel;
 import models.usuario.UsuarioModel;
 import net.datafaker.Faker;

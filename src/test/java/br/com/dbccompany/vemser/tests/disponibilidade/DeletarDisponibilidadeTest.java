@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.disponibilidade;
 
-import client.disponibilidade.DisponibilidadeClient;
-import factory.disponibilidade.DisponibilidadeDataFactory;
+import client.DisponibilidadeClient;
+import factory.DisponibilidadeDataFactory;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
 import org.apache.http.HttpStatus;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@DisplayName("Endpoint de deletar disponibilidade")
 public class DeletarDisponibilidadeTest {
     private static final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
     private static List<DisponibilidadeResponseModel> disponibilidadeCadastrada;

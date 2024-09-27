@@ -1,15 +1,15 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.candidato.CandidatoDataFactory;
-import factory.edicao.EdicaoDataFactory;
-import factory.formulario.FormularioDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.CandidatoDataFactory;
+import factory.EdicaoDataFactory;
+import factory.FormularioDataFactory;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
-import models.JSONFailureResponseWithArrayModel;
+import models.failure.JSONFailureResponseWithArrayModel;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
@@ -344,6 +344,7 @@ listaDeNomeDeTrilhas.add("FRONTEND");
 
     @Test
     @DisplayName("Cenário 10: Deve retornar 400 quando tenta cadastrar candidato com e-mail nulo")
+    @Tag("Regression")
     void testCadastrarCandidatoComEmailNulo() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

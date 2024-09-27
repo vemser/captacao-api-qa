@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import client.edicao.EdicaoClient;
-import factory.edicao.EdicaoDataFactory;
+import client.EdicaoClient;
+import factory.EdicaoDataFactory;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
