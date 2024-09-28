@@ -2,10 +2,10 @@ package br.com.dbccompany.vemser.tests.disponibilidade;
 
 import client.DisponibilidadeClient;
 import factory.DisponibilidadeDataFactory;
-import models.failure.JSONFailureResponseWithArrayModel;
-import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
+import models.failure.JSONFailureResponseWithArrayModel;
+import models.failure.JSONFailureResponseWithoutArrayModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 import utils.auth.Auth;
