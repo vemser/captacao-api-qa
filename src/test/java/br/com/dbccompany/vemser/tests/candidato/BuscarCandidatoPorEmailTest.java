@@ -1,12 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.candidato.CandidatoDataFactory;
-import factory.edicao.EdicaoDataFactory;
-import factory.formulario.FormularioDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.CandidatoDataFactory;
+import factory.EdicaoDataFactory;
+import factory.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
@@ -97,7 +97,7 @@ class BuscarCandidatoPorEmailTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de busca de candidatos por email no sistema")
-    @Tag("Regression")
+    @Tag("Contract")
     void testValidarContratoBuscarCandidatoPorEmail() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

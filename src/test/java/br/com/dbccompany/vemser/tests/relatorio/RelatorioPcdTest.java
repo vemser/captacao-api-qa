@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
-import client.edicao.EdicaoClient;
-import client.relatorio.RelatorioClient;
+import client.EdicaoClient;
+import client.RelatorioClient;
 import models.relatorio.RelatorioPcdModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -23,10 +23,10 @@ class RelatorioPcdTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por pcd")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorPcd() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -43,7 +43,7 @@ class RelatorioPcdTest {
     void testListarRelatorioPcdComSucesso() {
 
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

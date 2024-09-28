@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
-import client.edicao.EdicaoClient;
-import client.relatorio.RelatorioClient;
+import client.EdicaoClient;
+import client.RelatorioClient;
 import models.relatorio.RelatorioNeurodiversidadeModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -23,10 +23,10 @@ class RelatorioNeurodiversidadeTest {
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por neurodiversidade")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -42,7 +42,7 @@ class RelatorioNeurodiversidadeTest {
     @Tag("Regression")
     void testListarRelatorioNeurodiversidadeComSucesso() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

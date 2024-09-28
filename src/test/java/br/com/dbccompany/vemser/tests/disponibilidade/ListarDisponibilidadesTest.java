@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.disponibilidade;
 
-import client.disponibilidade.DisponibilidadeClient;
-import factory.disponibilidade.DisponibilidadeDataFactory;
+import client.DisponibilidadeClient;
+import factory.DisponibilidadeDataFactory;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
 import org.apache.http.HttpStatus;
@@ -37,7 +37,7 @@ public class ListarDisponibilidadesTest {
 					.statusCode(HttpStatus.SC_NO_CONTENT);
 	}
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato listar disponibilidade com sucesso")
 	public void testValidarContratoListarDisponibilidade() {
 

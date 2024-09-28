@@ -1,8 +1,8 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.formulario.FormularioDataFactory;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.FormularioDataFactory;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
@@ -27,7 +27,7 @@ class AtualizarFormularioTest{
     private static final String TRILHA_VALIDA = "FRONTEND";
 
     @Test
-    @Tag("Regression")
+    @Tag("Contract")
     @DisplayName("Cenário 1: Validação de contrato de atualizar formulario")
     public void testValidarContratoAtualizarFormulario() {
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

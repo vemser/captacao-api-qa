@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import client.edicao.EdicaoClient;
+import client.EdicaoClient;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,7 @@ class ListarUltimaEdicaoTest {
 	@Tag("Regression")
 	void testListarUltimaEdicaoComSucesso() {
 
-		edicaoClient.listaEdicaoAtualAutenticacao()
+		edicaoClient.obterEdicaoAtual()
 				.then()
 						.statusCode(HttpStatus.SC_OK);
 	}

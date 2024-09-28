@@ -1,10 +1,11 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import client.edicao.EdicaoClient;
-import factory.edicao.EdicaoDataFactory;
+import client.EdicaoClient;
+import factory.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,21 +14,25 @@ import org.junit.jupiter.api.Test;
 class DeletarEdicaoTest {
 
     private static final EdicaoClient edicaoClient = new EdicaoClient();
+	EdicaoModel edicaoCadastrada;
+	EdicaoModel edicaoResponse;
+
+	@BeforeEach
+	void setUp() {
+		edicaoCadastrada = EdicaoDataFactory.edicaoValida();
+		edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada);
+	}
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 204 ao deletar edição com sucesso")
     @Tag("Regression")
     void testDeletarEdicaoComSucesso() {
-        EdicaoModel edicaoCadastrada = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoResponse = edicaoClient.criarEdicao(edicaoCadastrada);
-
 
         Integer idEdicao = Integer.parseInt(String.valueOf(edicaoResponse.getIdEdicao()));
 
-        Response response = edicaoClient.deletarEdicao(idEdicao);
-
-        response.then().statusCode(204);
+        edicaoClient.deletarEdicao(idEdicao)
+				.then()
+				.statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
@@ -35,14 +40,8 @@ class DeletarEdicaoTest {
     @Tag("Regression")
     void testDeletarEdicaoSemAutenticacao() {
 
-        EdicaoModel cadastrarEdicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCadastrada = edicaoClient.criarEdicao(cadastrarEdicao);
-
-            edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
-                    .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
-
-        edicaoClient.deletarEdicao(edicaoCadastrada.getIdEdicao());
+		edicaoClient.deletarEdicaoSemAutenticacao(edicaoCadastrada.getIdEdicao())
+				.then()
+				.statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }

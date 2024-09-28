@@ -1,12 +1,12 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.candidato.CandidatoDataFactory;
-import factory.edicao.EdicaoDataFactory;
-import factory.formulario.FormularioDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.CandidatoDataFactory;
+import factory.EdicaoDataFactory;
+import factory.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
@@ -15,10 +15,7 @@ import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,13 +29,21 @@ class AtualizarCandidatoTest {
     private final EdicaoClient edicaoClient = new EdicaoClient();
     private final CandidatoClient candidatoClient = new CandidatoClient();
 
-    @Test
-    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar candidato com sucesso")
-    @Tag("Regression")
-    void testAtualizarCandidatoComSucesso() {
+    private List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+    private List<TrilhaModel> listaDeTrilhas = new ArrayList<>();
+    private FormularioCriacaoModel formulario;
+    private FormularioCriacaoResponseModel formularioCriado;
+    private EdicaoModel edicao;
+    private EdicaoModel edicaoCriada;
+    private CandidatoCriacaoModel candidatoCriado;
+    private CandidatoModel candidatoCadastrado;
+    private CandidatoCriacaoModel candidatoCriadoComNovoNome;
+    private CandidatoCriacaoResponseModel candidatoAtualizado;
+    private CandidatoCriacaoModel candidatoCriadoComNovoEmail;
 
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+    @BeforeEach
+    void setUp(){
+        listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                         .then()
                         .statusCode(HttpStatus.SC_OK)
                         .extract()
@@ -47,35 +52,46 @@ class AtualizarCandidatoTest {
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        edicao = EdicaoDataFactory.edicaoValida();
+        edicaoCriada = edicaoClient.criarEdicao(edicao);
+        candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
 
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-                .then()
+        candidatoCadastrado =
+            candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+            .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .as(CandidatoModel.class);
 
-        CandidatoCriacaoModel candidatoCriadoComNovoNome = CandidatoDataFactory.candidatoComNovoNome(candidatoCriado);
 
-        CandidatoCriacaoResponseModel candidatoAtualizado = candidatoClient.atualizarCandidato(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoNome)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(CandidatoCriacaoResponseModel.class);
+    }
+
+    @AfterEach
+    void deleteData(){
 
         candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
         edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+    }
+
+
+    @Test
+    @DisplayName("Cenário 1: Deve retornar 200 ao atualizar candidato com sucesso")
+    @Tag("Regression")
+    void testAtualizarCandidatoComSucesso() {
+
+        candidatoCriadoComNovoNome = CandidatoDataFactory.candidatoComNovoNome(candidatoCriado);
+
+        candidatoAtualizado =
+                candidatoClient.atualizarCandidato(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoNome)
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(CandidatoCriacaoResponseModel.class);
 
         Assertions.assertNotNull(candidatoAtualizado);
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoAtualizado.getIdCandidato());
@@ -86,45 +102,10 @@ class AtualizarCandidatoTest {
     @Tag("Functional")
     void testAtualizarCandidatoSemAutenticacao() {
 
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario());
-
-		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(CandidatoModel.class);
-
-
-        CandidatoCriacaoModel candidatoCriadoComNovoEmail = CandidatoDataFactory.candidatoComNovoEmail(candidatoCriado);
+        candidatoCriadoComNovoEmail = CandidatoDataFactory.candidatoComNovoEmail(candidatoCriado);
 
         candidatoClient.atualizarCandidatoSemAutenticacao(candidatoCadastrado.getIdCandidato(), candidatoCriadoComNovoEmail)
                 .then()
                 .statusCode(HttpStatus.SC_FORBIDDEN);
-
-
-        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
-                .then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
-
-		edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
     }
 }

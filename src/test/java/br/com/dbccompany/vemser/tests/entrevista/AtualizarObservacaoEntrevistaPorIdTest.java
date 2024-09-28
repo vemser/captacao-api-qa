@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.entrevista.EntrevistaClient;
-import factory.entrevista.EntrevistaDataFactory;
+import client.EntrevistaClient;
+import factory.EntrevistaDataFactory;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

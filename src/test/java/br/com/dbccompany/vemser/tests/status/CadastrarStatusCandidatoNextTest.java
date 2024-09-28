@@ -1,12 +1,12 @@
 package br.com.dbccompany.vemser.tests.status;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.status.StatusClient;
-import factory.candidato.CandidatoDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.StatusClient;
+import factory.CandidatoDataFactory;
 import io.restassured.response.Response;
-import models.JSONFailureResponseWithoutArrayModel;
+import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoResponseModel;
 import models.status.StatusModel;
@@ -32,7 +32,7 @@ public class CadastrarStatusCandidatoNextTest {
 	}
 
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato de criar status candidato next")
 	public void testValidarContratoCadastrarStatusNext() {
 

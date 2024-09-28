@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
-import client.edicao.EdicaoClient;
-import client.relatorio.RelatorioClient;
+import client.EdicaoClient;
+import client.RelatorioClient;
 import models.relatorio.RelatorioEstadoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -22,9 +22,9 @@ class RelatorioEstadoTest  {
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por estado")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEstado() {
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -39,7 +39,7 @@ class RelatorioEstadoTest  {
     @DisplayName("Cenário 2: Deve retornar 200 ao listar com sucesso relatório de candidatos por estado")
     @Tag("Regression")
     void testListarRelatorioEstadoComSucesso() {
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

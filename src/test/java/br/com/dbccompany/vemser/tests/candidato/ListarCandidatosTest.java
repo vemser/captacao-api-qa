@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import models.JSONFailureResponseWithArrayModel;
+import client.CandidatoClient;
+import models.failure.JSONFailureResponseWithArrayModel;
 import models.candidato.JSONListaCandidatoResponse;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -56,7 +56,7 @@ class ListarCandidatosTest {
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de listagem de candidatos no sistema")
-    @Tag("Regression")
+    @Tag("Contract")
     void testValidarContratoListarCandidatos() {
 
         candidatoClient.listarTodosOsCandidatos(0, 20)

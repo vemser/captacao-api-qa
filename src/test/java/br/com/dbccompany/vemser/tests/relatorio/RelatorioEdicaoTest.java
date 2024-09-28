@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.relatorio;
 
-import client.edicao.EdicaoClient;
-import client.relatorio.RelatorioClient;
+import client.EdicaoClient;
+import client.RelatorioClient;
 import models.relatorio.RelatorioEdicaoModel;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ class RelatorioEdicaoTest  {
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEdicao() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -42,7 +42,7 @@ class RelatorioEdicaoTest  {
     @Tag("Regression")
     void testListarRelatorioEdicaoComSucesso() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

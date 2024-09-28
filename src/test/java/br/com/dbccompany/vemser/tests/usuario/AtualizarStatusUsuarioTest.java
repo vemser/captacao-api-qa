@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.usuario;
 
-import client.usuario.UsuarioClient;
+import client.UsuarioClient;
 import models.usuario.UsuarioModel;
 import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
@@ -64,7 +64,7 @@ public class AtualizarStatusUsuarioTest {
 
     @Test
     @DisplayName("Cenário 5: Validar schema desativar gestor")
-    @Tag("Regression")
+    @Tag("Contract")
     public void testValidarSchemaDesativarGestor(){
         usuarioClient.desativarContaGestor( "3", true)
                 .then()

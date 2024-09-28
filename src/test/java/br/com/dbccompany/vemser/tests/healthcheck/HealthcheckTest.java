@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.healthcheck;
 
-import client.healthcheck.HealthcheckClient;
+import client.HealthcheckClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
