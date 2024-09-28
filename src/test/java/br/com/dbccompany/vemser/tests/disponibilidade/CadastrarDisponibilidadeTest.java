@@ -32,15 +32,18 @@ public class CadastrarDisponibilidadeTest {
 	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato criar disponibilidade com sucesso")
 	public void testValidarContratoCriarDisponibilidade() {
+
 		disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
 				.then()
 					.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/cadastrarDisponibilidade.json"));
+
 	}
 
 	@Test
 	@Tag("Regression")
 	@DisplayName("Cenário 2: Validar criar disponibilidade com sucesso")
 	public void testCriarDisponibilidadeComSucesso() {
+
 		DisponibilidadeResponseModel[] responseArray = disponibilidadeClient.cadastrarDisponibilidade(disponibilidade)
 				.then()
 					.statusCode(HttpStatus.SC_CREATED)
@@ -51,10 +54,13 @@ public class CadastrarDisponibilidadeTest {
 
 		deletarDisponibilidade(response);
 
-		Assertions.assertNotNull(response.getIdDisponibilidade());
-		Assertions.assertEquals(disponibilidade.getDataEntrevista(), response.getDataEntrevista());
-		Assertions.assertEquals(disponibilidade.getHoraInicio(), response.getHoraInicio());
-		Assertions.assertEquals(disponibilidade.getHoraFim(), response.getHoraFim());
+		Assertions.assertAll(
+				() -> Assertions.assertNotNull(response.getIdDisponibilidade()),
+				() -> Assertions.assertEquals(disponibilidade.getDataEntrevista(), response.getDataEntrevista()),
+				() -> Assertions.assertEquals(disponibilidade.getHoraInicio(), response.getHoraInicio()),
+				() -> Assertions.assertEquals(disponibilidade.getHoraFim(), response.getHoraFim())
+		);
+
 	}
 
 	@Test

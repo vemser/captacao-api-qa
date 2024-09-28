@@ -42,7 +42,7 @@ public class ListarDisponibilidadesTest {
 
 		disponibilidadeClient.listarDisponibilidades()
 				.then()
-				.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/listarDisponibilidade.json"));
+					.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/listarDisponibilidade.json"));
 	}
 
 	@Test
@@ -51,11 +51,11 @@ public class ListarDisponibilidadesTest {
 	public void testListarDisponibilidadeComSucesso() {
 		List<DisponibilidadeResponseModel> listaDisponibilidade = disponibilidadeClient.listarDisponibilidades()
 				.then()
-				.statusCode(HttpStatus.SC_OK)
-				.extract()
-				.body()
-				.jsonPath()
-				.getList("$", DisponibilidadeResponseModel.class);
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.body()
+					.jsonPath()
+					.getList("$", DisponibilidadeResponseModel.class);
 
 		Assertions.assertNotNull(listaDisponibilidade, "A lista de disponibilidade não deve ser nula");
 		Assertions.assertFalse(listaDisponibilidade.isEmpty(), "A lista de disponibilidade não deve estar vazia");
