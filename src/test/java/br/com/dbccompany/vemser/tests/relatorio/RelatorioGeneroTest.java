@@ -4,10 +4,8 @@ import client.EdicaoClient;
 import client.RelatorioClient;
 import models.relatorio.RelatorioGeneroModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,21 +18,25 @@ class RelatorioGeneroTest {
     private static final RelatorioClient relatorioClient = new RelatorioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_GENERO = "schemas/relatorio/listar_relatorios_genero.json";
+    private static final String ERRO_GENERO_NULO = "Campo 'genero' deve ser não nulo";
+    private static String edicao;
+
+    @BeforeEach
+    public void setUp() {
+        edicao = edicaoClient.getEdicaoAtualComoString();
+    }
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por genero")
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorGenero() {
 
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
         relatorioClient.listarCandidatosGenero(edicao)
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_GENERO))
+                    .statusCode(HttpStatus.SC_OK)
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_GENERO))
         ;
+
     }
 
     @Test
@@ -42,23 +44,23 @@ class RelatorioGeneroTest {
     @Tag("Regression")
     void testListarRelatorioGeneroComSucesso() {
 
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
-        var response = relatorioClient.listarCandidatosGenero(edicao)
+        RelatorioGeneroModel[] response = relatorioClient.listarCandidatosGenero(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
-                    .as(RelatorioGeneroModel[].class);
+                    .as(RelatorioGeneroModel[].class)
+                ;
 
         List<RelatorioGeneroModel> listaRelatorioGenero = Arrays.stream(response).toList();
 
-        if (!listaRelatorioGenero.isEmpty()) {
-            for (RelatorioGeneroModel r : listaRelatorioGenero) {
-                Assertions.assertNotNull(r.getGenero());
-            }
-        }
+        Assertions.assertAll(
+                listaRelatorioGenero.stream()
+                        .map(r -> (Executable) () ->
+                                Assertions.assertNotNull(r.getGenero(), ERRO_GENERO_NULO)
+                        )
+                        .toList()
+        );
+
     }
 
     @Test
@@ -68,6 +70,7 @@ class RelatorioGeneroTest {
 
         relatorioClient.listarCandidatosGeneroSemAutenticacao()
                 .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+                    .statusCode(HttpStatus.SC_FORBIDDEN);
+
     }
 }
