@@ -29,11 +29,11 @@ class ListarFormulariosTest{
     public static void setUp() {
 
         List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
 
@@ -50,7 +50,7 @@ class ListarFormulariosTest{
 
         formularioClient.listarTodosOsFormularios()
                 .then()
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_FORMULARIOS));
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_FORMULARIOS));
 
     }
 
@@ -60,10 +60,10 @@ class ListarFormulariosTest{
     void testListarFormulariosComSucesso()  {
 
         JSONListaFormularioResponse listaFormularioResponse = formularioClient.listarTodosOsFormularios()
-                        .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(JSONListaFormularioResponse.class);
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(JSONListaFormularioResponse.class);
 
         Integer idFormulario1 = listaFormularioResponse.getElementos().get(0).getIdFormulario();
         Integer idFormulario2 = listaFormularioResponse.getElementos().get(1).getIdFormulario();
@@ -132,11 +132,11 @@ class ListarFormulariosTest{
 
         formularioClient.incluiConfigPcEmFormularioComValidacao(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_OK);
 
         formularioClient.recuperarPrintConfigPc(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_OK)
         ;
 
         formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
@@ -152,9 +152,9 @@ class ListarFormulariosTest{
 
         JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarPrintConfigPc(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(JSONFailureResponseWithoutArrayModel.class);
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(JSONFailureResponseWithoutArrayModel.class);
 
         Assertions.assertEquals("Usuário não possui print das configurações do pc cadastrado.", response.getMessage());
         Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
@@ -172,11 +172,11 @@ class ListarFormulariosTest{
 
         formularioClient.incluiCurriculoEmFormularioComValidacao(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_OK);
 
         formularioClient.recuperarCurriculo(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK)
+                    .statusCode(HttpStatus.SC_OK)
         ;
 
         formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
@@ -193,9 +193,9 @@ class ListarFormulariosTest{
 
         JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarCurriculo(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                .as(JSONFailureResponseWithoutArrayModel.class);
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .extract()
+                    .as(JSONFailureResponseWithoutArrayModel.class);
 
         Assertions.assertEquals("Usuário não possui currículo cadastrado.", response.getMessage());
         Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
