@@ -1,18 +1,18 @@
 package br.com.dbccompany.vemser.tests.formulario;
 
 import client.FormularioClient;
+import client.TrilhaClient;
 import factory.FormularioDataFactory;
 import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.formulario.JSONListaFormularioResponse;
+import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -21,17 +21,38 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 class ListarFormulariosTest{
 
     private static final String PATH_SCHEMA_LISTAR_FORMULARIOS = "schemas/formulario/listar_formularios.json";
-    private static final String TRILHA_VALIDA = "FRONTEND";
-
     private static final FormularioClient formularioClient = new FormularioClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
+    private static final List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+    private static FormularioCriacaoResponseModel formularioCriado;
+
+    @BeforeAll
+    public static void setUp() {
+
+        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(TrilhaModel[].class))
+                .toList();
+
+        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+
+    }
+
+    @AfterAll
+    public static void tearDown() {
+    }
 
     @Test
     @Tag("Contract")
     @DisplayName("Cenário 1: Validar contrato listar formulários")
     void testValidarContratoListarFormularios() {
+
         formularioClient.listarTodosOsFormularios()
                 .then()
                 .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_FORMULARIOS));
+
     }
 
     @Test
@@ -49,6 +70,7 @@ class ListarFormulariosTest{
         Integer idFormulario2 = listaFormularioResponse.getElementos().get(1).getIdFormulario();
 
         Assertions.assertTrue(idFormulario2 > idFormulario1);
+
     }
 
     @Test
@@ -59,121 +81,107 @@ class ListarFormulariosTest{
         formularioClient.listarFormulariosSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
+
     }
 
     @Test
     @Tag("Regression")
     @DisplayName("Cenário 4: Buscar Comprovação de matricula com sucesso")
     void testTentarBuscarComprovacaoMatriculaComSucessp() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
 
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        formularioClient.incluiComprovanteMatriculaComValidacao(formularioCriado.getIdFormulario())
+        formularioClient.incluiComprovanteMatriculaComValidacao(formularioNovo.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_OK);
 
-        formularioClient.recuperarCompMatricula(formularioCriado.getIdFormulario())
+        formularioClient.recuperarCompMatricula(formularioNovo.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                 ;
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
     }
 
     @Test
     @Tag("Regression")
     @DisplayName("Cenário 5: Buscar Comprovação de matricula sem documento cadastrado")
     void testTentarBuscarComprovacaoMatriculaSemDocumentoCadastrado() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarCompMatricula(formularioCriado.getIdFormulario())
+        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarCompMatricula(formularioNovo.getIdFormulario())
                 .then()
                     .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .extract()
                     .as(JSONFailureResponseWithoutArrayModel.class);
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
-
         Assertions.assertEquals("Usuário não possui documentos.", response.getMessage());
         Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
     }
 
     @Test
     @Tag("Regression")
     @DisplayName("Cenário 6: Buscar print de configurações do PC com sucesso")
     void testTentarBuscarPrintConfigPcComSucesso() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-
-        formularioClient.incluiConfigPcEmFormularioComValidacao(formularioCriado.getIdFormulario())
+        formularioClient.incluiConfigPcEmFormularioComValidacao(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
 
-        formularioClient.recuperarPrintConfigPc(formularioCriado.getIdFormulario())
+        formularioClient.recuperarPrintConfigPc(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
         ;
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
     }
 
     @Test
     @Tag("Regression")
     @DisplayName("Cenário 7: Buscar Print configuração PC sem configuração cadastrada")
     void testTentarBuscarConfigPCSemConfigCadastrada() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarPrintConfigPc(formularioCriado.getIdFormulario())
+        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarPrintConfigPc(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
                 .as(JSONFailureResponseWithoutArrayModel.class);
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
-
         Assertions.assertEquals("Usuário não possui print das configurações do pc cadastrado.", response.getMessage());
         Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
     }
 
     @Test
     @Tag("Regression")
     @DisplayName("Cenário 8: Buscar curriculo com sucesso")
     void testTentarBuscarCurriculoComSucessp() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioCriado.getIdFormulario())
+        formularioClient.incluiCurriculoEmFormularioComValidacao(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
 
-        formularioClient.recuperarCurriculo(formularioCriado.getIdFormulario())
+        formularioClient.recuperarCurriculo(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
         ;
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
     }
 
 
@@ -181,21 +189,24 @@ class ListarFormulariosTest{
     @Tag("Regression")
     @DisplayName("Cenário 9: Buscar curriculo sem possuir documento cadastrado")
     void testTentarBuscarCurriculoSemDocumentoCadastrado() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
 
-        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarCurriculo(formularioCriado.getIdFormulario())
+        JSONFailureResponseWithoutArrayModel response = formularioClient.recuperarCurriculo(formularioNovo.getIdFormulario())
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract()
                 .as(JSONFailureResponseWithoutArrayModel.class);
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
-
         Assertions.assertEquals("Usuário não possui currículo cadastrado.", response.getMessage());
         Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+
+        formularioClient.deletarFormulario(formularioNovo.getIdFormulario());
+
+    }
+
+    private static FormularioCriacaoResponseModel criarFormulario() {
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        return formularioClient.criarFormularioComFormularioEntity(formulario);
     }
 }
