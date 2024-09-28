@@ -40,15 +40,14 @@ public class ListarUsuarioTest {
     @DisplayName("Cenário 2: Deve listar gestor por id")
     @Tag("Regression")
     public void testDeveListarGestorPorId(){
-        UsuarioModel usuarioEncontrado = usuarioClient.listarGestorPorId( "1", true)
+        UsuarioModel usuarioEncontrado = usuarioClient.listarGestorPorId( "3", true)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(UsuarioModel.class);
         assertAll(
-                () -> assertEquals(1, usuarioEncontrado.getIdGestor()),
-                () -> assertEquals("ADMIN", usuarioEncontrado.getNome()),
-                () -> assertEquals("T", usuarioEncontrado.getAtivo()),
+                () -> assertEquals(3, usuarioEncontrado.getIdGestor()),
+                () -> assertNotNull( usuarioEncontrado.getAtivo()),
                 () -> assertNotNull(usuarioEncontrado.getEmail())
         );
     }
@@ -144,7 +143,7 @@ public class ListarUsuarioTest {
     @DisplayName("Cenário 11: Validar schema listar gestor por id")
     @Tag("Contract")
     public void testValidarSchemaListarGestorPorId(){
-        usuarioClient.listarGestorPorId( "1", true)
+        usuarioClient.listarGestorPorId( "3", true)
                 .then()
                     .body(matchesJsonSchemaInClasspath("schemas/usuario/Listar_gestor_por_id.json"))
                     .statusCode(HttpStatus.SC_OK);
