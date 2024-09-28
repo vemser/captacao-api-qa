@@ -18,7 +18,7 @@ class DeletarEntrevistaPorEmailTest {
 
 	@BeforeEach
 	void setUp() {
-		edicao = edicaoClient.getEdicaoAtual();
+		edicao = edicaoClient.getEdicaoAtualComoString();
 		emailCandidato = entrevistaClient.getCandidatoEmail(edicao);
 	}
 

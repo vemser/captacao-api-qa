@@ -36,7 +36,7 @@ public class FormularioClient extends BaseClient {
         Auth.usuarioGestaoDePessoas();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(FORMULARIO_LISTAR)
@@ -47,7 +47,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(FORMULARIO_LISTAR)
                 ;
@@ -57,7 +57,7 @@ public class FormularioClient extends BaseClient {
         Auth.usuarioGestaoDePessoas();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .queryParam(ID_FORMULARIO, idFormulario)
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
@@ -69,7 +69,7 @@ public class FormularioClient extends BaseClient {
         Auth.usuarioGestaoDePessoas();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .queryParam(ID_FORMULARIO, idFormulario)
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
@@ -81,7 +81,7 @@ public class FormularioClient extends BaseClient {
         Auth.usuarioGestaoDePessoas();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .queryParam(ID_FORMULARIO, idFormulario)
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
@@ -96,7 +96,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(ORDER, ordemDecrescente)
                         .queryParam(SORT, ID_FORMULARIO)
@@ -111,7 +111,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(formulario)
@@ -125,7 +125,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(formulario)
@@ -142,7 +142,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(formulario)
@@ -159,7 +159,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(formulario)
@@ -176,7 +176,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
 .body(formulario)
@@ -196,7 +196,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType("multipart/form-data")
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
@@ -213,7 +213,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType("multipart/form-data")
                         .pathParam(ID_FORMULARIO, idFormulario)
@@ -229,7 +229,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType("multipart/form-data")
                         .pathParam(ID_FORMULARIO, idFormulario)
                         .multiPart(FILE, file)
@@ -245,7 +245,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType("multipart/form-data")
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
@@ -262,7 +262,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType("multipart/form-data")
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
@@ -277,7 +277,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
                         .contentType(ContentType.JSON)
@@ -291,7 +291,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
                         .contentType(ContentType.JSON)
@@ -309,7 +309,7 @@ public class FormularioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_FORMULARIO, idFormulario)
                 .when()

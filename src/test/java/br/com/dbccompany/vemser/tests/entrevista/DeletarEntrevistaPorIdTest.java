@@ -18,7 +18,7 @@ class DeletarEntrevistaPorIdTest{
 
 	@BeforeEach
 	public void setUp() {
-		edicao = edicaoClient.getEdicaoAtual();
+		edicao = edicaoClient.getEdicaoAtualComoString();
 		idEntrevista = entrevistaClient.getIdEntrevista(edicao);
 	}
 

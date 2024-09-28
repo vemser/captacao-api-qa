@@ -44,7 +44,7 @@ public class EntrevistaDataFactory {
 
 	public static Response buscarTodasEntrevistas() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

@@ -17,7 +17,7 @@ class ListarEntrevistaTest {
 
 	@BeforeEach
 	void setup() {
-		edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+		edicao = edicaoClient.obterEdicaoAtual()
 				.then()
 					.extract().asString();
 	}

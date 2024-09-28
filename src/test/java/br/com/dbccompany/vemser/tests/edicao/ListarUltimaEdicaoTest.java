@@ -17,7 +17,7 @@ class ListarUltimaEdicaoTest {
 	@Tag("Regression")
 	void testListarUltimaEdicaoComSucesso() {
 
-		edicaoClient.listaEdicaoAtualAutenticacao()
+		edicaoClient.obterEdicaoAtual()
 				.then()
 						.statusCode(HttpStatus.SC_OK);
 	}

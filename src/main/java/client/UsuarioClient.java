@@ -19,7 +19,7 @@ public class UsuarioClient extends BaseClient {
     public Response listarGestores(boolean isCondicaoInserirTokenValido){
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
@@ -30,7 +30,7 @@ public class UsuarioClient extends BaseClient {
     public Response listarGestorPorId(String id, boolean isCondicaoInserirTokenValido){
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                         .queryParam("idGestor", id)
@@ -42,7 +42,7 @@ public class UsuarioClient extends BaseClient {
     public Response listarTodoGestorInativo(boolean isCondicaoInserirTokenValido){
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
@@ -52,7 +52,7 @@ public class UsuarioClient extends BaseClient {
     public Response listarDadosMe(boolean isCondicaoInserirTokenValido){
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                 .when()
                         .get(USUARIO + ME);
@@ -60,7 +60,7 @@ public class UsuarioClient extends BaseClient {
 
     public Response desativarContaGestor(String id, boolean isCondicaoInserirTokenValido){
         return given()
-                    .spec(super.setUp())
+                    .spec(setUp())
                     .contentType(ContentType.JSON)
                     .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                     .pathParam("idGestor", id)
@@ -71,7 +71,7 @@ public class UsuarioClient extends BaseClient {
 
     public Response deletarGestor(String id, boolean isCondicaoInserirTokenValido){
         return  given()
-                    .spec(super.setUp())
+                    .spec(setUp())
                     .contentType(ContentType.JSON)
                     .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                     .pathParam("idGestor", id)

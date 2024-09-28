@@ -51,7 +51,7 @@ public class EdicaoClient extends BaseClient {
 						.asString();
 	}
 
-	public Response listaEdicaoAtualAutenticacao() {
+	public Response obterEdicaoAtual() {
 		Auth.usuarioGestaoDePessoas();
 
 		return
@@ -62,8 +62,8 @@ public class EdicaoClient extends BaseClient {
 						.get(EDICAO_EDICAO_ATUAL);
 	}
 
-	public String getEdicaoAtual() {
-		return listaEdicaoAtualAutenticacao()
+	public String getEdicaoAtualComoString() {
+		return obterEdicaoAtual()
 				.then()
 					.extract()
 					.asString();

@@ -26,7 +26,7 @@ class RelatorioGeneroTest {
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorGenero() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -42,7 +42,7 @@ class RelatorioGeneroTest {
     @Tag("Regression")
     void testListarRelatorioGeneroComSucesso() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

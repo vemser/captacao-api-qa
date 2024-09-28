@@ -34,7 +34,7 @@ public class EntrevistaClient extends BaseClient {
 		Auth.usuarioAluno();
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.contentType(ContentType.JSON)
 						.body(entrevista)
 				.when()
@@ -47,7 +47,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.queryParam("nomeEntrevista", nomeEntrevista)
 				.when()
@@ -69,7 +69,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 				.when()
 						.get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL + emailDoCandidato)
@@ -80,7 +80,7 @@ public class EntrevistaClient extends BaseClient {
 		Auth.usuarioAluno();
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 				.when()
 						.get(ENTREVISTA_BUSCAR_ENTREVISTA_EMAIL_CANDIDATO_EMAIL + emailDoCandidato)
 				;
@@ -91,7 +91,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.queryParam(TRILHA, trilha)
 				.when()
@@ -104,7 +104,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.queryParam(TRILHA, trilha)
 				.when()
 						.get(ENTREVISTA_POR_TRILHA)
@@ -116,7 +116,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.queryParam(MES, mesEntrevista)
 						.queryParam(ANO, anoEntrevista)
@@ -130,7 +130,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.queryParam(MES, mesEntrevista)
 						.queryParam(ANO, anoEntrevista)
 				.when()
@@ -143,7 +143,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 				.when()
 						.get(ENTREVISTA)
 				;
@@ -154,7 +154,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.pathParam(ID_ENTREVISTA1, idEntrevista)
 						.queryParam(LEGENDA, status)
@@ -170,7 +170,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam(ID_ENTREVISTA1, idEntrevista)
 						.queryParam(LEGENDA, status)
 						.contentType(ContentType.JSON)
@@ -181,9 +181,10 @@ public class EntrevistaClient extends BaseClient {
 	}
 
 	public Response deletarEntrevistaPorIdSemAutenticacao(Integer idEntrevista) {
+
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam(ID_ENTREVISTA1, idEntrevista)
 				.when()
 						.delete(ENTREVISTA_ID_ENTREVISTA)
@@ -191,9 +192,10 @@ public class EntrevistaClient extends BaseClient {
 	}
 
 	public Response deletarEntrevistaPorEmailSemAutenticacao(String email) {
+
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam(EMAIL, email)
 				.when()
 						.delete(ENTREVISTA_EMAIL_ENTREVISTA)
@@ -205,7 +207,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 				.when()
 						.get(ENTREVISTAS_GESTOR)
@@ -217,7 +219,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 				.when()
 						.get(ENTREVISTAS_GESTOR)
 				;
@@ -228,7 +230,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.pathParam(ID_ENTREVISTA, idEntrevista)
 						.queryParam(OBSERVACAO, observacao)
@@ -242,7 +244,7 @@ public class EntrevistaClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam(ID_ENTREVISTA, idEntrevista)
 						.queryParam(OBSERVACAO, observacao)
 				.when()
@@ -251,11 +253,13 @@ public class EntrevistaClient extends BaseClient {
 	}
 
 	public Integer getIdEntrevista(String edicao) {
-		return listarTodasAsEntrevistas(edicao)
-				.then()
-				.statusCode(HttpStatus.SC_OK)
-				.extract()
-				.path("[0].idEntrevista");
+
+		return
+				listarTodasAsEntrevistas(edicao)
+					.then()
+						.statusCode(HttpStatus.SC_OK)
+						.extract()
+						.path("[0].idEntrevista");
 	}
 
 
