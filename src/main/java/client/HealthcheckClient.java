@@ -15,7 +15,7 @@ public class HealthcheckClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(HEALTHCHECK)

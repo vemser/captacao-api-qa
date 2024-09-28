@@ -26,7 +26,7 @@ class RelatorioEdicaoTest  {
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorEdicao() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -42,7 +42,7 @@ class RelatorioEdicaoTest  {
     @Tag("Regression")
     void testListarRelatorioEdicaoComSucesso() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

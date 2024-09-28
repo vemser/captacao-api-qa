@@ -23,7 +23,7 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 				.when()
 						.get(EDICAO_LISTAR_TODAS);
@@ -34,31 +34,39 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 				.when()
 						.get(EDICAO_LISTAR_TODAS);
 	}
 
 	public String listaEdicaoAtualSemAutenticacao() {
 		Auth.usuarioAluno();
+
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 				.when()
 						.get(EDICAO_EDICAO_ATUAL)
 						.thenReturn()
 						.asString();
 	}
 
-	public Response listaEdicaoAtualAutenticacao() {
+	public Response obterEdicaoAtual() {
 		Auth.usuarioGestaoDePessoas();
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 				.when()
 						.get(EDICAO_EDICAO_ATUAL);
+	}
+
+	public String getEdicaoAtualComoString() {
+		return obterEdicaoAtual()
+				.then()
+					.extract()
+					.asString();
 	}
 
 	public EdicaoModel criarEdicao(EdicaoModel edicao) {
@@ -66,7 +74,7 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.contentType(ContentType.JSON)
 						.body(edicao)
@@ -83,7 +91,7 @@ public class EdicaoClient extends BaseClient {
 		return
 				given()
 						.header(AUTHORIZATION, AuthClient.getToken())
-						.spec(super.setUp())
+						.spec(setUp())
 						.contentType(ContentType.JSON)
 						.body(model)
 				.when()
@@ -94,7 +102,7 @@ public class EdicaoClient extends BaseClient {
 		Auth.usuarioAluno();
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.queryParam(NUMERO_EDICAO, numeroEdicao)
 				.when()
 						.post(EDICAO_CRIAR_EDICAO);
@@ -105,7 +113,7 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.pathParam(ID_EDICAO, idEdicao)
 				.when()
@@ -117,7 +125,7 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam(ID_EDICAO, idEdicao)
 				.when()
 						.delete(EDICAO_DELETE_FISICO_ID_EDICAO);
@@ -128,7 +136,7 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.contentType(ContentType.JSON)
 						.body(edicao)
 						.header(AUTHORIZATION, AuthClient.getToken())
@@ -141,10 +149,10 @@ public class EdicaoClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.contentType(ContentType.JSON)
 						.body(edicao)
-					.when()
+				.when()
 						.put(NOTA_DE_CORTE);
 	}
 

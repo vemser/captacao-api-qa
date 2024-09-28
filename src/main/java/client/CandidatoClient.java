@@ -42,7 +42,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("pagina", pagina)
                         .queryParam("tamanho", tamanho)
@@ -57,7 +57,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(TAMANHO, numCandidatos)
                 .when()
@@ -70,7 +70,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType("application/json")
@@ -85,7 +85,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .contentType(ContentType.JSON)
@@ -100,7 +100,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .pathParam(ID_CANDIDATO, idCandidato)
                         .contentType(ContentType.JSON)
                         .body(novosDados)
@@ -131,7 +131,7 @@ public class CandidatoClient extends BaseClient {
         Response response =
                 given()
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .body(candidatoCriado)
                 .when()
@@ -146,7 +146,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("email", email)
                 .when()
@@ -159,7 +159,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .queryParam("email", email)
                 .when()
                         .get(CANDIDATO_FINDBYEMAILS)
@@ -171,7 +171,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -183,7 +183,7 @@ public class CandidatoClient extends BaseClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
                         .delete(CANDIDATO_DELETE_ID_CANDIDATO)
@@ -195,7 +195,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -208,7 +208,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -220,7 +220,7 @@ public class CandidatoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_CANDIDATO, idCandidato)
@@ -232,7 +232,7 @@ public class CandidatoClient extends BaseClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .pathParam(ID_CANDIDATO, idCandidato)
                 .when()
                         .delete(CANDIDATO_DELETE_FISICO_ID_CANDIDATO)

@@ -5,6 +5,7 @@ import factory.TrilhaDataFactory;
 import io.restassured.response.Response;
 import models.trilha.TrilhaModel;
 import models.trilha.TrilhaResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,17 @@ public class CadastrarTrilhaTest {
 
 	TrilhaClient trilhaClient = new TrilhaClient();
 	private static final String PATH_SCHEMA_CADASTRAR_TRILHA = "schemas/trilha/post_trilha.json";
+	TrilhaModel trilha;
+
+	@BeforeEach
+	void setUp() {
+		trilha = TrilhaDataFactory.trilhaValida();
+	}
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de cadastrar trilha")
 	@Tag("Contract")
 	public void testValidarContratoCadastrarTrilha() {
-		TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 
 		trilhaClient.cadastrarTrilha(trilha)
 				.then()
@@ -32,8 +38,6 @@ public class CadastrarTrilhaTest {
 	@DisplayName("Cenário 2: Deve retornar 201 quando cadastra trilha com sucesso")
 	@Tag("Regression")
 	void testCadastroDeTrilhaComSucesso(){
-
-		TrilhaModel trilha = TrilhaDataFactory.trilhaValida();
 
 		TrilhaResponse trilhaResponse = trilhaClient.cadastrarTrilha(trilha)
 				.then()

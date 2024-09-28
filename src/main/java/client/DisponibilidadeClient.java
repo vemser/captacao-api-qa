@@ -20,7 +20,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         Response response =
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(disponibilidade)
@@ -34,7 +34,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
@@ -45,7 +45,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
     }

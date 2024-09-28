@@ -19,7 +19,7 @@ public class AvaliacaoClient extends BaseClient {
         String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, token)
                         .queryParam("token", token)
                         .body(avaliacao)
@@ -32,7 +32,7 @@ public class AvaliacaoClient extends BaseClient {
         String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                 .when()
@@ -44,7 +44,7 @@ public class AvaliacaoClient extends BaseClient {
         String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, token)
                         .queryParam("pagina", 0)
                         .queryParam("tamanho", 1)
@@ -58,7 +58,7 @@ public class AvaliacaoClient extends BaseClient {
         String token = inserirToken(isCondicaoInserirTokenValido);
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, token)
                         .pathParam(ID_AVALIACAO, idAvaliacao)
                         .contentType(ContentType.JSON)
