@@ -15,27 +15,26 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class ListarDisponibilidadesTest {
 
 	private static final DisponibilidadeClient disponibilidadeClient = new DisponibilidadeClient();
-	private static Integer idGestor = 1;
-	private static List<DisponibilidadeResponseModel> disponibilidadeCadastrada;
+	private static DisponibilidadeResponseModel[] disponibilidadeCadastrada;
+	private static Integer idGestor = 2;
 
-	@BeforeAll
-	public static void criarMassaDados(){
+	@BeforeEach
+	public void criarMassaDados(){
 		DisponibilidadeModel disponibilidadeParaCadastrar = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);
 		disponibilidadeCadastrada = disponibilidadeClient.cadastrarDisponibilidade(disponibilidadeParaCadastrar)
 				.then()
 					.statusCode(HttpStatus.SC_CREATED)
 					.extract()
-					.jsonPath()
-					.getList("", DisponibilidadeResponseModel.class);
+					.as(DisponibilidadeResponseModel[].class);
 	}
 
 	@AfterAll
 	public static void deletarMassaDados(){
-		disponibilidadeClient.deletarDisponibilidade(String.valueOf(disponibilidadeCadastrada.get(0).getIdDisponibilidade()),
-				true)
+		disponibilidadeClient.deletarDisponibilidade(disponibilidadeCadastrada[0].getIdDisponibilidade())
 				.then()
 					.statusCode(HttpStatus.SC_NO_CONTENT);
 	}
+
 	@Test
 	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato listar disponibilidade com sucesso")
@@ -43,7 +42,7 @@ public class ListarDisponibilidadesTest {
 
 		disponibilidadeClient.listarDisponibilidades()
 				.then()
-				.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/listarDisponibilidade.json"));
+					.body(matchesJsonSchemaInClasspath("schemas/disponibilidade/listarDisponibilidade.json"));
 	}
 
 	@Test
@@ -52,11 +51,11 @@ public class ListarDisponibilidadesTest {
 	public void testListarDisponibilidadeComSucesso() {
 		List<DisponibilidadeResponseModel> listaDisponibilidade = disponibilidadeClient.listarDisponibilidades()
 				.then()
-				.statusCode(HttpStatus.SC_OK)
-				.extract()
-				.body()
-				.jsonPath()
-				.getList("$", DisponibilidadeResponseModel.class);
+					.statusCode(HttpStatus.SC_OK)
+					.extract()
+					.body()
+					.jsonPath()
+					.getList("$", DisponibilidadeResponseModel.class);
 
 		Assertions.assertNotNull(listaDisponibilidade, "A lista de disponibilidade não deve ser nula");
 		Assertions.assertFalse(listaDisponibilidade.isEmpty(), "A lista de disponibilidade não deve estar vazia");
@@ -67,7 +66,7 @@ public class ListarDisponibilidadesTest {
 	@DisplayName("Cenário 3: Deve listar toda disponibilidade por data com sucesso")
 	@Tag("Functional")
 	public void testDeveListarTodaDisponibilidadePorDataComSucesso(){
-		disponibilidadeClient.listarPorData(disponibilidadeCadastrada.get(0).getDataEntrevista(), true)
+		disponibilidadeClient.listarPorData(disponibilidadeCadastrada[0].getDataEntrevista())
 				.then()
 					.statusCode(HttpStatus.SC_OK);
 
@@ -86,7 +85,7 @@ public class ListarDisponibilidadesTest {
 	@DisplayName("Cenário 5: Tentar listar toda disponibilidade por data sem token")
 	@Tag("Regression")
 	public void testTentarListarTodaDispoonibilidadePorDataSemToken(){
-		disponibilidadeClient.listarPorData(disponibilidadeCadastrada.get(0).getDataEntrevista(), false)
+		disponibilidadeClient.listarPorDataSemAutenticacao(disponibilidadeCadastrada[0].getDataEntrevista())
 				.then()
 					.statusCode(HttpStatus.SC_FORBIDDEN);
 	}
