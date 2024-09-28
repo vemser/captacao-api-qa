@@ -17,7 +17,7 @@ public class StatusClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.pathParam("idCandidato", idCandidato)
 				.when()
@@ -29,7 +29,7 @@ public class StatusClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam("idCandidato", idCandidato)
 				.when()
 						.post(STATUS_PREVIUS);
@@ -40,7 +40,7 @@ public class StatusClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.header(AUTHORIZATION, AuthClient.getToken())
 						.pathParam("idCandidato", idCandidato)
 						.when()
@@ -52,7 +52,7 @@ public class StatusClient extends BaseClient {
 
 		return
 				given()
-						.spec(super.setUp())
+						.spec(setUp())
 						.pathParam("idCandidato", idCandidato)
 						.when()
 						.post(STATUS_NEXT);

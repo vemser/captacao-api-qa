@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoModel;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,34 +17,43 @@ class AtualizarEntrevistaTest  {
 
     private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 	private static final EdicaoClient edicaoClient = new EdicaoClient();
+	private static final String STATUS_ENTREVISTA = "CONFIRMADA";
+	private static final Boolean CANDIDATO_AVALIADO = true;
+	String edicao;
+	EntrevistaCriacaoResponseModel[] listaDeEntrevistas;
+	Integer primeiraEntrevistaId;
+	String emailEntrevista;
+	EntrevistaCriacaoModel entrevistaCriada;
+
+	@BeforeEach
+	void setUp() {
+		edicao = edicaoClient.obterEdicaoAtual()
+				.then()
+				.extract().asString();
+
+		listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas(edicao)
+				.then()
+				.statusCode(HttpStatus.SC_OK)
+				.extract()
+				.as(EntrevistaCriacaoResponseModel[].class);
+
+		primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
+
+		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
+		emailEntrevista = response.path("[0].candidatoDTO.email");
+
+		entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, CANDIDATO_AVALIADO);
+
+	}
 
 	@Test
 	@DisplayName("Cenário 1: Deve retornar 204 ao atualizar entrevista com sucesso")
 	@Tag("Functional")
 	void testAtualizarEntrevistaComSucesso() {
 
-		String statusEntrevista = "CONFIRMADA";
-
-		String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+		entrevistaClient.atualizarEntrevista(primeiraEntrevistaId, STATUS_ENTREVISTA, entrevistaCriada)
 				.then()
-				.extract().asString();
-
-		EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas(edicao)
-				.then()
-					.statusCode(HttpStatus.SC_OK)
-					.extract()
-					.as(EntrevistaCriacaoResponseModel[].class);
-
-		int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
-
-		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
-		String emailEntrevista = response.path("[0].candidatoDTO.email");
-		Boolean candidatoAvaliado = true;
-
-		EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
-
-		entrevistaClient.atualizarEntrevista(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
-				.then()
+				.log().all()
 					.statusCode(HttpStatus.SC_NO_CONTENT);
 
 	}
@@ -53,28 +63,7 @@ class AtualizarEntrevistaTest  {
     @Tag("Regression")
     void testAtualizarEntrevistaSemAutenticacao() {
 
-        String statusEntrevista = "CONFIRMADA";
-
-		String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
-				.then()
-				.extract().asString();
-
-
-		EntrevistaCriacaoResponseModel[] listaDeEntrevistas = entrevistaClient.listarTodasAsEntrevistas(edicao)
-                .then()
-                	.statusCode(HttpStatus.SC_OK)
-                	.extract()
-                	.as(EntrevistaCriacaoResponseModel[].class);
-
-        int primeiraEntrevistaId = listaDeEntrevistas[0].getIdEntrevista();
-
-		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
-		String emailEntrevista = response.path("[0].candidatoDTO.email");
-		Boolean candidatoAvaliado = true;
-
-        EntrevistaCriacaoModel entrevistaCriada = EntrevistaDataFactory.entrevistaCriacaoValida(emailEntrevista, candidatoAvaliado);
-
-        entrevistaClient.atualizarEntrevistaSemAutenticacao(primeiraEntrevistaId, statusEntrevista, entrevistaCriada)
+        entrevistaClient.atualizarEntrevistaSemAutenticacao(primeiraEntrevistaId, STATUS_ENTREVISTA, entrevistaCriada)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
 

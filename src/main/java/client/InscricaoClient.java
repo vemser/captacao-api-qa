@@ -23,7 +23,7 @@ public class InscricaoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -34,7 +34,7 @@ public class InscricaoClient extends BaseClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam(ID_CANDIDATO, idCandidato)
                 .when()
@@ -47,7 +47,7 @@ public class InscricaoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .pathParam(ID_INSCRICAO, idInscricao)
                 .when()
@@ -65,7 +65,7 @@ public class InscricaoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("pagina", pagina)
                         .queryParam("tamanho", tamanho)
@@ -81,7 +81,7 @@ public class InscricaoClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("id", idInscricao)
                 .when()
@@ -93,7 +93,7 @@ public class InscricaoClient extends BaseClient {
         Auth.usuarioAluno();
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .queryParam("id", idInscricao)
                 .when()
                         .get(INSCRICAO_FIND_BY_ID_INSCRICAO);
@@ -103,7 +103,7 @@ public class InscricaoClient extends BaseClient {
         String token = inserirToken(isCondicaoTokenValido);
         Response response =
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, token)
                         .queryParam("pagina", pagina)
                         .queryParam("tamanho", tamanho)

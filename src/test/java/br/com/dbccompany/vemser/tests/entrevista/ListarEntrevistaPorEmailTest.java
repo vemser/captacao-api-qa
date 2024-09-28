@@ -1,42 +1,33 @@
 package br.com.dbccompany.vemser.tests.entrevista;
 
-import client.EdicaoClient;
 import client.EntrevistaClient;
 import factory.EntrevistaDataFactory;
-import io.restassured.response.Response;
 import models.entrevista.EntrevistaCriacaoResponseModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import utils.auth.Email;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @DisplayName("Endpoint de listagem de entrevistas por email")
 class ListarEntrevistaPorEmailTest {
 
-  private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
+  	private static final EntrevistaClient entrevistaClient = new EntrevistaClient();
 	private static final String PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL = "schemas/entrevista/listar_entrevista_por_email.json";
-	private static final EdicaoClient edicaoClient = new EdicaoClient();
+	private String emailCandidato;
+
+	@BeforeEach
+	public void setUp() {
+		emailCandidato = EntrevistaDataFactory.getEmailCandidato();
+	}
 
 	@Test
 	@DisplayName("Cenário 1: Validação de contrato de listar entrevistas por email")
 	@Tag("Contract")
 	public void testValidarContratoListarEntrevistasPorEmail() {
 
-		String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailCandidato)
 				.then()
-				.extract().asString();
-
-		Response response = entrevistaClient.listarTodasAsEntrevistas(edicao);
-		String emailEntrevista = response.path("[0].candidatoEmail");
-
-		entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
-				.then()
-				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL))
-		;
+				.body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_ENTREVISTA_POR_EMAIL));
 	}
 
 	@Test
@@ -44,17 +35,14 @@ class ListarEntrevistaPorEmailTest {
 	@Tag("Regression")
 	void testListaEntrevistaPorEmailComSucesso() {
 
-		Response response = EntrevistaDataFactory.buscarTodasEntrevistas();
-		String emailEntrevista = response.path("[0].candidatoEmail");
-
-		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailEntrevista)
+		EntrevistaCriacaoResponseModel entrevista = entrevistaClient.listarTodasAsEntrevistasPorEmail(emailCandidato)
 				.then()
 					.statusCode(HttpStatus.SC_OK)
 					.extract()
 					.as(EntrevistaCriacaoResponseModel.class);
 
 		Assertions.assertNotNull(entrevista);
-		Assertions.assertEquals(emailEntrevista, entrevista.getCandidatoEmail());
+		Assertions.assertEquals(emailCandidato, entrevista.getCandidatoEmail());
 	}
 
 	@Test
@@ -62,10 +50,9 @@ class ListarEntrevistaPorEmailTest {
 	@Tag("Regression")
     void testListaEntrevistaPorEmailSemAutenticacao() {
 
-        String emailDoCandidato = Email.getEmail();
-
-        entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailDoCandidato)
+        entrevistaClient.listarTodasAsEntrevistasPorEmailSemAutenticacao(emailCandidato)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
     }
+
 }

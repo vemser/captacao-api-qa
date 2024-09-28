@@ -21,7 +21,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         Response response =
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .contentType(ContentType.JSON)
                         .body(disponibilidade)
@@ -35,7 +35,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
@@ -46,7 +46,7 @@ public class DisponibilidadeClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(LISTAR_TODAS_DISPONIBILIDADES);
     }
@@ -54,7 +54,7 @@ public class DisponibilidadeClient extends BaseClient {
     public Response deletarDisponibilidade(String id, boolean isCondicaoInserirTokenValido){
         return
                 given()
-                    .spec(super.setUp())
+                    .spec(setUp())
                     .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                     .pathParam("idDisponibilidade", id)
                 .when()
@@ -64,7 +64,7 @@ public class DisponibilidadeClient extends BaseClient {
     public Response listarPorData(String data, boolean isCondicaoInserirTokenValido){
         Response response =
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, inserirToken(isCondicaoInserirTokenValido))
                         .pathParam("data", data)
                 .when()

@@ -19,7 +19,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("nomeEdicao", nomeEdicao)
                 .when()
@@ -32,7 +32,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("nomeEdicao", nomeEdicao)
                 .when()
@@ -45,7 +45,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("nomeEdicao", nomeEdicao)
                 .when()
@@ -58,7 +58,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_GENERO)
                 ;
@@ -69,7 +69,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("nomeEdicao", nomeEdicao)
                 .when()
@@ -82,7 +82,7 @@ public class RelatorioClient extends BaseClient {
 
         Response response =
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_ESTADO)
                 ;
@@ -95,7 +95,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .header(AUTHORIZATION, AuthClient.getToken())
                         .queryParam("nomeEdicao", nomeEdicao)
                 .when()
@@ -108,7 +108,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_EDICAO)
                 ;
@@ -119,7 +119,7 @@ public class RelatorioClient extends BaseClient {
 
         return
                 given()
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(RELATORIOS_QUANTIDADE_DE_PESSOAS_INSCRITAS_POR_NEURODIVERSIDADE)
                 ;

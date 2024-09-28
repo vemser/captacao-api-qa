@@ -26,7 +26,7 @@ class RelatorioPcdTest {
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorPcd() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -43,7 +43,7 @@ class RelatorioPcdTest {
     void testListarRelatorioPcdComSucesso() {
 
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 

@@ -20,7 +20,7 @@ public class TrilhaClient extends BaseClient {
         return
                 given()
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(super.setUp())
+                        .spec(setUp())
                 .when()
                         .get(LISTAR_TRILHAS)
                 ;
@@ -32,7 +32,7 @@ public class TrilhaClient extends BaseClient {
         return
                 given()
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .contentType(ContentType.JSON)
                         .body(trilha)
                 .when()
@@ -46,7 +46,7 @@ public class TrilhaClient extends BaseClient {
         return
                 given()
                         .header(AUTHORIZATION, AuthClient.getToken())
-                        .spec(super.setUp())
+                        .spec(setUp())
                         .pathParam(ID_TRILHA, idTrilha)
                 .when()
                         .delete(DELETAR_TRILHA)

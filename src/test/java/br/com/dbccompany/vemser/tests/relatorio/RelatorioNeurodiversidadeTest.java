@@ -26,7 +26,7 @@ class RelatorioNeurodiversidadeTest {
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
@@ -42,7 +42,7 @@ class RelatorioNeurodiversidadeTest {
     @Tag("Regression")
     void testListarRelatorioNeurodiversidadeComSucesso() {
 
-        String edicao = edicaoClient.listaEdicaoAtualAutenticacao()
+        String edicao = edicaoClient.obterEdicaoAtual()
                 .then()
                 .extract().asString();
 
