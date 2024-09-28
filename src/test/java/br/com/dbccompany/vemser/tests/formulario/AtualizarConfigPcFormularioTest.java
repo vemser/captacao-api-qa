@@ -72,6 +72,7 @@ class AtualizarConfigPcFormularioTest {
 
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, erroEnvioCurriculo.getStatus());
         Assertions.assertEquals(ERRO_BUSCAR_O_FORMULÁRIO, erroEnvioCurriculo.getMessage());
+
     }
 
     private static FormularioCriacaoResponseModel criarFormulario() {

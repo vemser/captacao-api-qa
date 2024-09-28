@@ -24,7 +24,6 @@ class ListarFormulariosTest{
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-    private static FormularioCriacaoResponseModel formularioCriado;
 
     @BeforeAll
     public static void setUp() {

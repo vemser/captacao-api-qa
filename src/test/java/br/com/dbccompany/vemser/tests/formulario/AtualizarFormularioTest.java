@@ -23,7 +23,6 @@ class AtualizarFormularioTest {
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final String PATH_SCHEMA_PUT_FORMULARIO = "schemas/formulario/put_formulario.json";
     private static final String ERRO_MATRICULADO = "O status de matrícula deve ser o mesmo.";
-    private static final String ERRO_CURSO = "O curso deve ser o mesmo.";
     private static final String ERRO_TURNO = "O turno deve ser o mesmo.";
     private static final String ERRO_INSTITUICAO = "A instituição deve ter sido atualizada.";
     private static final String ERRO_GITHUB = "O GitHub deve ser o mesmo.";

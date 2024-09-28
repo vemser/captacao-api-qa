@@ -20,6 +20,7 @@ class DeletarFormularioTest {
     private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+    public static final String ERRO_BUSCAR_FORMULARIO = "Erro ao buscar o formulário.";
     private static FormularioCriacaoResponseModel formularioCriado;
 
 
@@ -54,8 +55,8 @@ class DeletarFormularioTest {
                     .extract()
                     .as(JSONFailureResponseWithoutArrayModel.class);
 
-        Assertions.assertEquals(404, erroDelecaoFormulario.getStatus());
-        Assertions.assertEquals("Erro ao buscar o formulário.", erroDelecaoFormulario.getMessage());
+        Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, erroDelecaoFormulario.getStatus());
+        Assertions.assertEquals(ERRO_BUSCAR_FORMULARIO, erroDelecaoFormulario.getMessage());
 
     }
 

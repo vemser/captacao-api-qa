@@ -117,6 +117,7 @@ class CadastrarFormularioTest{
 
         assertEquals(erroNaoMatriculado.getMessage(), ERRO_NAO_MATRICULADO);
         assertEquals(erroNaoMatriculado.getStatus(), HttpStatus.SC_BAD_REQUEST);
+
     }
 
     @Test

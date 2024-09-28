@@ -74,6 +74,7 @@ class AtualizarCurriculoFormularioTest{
 
         Assertions.assertEquals(HttpStatus.SC_NOT_FOUND, erroEnvioCurriculo.getStatus());
         Assertions.assertEquals(ERRO_BUSCAR_FORMULARIO, erroEnvioCurriculo.getMessage());
+
     }
 
     private static FormularioCriacaoResponseModel criarFormulario() {
