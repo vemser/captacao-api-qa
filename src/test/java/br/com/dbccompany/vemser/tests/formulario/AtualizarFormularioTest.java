@@ -37,11 +37,11 @@ class AtualizarFormularioTest {
     public static void setUp() {
 
         List<TrilhaModel> trilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
+                .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract()
+                    .as(TrilhaModel[].class))
+                    .toList();
 
         listaDeNomeDeTrilhas.add(trilhas.get(0).getNome());
     }
@@ -62,7 +62,7 @@ class AtualizarFormularioTest {
 
         formularioClient.atualizaFormularioContrato(formularioCriado.getIdFormulario(), formularioAtualizado)
                 .then()
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_PUT_FORMULARIO));
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_PUT_FORMULARIO));
     }
 
     @Test
@@ -96,7 +96,7 @@ class AtualizarFormularioTest {
 
         formularioClient.incluiComprovanteMatriculaComValidacao(formularioCriado.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                    .statusCode(HttpStatus.SC_OK);
         
     }
 
