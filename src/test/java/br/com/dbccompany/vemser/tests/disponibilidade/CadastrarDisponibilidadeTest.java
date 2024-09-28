@@ -1,9 +1,9 @@
 package br.com.dbccompany.vemser.tests.disponibilidade;
 
-import client.disponibilidade.DisponibilidadeClient;
-import factory.disponibilidade.DisponibilidadeDataFactory;
-import models.JSONFailureResponseWithArrayModel;
-import models.JSONFailureResponseWithoutArrayModel;
+import client.DisponibilidadeClient;
+import factory.DisponibilidadeDataFactory;
+import models.failure.JSONFailureResponseWithArrayModel;
+import models.failure.JSONFailureResponseWithoutArrayModel;
 import models.disponibilidade.DisponibilidadeModel;
 import models.disponibilidade.DisponibilidadeResponseModel;
 import org.apache.http.HttpStatus;
@@ -24,7 +24,7 @@ public class CadastrarDisponibilidadeTest {
 	}
 
 	@Test
-	@Tag("Regression")
+	@Tag("Contract")
 	@DisplayName("Cenário 1: Validar contrato criar disponibilidade com sucesso")
 	public void testValidarContratoCriarDisponibilidade() {
 		DisponibilidadeModel disponibilidade = DisponibilidadeDataFactory.disponibilidadeValida(idGestor);

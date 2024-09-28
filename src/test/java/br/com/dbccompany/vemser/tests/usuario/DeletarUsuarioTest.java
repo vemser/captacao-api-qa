@@ -1,6 +1,6 @@
 package br.com.dbccompany.vemser.tests.usuario;
 
-import client.usuario.UsuarioClient;
+import client.UsuarioClient;
 import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;

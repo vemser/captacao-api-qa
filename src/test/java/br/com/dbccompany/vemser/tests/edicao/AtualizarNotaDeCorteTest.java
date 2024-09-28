@@ -1,7 +1,7 @@
 package br.com.dbccompany.vemser.tests.edicao;
 
-import client.edicao.EdicaoClient;
-import factory.edicao.EdicaoDataFactory;
+import client.EdicaoClient;
+import factory.EdicaoDataFactory;
 import io.restassured.response.Response;
 import models.edicao.EdicaoModel;
 import org.apache.http.HttpStatus;
@@ -20,7 +20,7 @@ public class AtualizarNotaDeCorteTest {
 
 	@Test
 	@DisplayName("Cenário 1: Deve validar o contrato de atualizar nota de corte")
-	@Tag("Regression")
+	@Tag("Contract")
 	public void testContratoAtualizarNotaDeCorte() {
 
 		EdicaoModel edicao = EdicaoDataFactory.edicaoValida();

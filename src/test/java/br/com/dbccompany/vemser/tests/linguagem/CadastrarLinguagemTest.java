@@ -9,7 +9,7 @@
 
 //package br.com.dbccompany.vemser.tests.linguagem;
 //
-//import client.linguagem.LinguagemClient;
+//import client.LinguagemClient;
 //import models.linguagem.LinguagemModel;
 //import org.apache.http.HttpStatus;
 //import org.junit.jupiter.api.Assertions;

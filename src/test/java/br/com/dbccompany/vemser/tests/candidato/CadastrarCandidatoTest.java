@@ -1,15 +1,15 @@
 package br.com.dbccompany.vemser.tests.candidato;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.trilha.TrilhaClient;
-import factory.candidato.CandidatoDataFactory;
-import factory.edicao.EdicaoDataFactory;
-import factory.formulario.FormularioDataFactory;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
+import factory.CandidatoDataFactory;
+import factory.EdicaoDataFactory;
+import factory.FormularioDataFactory;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
-import models.JSONFailureResponseWithArrayModel;
+import models.failure.JSONFailureResponseWithArrayModel;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.candidato.CandidatoModel;
@@ -88,7 +88,7 @@ listaDeNomeDeTrilhas.add("FRONTEND");
 
     @Test
     @DisplayName("Cenário 2: Deve validar o contrato de cadastro de candidatos no sistema")
-    @Tag("Regression")
+    @Tag("Contract")
     void testValidarContratoCadastrarCandidatos() {
 
         List<String> listaDeNomeDeTrilhas = new ArrayList<>();

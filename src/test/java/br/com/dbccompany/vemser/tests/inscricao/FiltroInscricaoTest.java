@@ -1,9 +1,9 @@
 package br.com.dbccompany.vemser.tests.inscricao;
 
-import client.candidato.CandidatoClient;
-import client.edicao.EdicaoClient;
-import client.formulario.FormularioClient;
-import client.inscricao.InscricaoClient;
+import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.InscricaoClient;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoListaResponseModel;
 import models.inscricao.InscricaoModel;
