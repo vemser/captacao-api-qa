@@ -2,12 +2,11 @@ package br.com.dbccompany.vemser.tests.relatorio;
 
 import client.EdicaoClient;
 import client.RelatorioClient;
+import models.relatorio.RelatorioGeneroModel;
 import models.relatorio.RelatorioNeurodiversidadeModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,21 +19,25 @@ class RelatorioNeurodiversidadeTest {
     private static final RelatorioClient relatorioClient = new RelatorioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_NEURODIVERSIDADE = "schemas/relatorio/listar_relatorios_neurodiversidade.json";
+    private static final String ERRO_NEURODIVERSIDADE_NULO = "Campo 'neurodiversidade' deve ser não nulo";
+    private static String edicao;
+
+    @BeforeEach
+    public void setUp() {
+        edicao = edicaoClient.getEdicaoAtualComoString();
+    }
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por neurodiversidade")
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorNeurodiversidade() {
 
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
         relatorioClient.listarCandidatosNeurodiversidade(edicao)
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_NEURODIVERSIDADE))
+                    .statusCode(HttpStatus.SC_OK)
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_NEURODIVERSIDADE))
         ;
+
     }
 
     @Test
@@ -42,23 +45,23 @@ class RelatorioNeurodiversidadeTest {
     @Tag("Regression")
     void testListarRelatorioNeurodiversidadeComSucesso() {
 
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
-        var response = relatorioClient.listarCandidatosNeurodiversidade(edicao)
+        RelatorioNeurodiversidadeModel[] response = relatorioClient.listarCandidatosNeurodiversidade(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
-                    .as(RelatorioNeurodiversidadeModel[].class);
+                    .as(RelatorioNeurodiversidadeModel[].class)
+                ;
 
         List<RelatorioNeurodiversidadeModel> listaRelatorioNeurodiversidade = Arrays.stream(response).toList();
 
-        if (!listaRelatorioNeurodiversidade.isEmpty()) {
-            for (RelatorioNeurodiversidadeModel r : listaRelatorioNeurodiversidade) {
-                Assertions.assertNotNull(r.getNeurodiversidade());
-            }
-        }
+        Assertions.assertAll(
+                listaRelatorioNeurodiversidade.stream()
+                        .map(r -> (Executable) () ->
+                                Assertions.assertNotNull(r.getNeurodiversidade(), ERRO_NEURODIVERSIDADE_NULO)
+                        )
+                        .toList()
+        );
+
     }
 
     @Test
@@ -69,6 +72,6 @@ class RelatorioNeurodiversidadeTest {
         relatorioClient.listarCandidatosNeurodiversidadeSemAutenticacao()
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
-    }
 
+    }
 }
