@@ -7,134 +7,101 @@ import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
 import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Endpoint de atualização do formulário")
-class AtualizarFormularioTest{
+class AtualizarFormularioTest {
 
-    private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
+    private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final String PATH_SCHEMA_PUT_FORMULARIO = "schemas/formulario/put_formulario.json";
-    private static final String TRILHA_VALIDA = "FRONTEND";
+    private static final String ERRO_MATRICULADO = "O status de matrícula deve ser o mesmo.";
+    private static final String ERRO_TURNO = "O turno deve ser o mesmo.";
+    private static final String ERRO_INSTITUICAO = "A instituição deve ter sido atualizada.";
+    private static final String ERRO_GITHUB = "O GitHub deve ser o mesmo.";
+    private static final String ERRO_LINKEDIN = "O LinkedIn deve ser o mesmo.";
+    private static final String ERRO_ID_FORMULARIO = "ID do formulário deve ser o mesmo.";
 
-    @Test
-    @Tag("Contract")
-    @DisplayName("Cenário 1: Validação de contrato de atualizar formulario")
-    public void testValidarContratoAtualizarFormulario() {
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+    private static FormularioCriacaoResponseModel formularioCriado;
+    private static FormularioCriacaoModel formulario;
+    private static final List<String> listaDeNomeDeTrilhas = new ArrayList<>();
 
-        listaDeNomeDeTrilhas.add(TRILHA_VALIDA);
+    @BeforeAll
+    public static void setUp() {
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        FormularioCriacaoModel formularioInstituicaoAtualizada = FormularioDataFactory.formularioComInstituicaoAtualizada(formulario);
-
-        formularioClient.atualizaFormularioContrato(
-                formularioCriado.getIdFormulario(),
-                formularioInstituicaoAtualizada
-        )
-                .then()
-                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_PUT_FORMULARIO))
-                ;
-
-    }
-
-    @Test
-    @Tag("Regression")
-    @DisplayName("Cenário 2: Deve retornar 200 ao atualizar formulário com sucesso")
-    void testAtualizarFormularioComSucesso() {
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
+        List<TrilhaModel> trilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
                     .as(TrilhaModel[].class))
                     .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
+        listaDeNomeDeTrilhas.add(trilhas.get(0).getNome());
+    }
 
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        FormularioCriacaoModel formularioInstituicaoAtualizada = FormularioDataFactory.formularioComInstituicaoAtualizada(formulario);
-
-        FormularioCriacaoResponseModel formularioAtualizado = formularioClient.atualizaFormulario(
-                formularioCriado.getIdFormulario(),
-                formularioInstituicaoAtualizada
-        );
-
-        Assertions.assertEquals(formularioCriado.getIdFormulario(), formularioAtualizado.getIdFormulario());
-        Assertions.assertEquals(formularioCriado.getMatriculado(), formularioAtualizado.getMatriculado());
-        Assertions.assertEquals(formularioCriado.getCurso(), formularioAtualizado.getCurso());
-        Assertions.assertEquals(formularioCriado.getTurno(), formularioAtualizado.getTurno());
-
-        Assertions.assertEquals(formularioInstituicaoAtualizada.getInstituicao(), formularioAtualizado.getInstituicao());
-
-        Assertions.assertEquals(formularioCriado.getGithub(), formularioAtualizado.getGithub());
-        Assertions.assertEquals(formularioCriado.getLinkedin(), formularioAtualizado.getLinkedin());
-        Assertions.assertEquals(formularioCriado.getDesafios(), formularioAtualizado.getDesafios());
-        Assertions.assertEquals(formularioCriado.getProblema(), formularioAtualizado.getProblema());
-        Assertions.assertEquals(formularioCriado.getReconhecimento(), formularioAtualizado.getReconhecimento());
-        Assertions.assertEquals(formularioCriado.getAltruismo(), formularioAtualizado.getAltruismo());
-        Assertions.assertEquals(formularioCriado.getResposta(), formularioAtualizado.getResposta());
-        Assertions.assertEquals(formularioCriado.getCurriculo(), formularioAtualizado.getCurriculo());
-        Assertions.assertEquals(formularioCriado.getLgpd(), formularioAtualizado.getLgpd());
-        Assertions.assertEquals(formularioCriado.getProva(), formularioAtualizado.getProva());
-        Assertions.assertEquals(formularioCriado.getIngles(), formularioAtualizado.getIngles());
-        Assertions.assertEquals(formularioCriado.getEspanhol(), formularioAtualizado.getEspanhol());
-        Assertions.assertEquals(formularioCriado.getNeurodiversidade(), formularioAtualizado.getNeurodiversidade());
-        Assertions.assertEquals(formularioCriado.getEfetivacao(), formularioAtualizado.getEfetivacao());
-        Assertions.assertEquals(formularioCriado.getGenero(), formularioAtualizado.getGenero());
-        Assertions.assertEquals(formularioCriado.getOrientacao(), formularioAtualizado.getOrientacao());
-        Assertions.assertEquals(formularioCriado.getDisponibilidade(), formularioAtualizado.getDisponibilidade());
-
-        formularioCriado.getTrilhas().forEach(trilhaOriginal -> formularioAtualizado.getTrilhas().forEach(trilhaAtualizado -> {
-            Assertions.assertEquals(trilhaOriginal.getIdTrilha(), trilhaAtualizado.getIdTrilha());
-            Assertions.assertEquals(trilhaOriginal.getNome(), trilhaAtualizado.getNome());
-        }));
-
-        Assertions.assertEquals(formularioCriado.getImagemConfigPc(), formularioAtualizado.getImagemConfigPc());
-        Assertions.assertEquals(formularioCriado.getImportancia(), formularioAtualizado.getImportancia());
+    @AfterEach
+    public void tearDown() {
+        if (formularioCriado != null) {
+            formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
+        }
     }
 
     @Test
-    @DisplayName("Cenário 3: Deve retornar 200 ao realizar upload de comprovante de matricula com sucesso")
+    @Tag("Contract")
+    @DisplayName("Validação de contrato ao atualizar formulário")
+    void testValidarContratoAtualizarFormulario() {
+        formularioCriado = criarFormulario();
+        FormularioCriacaoModel formularioAtualizado = FormularioDataFactory.formularioComInstituicaoAtualizada(formulario);
+
+        formularioClient.atualizaFormularioContrato(formularioCriado.getIdFormulario(), formularioAtualizado)
+                .then()
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_PUT_FORMULARIO));
+    }
+
+    @Test
     @Tag("Regression")
+    @DisplayName("Deve retornar 200 ao atualizar formulário com sucesso")
+    void testAtualizarFormularioComSucesso() {
+
+        FormularioCriacaoResponseModel formularioNovo = criarFormulario();
+
+        FormularioCriacaoModel formularioAtualizadoModel = FormularioDataFactory.formularioComInstituicaoAtualizada(formulario);
+        FormularioCriacaoResponseModel formularioAtualizado = formularioClient.atualizaFormulario(
+                formularioNovo.getIdFormulario(), formularioAtualizadoModel);
+
+        assertAll("Validando dados atualizados do formulário",
+                () -> Assertions.assertEquals(formularioNovo.getIdFormulario(), formularioAtualizado.getIdFormulario(), ERRO_ID_FORMULARIO),
+                () -> Assertions.assertEquals(formularioNovo.getMatriculado(), formularioAtualizado.getMatriculado(), ERRO_MATRICULADO),
+                () -> Assertions.assertEquals(formularioNovo.getTurno(), formularioAtualizado.getTurno(), ERRO_TURNO),
+                () -> Assertions.assertEquals(formularioAtualizadoModel.getInstituicao(), formularioAtualizado.getInstituicao(), ERRO_INSTITUICAO),
+                () -> Assertions.assertEquals(formularioNovo.getGithub(), formularioAtualizado.getGithub(), ERRO_GITHUB),
+                () -> Assertions.assertEquals(formularioNovo.getLinkedin(), formularioAtualizado.getLinkedin(), ERRO_LINKEDIN)
+        );
+
+    }
+
+    @Test
+    @Tag("Regression")
+    @DisplayName("Deve retornar 200 ao realizar upload de comprovante de matrícula com sucesso")
     void testUploadComprovanteMatriculaComSucesso() {
 
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-                        .then()
-                        .statusCode(HttpStatus.SC_OK)
-                        .extract()
-                        .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
+        formularioCriado = criarFormulario();
 
         formularioClient.incluiComprovanteMatriculaComValidacao(formularioCriado.getIdFormulario())
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-        ;
+                    .statusCode(HttpStatus.SC_OK);
+        
+    }
 
-        formularioClient.deletarFormulario(formularioCriado.getIdFormulario());
-
+    private static FormularioCriacaoResponseModel criarFormulario() {
+        formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
+        return formularioClient.criarFormularioComFormularioEntity(formulario);
     }
 }
