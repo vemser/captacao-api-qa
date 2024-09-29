@@ -1,18 +1,23 @@
 package factory;
 
 import client.CandidatoClient;
+import client.EdicaoClient;
+import client.FormularioClient;
+import client.TrilhaClient;
 import io.restassured.response.Response;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
+import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
+import models.formulario.FormularioCriacaoModel;
+import models.formulario.FormularioCriacaoResponseModel;
+import models.trilha.TrilhaModel;
 import net.datafaker.Faker;
+import org.apache.http.HttpStatus;
 import utils.auth.Email;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static utils.config.Tools.removerCaracteresEspeciais;
 
@@ -20,7 +25,6 @@ public class CandidatoDataFactory {
 
     private static final Faker faker = new Faker(new Locale("pt-BR"));
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 	private static final CandidatoClient candidatoClient = new CandidatoClient();
 
     public static CandidatoCriacaoModel candidatoCriacaoValido(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
@@ -413,20 +417,6 @@ public class CandidatoDataFactory {
         return candidato;
     }
 
-    public static CandidatoCriacaoModel candidatoComListaDeLinguagemEmBranco(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
-        String linguagemEmBranco = " ";
-        List<String> listaLinguagemEmBranco = Collections.singletonList(linguagemEmBranco);
-
-        CandidatoCriacaoModel candidato = novoCandidato();
-        candidato.setEdicao(edicao);
-        candidato.setFormulario(idFormulario);
-        candidato.setLinguagens(Collections.singletonList(nomeLinguagem));
-
-        candidato.setLinguagens(listaLinguagemEmBranco);
-
-        return candidato;
-    }
-
     public static CandidatoCriacaoModel candidatoComEdicaoNula(EdicaoModel edicao, Integer idFormulario, String nomeLinguagem) {
         EdicaoModel edicaoNula = null;
 
@@ -529,9 +519,32 @@ public class CandidatoDataFactory {
 
 	public static Response buscarTodosCandidatos() {
 		return candidatoClient.listarTodosOsCandidatos(0, 1)
-				.then()
-				.extract()
-				.response();
+        .then()
+            .extract()
+                .response();
 	}
 
+    public static FormularioCriacaoResponseModel criarFormularioValido(List<String> trilhas, FormularioClient formularioClient) {
+        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(trilhas);
+        return formularioClient.criarFormularioComFormularioEntity(formulario);
+    }
+
+    public static EdicaoModel criarEdicaoValida(EdicaoClient edicaoClient) {
+        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
+        return edicaoClient.criarEdicao(edicao);
+    }
+
+    public static CandidatoCriacaoModel criarCandidatoValido(EdicaoModel edicao, int numeroTrilhas, String linguagem, FormularioCriacaoResponseModel formularioCriado) {
+        return CandidatoDataFactory.candidatoCriacaoValido(edicao, formularioCriado.getIdFormulario(), linguagem);
+    }
+
+    public static void deletarCandidato(EdicaoModel edicaoCriada, CandidatoClient candidatoClient, CandidatoModel candidatoCadastrado, EdicaoClient edicaoClient) {
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
+
+        if (edicaoCriada != null) {
+            edicaoClient.deletarEdicao(edicaoCriada.getIdEdicao());
+        }
+    }
 }
