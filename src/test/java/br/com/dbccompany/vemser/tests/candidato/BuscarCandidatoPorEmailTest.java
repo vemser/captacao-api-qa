@@ -5,22 +5,14 @@ import client.EdicaoClient;
 import client.FormularioClient;
 import client.TrilhaClient;
 import factory.CandidatoDataFactory;
-import factory.EdicaoDataFactory;
-import factory.FormularioDataFactory;
 import models.candidato.CandidatoCriacaoModel;
 import models.candidato.CandidatoModel;
 import models.edicao.EdicaoModel;
-import models.formulario.FormularioCriacaoModel;
 import models.formulario.FormularioCriacaoResponseModel;
-import models.trilha.TrilhaModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -28,41 +20,33 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @DisplayName("Endpoint de busca de candidato por Email")
 class BuscarCandidatoPorEmailTest {
 
-    private static final TrilhaClient trilhaClient = new TrilhaClient();
     private static final FormularioClient formularioClient = new FormularioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final CandidatoClient candidatoClient = new CandidatoClient();
+
+    private FormularioCriacaoResponseModel formularioCriado;
+    private EdicaoModel edicaoCriada;
+    private CandidatoCriacaoModel candidatoCriado;
+    private CandidatoModel candidatoCadastrado;
+
+    @BeforeEach
+    void setUp(){
+        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
+        listaDeNomeDeTrilhas.add("FRONTEND");
+        formularioCriado = CandidatoDataFactory.criarFormularioValido(listaDeNomeDeTrilhas, formularioClient);
+        edicaoCriada = CandidatoDataFactory.criarEdicaoValida(edicaoClient);
+        candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
+        candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoModel.class);
+    }
 
     @Test
     @DisplayName("Cenário 1: Deve retornar 200 quando busca candidato por email com sucesso")
     @Tag("Regression")
     void testBuscarCandidatoPorEmailComSucesso() {
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-        .then()
-            .statusCode(HttpStatus.SC_CREATED)
-            .extract()
-                .as(CandidatoModel.class);
 
         CandidatoModel candidatoBuscado = candidatoClient.buscarCandidatoPorEmail(candidatoCadastrado.getEmail())
         .then()
@@ -100,33 +84,8 @@ class BuscarCandidatoPorEmailTest {
     @Tag("Contract")
     void testValidarContratoBuscarCandidatoPorEmail() {
 
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
 
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-        .then()
-            .statusCode(HttpStatus.SC_CREATED)
-            .extract()
-                .as(CandidatoModel.class);
-
-        CandidatoModel candidatoBuscado = candidatoClient.buscarCandidatoPorEmail(candidatoCadastrado.getEmail())
+        candidatoClient.buscarCandidatoPorEmail(candidatoCadastrado.getEmail())
         .then()
             .statusCode(HttpStatus.SC_OK)
             .body(matchesJsonSchemaInClasspath("schemas/candidato/BuscarCandidatoPorEmail.json"))
@@ -142,32 +101,6 @@ class BuscarCandidatoPorEmailTest {
     @DisplayName("Cenário 3: Deve retornar 403 quando busca candidato por email sem autenticação")
     @Tag("Regression")
     void testBuscarCandidatoPorEmailSemAutenticacao() {
-
-        List<String> listaDeNomeDeTrilhas = new ArrayList<>();
-        List<TrilhaModel> listaDeTrilhas = Arrays.stream(trilhaClient.listarTodasAsTrilhas()
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(TrilhaModel[].class))
-                .toList();
-
-        listaDeNomeDeTrilhas.add(listaDeTrilhas.get(0).getNome());
-
-        FormularioCriacaoModel formulario = FormularioDataFactory.formularioValido(listaDeNomeDeTrilhas);
-
-        FormularioCriacaoResponseModel formularioCriado = formularioClient.criarFormularioComFormularioEntity(formulario);
-
-        EdicaoModel edicao = EdicaoDataFactory.edicaoValida();
-
-        EdicaoModel edicaoCriada = edicaoClient.criarEdicao(edicao);
-
-        CandidatoCriacaoModel candidatoCriado = CandidatoDataFactory.candidatoCriacaoValido(edicaoCriada, formularioCriado.getIdFormulario(), "java");
-
-        CandidatoModel candidatoCadastrado = candidatoClient.cadastrarCandidatoComCandidatoEntity(candidatoCriado)
-        .then()
-            .statusCode(HttpStatus.SC_CREATED)
-            .extract()
-                .as(CandidatoModel.class);
 
         candidatoClient.buscarCandidatoPorEmailSemAutenticacao(candidatoCadastrado.getEmail())
         .then()
@@ -202,9 +135,9 @@ class BuscarCandidatoPorEmailTest {
         String emailVazio = "";
 
         CandidatoModel candidatoBuscado = candidatoClient.buscarCandidatoPorEmail(emailVazio)
-                .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
+        .then()
+            .statusCode(HttpStatus.SC_BAD_REQUEST)
+            .extract()
                 .as(CandidatoModel.class);
 
         Assertions.assertEquals(candidatoBuscado.getMessage(), "Candidato com o e-mail especificado não existe");
