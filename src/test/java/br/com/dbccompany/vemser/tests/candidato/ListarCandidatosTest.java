@@ -21,15 +21,15 @@ class ListarCandidatosTest {
     @Tag("Regression")
     void testListarTodosOsCandidatos() {
 
-        Integer tamanho = 20;
-        Integer pagina = 0;
+        int tamanho = 20;
+        int pagina = 0;
 
         JSONListaCandidatoResponse listaCandidato =
-            candidatoClient.listarTodosOsCandidatos(pagina, tamanho)
-            .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                 .as(JSONListaCandidatoResponse.class);
+        candidatoClient.listarTodosOsCandidatos(pagina, tamanho)
+        .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract()
+                .as(JSONListaCandidatoResponse.class);
 
         Integer idCandidato1 = listaCandidato.getElementos().get(0).getIdCandidato();
         Integer idCandidato2 = listaCandidato.getElementos().get(1).getIdCandidato();
@@ -74,11 +74,11 @@ class ListarCandidatosTest {
         Integer pagina = 1;
 
         JSONListaCandidatoResponse listaCandidatoResponse =
-            candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
-            .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                    .as(JSONListaCandidatoResponse.class);
+        candidatoClient.listarTodosOsCandidatos(pagina, tamanhoPadraoLista)
+        .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract()
+                .as(JSONListaCandidatoResponse.class);
 
         Assertions.assertTrue(tamanhoPadraoLista >= listaCandidatoResponse.getElementos().size());
         Assertions.assertEquals(tamanhoPadraoLista, listaCandidatoResponse.tamanho);
@@ -88,14 +88,15 @@ class ListarCandidatosTest {
     @DisplayName("Cenário 4: Deve retornar 400 quando é passado quantidade negativa de candidatos")
     @Tag("Regression")
     void testListarCandidatosComTamanhoInvalido() {
+
         Integer numDeCandidatos = -5;
 
         JSONFailureResponseWithArrayModel failureResponse =
-            candidatoClient.listarNumCandidatos(numDeCandidatos)
-            .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract()
-                    .as(JSONFailureResponseWithArrayModel.class);
+        candidatoClient.listarNumCandidatos(numDeCandidatos)
+        .then()
+            .statusCode(HttpStatus.SC_BAD_REQUEST)
+            .extract()
+                .as(JSONFailureResponseWithArrayModel.class);
 
         Assertions.assertEquals(400, failureResponse.getStatus());
         Assertions.assertEquals("O tamanho não pode ser menor do que 1.", failureResponse.getMessage());
@@ -105,10 +106,11 @@ class ListarCandidatosTest {
     @DisplayName("Cenário 5: Deve retornar 400 quando é passado quantidade de candidatos como string")
     @Tag("Regression")
     void testListarCandidatosComTamanhoString() {
+
         String numDeCandidatos = "abc";
 
         candidatoClient.listarNumCandidatos(numDeCandidatos)
-            .then()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+        .then()
+            .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 }
