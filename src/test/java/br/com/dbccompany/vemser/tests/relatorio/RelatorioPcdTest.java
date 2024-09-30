@@ -2,12 +2,11 @@ package br.com.dbccompany.vemser.tests.relatorio;
 
 import client.EdicaoClient;
 import client.RelatorioClient;
+import models.relatorio.RelatorioNeurodiversidadeModel;
 import models.relatorio.RelatorioPcdModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,21 +19,25 @@ class RelatorioPcdTest {
     private static final RelatorioClient relatorioClient = new RelatorioClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final String PATH_SCHEMA_LISTAR_RELATORIOS_PCD = "schemas/relatorio/listar_relatorios_pcd.json";
+    private static final String ERRO_PCD_NULO = "Campo 'pcd' deve ser não nulo";
+    private static String edicao;
+
+    @BeforeEach
+    public void setUp() {
+        edicao = edicaoClient.getEdicaoAtualComoString();
+    }
 
     @Test
     @DisplayName("Cenário 1: Validação de contrato de listar relatórios por pcd")
     @Tag("Contract")
     public void testValidarContratoListarRelatoriosPorPcd() {
 
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
         relatorioClient.listarCandidatosPcd(edicao)
                 .then()
-                .statusCode(HttpStatus.SC_OK)
-                .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_PCD))
+                    .statusCode(HttpStatus.SC_OK)
+                    .body(matchesJsonSchemaInClasspath(PATH_SCHEMA_LISTAR_RELATORIOS_PCD))
         ;
+
     }
 
     @Test
@@ -42,23 +45,22 @@ class RelatorioPcdTest {
     @Tag("Regression")
     void testListarRelatorioPcdComSucesso() {
 
-
-        String edicao = edicaoClient.obterEdicaoAtual()
-                .then()
-                .extract().asString();
-
-        var response = relatorioClient.listarCandidatosPcd(edicao)
+        RelatorioPcdModel[] response = relatorioClient.listarCandidatosPcd(edicao)
                 .then()
                     .statusCode(HttpStatus.SC_OK)
                     .extract()
-                    .as(RelatorioPcdModel[].class);
+                    .as(RelatorioPcdModel[].class)
+                ;
 
-        List<RelatorioPcdModel> relatorioCandidatosPcd = Arrays.stream(response).toList();
+        List<RelatorioPcdModel> listaRelatorioPcd = Arrays.stream(response).toList();
 
-        if (!relatorioCandidatosPcd.isEmpty()) {
-            for (RelatorioPcdModel r : relatorioCandidatosPcd) {
-                Assertions.assertNotNull(r.getPcd());
-            }
-        }
+        Assertions.assertAll(
+                listaRelatorioPcd.stream()
+                        .map(r -> (Executable) () ->
+                                Assertions.assertNotNull(r.getPcd(), ERRO_PCD_NULO)
+                        )
+                        .toList()
+        );
+
     }
 }

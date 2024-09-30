@@ -11,9 +11,7 @@ import models.avaliacao.AvaliacaoModel;
 import models.candidato.CandidatoCriacaoResponseModel;
 import models.inscricao.InscricaoModel;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -24,29 +22,42 @@ class DeletarAvaliacaoTest{
     private static final AvaliacaoClient avaliacaoClient = new AvaliacaoClient();
     private static final EdicaoClient edicaoClient = new EdicaoClient();
     private static final FormularioClient formularioClient = new FormularioClient();
+    private static CandidatoCriacaoResponseModel candidatoCadastrado;
+    private static InscricaoModel inscricaoCadastrada;
+    private static AvaliacaoModel avaliacaoCadastrada;
+    private static AvaliacaoCriacaoModel avaliacao;
+    @BeforeAll
+    public static void setUp(){
+        candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(CandidatoCriacaoResponseModel.class);
+        inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(InscricaoModel.class);
+        avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
+        avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
+                .then()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract()
+                    .as(AvaliacaoModel.class);
+    }
+
+    @AfterAll
+    public static void setpDelete(){
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao());
+        candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato());
+        formularioClient.deletarFormulario(candidatoCadastrado.getFormulario().getIdFormulario());
+        edicaoClient.deletarEdicao(candidatoCadastrado.getEdicao().getIdEdicao());
+    }
 
     @Test
     @DisplayName("Cenário 1: Deve deletar avaliação com sucesso")
     @Tag("Functional")
     public void testDeveDeletarAvaliacaoComSucesso() {
-
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(AvaliacaoModel.class);
-
         avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), true)
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
@@ -59,22 +70,6 @@ class DeletarAvaliacaoTest{
     @DisplayName("Cenário 2: Tentar deletar avaliação sem autenticação")
     @Tag("Functional")
     public void testTentarDeletarAvaliacaoSemAutenticacao() {
-        CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-        InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-        AvaliacaoCriacaoModel avaliacao = AvaliacaoDataFactory.avaliacaoValida(inscricaoCadastrada.getIdInscricao(), true);
-        AvaliacaoModel avaliacaoCadastrada = avaliacaoClient.cadastrarAvaliacao(avaliacao, true)
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(AvaliacaoModel.class);
         avaliacaoClient.deletarAvaliacao(avaliacaoCadastrada.getIdAvaliacao(), false)
                 .then()
                     .statusCode(HttpStatus.SC_FORBIDDEN);
