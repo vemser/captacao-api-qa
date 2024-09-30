@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.config;
 public class BaseClient {
 
     // VemSer Server
-    private static final String BASE_URI = "https://captacao-back-hml.onrender.com/";
+    private static final String BASE_URI = "https://captacao-back-hml-yx8y.onrender.com/";
 
     public BaseClient() {
     }
