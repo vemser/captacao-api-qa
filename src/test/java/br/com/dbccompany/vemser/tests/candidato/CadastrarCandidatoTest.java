@@ -61,20 +61,22 @@ class CadastrarCandidatoTest{
 
         CandidatoDataFactory.deletarCandidato(edicaoCriada, candidatoClient, candidatoCadastrado, edicaoClient);
 
-        Assertions.assertEquals(candidatoCriado.getNome().toLowerCase(), candidatoCadastrado.getNome().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getDataNascimento(), candidatoCadastrado.getDataNascimento());
-        Assertions.assertEquals(candidatoCriado.getEmail(), candidatoCadastrado.getEmail());
-        Assertions.assertEquals(candidatoCriado.getTelefone(), candidatoCadastrado.getTelefone());
-        Assertions.assertEquals(candidatoCriado.getRg(), candidatoCadastrado.getRg());
-        Assertions.assertEquals(candidatoCriado.getCpf(), candidatoCadastrado.getCpf());
-        Assertions.assertEquals(candidatoCriado.getEstado().toLowerCase(), candidatoCadastrado.getEstado().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getCidade().toLowerCase(), candidatoCadastrado.getCidade().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getPcd().toLowerCase(), candidatoCadastrado.getPcd().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getAtivo().toLowerCase(), candidatoCadastrado.getAtivo().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getLinguagens().size(), candidatoCadastrado.getLinguagens().size());
-        Assertions.assertEquals(candidatoCriado.getEdicao().getIdEdicao(), candidatoCadastrado.getEdicao().getIdEdicao());
-        Assertions.assertEquals(candidatoCriado.getEdicao().getNome().toLowerCase(), candidatoCadastrado.getEdicao().getNome().toLowerCase());
-        Assertions.assertEquals(candidatoCriado.getFormulario(), candidatoCadastrado.getFormulario().getIdFormulario());
+        Assertions.assertAll("candidatoCadastrado",
+            () -> Assertions.assertEquals(candidatoCriado.getNome().toLowerCase(), candidatoCadastrado.getNome().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getDataNascimento(), candidatoCadastrado.getDataNascimento()),
+            () -> Assertions.assertEquals(candidatoCriado.getEmail(), candidatoCadastrado.getEmail()),
+            () -> Assertions.assertEquals(candidatoCriado.getTelefone(), candidatoCadastrado.getTelefone()),
+            () -> Assertions.assertEquals(candidatoCriado.getRg(), candidatoCadastrado.getRg()),
+            () -> Assertions.assertEquals(candidatoCriado.getCpf(), candidatoCadastrado.getCpf()),
+            () -> Assertions.assertEquals(candidatoCriado.getEstado().toLowerCase(), candidatoCadastrado.getEstado().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getCidade().toLowerCase(), candidatoCadastrado.getCidade().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getPcd().toLowerCase(), candidatoCadastrado.getPcd().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getAtivo().toLowerCase(), candidatoCadastrado.getAtivo().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getLinguagens().size(), candidatoCadastrado.getLinguagens().size()),
+            () -> Assertions.assertEquals(candidatoCriado.getEdicao().getIdEdicao(), candidatoCadastrado.getEdicao().getIdEdicao()),
+            () -> Assertions.assertEquals(candidatoCriado.getEdicao().getNome().toLowerCase(), candidatoCadastrado.getEdicao().getNome().toLowerCase()),
+            () -> Assertions.assertEquals(candidatoCriado.getFormulario(), candidatoCadastrado.getFormulario().getIdFormulario())
+        );
     }
 
     @Test

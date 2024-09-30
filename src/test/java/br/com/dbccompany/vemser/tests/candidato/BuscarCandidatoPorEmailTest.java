@@ -54,25 +54,26 @@ class BuscarCandidatoPorEmailTest {
             .extract()
                 .as(CandidatoModel.class);
 
-        Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoBuscado.getIdCandidato());
-        Assertions.assertEquals(candidatoCadastrado.getNome(), candidatoBuscado.getNome());
-        Assertions.assertEquals(candidatoCadastrado.getDataNascimento(), candidatoBuscado.getDataNascimento());
-        Assertions.assertEquals(candidatoCadastrado.getCpf(), candidatoBuscado.getCpf());
-        Assertions.assertEquals(candidatoCadastrado.getTelefone(), candidatoBuscado.getTelefone());
-        Assertions.assertEquals(candidatoCadastrado.getRg(), candidatoBuscado.getRg());
-        Assertions.assertEquals(candidatoCadastrado.getCpf(), candidatoBuscado.getCpf());
-        Assertions.assertEquals(candidatoCadastrado.getEstado(), candidatoBuscado.getEstado());
-        Assertions.assertEquals(candidatoCadastrado.getCidade(), candidatoBuscado.getCidade());
-        Assertions.assertEquals(candidatoCadastrado.getPcd(), candidatoBuscado.getPcd());
-        Assertions.assertEquals(candidatoCadastrado.getObservacoes(), candidatoBuscado.getObservacoes());
-        Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaComportamental(), candidatoBuscado.getNotaEntrevistaComportamental());
-        Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaTecnica(), candidatoBuscado.getNotaEntrevistaTecnica());
-        Assertions.assertEquals(candidatoCadastrado.getAtivo(), candidatoBuscado.getAtivo());
-        Assertions.assertEquals(candidatoCadastrado.getParecerComportamental(), candidatoBuscado.getParecerComportamental());
-        Assertions.assertEquals(candidatoCadastrado.getParecerTecnico(), candidatoBuscado.getParecerTecnico());
-        Assertions.assertEquals(candidatoCadastrado.getMedia(), candidatoBuscado.getMedia());
-        Assertions.assertEquals(candidatoCadastrado.getEdicao().getIdEdicao(), candidatoBuscado.getEdicao().getIdEdicao());
-        Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), candidatoBuscado.getFormulario().getIdFormulario());
+        Assertions.assertAll("candidatoBuscado",
+            () -> Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), candidatoBuscado.getIdCandidato()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getNome(), candidatoBuscado.getNome()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getDataNascimento(), candidatoBuscado.getDataNascimento()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getCpf(), candidatoBuscado.getCpf()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getTelefone(), candidatoBuscado.getTelefone()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getRg(), candidatoBuscado.getRg()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getEstado(), candidatoBuscado.getEstado()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getCidade(), candidatoBuscado.getCidade()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getPcd(), candidatoBuscado.getPcd()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getObservacoes(), candidatoBuscado.getObservacoes()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaComportamental(), candidatoBuscado.getNotaEntrevistaComportamental()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getNotaEntrevistaTecnica(), candidatoBuscado.getNotaEntrevistaTecnica()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getAtivo(), candidatoBuscado.getAtivo()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getParecerComportamental(), candidatoBuscado.getParecerComportamental()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getParecerTecnico(), candidatoBuscado.getParecerTecnico()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getMedia(), candidatoBuscado.getMedia()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getEdicao().getIdEdicao(), candidatoBuscado.getEdicao().getIdEdicao()),
+            () -> Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), candidatoBuscado.getFormulario().getIdFormulario())
+        );
 
         candidatoClient.deletarCandidato(candidatoCadastrado.getIdCandidato())
         .then()

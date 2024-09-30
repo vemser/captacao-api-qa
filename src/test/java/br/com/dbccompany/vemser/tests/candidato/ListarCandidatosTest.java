@@ -25,33 +25,35 @@ class ListarCandidatosTest {
         int pagina = 0;
 
         JSONListaCandidatoResponse listaCandidato =
-        candidatoClient.listarTodosOsCandidatos(pagina, tamanho)
-        .then()
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-                .as(JSONListaCandidatoResponse.class);
+                candidatoClient.listarTodosOsCandidatos(pagina, tamanho)
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .as(JSONListaCandidatoResponse.class);
 
         Integer idCandidato1 = listaCandidato.getElementos().get(0).getIdCandidato();
         Integer idCandidato2 = listaCandidato.getElementos().get(1).getIdCandidato();
 
-        Assertions.assertTrue(tamanho >= listaCandidato.elementos.size());
-        Assertions.assertTrue(idCandidato2 > idCandidato1);
-        Assertions.assertNotNull(listaCandidato.getTotalElementos());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getNome());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getDataNascimento());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getEmail());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getTelefone());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getRg());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getCpf());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getEstado());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getCidade());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getPcd());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getAtivo());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getLinguagens());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getEdicao().getIdEdicao());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getEdicao().getNome());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getEdicao().getNotaCorte());
-        Assertions.assertNotNull(listaCandidato.elementos.get(0).getFormulario());
+        Assertions.assertAll("listaCandidato",
+                () -> Assertions.assertTrue(tamanho >= listaCandidato.getElementos().size()),
+                () -> Assertions.assertTrue(idCandidato2 > idCandidato1),
+                () -> Assertions.assertNotNull(listaCandidato.getTotalElementos()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getNome()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getDataNascimento()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getEmail()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getTelefone()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getRg()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getCpf()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getEstado()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getCidade()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getPcd()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getAtivo()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getLinguagens()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getEdicao().getIdEdicao()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getEdicao().getNome()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getEdicao().getNotaCorte()),
+                () -> Assertions.assertNotNull(listaCandidato.getElementos().get(0).getFormulario())
+        );
     }
 
     @Test
