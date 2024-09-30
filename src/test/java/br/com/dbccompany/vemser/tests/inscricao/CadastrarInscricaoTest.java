@@ -22,23 +22,20 @@ class CadastrarInscricaoTest {
     void testCadastrarInscricaoComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(InscricaoModel.class);
 
         inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
+        .then()
+            .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), inscricaoCadastrada.getCandidato().getIdCandidato());
         Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), inscricaoCadastrada.getCandidato().getFormulario().getIdFormulario());
@@ -50,22 +47,20 @@ class CadastrarInscricaoTest {
     void testCadastrarInscricaoSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricaoSemAutenticacao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
-
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(InscricaoModel.class);
 
         inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+        .then()
+            .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), inscricaoCadastrada.getCandidato().getIdCandidato());
         Assertions.assertEquals(candidatoCadastrado.getFormulario().getIdFormulario(), inscricaoCadastrada.getCandidato().getFormulario().getIdFormulario());

@@ -67,7 +67,7 @@ public class FiltroInscricaoTest {
             inscricaoCadastrada.getCandidato().getEmail(),
             candidatoCadastrado.getEdicao().getNome(),
             candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),false)
-            .then()
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+        .then()
+            .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }
