@@ -23,30 +23,29 @@ class ListarInscricaoTest {
     void testListarInscricoesComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(InscricaoModel.class);
 
         InscricaoListaResponseModel listaInscricoes = inscricaoClient.listaUltimaInscricao()
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(InscricaoListaResponseModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract()
+                .as(InscricaoListaResponseModel.class);
 
         InscricaoModel inscricaoListada = listaInscricoes.getElementos().get(0);
 
         inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
+        .then()
+            .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertNotNull(inscricaoListada);
         Assertions.assertEquals(candidatoCadastrado.getIdCandidato(), inscricaoListada.getCandidato().getIdCandidato());

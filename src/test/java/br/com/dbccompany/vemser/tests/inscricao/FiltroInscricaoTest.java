@@ -47,15 +47,13 @@ public class FiltroInscricaoTest {
     @DisplayName("Cenário 1: Deve filtrar inscrição com sucesso")
     @Tag("Regression")
     public void testDeveFiltrarInscricaoComSucesso(){
-        InscricaoListaResponseModel filtroInscricao = inscricaoClient.filtrarInscricao("0",
-                "10",
-                inscricaoCadastrada.getCandidato().getEmail(),
-                candidatoCadastrado.getEdicao().getNome(),
-                candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),
-                true)
+        InscricaoListaResponseModel filtroInscricao = inscricaoClient.filtrarInscricao("0","10",
+            inscricaoCadastrada.getCandidato().getEmail(),
+            candidatoCadastrado.getEdicao().getNome(),
+            candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),true)
         .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
+            .statusCode(HttpStatus.SC_OK)
+            .extract()
                 .as(InscricaoListaResponseModel.class);
         assertNotNull(filtroInscricao);
         assertEquals(filtroInscricao.getElementos().get(0).getIdInscricao(), inscricaoCadastrada.getIdInscricao());
@@ -65,13 +63,11 @@ public class FiltroInscricaoTest {
     @DisplayName("Cenário 2: Tentar filtrar inscrição sem token")
     @Tag("Regression")
     public void testTentarFiltrarInscricaoSemToken(){
-        inscricaoClient.filtrarInscricao("0",
-                        "10",
-                        inscricaoCadastrada.getCandidato().getEmail(),
-                        candidatoCadastrado.getEdicao().getNome(),
-                        candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),
-                        false)
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
+        inscricaoClient.filtrarInscricao("0","10",
+            inscricaoCadastrada.getCandidato().getEmail(),
+            candidatoCadastrado.getEdicao().getNome(),
+            candidatoCadastrado.getFormulario().getTrilhas().get(0).getNome(),false)
+        .then()
+            .statusCode(HttpStatus.SC_FORBIDDEN);
     }
 }
