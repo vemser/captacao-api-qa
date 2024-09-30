@@ -32,7 +32,7 @@ class DeletarInscricaoTest {
                     .extract()
                     .as(InscricaoModel.class);
 
-        var deletarInscricao = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
                 .then()
                     .statusCode(HttpStatus.SC_NO_CONTENT);
     }

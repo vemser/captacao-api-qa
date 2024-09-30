@@ -22,28 +22,27 @@ class ListarInscricaoPorIdTest {
     void testListarInscricaoPorIdComSucesso() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(InscricaoModel.class);
 
         InscricaoModel inscricaoListada = inscricaoClient.listarInscricaoPorId(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .extract()
-                    .as(InscricaoModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract()
+                .as(InscricaoModel.class);
 
-        var deletarInscricao = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
-
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        .then()
+            .statusCode(HttpStatus.SC_NO_CONTENT);
 
         Assertions.assertNotNull(inscricaoListada);
         Assertions.assertEquals(inscricaoCadastrada.getIdInscricao(), inscricaoListada.getIdInscricao());
@@ -57,24 +56,23 @@ class ListarInscricaoPorIdTest {
     void testListarInscricaoPorIdSemAutenticacao() {
 
         CandidatoCriacaoResponseModel candidatoCadastrado = candidatoClient.criarECadastrarCandidatoComCandidatoEntity()
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(CandidatoCriacaoResponseModel.class);
-
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(CandidatoCriacaoResponseModel.class);
 
         InscricaoModel inscricaoCadastrada = inscricaoClient.cadastrarInscricao(candidatoCadastrado.getIdCandidato())
-                .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(InscricaoModel.class);
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .extract()
+                .as(InscricaoModel.class);
 
-        var inscricaoListada = inscricaoClient.listarInscricaoPorIdSemAutenticacao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_FORBIDDEN);
+        inscricaoClient.listarInscricaoPorIdSemAutenticacao(inscricaoCadastrada.getIdInscricao())
+        .then()
+            .statusCode(HttpStatus.SC_FORBIDDEN);
 
-        var deletarInscricao = inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
-                .then()
-                    .statusCode(HttpStatus.SC_NO_CONTENT);
+        inscricaoClient.deletarInscricao(inscricaoCadastrada.getIdInscricao())
+        .then()
+            .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
