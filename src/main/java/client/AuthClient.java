@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 @NoArgsConstructor
 public class AuthClient {
 
-    private static final String LOGIN_ENDPOINT = "https://usuario-back-hml.onrender.com/usuario/login";
+	private static final String LOGIN_ENDPOINT = "https://usuario-back.onrender.com/usuario/login";
 
     @Getter
     @Setter
