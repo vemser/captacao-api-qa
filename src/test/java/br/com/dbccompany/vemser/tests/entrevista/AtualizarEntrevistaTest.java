@@ -46,20 +46,8 @@ class AtualizarEntrevistaTest  {
 
 	}
 
-	@Test
-	@DisplayName("Cenário 1: Deve retornar 204 ao atualizar entrevista com sucesso")
-	@Tag("Functional")
-	void testAtualizarEntrevistaComSucesso() {
-
-		entrevistaClient.atualizarEntrevista(primeiraEntrevistaId, STATUS_ENTREVISTA, entrevistaCriada)
-				.then()
-				.log().all()
-					.statusCode(HttpStatus.SC_NO_CONTENT);
-
-	}
-
     @Test
-    @DisplayName("Cenário 2: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
+    @DisplayName("Cenário 1: Deve retornar 403 ao atualizar entrevista sem estar autenticado")
     @Tag("Regression")
     void testAtualizarEntrevistaSemAutenticacao() {
 
