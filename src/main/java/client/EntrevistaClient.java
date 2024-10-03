@@ -149,22 +149,6 @@ public class EntrevistaClient extends BaseClient {
 				;
 	}
 
-	public Response atualizarEntrevista(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
-		Auth.usuarioAluno();
-
-		return
-				given()
-						.spec(setUp())
-						.header(AUTHORIZATION, AuthClient.getToken())
-						.pathParam(ID_ENTREVISTA1, idEntrevista)
-						.queryParam(LEGENDA, status)
-						.contentType(ContentType.JSON)
-						.body(dadosAtualizados)
-				.when()
-						.put(ENTREVISTA_ATUALIZAR_ENTREVISTA_ID_ENTREVISTA)
-				;
-	}
-
 	public Response atualizarEntrevistaSemAutenticacao(Integer idEntrevista, String status, EntrevistaCriacaoModel dadosAtualizados) {
 		Auth.usuarioAluno();
 
