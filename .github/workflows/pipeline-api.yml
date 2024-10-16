@@ -1,10 +1,6 @@
 name: Relatorio de testes API Captacao
 
 on:  
-  schedule:
-    - cron: '50 11 * * *'
-    - cron: '50 16 * * *'
-    - cron: '50 20 * * *'
   push:
     branches:
       - hml
